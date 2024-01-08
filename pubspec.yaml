@@ -29,6 +29,8 @@ flutter:
 
   assets:
     - assets/fonts/Urbanist/
+    - assets/icons/
+    - assets/images/
 
   fonts:
     - family: Urbanist
