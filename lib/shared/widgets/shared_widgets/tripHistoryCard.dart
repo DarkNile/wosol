@@ -57,23 +57,23 @@ class TripHistoryCard extends StatelessWidget {
               ),
               Text(
                 date,
-                style: AppFonts.medium.copyWith(color: AppColors.darkGreyhint),
+                style: AppFonts.medium.copyWith(color: AppColors.darkGreyHint),
               ),
               Row(
                 children: [
                   DefaultTextButton(
                     function: () {},
                     text: 'Ride Details',
-                    textColor: AppColors.darkGreyhint,
+                    textColor: AppColors.darkGreyHint,
                     textStyle:
-                        AppFonts.medium.copyWith(color: AppColors.darkGreyhint),
+                        AppFonts.medium.copyWith(color: AppColors.darkGreyHint),
                   ),
                   const SizedBox(
                     width: 30,
                   ),
-                   Icon(
+                  Icon(
                     Icons.arrow_forward,
-                    color: AppColors.darkGreyhint,
+                    color: AppColors.darkGreyHint,
                   )
                 ],
               ),

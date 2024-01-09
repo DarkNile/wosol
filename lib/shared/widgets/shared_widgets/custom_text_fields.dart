@@ -113,7 +113,7 @@ class EmailTextField extends StatelessWidget {
                     ? FittedBox(
                         fit: BoxFit.scaleDown,
                         child: SvgPicture.asset(
-                          'assets/images/sms.svg',
+                          'assets/icons/sms.svg',
                           width: 24,
                           height: 24,
                         ),
@@ -130,11 +130,10 @@ class EmailTextField extends StatelessWidget {
                   color: AppColors.black,
                 ),
                 contentPadding: AppConstants.edge(
-                 padding: const EdgeInsets.only(
-                   left: 16,
-                   right: 12,
-                 )
-                ),
+                    padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 12,
+                )),
                 disabledBorder: border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -179,12 +178,11 @@ class EmailTextField extends StatelessWidget {
           if (fieldValidation == TextFieldValidation.notValid)
             Padding(
               padding: AppConstants.edge(
-              padding: const EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
                 top: 8,
-              )
-              ),
+              )),
               child: Text(
                 validateText,
                 style: AppFonts.small.copyWith(
@@ -265,13 +263,12 @@ class PasswordTextField extends StatelessWidget {
           Container(
             clipBehavior: Clip.antiAlias,
             margin: AppConstants.edge(
-           padding: EdgeInsets.only(
-             right: marginRight,
-             left: marginLeft,
-             top: marginTop,
-             bottom: marginBottom,
-           )
-            ),
+                padding: EdgeInsets.only(
+              right: marginRight,
+              left: marginLeft,
+              top: marginTop,
+              bottom: marginBottom,
+            )),
             padding: const EdgeInsets.only(top: 4),
             height: 58,
             width: double.infinity,
@@ -319,7 +316,7 @@ class PasswordTextField extends StatelessWidget {
                 prefixIcon: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: SvgPicture.asset(
-                    'assets/images/lock.svg',
+                    'assets/icons/lock.svg',
                     width: 24,
                     height: 24,
                   ),

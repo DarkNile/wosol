@@ -52,27 +52,27 @@ class TripDetailsCard extends StatelessWidget {
                   Text(
                     date,
                     style: AppFonts.medium
-                        .copyWith(color: AppColors.greyhintColor),
+                        .copyWith(color: AppColors.greyHintColor),
                   ),
                 ],
               ),
               SvgPicture.asset(
-                "assets/images/cap.svg",
+                "assets/icons/cap.svg",
                 height: AppConstants.screenHeight(context) * .1 - 20,
               )
             ],
           ),
-        const  Spacer(),
+          const Spacer(),
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.ideographic,
             children: [
-            const  Icon(
+              const Icon(
                 Icons.circle,
                 color: Colors.green,
                 size: 12,
               ),
-            const  SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Flexible(
@@ -88,7 +88,7 @@ class TripDetailsCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.ideographic,
             children: [
-            const  Icon(
+              const Icon(
                 Icons.circle,
                 color: Colors.red,
                 size: 12,
