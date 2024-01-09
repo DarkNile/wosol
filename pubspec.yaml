@@ -16,6 +16,8 @@ dependencies:
   get: ^4.6.6
   flutter_svg: ^2.0.9
   shared_preferences: ^2.2.2
+  # For Rating
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
