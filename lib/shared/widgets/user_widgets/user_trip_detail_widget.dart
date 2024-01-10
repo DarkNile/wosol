@@ -135,11 +135,14 @@ class _CustomLocationRowWidget extends StatelessWidget {
         const SizedBox(
           width: 4,
         ),
-        Text(location,
-            style: AppFonts.button.copyWith(
-                fontSize: 13.0.sp(context),
-                fontWeight: FontWeight.w500,
-                color: AppColors.darkBlue300)),
+        Expanded(
+          child: Text(location,
+              overflow: TextOverflow.ellipsis,
+              style: AppFonts.button.copyWith(
+                  fontSize: 13.0.sp(context),
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.darkBlue300)),
+        ),
       ]),
     );
   }

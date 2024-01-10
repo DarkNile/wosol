@@ -56,7 +56,7 @@ class SettingsCard extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    iconController.toggleIcon();
+                    // iconController.toggleIcon();
                   },
                   child: const Icon(
                     Icons.arrow_forward,

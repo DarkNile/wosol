@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/style/colors.dart';
@@ -132,7 +133,7 @@ class DefaultTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  AppConstants.edge(
+      padding: AppConstants.edge(
         padding: EdgeInsets.only(
           top: marginTop,
           bottom: marginBottom,
@@ -157,6 +158,145 @@ class DefaultTextButton extends StatelessWidget {
                     ? TextDecoration.underline
                     : TextDecoration.none,
               ),
+        ),
+      ),
+    );
+  }
+}
+
+class DefaultRowButton extends StatelessWidget {
+  final Color color;
+  final MainAxisAlignment mainAxisAlignment;
+  final String svgPic;
+  final double? sizedBoxWidth;
+  final Function() function;
+  final double height;
+  final double width;
+  final double borderRadius;
+  final double marginTop;
+  final double marginBottom;
+  final double marginRight;
+  final double marginLeft;
+  final bool loading;
+  final String text;
+  final FontWeight fontWeight;
+  final double fontSize;
+  final Color textColor;
+  final Border? border;
+  final TextStyle? textStyle;
+  final Widget? textWidget;
+  final List<BoxShadow>? boxShadow;
+  const DefaultRowButton({
+    Key? key,
+    required this.function,
+    this.color = AppColors.logo,
+    this.textColor = AppColors.white,
+    this.height = 53,
+    this.width = double.infinity,
+    this.marginTop = 0,
+    this.marginBottom = 0,
+    this.text = 'Cancel Trip',
+    this.border,
+    this.fontWeight = FontWeight.w600,
+    this.fontSize = 16,
+    this.borderRadius = 10,
+    this.marginRight = 0,
+    this.marginLeft = 0,
+    this.loading = false,
+    this.textWidget,
+    this.boxShadow,
+    this.textStyle,
+    required this.svgPic,
+    this.sizedBoxWidth = 8,
+    this.mainAxisAlignment = MainAxisAlignment.center,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: function,
+      splashColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      child: Container(
+        height: height,
+        width: width,
+        margin: AppConstants.edge(
+          padding: EdgeInsets.only(
+            top: marginTop,
+            bottom: marginBottom,
+            right: marginRight,
+            left: marginLeft,
+          ),
+        ),
+        alignment: Alignment.center,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: color,
+          border: border,
+          boxShadow: boxShadow,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+        child: Center(
+          child: loading
+              ? SizedBox(
+                  height: height - 16,
+                  width: height - 16,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.white,
+                  ),
+                )
+              : mainAxisAlignment == MainAxisAlignment.spaceBetween
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Row(
+                        mainAxisAlignment: mainAxisAlignment,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: textWidget ??
+                                Text(
+                                  text,
+                                  style: textStyle ??
+                                      AppFonts.button.copyWith(
+                                        color: textColor,
+                                        fontWeight: fontWeight,
+                                        fontSize: fontSize,
+                                      ),
+                                  textAlign: TextAlign.center,
+                                ),
+                          ),
+                          SvgPicture.asset(svgPic),
+                        ],
+                      ),
+                    )
+                  : Row(
+                      mainAxisAlignment: mainAxisAlignment,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(svgPic),
+                        SizedBox(
+                          width: sizedBoxWidth,
+                        ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: textWidget ??
+                              Text(
+                                text,
+                                style: textStyle ??
+                                    AppFonts.button.copyWith(
+                                      color: textColor,
+                                      fontWeight: fontWeight,
+                                      fontSize: fontSize,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                        ),
+                      ],
+                    ),
         ),
       ),
     );
