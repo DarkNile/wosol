@@ -4,8 +4,8 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
-class CustomPhoneNumberField extends StatelessWidget {
-  const CustomPhoneNumberField({
+class CustomPhoneField extends StatelessWidget {
+  const CustomPhoneField({
     super.key,
   });
 

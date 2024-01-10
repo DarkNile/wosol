@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
 class OptionalMessage extends StatelessWidget {
   const OptionalMessage({
@@ -20,10 +22,8 @@ class OptionalMessage extends StatelessWidget {
           width: 343,
           height: 102,
           padding: const EdgeInsets.only(
-            top: 20,
             left: 12,
             right: 12,
-            bottom: 70,
           ),
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
@@ -33,26 +33,19 @@ class OptionalMessage extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  child: Text(
-                    'enter your message',
-                    style: TextStyle(
-                      color: Color(0xFFA1AECB),
-                      fontSize: 14,
-                      fontFamily: 'Urbanist',
-                      fontWeight: FontWeight.w400,
-                      height: 0.11,
-                    ),
-                  ),
-                ),
+          child: Expanded(
+            child: TextField(
+              // keyboardType: TextInputType.multiline,
+              controller: TextEditingController(),
+              decoration: InputDecoration(
+                hintText: 'enter your message',
+                hintStyle: AppFonts.small,
+                border: InputBorder.none,
               ),
-            ],
+              cursorColor: AppColors.darkGreyHint,
+              expands: true,
+              maxLines: null,
+            ),
           ),
         )
       ],
