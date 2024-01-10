@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -8,12 +7,12 @@ class ProfileCard extends StatelessWidget {
       {super.key,
       required this.title,
       this.subTitle,
-      required this.leadingimgPath,
+      required this.leadingImagePath,
       this.trailingWidget});
   final String title;
   final String? subTitle;
   final Widget? trailingWidget;
-  final String leadingimgPath;
+  final String leadingImagePath;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +20,7 @@ class ProfileCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: ListTile(
-        leading: Image.asset(leadingimgPath),
+        leading: Image.asset(leadingImagePath),
         title: Text(title),
         subtitle: Text(
           subTitle ?? '',
