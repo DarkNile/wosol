@@ -427,6 +427,7 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final bool? readOnly;
   final bool isObscureText;
+  final bool expands;
 
   const CustomTextField({
     super.key,
@@ -462,7 +463,7 @@ class CustomTextField extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.isObscureText = false,
-    required this.label,
+    required this.label,required this.expands,
   });
 
   @override
@@ -494,8 +495,8 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0),
               ),
               child: TextFormField(
-                // expands: true,
-                // maxLines: null,
+                expands: expands,
+                 maxLines: null,
                 // minLines: null,
                 onTap: onTap,
                 readOnly: readOnly ?? false,
@@ -517,9 +518,8 @@ class CustomTextField extends StatelessWidget {
                 },
                 decoration: InputDecoration(
                   labelText: label,
-                  labelStyle: AppFonts.small.copyWith(
-                    color: AppColors.black,
-                  ),
+                  labelStyle: AppFonts.small
+                      .copyWith(color: AppColors.black, fontSize: 12),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   suffixIcon: icon,
                   prefixIcon: prefixIcon,
