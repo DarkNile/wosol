@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
 class PersonalPicture extends StatelessWidget {
   const PersonalPicture({super.key});
