@@ -7,18 +7,16 @@ class LayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        children: [
-          SettingsCard(
-            isSwitcher: true,
-            title: 'ccc',
+    return const Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [],
           ),
-         ProfileCard(title: "Location", 
-         leadingImagePath: "assets/images/routing.png")
-        ],
+        ),
       ),
-    ));
+    );
   }
 }
