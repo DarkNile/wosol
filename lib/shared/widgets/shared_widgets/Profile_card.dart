@@ -7,21 +7,31 @@ class ProfileCard extends StatelessWidget {
       {super.key,
       required this.title,
       this.subTitle,
+      this.borderRadius = 0,
       required this.leadingImagePath,
-      this.trailingWidget});
+      this.trailingWidget = const Icon(
+        Icons.arrow_forward,
+        color: Colors.black,
+      )});
   final String title;
   final String? subTitle;
   final Widget? trailingWidget;
   final String leadingImagePath;
+  final double borderRadius;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: AppConstants.edge(padding: const EdgeInsets.all(10)),
+      width: 343,
+      height: 65,
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(12)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(borderRadius)),
       child: ListTile(
         leading: Image.asset(leadingImagePath),
-        title: Text(title),
+        title: Text(
+          title,
+          style: AppFonts.header,
+        ),
         subtitle: Text(
           subTitle ?? '',
           style: AppFonts.small,
