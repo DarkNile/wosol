@@ -16,7 +16,7 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: AppConstants.edge(padding: const EdgeInsets.all(10)),
+      margin: AppConstants.edge(padding: const EdgeInsets.all(12)),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: ListTile(
