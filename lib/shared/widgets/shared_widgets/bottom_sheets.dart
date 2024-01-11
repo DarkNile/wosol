@@ -240,7 +240,7 @@ class ConfirmPickupBottomSheet extends StatelessWidget {
   }
 }
 
-class CancelationReasonAndReportRideBottomSheet extends StatelessWidget {
+class CancellationReasonAndReportRideBottomSheet extends StatelessWidget {
   final String headTitle;
   final List<String> reasons;
   final int reasonsSelectedIndex;
@@ -248,7 +248,7 @@ class CancelationReasonAndReportRideBottomSheet extends StatelessWidget {
   final TextEditingController? controller;
   final bool containTextField;
 
-  const CancelationReasonAndReportRideBottomSheet(
+  const CancellationReasonAndReportRideBottomSheet(
       {super.key,
         required this.function,
         required this.headTitle,

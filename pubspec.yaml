@@ -35,6 +35,7 @@ flutter:
     - assets/fonts/Urbanist/
     - assets/icons/
     - assets/images/
+    - assets/images/home/
     - assets/lottie/
 
   fonts:
