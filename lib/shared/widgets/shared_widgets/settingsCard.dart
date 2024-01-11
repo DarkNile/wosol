@@ -10,19 +10,21 @@ class SettingsCard extends StatelessWidget {
   const SettingsCard({
     super.key,
     required this.isSwitcher,
-    required this.title,
+    required this.title,  this.lang=false,
   });
   final bool isSwitcher;
   final String title;
+  final bool lang;
   @override
   Widget build(BuildContext context) {
     final IconController iconController = Get.put(IconController());
     return Container(
-      height: AppConstants.screenHeight(context) * .1 - 20,
+      height: 52,
+      width: 343,
       margin: AppConstants.edge(padding: const EdgeInsets.all(2)),
       padding: AppConstants.edge(padding: const EdgeInsets.all(10)),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(12)),
+          color: Colors.white, borderRadius: BorderRadius.circular(8)),
       child: isSwitcher
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,14 +57,28 @@ class SettingsCard extends StatelessWidget {
                   style: AppFonts.header,
                 ),
                 InkWell(
-                  onTap: () {
-                    // iconController.toggleIcon();
-                  },
-                  child: const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.black,
-                  ),
-                )
+                    onTap: () {},
+                    child:lang? Row(
+                      children: [
+                       
+                        Text("العربيه"),
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg",
+                          width: 16,
+                          height: 16,
+                        ),
+                      ],
+                    ):Row(
+                      children: [
+                       
+                        
+                        SvgPicture.asset(
+                          "assets/icons/arrow-right.svg",
+                          width: 16,
+                          height: 16,
+                      )
+                      ],
+                    ))
               ],
             ),
     );
