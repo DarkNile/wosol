@@ -3,9 +3,16 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
-class UserTripsTabBarWidget extends StatelessWidget {
+class UserTripsTabBarWidget extends StatefulWidget {
   const UserTripsTabBarWidget({super.key, this.controller});
   final TabController? controller;
+
+  @override
+  State<UserTripsTabBarWidget> createState() => _UserTripsTabBarWidgetState();
+}
+
+class _UserTripsTabBarWidgetState extends State<UserTripsTabBarWidget>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return TabBar(
@@ -30,7 +37,7 @@ class UserTripsTabBarWidget extends StatelessWidget {
           border:
               Border(bottom: BorderSide(color: Colors.transparent, width: 0.0)),
         ),
-        controller: controller,
+        controller: widget.controller ?? TabController(vsync: this, length: 5),
         padding: AppConstants.edge(
             padding: const EdgeInsets.only(left: 0, right: 10)),
         tabs: List.generate(
