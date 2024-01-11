@@ -6,7 +6,11 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 
 class RideCard extends StatelessWidget {
-  const RideCard({super.key, required this.title, required this.date, required this.imgPath});
+  const RideCard(
+      {super.key,
+      required this.title,
+      required this.date,
+      required this.imgPath});
   final String title;
   final String imgPath;
   final String date;
@@ -32,8 +36,8 @@ class RideCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                   // "From $title Within $date mins",
-                   title,
+                    "From $title Within $date mins",
+                    // title + date,
                     softWrap: true,
                     style: AppFonts.header.copyWith(color: Colors.white),
                   ),
@@ -55,8 +59,7 @@ class RideCard extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-              flex: 3, child: SvgPicture.asset(imgPath))
+          Expanded(flex: 3, child: SvgPicture.asset(imgPath))
         ]),
       ),
     );

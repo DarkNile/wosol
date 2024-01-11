@@ -7,7 +7,8 @@ import '../../constants/style/fonts.dart';
 
 class DefaultButton extends StatelessWidget {
   final Color color;
-  final Function() function;
+  final void Function()? function;
+
   final double height;
   final double width;
   final double borderRadius;

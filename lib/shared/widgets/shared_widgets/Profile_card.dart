@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -21,8 +20,7 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 343,
-      height: 65,
+      height: 67,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(borderRadius)),
