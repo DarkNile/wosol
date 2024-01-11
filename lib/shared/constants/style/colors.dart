@@ -27,4 +27,5 @@ class AppColors {
   static const Color orange2 = Color(0xFFFFAC61);
   static const Color btnTxtColor = Color(0xFF65340A);
   static const Color btnBgColor = Color(0xFFFAE7AF);
+  static const Color btnEditColor = Color(0xFF65340A);
 }
