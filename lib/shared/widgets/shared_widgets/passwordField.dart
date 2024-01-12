@@ -12,13 +12,13 @@ class PasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppConstants.screenHeight(context) * .02),
+        padding:const EdgeInsets.only(
+          top: 10,bottom: 10,right: 12,left: 12
+            ),
         child: PasswordTextField(
             controller: textEditingController,
             fieldValidation: TextFieldValidation.valid,
             onIconPress: () {},
-            suffixIcon: Icons.remove_red_eye_rounded,
             onSubmit: (val) {},
             onChange: (val) {}));
   }

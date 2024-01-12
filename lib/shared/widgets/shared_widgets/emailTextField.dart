@@ -3,9 +3,8 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
 class EmailField extends StatelessWidget {
-   EmailField({
+  EmailField({
     super.key,
-   
   });
 
   TextEditingController textEditingController = TextEditingController();
@@ -13,11 +12,14 @@ class EmailField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppConstants.screenHeight(context) * .02),
+       padding:const EdgeInsets.only(
+          top: 10,bottom: 10,right: 12,left: 12
+            ),
       child: EmailTextField(
           controller: textEditingController,
           onSubmit: (String value) {},
+          hint: "Email",
+          
           fieldValidation: TextFieldValidation.valid),
     );
   }

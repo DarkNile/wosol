@@ -10,9 +10,9 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: AppConstants.screenHeight(context) * .019),
-      child: DefaultButton(function: () {}),
+      padding:const EdgeInsets.only(
+         top: 12,bottom: 12,right: 14,left: 14),
+      child: DefaultButton(function: () {},),
     );
   }
 }
