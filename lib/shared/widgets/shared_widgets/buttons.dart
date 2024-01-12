@@ -108,6 +108,7 @@ class DefaultTextButton extends StatelessWidget {
   final Color textColor;
   final String text;
   final void Function() function;
+  final Widget? textAsWidget;
   final TextStyle? textStyle;
   final FontWeight fontWeight;
   final double fontSize;
@@ -124,6 +125,7 @@ class DefaultTextButton extends StatelessWidget {
     this.fontWeight = FontWeight.w500,
     this.fontSize = 14,
     this.textStyle,
+    this.textAsWidget,
     this.marginBottom = 0,
     this.marginLeft = 0,
     this.marginRight = 0,
@@ -148,18 +150,19 @@ class DefaultTextButton extends StatelessWidget {
         hoverColor: AppColors.logo.withOpacity(0.1),
         highlightColor: AppColors.logo.withOpacity(0.1),
         splashColor: AppColors.logo.withOpacity(0.1),
-        child: Text(
-          text,
-          style: textStyle ??
-              AppFonts.button.copyWith(
-                color: textColor,
-                fontWeight: fontWeight,
-                fontSize: fontSize,
-                decoration: addUnderLine
-                    ? TextDecoration.underline
-                    : TextDecoration.none,
-              ),
-        ),
+        child: textAsWidget ??
+            Text(
+              text,
+              style: textStyle ??
+                  AppFonts.button.copyWith(
+                    color: textColor,
+                    fontWeight: fontWeight,
+                    fontSize: fontSize,
+                    decoration: addUnderLine
+                        ? TextDecoration.underline
+                        : TextDecoration.none,
+                  ),
+            ),
       ),
     );
   }
@@ -272,8 +275,7 @@ class DefaultRowButton extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                           ),
-                          if(containIcon)
-                          SvgPicture.asset(svgPic!),
+                          if (containIcon) SvgPicture.asset(svgPic!),
                         ],
                       ),
                     )
@@ -281,12 +283,11 @@ class DefaultRowButton extends StatelessWidget {
                       mainAxisAlignment: mainAxisAlignment,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if(containIcon)
-                        SvgPicture.asset(svgPic!),
-                        if(containIcon)
-                        SizedBox(
-                          width: sizedBoxWidth,
-                        ),
+                        if (containIcon) SvgPicture.asset(svgPic!),
+                        if (containIcon)
+                          SizedBox(
+                            width: sizedBoxWidth,
+                          ),
                         FittedBox(
                           fit: BoxFit.scaleDown,
                           child: textWidget ??

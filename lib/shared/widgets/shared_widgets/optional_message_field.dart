@@ -16,7 +16,7 @@ class OptionalMessage extends StatelessWidget {
       children: [
         Text(
           "Message(optional)",
-          style: AppFonts.medium.copyWith(color: AppColors.darkGreyHint),
+          style: AppFonts.medium.copyWith(color: AppColors.darkBlue500Base),
         ),
 
         Container(
@@ -43,7 +43,7 @@ class OptionalMessage extends StatelessWidget {
               hintStyle: AppFonts.small,
               border: InputBorder.none,
             ),
-            cursorColor: AppColors.darkGreyHint,
+            cursorColor: AppColors.darkBlue500Base,
             expands: true,
             maxLines: null,
           ),

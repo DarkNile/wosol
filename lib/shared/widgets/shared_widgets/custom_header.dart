@@ -240,3 +240,49 @@ class CustomHeaderWithBackButton extends StatelessWidget {
     );
   }
 }
+
+class CustomHeaderWithOptionalWidget extends StatelessWidget {
+  const CustomHeaderWithOptionalWidget({
+    super.key,
+    required this.screenTitle,
+    this.suffixWidget,
+    required this.isWithBackArrow,
+  });
+
+  final String screenTitle;
+  final Widget? suffixWidget;
+  final bool isWithBackArrow;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 1,
+      child: Container(
+        height: 48,
+        width: AppConstants.screenWidth(context),
+        color: AppColors.white,
+        child: Row(
+          children: [
+            if (isWithBackArrow)
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: AppColors.black800,
+                ),
+              ),
+            if (!isWithBackArrow)
+              const SizedBox(
+                width: 16,
+              ),
+            Text(
+              "Trip Details",
+              style: AppFonts.header,
+            ),
+            if (suffixWidget != null) const Spacer(),
+            if (suffixWidget != null) suffixWidget!,
+          ],
+        ),
+      ),
+    );
+  }
+}
