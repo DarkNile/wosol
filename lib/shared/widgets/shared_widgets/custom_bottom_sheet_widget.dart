@@ -16,13 +16,14 @@ class CustomBottomSheetWidgetWidget extends StatelessWidget {
       this.draggable = false,
       required this.headTitle,
       required this.child,
-      this.height});
+      this.height,
+      });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: height ?? 328,
+      height: height ?? 294,
       padding: EdgeInsets.only(
         top: draggable ? 14 : 20,
         left: 16,
