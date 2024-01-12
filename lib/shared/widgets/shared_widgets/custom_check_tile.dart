@@ -7,10 +7,12 @@ class CustomCheckTileWidget extends StatelessWidget {
   final bool isChecked;
   final void Function()? onTap;
   final bool withCircularCheckBox;
+  final String title;
   const CustomCheckTileWidget(
       {super.key,
       this.isChecked = false,
       this.withCircularCheckBox = true,
+      this.title = 'Driver arrived late',
       required this.onTap});
 
   @override
@@ -33,7 +35,7 @@ class CustomCheckTileWidget extends StatelessWidget {
         ),
         child: !withCircularCheckBox
             ? Text(
-                'Driver arrived late',
+                title,
                 style: AppFonts.medium.copyWith(
                   color: isChecked ? AppColors.logo : AppColors.black800,
                   fontWeight: isChecked ? FontWeight.w600 : FontWeight.w400,
@@ -45,7 +47,7 @@ class CustomCheckTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Driver arrived late',
+                  title,
                   style: AppFonts.medium.copyWith(
                     color: isChecked ? AppColors.logo : AppColors.black800,
                     fontWeight: isChecked ? FontWeight.w600 : FontWeight.w400,
