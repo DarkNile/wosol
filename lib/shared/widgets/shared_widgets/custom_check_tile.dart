@@ -20,7 +20,7 @@ class CustomCheckTileWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 48,
+        height: !withCircularCheckBox ? 38 : 48,
         alignment:
             withCircularCheckBox ? Alignment.center : Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: 12),

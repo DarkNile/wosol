@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/style/colors.dart';
+import '../../constants/style/fonts.dart';
 import '../captain_widgets/custom_captain_list_tile.dart';
 import '../user_widgets/rating_bar_widget.dart';
 import '../user_widgets/user_trip_detail_widget.dart';
@@ -333,20 +334,24 @@ class SelectUsersToPickupBottomSheet extends StatelessWidget {
 
 class RideAndTripEndBottomSheet extends StatelessWidget {
   final String headTitle;
-  final String lottiePath;
+  final String imagePath;
+  final String? lottiePath;
   final String headerMsg;
   final String subHeaderMsg;
   final bool isTrip;
+  final bool containLottie;
   final Function()? function;
 
   const RideAndTripEndBottomSheet(
       {super.key,
         required this.headTitle,
-        required this.lottiePath,
+        required this.imagePath,
         required this.headerMsg,
         required this.subHeaderMsg,
         this.isTrip = false,
         this.function,
+        this.containLottie = false,
+        this.lottiePath,
       });
 
   @override
@@ -364,9 +369,11 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
       height: isTrip? 311 : 256,
       child: Center(
         child: CustomStatusWidget(
-          lottiePath: lottiePath,
+          imagePath: imagePath,
           title: headerMsg,
           subTitle: subHeaderMsg,
+          containLottie: containLottie,
+          lottiePath: lottiePath,
         ),
       ),
     );
@@ -374,13 +381,13 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
 }
 
 class TripCompletedBottomSheet extends StatelessWidget {
-  final String lottiePath;
+  final String imagePath;
   final String headerMsg;
   final Function() function;
 
   const TripCompletedBottomSheet(
       {super.key,
-        required this.lottiePath,
+        required this.imagePath,
         required this.headerMsg,
         required this.function,
       });
@@ -401,7 +408,7 @@ class TripCompletedBottomSheet extends StatelessWidget {
       height: 251,
       child: Center(
         child: CustomStatusWidget(
-          lottiePath: lottiePath,
+          imagePath: imagePath,
           title: headerMsg,
           subTitle: '',
         ),
@@ -412,7 +419,7 @@ class TripCompletedBottomSheet extends StatelessWidget {
 
 class RideCanceledAndReportedBottomSheet extends StatelessWidget {
   final String headTitle;
-  final String lottiePath;
+  final String imagePath;
   final String headerMsg;
   final String subHeaderMsg;
   final bool isCancelFirstStep;
@@ -425,7 +432,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
   const RideCanceledAndReportedBottomSheet(
       {super.key,
         required this.headTitle,
-        required this.lottiePath,
+        required this.imagePath,
         required this.headerMsg,
         required this.subHeaderMsg,
         this.isCancelFirstStep = false,
@@ -457,7 +464,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
       height: showOrButton? 434 : (isCancelFirstStep? 362 : isReportFirstStep? 276 : 254),
       child: Center(
         child: CustomStatusWidget(
-          lottiePath: lottiePath,
+          imagePath: imagePath,
           title: headerMsg,
           subTitle: subHeaderMsg,
         ),
@@ -468,14 +475,25 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
 
 class RateBottomSheet extends StatelessWidget {
   final String headTitle;
+  final bool selectIssue;
   final Function() function;
   final Function(double) onRatingUpdate;
+  final List<String> issues = [
+    'Aggressive Driving',
+    'Car wasn’t clean',
+    'Ride arrive late',
+    'Driver behaviour',
+    'Driver behaviour',
+    'The driver wasn’t the same',
+    'Wrong vehicle arrived',
+  ];
 
-  const RateBottomSheet(
+  RateBottomSheet(
       {super.key,
         required this.function,
         required this.onRatingUpdate,
         required this.headTitle,
+        required this.selectIssue,
       });
 
   @override
@@ -486,9 +504,37 @@ class RateBottomSheet extends StatelessWidget {
       firstButtonFunction: function,
       firstButtonText: 'Submit',
       withCloseIcon: true,
-      height: 243,
-      child: RatingBarWidget(
-        onRatingUpdate: onRatingUpdate,
+      height: selectIssue? 485 : 243,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Align(
+            child: RatingBarWidget(
+              onRatingUpdate: onRatingUpdate,
+            ),
+          ),
+          if(selectIssue)
+          Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            child: Text('Select Issue (select one or more)', style: AppFonts.header),
+          ),
+          if(selectIssue)
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: List.generate(issues.length, (index) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomCheckTileWidget(
+                    onTap: function,
+                    title: issues[index],
+                    isChecked: index == 0 || index == 1 || index == 6? true : false,
+                    withCircularCheckBox: false,
+                  ),
+                ],
+              ),),
+            ),
+        ],
       ),
     );
   }
