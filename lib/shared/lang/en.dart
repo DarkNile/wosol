@@ -10,4 +10,12 @@ const Map<String, String> en = {
   "viewOnMap": "View on map",
   "tripsHistory": "Trip History",
   "rideDetails": "Ride details",
+  "thisWeekTrips": "This Week Trips",
+  "tripDetails": "Trip Details",
+  "subscriptions": "Subscriptions",
+  "current": "Current",
+  "previous": "Previous",
+  "rate": "Rate",
+  "noRating": "No rating",
+  "reportAProblem": "Report a Problem"
 };

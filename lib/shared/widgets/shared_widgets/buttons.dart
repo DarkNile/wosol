@@ -173,7 +173,8 @@ class DefaultRowButton extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final String? svgPic;
   final double? sizedBoxWidth;
-  final Function() function;
+
+  final void Function()? function;
   final double height;
   final double width;
   final double borderRadius;

@@ -13,9 +13,11 @@ class TripDetailsCard extends StatelessWidget {
       required this.date,
       required this.fromCity,
       required this.toCity,
-      this.isCaptain = true});
+      this.isCaptain = true,
+      this.captainName});
   final String date;
   final bool isCaptain;
+  final String? captainName;
   final String fromCity;
 
   final String toCity;
@@ -23,9 +25,9 @@ class TripDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: isCaptain ? 356 : 382,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: isCaptain ? null : BorderRadius.circular(12),
+        // borderRadius: isCaptain ? BorderRadius.circular(12) : null,
       ),
       child: Padding(
         padding: AppConstants.edge(
@@ -90,7 +92,7 @@ class TripDetailsCard extends StatelessWidget {
                               .copyWith(color: AppColors.black800),
                         ),
                         Text(
-                          "Mohammed Aly",
+                          captainName ?? "Captain Name",
                           style: AppFonts.header
                               .copyWith(color: AppColors.black800),
                         ),
