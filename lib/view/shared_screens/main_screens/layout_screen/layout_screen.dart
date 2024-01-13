@@ -43,7 +43,7 @@ class LayoutScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: CancelationReasonAndReportRideBottomSheet(
+                  child: CancellationReasonAndReportRideBottomSheet(
                     function: (){},
                     headTitle: 'Cancelation reason',
                     reasons: const ['No Show', 'User canceled the trip', 'Canceled by customer support', 'Other'],
@@ -60,7 +60,9 @@ class LayoutScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: RideAndTripEndBottomSheet(
                     headTitle: 'Ride end',
-                    lottiePath: 'assets/lottie/congratulation.json',
+                    imagePath: 'assets/images/celebrate.png',
+                    lottiePath: 'assets/lottie/success.json',
+                    containLottie: true,
                     headerMsg: 'Congratulations ',
                     subHeaderMsg: 'ride completed successfully, Thank you',
                   ),
@@ -68,7 +70,9 @@ class LayoutScreen extends StatelessWidget {
                 RideAndTripEndBottomSheet(
                   function: (){},
                   headTitle: 'Ride end',
-                  lottiePath: 'assets/lottie/congratulation.json',
+                  imagePath: 'assets/images/celebrate.png',
+                  lottiePath: 'assets/lottie/success.json',
+                  containLottie: true,
                   headerMsg: 'Congratulations ',
                   subHeaderMsg: 'ride completed successfully, Thank you',
                   isTrip: true,
@@ -76,14 +80,14 @@ class LayoutScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: TripCompletedBottomSheet(
-                    lottiePath: 'assets/lottie/congratulation.json',
+                    imagePath: 'assets/images/end.png',
                     headerMsg: 'Trip Completed?',
                     function: (){},
                   ),
                 ),
                 RideCanceledAndReportedBottomSheet(
                   headTitle: 'Cancel Ride',
-                  lottiePath: 'assets/lottie/congratulation.json',
+                  imagePath: 'assets/images/thinking.png',
                   headerMsg: 'You are about to cancel your ride, are you sure?',
                   subHeaderMsg: 'Note: today trip only will be canceled',
                   isCancelFirstStep: true,
@@ -94,14 +98,14 @@ class LayoutScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: RideCanceledAndReportedBottomSheet(
                     headTitle: 'Ride Canceled',
-                    lottiePath: 'assets/lottie/congratulation.json',
+                    imagePath: 'assets/images/smile.png',
                     headerMsg: 'Ride has been canceled',
                     subHeaderMsg: "Thank you for being kind and save others' time.",
                   ),
                 ),
                 const RideCanceledAndReportedBottomSheet(
                   headTitle: 'Ride Reported',
-                  lottiePath: 'assets/lottie/congratulation.json',
+                  imagePath: 'assets/images/sad.png',
                   headerMsg: 'We feel sorry for you',
                   subHeaderMsg: "We received your report successfully, and we will try to resolve the issue very soon.",
                   isReportFirstStep: true,
@@ -110,12 +114,12 @@ class LayoutScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: RideCanceledAndReportedBottomSheet(
                     headTitle: 'Ride Reported',
-                    lottiePath: 'assets/lottie/congratulation.json',
+                    imagePath: 'assets/images/star.png',
                     headerMsg: 'Rated submitted successfully',
                     subHeaderMsg: "Thank you, hope you have enjoyed your ride with us",
                   ),
                 ),
-                CancelationReasonAndReportRideBottomSheet(
+                CancellationReasonAndReportRideBottomSheet(
                   function: (){},
                   headTitle: 'Report ride',
                   reasons: const ['Driver behaviour', 'Driver arrived late', 'Car problem', 'Other'],
@@ -129,6 +133,7 @@ class LayoutScreen extends StatelessWidget {
                     headTitle: 'Rate your trip',
                     function: (){},
                     onRatingUpdate: (rate){},
+                    selectIssue: false,
                   ),
                 ),
                 RideStartBottomSheet(
@@ -141,7 +146,7 @@ class LayoutScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: RideCanceledAndReportedBottomSheet(
                     headTitle: 'Cancel Ride',
-                    lottiePath: 'assets/lottie/congratulation.json',
+                    imagePath: 'assets/images/thinking.png',
                     headerMsg: 'Are you sure to Turn-off this ride?',
                     subHeaderMsg: 'This trip will not be available until you turn it back again',
                     isCancelFirstStep: true,
@@ -155,6 +160,7 @@ class LayoutScreen extends StatelessWidget {
                   headTitle: 'Rate your trip',
                   function: (){},
                   onRatingUpdate: (rate){},
+                  selectIssue: true,
                 ),
               ],
             ),

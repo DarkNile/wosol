@@ -5,25 +5,52 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 class CustomStatusWidget extends StatelessWidget {
-  final String lottiePath;
+  final String imagePath;
+  final String? lottiePath;
   final String title;
   final String subTitle;
+  final bool containLottie;
   const CustomStatusWidget(
       {super.key,
-      required this.lottiePath,
+      required this.imagePath,
       required this.title,
-      required this.subTitle});
+      required this.subTitle,
+        this.containLottie = false,
+        this.lottiePath,
+      });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Lottie.asset(
-          lottiePath,
-          height: 65,
+        SizedBox(
           width: 65,
-          fit: BoxFit.fill
+          height: 65,
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              if(containLottie)
+                OverflowBox(
+                  maxHeight: 140,
+                  minHeight: 140,
+                  maxWidth: 105,
+                  minWidth: 105,
+                  child: Lottie.asset(
+                      lottiePath!,
+                      height: 140,
+                      width: 105,
+                      fit: BoxFit.fill
+                  ),
+                ),
+              Image.asset(
+                imagePath,
+                height: 65,
+                width: 65,
+                fit: BoxFit.fill
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(
