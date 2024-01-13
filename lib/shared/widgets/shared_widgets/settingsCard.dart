@@ -1,86 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:wosol/controllers/shared_controllers/icon_controller.dart';
-import 'package:wosol/shared/constants/constants.dart';
-import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 
 class SettingsCard extends StatelessWidget {
   const SettingsCard({
     super.key,
-    required this.isSwitcher,
-    required this.title,  this.lang=false,
   });
-  final bool isSwitcher;
-  final String title;
-  final bool lang;
+
   @override
   Widget build(BuildContext context) {
-    final IconController iconController = Get.put(IconController());
     return Container(
-      height: 52,
-      width: 343,
-      margin: AppConstants.edge(padding: const EdgeInsets.all(2)),
-      padding: AppConstants.edge(padding: const EdgeInsets.all(10)),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(8)),
-      child: isSwitcher
-          ? Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: AppFonts.header,
-                ),
-                InkWell(
-                  onTap: () {
-                    iconController.toggleIcon();
-                  },
-                  child: Obx(() {
-                    return iconController.isIconOn.value
-                        ? SvgPicture.asset(
-                            "assets/icons/GToggle.svg",
-                          )
-                        : SvgPicture.asset(
-                            "assets/icons/Toggle.svg",
-                          );
-                  }),
-                )
-              ],
-            )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: AppFonts.header,
-                ),
-                InkWell(
-                    onTap: () {},
-                    child:lang? Row(
-                      children: [
-                       
-                        Text("العربيه"),
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg",
-                          width: 16,
-                          height: 16,
-                        ),
-                      ],
-                    ):Row(
-                      children: [
-                       
-                        
-                        SvgPicture.asset(
-                          "assets/icons/arrow-right.svg",
-                          width: 16,
-                          height: 16,
-                      )
-                      ],
-                    ))
-              ],
+        height: 208,
+        decoration: BoxDecoration(
+            color: AppColors.white, borderRadius: BorderRadius.circular(8)),
+        child: const Column(
+          children: [
+            CustomSettingRowWidget(
+              isSwitcher: true,
+              title: 'Notifications',
             ),
-    );
+            Divider(
+              height: 1,
+              color: AppColors.darkBlue100,
+            ),
+            CustomSettingRowWidget(
+              isSwitcher: true,
+              title: 'Login with finger print',
+            ),
+            Divider(
+              height: 1,
+              color: AppColors.darkBlue100,
+            ),
+            CustomSettingRowWidget(
+              isSwitcher: false,
+              title: 'Terms & Conditions',
+            ),
+            Divider(
+              height: 1,
+              color: AppColors.darkBlue100,
+            ),
+            CustomSettingRowWidget(
+              isSwitcher: false,
+              lang: true,
+              title: 'Change Language',
+            ),
+          ],
+        ));
   }
 }

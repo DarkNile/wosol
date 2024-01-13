@@ -7,7 +7,8 @@ import '../../constants/style/fonts.dart';
 
 class DefaultButton extends StatelessWidget {
   final Color color;
-  final Function() function;
+  final void Function()? function;
+
   final double height;
   final double width;
   final double borderRadius;
@@ -167,7 +168,7 @@ class DefaultTextButton extends StatelessWidget {
 class DefaultRowButton extends StatelessWidget {
   final Color color;
   final MainAxisAlignment mainAxisAlignment;
-  final String svgPic;
+  final String? svgPic;
   final double? sizedBoxWidth;
   final Function() function;
   final double height;
@@ -178,6 +179,7 @@ class DefaultRowButton extends StatelessWidget {
   final double marginRight;
   final double marginLeft;
   final bool loading;
+  final bool containIcon;
   final String text;
   final FontWeight fontWeight;
   final double fontSize;
@@ -203,10 +205,11 @@ class DefaultRowButton extends StatelessWidget {
     this.marginRight = 0,
     this.marginLeft = 0,
     this.loading = false,
+    this.containIcon = false,
     this.textWidget,
     this.boxShadow,
     this.textStyle,
-    required this.svgPic,
+    this.svgPic,
     this.sizedBoxWidth = 8,
     this.mainAxisAlignment = MainAxisAlignment.center,
   }) : super(key: key);
@@ -269,7 +272,8 @@ class DefaultRowButton extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                           ),
-                          SvgPicture.asset(svgPic),
+                          if(containIcon)
+                          SvgPicture.asset(svgPic!),
                         ],
                       ),
                     )
@@ -277,7 +281,9 @@ class DefaultRowButton extends StatelessWidget {
                       mainAxisAlignment: mainAxisAlignment,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(svgPic),
+                        if(containIcon)
+                        SvgPicture.asset(svgPic!),
+                        if(containIcon)
                         SizedBox(
                           width: sizedBoxWidth,
                         ),

@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:wosol/shared/widgets/shared_widgets/info_card.dart';
+import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
+import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [LoginScreen()],
-          ),
-        ),
-      ),
-    );
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: SettingsScreen())));
   }
 }

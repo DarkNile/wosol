@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
-import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
 class OptionalMessage extends StatelessWidget {
   const OptionalMessage({
     super.key,
+    required this.controller,
   });
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,11 @@ class OptionalMessage extends StatelessWidget {
           "Message(optional)",
           style: AppFonts.medium.copyWith(color: AppColors.darkGreyHint),
         ),
+
         Container(
           width: 343,
           height: 102,
+          margin: const EdgeInsets.only(top: 8),
           padding: const EdgeInsets.only(
             left: 12,
             right: 12,
@@ -33,19 +35,17 @@ class OptionalMessage extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: Expanded(
-            child: TextField(
-              // keyboardType: TextInputType.multiline,
-              controller: TextEditingController(),
-              decoration: InputDecoration(
-                hintText: 'enter your message',
-                hintStyle: AppFonts.small,
-                border: InputBorder.none,
-              ),
-              cursorColor: AppColors.darkGreyHint,
-              expands: true,
-              maxLines: null,
+          child: TextField(
+            // keyboardType: TextInputType.multiline,
+            controller: TextEditingController(),
+            decoration: InputDecoration(
+              hintText: 'enter your message',
+              hintStyle: AppFonts.small,
+              border: InputBorder.none,
             ),
+            cursorColor: AppColors.darkGreyHint,
+            expands: true,
+            maxLines: null,
           ),
         )
       ],

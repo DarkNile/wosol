@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/widgets/shared_widgets/Profile_card.dart';
-import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
+import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
+import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
@@ -10,51 +9,68 @@ class ProfileContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
         children: [
-          ProfileCard(
-            title: "Farah",
-            leadingImagePath: "assets/images/avatar.png",
-            subTitle: '0100000',
-            borderRadius: 8,
-            trailingWidget: DefaultButton(
-              function: () {},
-              text: "Edit",
-              textColor: AppColors.btnTxtColor,
-              color: AppColors.btnBgColor,
-              width: AppConstants.screenWidth(context) * .2,
-              height: AppConstants.screenHeight(context) * .1 - 40,
+          Container(
+            height: 67,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: CustomProfileRowWidget(
+              image: '',
+              onTapEdit: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfile();
+                }));
+              },
+              title: 'Hossam Essam',
+              subTitle: '+966 123 456 7890',
+              isProfile: true,
             ),
           ),
           const SizedBox(
             height: 24,
           ),
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ProfileCard(
-                title: "Vehicles",
-                leadingImagePath: "assets/images/bus.png",
-                subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
-              ),
-              SizedBox(
-                height: 1,
-              ),
-              ProfileCard(
-                title: "Routes",
-                leadingImagePath: "assets/images/routing.png",
-                subTitle: "Mecca, Jedaha  ",
-              ),
-              SizedBox(
-                height: 1,
-              ),
-              ProfileCard(
-                title: "License ",
-                leadingImagePath: "assets/images/personalcard.png",
-                subTitle: "Tdriving license, car license",
-              )
-            ],
+          Container(
+            height: 195,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CustomProfileRowWidget(
+                  image: "assets/images/bus.png",
+                  title: "Vehicles",
+                  subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
+                  isProfile: false,
+                ),
+                Divider(
+                  height: 1,
+                  color: AppColors.darkBlue100,
+                ),
+                CustomProfileRowWidget(
+                  image: "assets/images/routing.png",
+                  title: "Routes",
+                  subTitle: "Mecca, Jedaha  ",
+                  isProfile: false,
+                ),
+                Divider(
+                  height: 1,
+                  color: AppColors.darkBlue100,
+                ),
+                CustomProfileRowWidget(
+                  image: "assets/images/personalcard.png",
+                  title: "License ",
+                  subTitle: "Tdriving license, car license",
+                  isProfile: false,
+                ),
+              ],
+            ),
           ),
         ],
       ),

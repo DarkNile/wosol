@@ -138,14 +138,14 @@ class EmailTextField extends StatelessWidget {
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
-                        color: AppColors.logo,
+                        color: AppColors.darkBlue200,
                       ),
                     ),
                 border: border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
-                        color: AppColors.logo,
+                        color: AppColors.darkBlue200,
                       ),
                     ),
                 focusedBorder: border ??
@@ -169,7 +169,7 @@ class EmailTextField extends StatelessWidget {
                         OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
-                            color: AppColors.logo,
+                            color: AppColors.darkBlue200,
                           ),
                         ),
               ),
@@ -304,7 +304,7 @@ class PasswordTextField extends StatelessWidget {
                     splashColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    icon:SvgPicture.asset("assets/icons/eye.svg"),
+                    icon: SvgPicture.asset("assets/icons/eye.svg"),
                     onPressed: onIconPress,
                     color: AppColors.black,
                   ),
@@ -353,7 +353,7 @@ class PasswordTextField extends StatelessWidget {
                     : OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
-                          color: AppColors.logo,
+                          color: AppColors.darkBlue200,
                         ),
                       ),
               ),
@@ -518,7 +518,7 @@ class CustomTextField extends StatelessWidget {
                   labelStyle: AppFonts.small
                       .copyWith(color: AppColors.darkBlue500Base, fontSize: 12),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  suffixIcon: SvgPicture.asset("assets/icons/eye.svg"),
+                  //suffixIcon: SvgPicture.asset("assets/icons/eye.svg"),
                   prefixIcon: prefixIcon,
                   prefixIconConstraints: const BoxConstraints(),
                   hintText: hint,
