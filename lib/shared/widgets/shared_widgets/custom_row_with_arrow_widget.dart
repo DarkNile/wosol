@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -46,11 +47,13 @@ class CustomRowWithArrowWidget extends StatelessWidget {
             children: [
               Text(from, style: textStyle()),
               const SizedBox(width: 10),
-              Icon(Icons.arrow_forward,
-                  color: isHeader
-                      ? const Color(0xff292D32)
-                      : AppColors.darkBlue500Base,
-                  size: 16),
+              SvgPicture.asset(
+                isHeader
+                    ? 'assets/icons/arrow_right_header.svg'
+                    : 'assets/icons/arrow-right.svg',
+                width: 16,
+                height: 16,
+              ),
               const SizedBox(width: 10),
               Text(to, style: textStyle())
             ],

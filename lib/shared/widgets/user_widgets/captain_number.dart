@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/captain_image_with_cart_widget.dart';
 
 class CaptainNumberWidget extends StatelessWidget {
   final String carNumber;
@@ -12,7 +13,7 @@ class CaptainNumberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image.asset('assets/images/car_with_driver.png', height: 46),
+        const CaptainImageWithCartWidget(),
         const Spacer(),
         Column(
           children: [

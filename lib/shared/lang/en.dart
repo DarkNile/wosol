@@ -17,5 +17,7 @@ const Map<String, String> en = {
   "previous": "Previous",
   "rate": "Rate",
   "noRating": "No rating",
-  "reportAProblem": "Report a Problem"
+  "reportAProblem": "Report a Problem",
+  "manageTrip": "Manage Trip",
+  "manageMyTrips": "Manage my trips"
 };

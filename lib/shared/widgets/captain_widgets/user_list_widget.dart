@@ -5,7 +5,8 @@ import 'package:wosol/shared/widgets/captain_widgets/custom_captain_list_tile.da
 
 class UserListWidget extends StatelessWidget {
   final bool hasSubTitle;
-  const UserListWidget({super.key, this.hasSubTitle = true});
+  final int length;
+  const UserListWidget({super.key, this.hasSubTitle = true, this.length = 6});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class UserListWidget extends StatelessWidget {
               height: 6,
             ),
             ...List.generate(
-                6,
+                length,
                 (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: CustomCaptainListTileWidget(

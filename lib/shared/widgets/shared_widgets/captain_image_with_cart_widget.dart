@@ -8,7 +8,7 @@ class CaptainImageWithCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
+        const SizedBox(
           width: 89,
           height: 46,
         ),

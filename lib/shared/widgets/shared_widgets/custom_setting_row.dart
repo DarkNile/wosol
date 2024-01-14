@@ -11,17 +11,20 @@ class CustomSettingRowWidget extends StatelessWidget {
     required this.isSwitcher,
     required this.title,
     this.lang = false,
+    this.isManageScreen = false,
   });
   final bool isSwitcher;
   final String title;
   final bool lang;
+  final bool isManageScreen;
+
   @override
   Widget build(BuildContext context) {
     final IconController iconController = Get.put(IconController());
     return SizedBox(
-      height: 51,
+      height: isManageScreen ? 26 : 51,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
+        padding: EdgeInsets.symmetric(horizontal: isManageScreen ? 0 : 12),
         child: isSwitcher
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

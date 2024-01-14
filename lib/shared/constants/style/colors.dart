@@ -25,8 +25,12 @@ class AppColors {
 
   static const Color white900 = Color(0xffFFFFFF);
   static const Color orange2 = Color(0xFFFFAC61);
+
   static const Color btnTxtColor = Color(0xFF65340A);
   static const Color btnBgColor = Color(0xFFFAE7AF);
   static const Color btnEditColor = Color(0xFF65340A);
   static const Color btnBackColor = Color(0xFFFDFBF0);
+
+  static const Color black300 = Color.fromRGBO(0, 0, 0, 0.24);
+  static const Color orange50 = Color(0xffFEFBF1);
 }

@@ -4,20 +4,20 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 // ignore: must_be_immutable
-class CustomBottomSheetWidgetWidget extends StatelessWidget {
+class CustomBottomSheetWidget extends StatelessWidget {
   final String headTitle;
   final Widget child;
   bool draggable;
   bool withCloseIcon;
   final double? height;
-  CustomBottomSheetWidgetWidget(
-      {super.key,
-      this.withCloseIcon = false,
-      this.draggable = false,
-      required this.headTitle,
-      required this.child,
-      this.height,
-      });
+  CustomBottomSheetWidget({
+    super.key,
+    this.withCloseIcon = false,
+    this.draggable = false,
+    required this.headTitle,
+    required this.child,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {

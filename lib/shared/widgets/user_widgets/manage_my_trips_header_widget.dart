@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/user_widgets/user_trips_tab_bar.dart';
@@ -18,22 +19,22 @@ class ManageMyTripsHeaderWidget extends StatelessWidget {
           decoration: const BoxDecoration(
             color: AppColors.white,
           ),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CustomHeader(
                 elevation: 0,
                 height: 36,
                 hasPadding: false,
-                header: 'Manage my trips',
+                header: 'manageMyTrips'.tr,
                 svgIcon: 'assets/icons/call.svg',
                 iconWidth: 36,
                 iconHeight: 36,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              UserTripsTabBarWidget(),
+              const UserTripsTabBarWidget(),
             ],
           ),
         ));
