@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static const Color white = Color(0xffFFFFFF);
   static const Color black = Color(0xff000000);
-  static Color black800 = Colors.black.withOpacity(0.9200000166893005);
+  static Color black800 = Colors.black.withOpacity(0.92);
   static const Color logo = Color(0xffD49836);
   static const Color darkBlueGrey = Color(0xff323F5D);
   static const Color darkBlue500Base = Color(0xff5F6E91);
@@ -12,8 +12,6 @@ class AppColors {
   static const Color starColor = Color(0xFFFFD809);
 
   static const Color darkBlue100 = Color(0xffEAECF0);
-  static const Color greyHintColor = Color(0xFFA1AECB);
-  static const Color darkGreyHint = Color(0xFF5F6E91);
   static const Color darkBlue200 = Color(0xffD1D7E6);
   static const Color darkBlue300 = Color(0xffA1AECB);
   static const Color darkBlue700 = Color(0xff323F5D);
@@ -29,4 +27,5 @@ class AppColors {
   static const Color btnTxtColor = Color(0xFF65340A);
   static const Color btnBgColor = Color(0xFFFAE7AF);
   static const Color btnEditColor = Color(0xFF65340A);
+  static const Color btnBackColor = Color(0xFFFDFBF0);
 }

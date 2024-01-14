@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -11,11 +10,13 @@ class CustomCaptainListTileWidget extends StatelessWidget {
   bool isCheckbox;
   bool isChat;
   bool noSubTitle;
+  bool isUserList;
   CustomCaptainListTileWidget(
       {super.key,
       this.isCheckbox = true,
       this.isChat = true,
       this.noSubTitle = false,
+      this.isUserList = false,
       required this.title,
       required this.subTitle});
 
@@ -40,21 +41,23 @@ class CustomCaptainListTileWidget extends StatelessWidget {
                   activeColor: AppColors.darkBlue300),
             ),
           Container(
-            width: 46,
-            height: 46,
+            width: isUserList ? 24 : 46,
+            height: isUserList ? 24 : 46,
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+            padding: isUserList
+                ? null
+                : const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
             decoration: ShapeDecoration(
               color: AppColors.orange,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4)),
             ),
             child: Text(
-              'MA',
+              isUserList ? "M" : 'MA',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.white900,
-                fontSize: 14.0.sp(context),
+                fontSize: isUserList ? 10 : 14.0,
                 fontFamily: 'Noto Sans',
                 fontWeight: FontWeight.w700,
               ),
@@ -72,8 +75,12 @@ class CustomCaptainListTileWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title,
-                        style: AppFonts.button
-                            .copyWith(color: AppColors.black800)),
+                        style: isUserList
+                            ? AppFonts.medium.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.darkBlue700)
+                            : AppFonts.button
+                                .copyWith(color: AppColors.black800)),
                     const SizedBox(height: 2),
                     Text(subTitle,
                         style: AppFonts.small

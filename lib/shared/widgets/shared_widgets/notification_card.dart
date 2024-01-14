@@ -29,12 +29,12 @@ class NotificationCard extends StatelessWidget {
       subtitle: Text(
         notificationTime,
         style: AppFonts.medium
-            .copyWith(color: AppColors.greyHintColor, fontSize: 16),
+            .copyWith(color: AppColors.darkBlue300, fontSize: 16),
       ),
       trailing: const Icon(
         Icons.more_vert,
         size: 30,
-        color: AppColors.greyHintColor,
+        color: AppColors.darkBlue300,
       ),
     );
   }
