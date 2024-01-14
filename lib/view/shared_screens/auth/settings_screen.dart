@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
         index: 3,
       ),
       backgroundColor: Colors.grey[100],
-      body: Column(children: [
+      body: ListView(children: [
         CustomHeader(
             header: "Farah",
             svgIcon: 'assets/icons/logo.svg',

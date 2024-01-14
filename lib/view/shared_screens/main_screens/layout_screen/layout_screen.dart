@@ -14,7 +14,7 @@ class LayoutScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: SafeArea(
-        child: VehiclesScreen(),
+        child: NotificationListView(),
       ),
     );
   }

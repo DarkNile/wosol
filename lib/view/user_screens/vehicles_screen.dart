@@ -9,7 +9,7 @@ class VehiclesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: const Column(
+      body: ListView(
         children: [
           CustomHeaderWithBackButton(header: "Vehicles"),
           Padding(

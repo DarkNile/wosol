@@ -12,52 +12,55 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          "assets/icons/logo.svg",
-          width: 97,
-          height: 65,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 24),
-          child: Column(
-            children: [
-              Text(
-                "Welcome 👋",
-                style: AppFonts.header.copyWith(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Enter your account here",
-                style: AppFonts.medium.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.darkBlue500Base),
-              )
-            ],
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          SvgPicture.asset(
+            "assets/icons/logo.svg",
+            width: 97,
+            height: 65,
           ),
-        ),
-        const SizedBox(
-          height: 24,
-        ),
-        EmailField(
-          hint: "Email",
-          label: "Enter Username",
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        PasswordField(),
-        const ForgotPassword(),
-        const SizedBox(
-          height: 6,
-        ),
-        const CustomButton(
-          text: "Login",
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: Column(
+              children: [
+                Text(
+                  "Welcome 👋",
+                  style: AppFonts.header.copyWith(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Enter your account here",
+                  style: AppFonts.medium.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.darkBlue500Base),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          EmailField(
+            hint: "Email",
+            label: "Enter Username",
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          PasswordField(),
+          const ForgotPassword(),
+          const SizedBox(
+            height: 6,
+          ),
+          const CustomButton(
+            text: "Login",
+          )
+        ],
+      ),
     );
   }
 }
