@@ -17,5 +17,7 @@ const Map<String, String> ar = {
   "previous": "سابق",
   "rate": "التقييم",
   "noRating": "لا يوجد تقييم",
-  "reportAProblem": "الإبلاغ عن مشكلة"
+  "reportAProblem": "الإبلاغ عن مشكلة",
+  "manageTrip": "إدارة الرحلة",
+  "manageMyTrips": "إدارة رحلاتي"
 };
