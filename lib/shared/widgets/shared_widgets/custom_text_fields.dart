@@ -127,7 +127,7 @@ class EmailTextField extends StatelessWidget {
                 hintText: hint,
                 hintStyle: AppFonts.small.copyWith(
                   fontSize: 16,
-                  color: AppColors.black,
+                  color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
                     padding: const EdgeInsets.only(
@@ -138,14 +138,14 @@ class EmailTextField extends StatelessWidget {
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
-                        color: AppColors.logo,
+                        color: AppColors.darkBlue200,
                       ),
                     ),
                 border: border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
-                        color: AppColors.logo,
+                        color: AppColors.darkBlue200,
                       ),
                     ),
                 focusedBorder: border ??
@@ -169,7 +169,7 @@ class EmailTextField extends StatelessWidget {
                         OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
-                            color: AppColors.logo,
+                            color: AppColors.darkBlue200,
                           ),
                         ),
               ),
@@ -218,7 +218,6 @@ class PasswordTextField extends StatelessWidget {
   final Function(String value) onSubmit;
   final Function(String value) onChange;
   final Iterable<String>? autofill;
-  final IconData suffixIcon;
   final Color suffixIconColor;
   final Function(PointerDownEvent)? onTapOutside;
 
@@ -227,7 +226,6 @@ class PasswordTextField extends StatelessWidget {
     required this.controller,
     required this.fieldValidation,
     required this.onIconPress,
-    required this.suffixIcon,
     this.suffixIconColor = AppColors.black,
     this.isObscureText = true,
     this.enabled = true,
@@ -296,7 +294,7 @@ class PasswordTextField extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: label,
                 labelStyle: AppFonts.small.copyWith(
-                  color: AppColors.black,
+                  color: AppColors.darkBlue500Base,
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 suffixIcon: Padding(
@@ -306,9 +304,7 @@ class PasswordTextField extends StatelessWidget {
                     splashColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    icon: Icon(
-                      suffixIcon,
-                    ),
+                    icon: SvgPicture.asset("assets/icons/eye.svg"),
                     onPressed: onIconPress,
                     color: AppColors.black,
                   ),
@@ -324,7 +320,7 @@ class PasswordTextField extends StatelessWidget {
                 hintText: hintText ?? "Password",
                 hintStyle: AppFonts.small.copyWith(
                   fontSize: hintTextSize,
-                  color: AppColors.black,
+                  color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
                   padding: const EdgeInsets.only(
@@ -357,7 +353,7 @@ class PasswordTextField extends StatelessWidget {
                     : OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
-                          color: AppColors.logo,
+                          color: AppColors.darkBlue200,
                         ),
                       ),
               ),
@@ -463,7 +459,8 @@ class CustomTextField extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.isObscureText = false,
-    required this.label,required this.expands,
+    required this.label,
+    required this.expands,
   });
 
   @override
@@ -496,7 +493,7 @@ class CustomTextField extends StatelessWidget {
               ),
               child: TextFormField(
                 expands: expands,
-                 maxLines: null,
+                maxLines: null,
                 // minLines: null,
                 onTap: onTap,
                 readOnly: readOnly ?? false,
@@ -519,9 +516,9 @@ class CustomTextField extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: label,
                   labelStyle: AppFonts.small
-                      .copyWith(color: AppColors.black, fontSize: 12),
+                      .copyWith(color: AppColors.darkBlue500Base, fontSize: 12),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  suffixIcon: icon,
+                  //suffixIcon: SvgPicture.asset("assets/icons/eye.svg"),
                   prefixIcon: prefixIcon,
                   prefixIconConstraints: const BoxConstraints(),
                   hintText: hint,

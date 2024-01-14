@@ -11,19 +11,25 @@ class LogOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset("assets/icons/logout.svg"),
-        DefaultTextButton(
-          function: () {},
-          text: "Logout",
-          textStyle: AppFonts.medium.copyWith(
-            color: AppColors.error600,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24,horizontal: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset("assets/icons/logout.svg"),
+          SizedBox(
+            width: 6,
           ),
-        )
-      ],
+          DefaultTextButton(
+            function: () {},
+            text: "Logout",
+            textStyle: AppFonts.medium.copyWith(
+              color: AppColors.error600,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

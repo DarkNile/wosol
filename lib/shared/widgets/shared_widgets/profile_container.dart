@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
+import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
@@ -20,7 +21,11 @@ class ProfileContainer extends StatelessWidget {
             ),
             child: CustomProfileRowWidget(
               image: '',
-              onTapEdit: () {},
+              onTapEdit: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return EditProfile();
+                }));
+              },
               title: 'Hossam Essam',
               subTitle: '+966 123 456 7890',
               isProfile: true,
