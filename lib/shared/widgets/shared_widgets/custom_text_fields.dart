@@ -122,7 +122,7 @@ class EmailTextField extends StatelessWidget {
                 labelText: label,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelStyle: AppFonts.small.copyWith(
-                  color: AppColors.black,
+                  color: AppColors.darkBlue500Base,
                 ),
                 hintText: hint,
                 hintStyle: AppFonts.small.copyWith(

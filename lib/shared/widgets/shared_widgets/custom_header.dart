@@ -257,6 +257,7 @@ class CustomHeaderWithOptionalWidget extends StatelessWidget {
     return Material(
       elevation: 1,
       child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
         height: 48,
         width: AppConstants.screenWidth(context),
         color: AppColors.white,
@@ -271,13 +272,13 @@ class CustomHeaderWithOptionalWidget extends StatelessWidget {
                 ),
               ),
             if (!isWithBackArrow)
-              const SizedBox(
-                width: 16,
+              // const SizedBox(
+              //   width: 16,
+              // ),
+              Text(
+                screenTitle,
+                style: AppFonts.header,
               ),
-            Text(
-              "Trip Details",
-              style: AppFonts.header,
-            ),
             if (suffixWidget != null) const Spacer(),
             if (suffixWidget != null) suffixWidget!,
           ],

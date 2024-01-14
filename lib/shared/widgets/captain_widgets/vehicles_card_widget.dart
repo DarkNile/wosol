@@ -20,7 +20,7 @@ class VehiclesCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 147,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       decoration: BoxDecoration(
         color: AppColors.white,

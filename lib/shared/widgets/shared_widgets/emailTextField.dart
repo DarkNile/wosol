@@ -22,6 +22,7 @@ class EmailField extends StatelessWidget {
           onSubmit: (String value) {},
           hint: hint,
           label: label,
+          validateText: "user.info@mail.com",
           fieldValidation: TextFieldValidation.valid),
     );
   }

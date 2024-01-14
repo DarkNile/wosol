@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
-import 'package:wosol/shared/widgets/shared_widgets/bottomNavigationBar.dart';
+import 'package:wosol/shared/widgets/user_widgets/bottomNavigationBar.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBarr(
+      bottomNavigationBar: const BottomNavigationBarr(
         index: 3,
       ),
       backgroundColor: Colors.grey[100],
@@ -33,17 +33,17 @@ class SettingsScreen extends StatelessWidget {
               }));
             }),
         Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               ProfileContainer(),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                padding: const EdgeInsets.only(top: 24, bottom: 12),
                 child: Row(
                   children: [
                     SvgPicture.asset("assets/icons/setting.svg"),
                     Text(
-                      "Settings",
+                      "Settings".tr,
                       style: AppFonts.medium
                           .copyWith(color: AppColors.darkBlue400),
                     ),

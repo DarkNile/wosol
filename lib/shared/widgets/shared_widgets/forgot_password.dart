@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -13,7 +14,7 @@ class ForgotPassword extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          "Forgot Password?     ",
+          "Forgot Password?     ".tr,
           style:
               AppFonts.button.copyWith(fontSize: 13, color: AppColors.logo),
         ),

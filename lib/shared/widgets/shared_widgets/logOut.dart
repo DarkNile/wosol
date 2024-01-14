@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
@@ -23,7 +24,7 @@ class LogOut extends StatelessWidget {
           ),
           DefaultTextButton(
             function: () {},
-            text: "Logout",
+            text: "Logout".tr,
             textStyle: AppFonts.medium.copyWith(
               color: AppColors.error600,
             ),

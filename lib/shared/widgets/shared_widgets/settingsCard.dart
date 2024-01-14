@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 
@@ -13,27 +14,27 @@ class SettingsCard extends StatelessWidget {
         height: 208,
         decoration: BoxDecoration(
             color: AppColors.white, borderRadius: BorderRadius.circular(8)),
-        child: const Column(
+        child:  Column(
           children: [
             CustomSettingRowWidget(
               isSwitcher: true,
-              title: 'Notifications',
+              title: 'Notifications'.tr,
             ),
-            Divider(
+          const  Divider(
               height: 1,
               color: AppColors.darkBlue100,
             ),
             CustomSettingRowWidget(
               isSwitcher: true,
-              title: 'Login with finger print',
+              title: 'Login with finger print'.tr,
             ),
-            Divider(
+          const  Divider(
               height: 1,
               color: AppColors.darkBlue100,
             ),
             CustomSettingRowWidget(
               isSwitcher: false,
-              title: 'Terms & Conditions',
+              title: 'Terms & Conditions'.tr,
             ),
             Divider(
               height: 1,
