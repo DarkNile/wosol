@@ -5,26 +5,34 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 class NotificationCard extends StatelessWidget {
-  const NotificationCard(
+  NotificationCard(
       {super.key,
       required this.notificationTitle,
-      required this.notificationTime});
+      required this.notificationTime,
+      this.isHover});
   final String notificationTitle;
   final String notificationTime;
-
+  final bool? isHover;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
           backgroundColor: AppColors.orange2,
           child: SvgPicture.asset("assets/icons/notification.svg")),
-      title: Padding(
-        padding: AppConstants.edge(padding: const EdgeInsets.only(top: 30)),
-        child: Text(
-          notificationTitle,
-          softWrap: true,
-          style: const TextStyle(textBaseline: TextBaseline.ideographic),
-        ),
+      title: Text.rich(
+        TextSpan(children: [
+          TextSpan(
+            text: "You canceled your trip ",
+            style: const TextStyle(
+                color: AppColors.orange,
+                textBaseline: TextBaseline.ideographic),
+          ),
+          TextSpan(
+            text: notificationTitle,
+            style: const TextStyle(textBaseline: TextBaseline.ideographic),
+          ),
+        ]),
+        softWrap: true,
       ),
       subtitle: Text(
         notificationTime,

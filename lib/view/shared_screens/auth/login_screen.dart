@@ -13,15 +13,11 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: SvgPicture.asset(
-            "assets/icons/logo.svg",
-            width: 97,
-            height: 65,
-          ),
+        SvgPicture.asset(
+          "assets/icons/logo.svg",
+          width: 97,
+          height: 65,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 24),
@@ -46,7 +42,10 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 24,
         ),
-        EmailField(),
+        EmailField(
+          hint: "Email",
+          label: "Enter Username",
+        ),
         const SizedBox(
           height: 12,
         ),
@@ -55,7 +54,9 @@ class LoginScreen extends StatelessWidget {
         const SizedBox(
           height: 6,
         ),
-        const LoginButton()
+        const CustomButton(
+          text: "Login",
+        )
       ],
     );
   }

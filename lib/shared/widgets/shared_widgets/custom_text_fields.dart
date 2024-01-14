@@ -127,7 +127,7 @@ class EmailTextField extends StatelessWidget {
                 hintText: hint,
                 hintStyle: AppFonts.small.copyWith(
                   fontSize: 16,
-                  color: AppColors.darkGreyHint,
+                  color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
                     padding: const EdgeInsets.only(
@@ -320,7 +320,7 @@ class PasswordTextField extends StatelessWidget {
                 hintText: hintText ?? "Password",
                 hintStyle: AppFonts.small.copyWith(
                   fontSize: hintTextSize,
-                  color: AppColors.darkGreyHint,
+                  color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
                   padding: const EdgeInsets.only(

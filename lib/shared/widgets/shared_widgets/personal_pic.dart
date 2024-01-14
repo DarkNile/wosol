@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 
 class PersonalPicture extends StatelessWidget {
@@ -8,6 +9,7 @@ class PersonalPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: AppConstants.edge(padding: EdgeInsets.all(30)),
       child: Stack(
         children: [
           Container(
@@ -43,7 +45,6 @@ class PersonalPicture extends StatelessWidget {
               child: SvgPicture.asset("assets/icons/gallery-add.svg"),
             ),
           ),
-         
         ],
       ),
     );

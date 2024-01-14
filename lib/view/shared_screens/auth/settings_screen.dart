@@ -16,47 +16,46 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBarr(),
-      backgroundColor: const Color.fromARGB(255, 220, 215, 215),
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(80),
-      //   child: CustomHeader(
-      //     header: "Farah",
-      //     svgIcon: 'assets/icons/logo.svg',
-      //     iconWidth: 40,
-      //     iconHeight: 40,
-      //   ),
-      // ),
-      body: Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Column(children: [
-          // CustomHeader(
-          //     header: "Farah",
-          //     svgIcon: 'assets/icons/logo.svg',
-          //     iconWidth: 40,
-          //     iconHeight: 40,
-          //     onPressed: () {
-          //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //         return EditProfile();
-          //       }));
-          //     }),
-          ProfileContainer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/icons/setting.svg"),
-                Text(
-                  "Settings",
-                  style: AppFonts.medium.copyWith(color: AppColors.darkBlue400),
-                ),
-              ],
-            ),
-          ),
-          SettingsCard(),
-          LogOut()
-        ]),
+      bottomNavigationBar: BottomNavigationBarr(
+        index: 3,
       ),
+      backgroundColor: Colors.grey[100],
+      body: Column(children: [
+        CustomHeader(
+            header: "Farah",
+            svgIcon: 'assets/icons/logo.svg',
+            iconWidth: 40,
+            iconHeight: 40,
+            isHome: true,
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return EditProfile();
+              }));
+            }),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              ProfileContainer(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/icons/setting.svg"),
+                    Text(
+                      "Settings",
+                      style: AppFonts.medium
+                          .copyWith(color: AppColors.darkBlue400),
+                    ),
+                  ],
+                ),
+              ),
+              SettingsCard(),
+              LogOut()
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

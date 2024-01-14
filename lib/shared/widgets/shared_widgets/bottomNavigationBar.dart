@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BottomNavigationBarr extends StatefulWidget {
-  const BottomNavigationBarr({
-    super.key,
-  });
-
-  @override
-  State<BottomNavigationBarr> createState() => _BottomNavigationBarrState();
-}
-
-class _BottomNavigationBarrState extends State<BottomNavigationBarr> {
-  int index=0;
-
+class BottomNavigationBarr extends StatelessWidget {
+  final index;
+  const BottomNavigationBarr({Key? key, required this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: index,
       onTap: (int index) {
-        setState(() {
-          index = this.index;
-        });
+        index = index;
       },
       type: BottomNavigationBarType.fixed,
       showUnselectedLabels: true,

@@ -10,7 +10,8 @@ class AppColors {
   static const Color darkBlue400 = Color(0xff8491B0);
   static const Color darkBlue50 = Color(0xffF6F7F9);
   static const Color starColor = Color(0xFFFFD809);
-
+  static const LinearGradient softOrange =
+      LinearGradient(colors: [Color(0xffF6F7F9), Color(0xffFEFBF1)]);
   static const Color darkBlue100 = Color(0xffEAECF0);
   static const Color darkBlue200 = Color(0xffD1D7E6);
   static const Color darkBlue300 = Color(0xffA1AECB);
