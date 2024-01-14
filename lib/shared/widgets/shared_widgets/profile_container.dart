@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
@@ -40,12 +41,12 @@ class ProfileContainer extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Column(
+            child:  Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomProfileRowWidget(
                   image: "assets/images/bus.png",
-                  title: "Vehicles",
+                  title: "Vehicles".tr,
                   subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
                   isProfile: false,
                 ),
@@ -55,7 +56,7 @@ class ProfileContainer extends StatelessWidget {
                 ),
                 CustomProfileRowWidget(
                   image: "assets/images/routing.png",
-                  title: "Routes",
+                  title: "Routes".tr,
                   subTitle: "Mecca, Jedaha  ",
                   isProfile: false,
                 ),
@@ -65,7 +66,7 @@ class ProfileContainer extends StatelessWidget {
                 ),
                 CustomProfileRowWidget(
                   image: "assets/images/personalcard.png",
-                  title: "License ",
+                  title: "License".tr,
                   subTitle: "Tdriving license, car license",
                   isProfile: false,
                 ),

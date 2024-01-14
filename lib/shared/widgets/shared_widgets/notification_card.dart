@@ -15,34 +15,73 @@ class NotificationCard extends StatelessWidget {
   final bool? isHover;
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-          backgroundColor: AppColors.orange2,
-          child: SvgPicture.asset("assets/icons/notification.svg")),
-      title: Text.rich(
-        TextSpan(children: [
-          TextSpan(
-            text: "You canceled your trip ",
-            style: const TextStyle(
-                color: AppColors.orange,
-                textBaseline: TextBaseline.ideographic),
-          ),
-          TextSpan(
-            text: notificationTitle,
-            style: const TextStyle(textBaseline: TextBaseline.ideographic),
-          ),
-        ]),
-        softWrap: true,
-      ),
-      subtitle: Text(
-        notificationTime,
-        style: AppFonts.medium
-            .copyWith(color: AppColors.darkBlue300, fontSize: 16),
-      ),
-      trailing: const Icon(
-        Icons.more_vert,
-        size: 30,
-        color: AppColors.darkBlue300,
+    return Container(
+      height: 87,
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 9.0),
+                      child: SizedBox(
+                        height: 36,
+                        width: 36,
+                        child: CircleAvatar(
+                            backgroundColor: AppColors.orange2,
+                            child: SvgPicture.asset(
+                              "assets/icons/notification.svg",
+                            )),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text.rich(
+                            TextSpan(children: [
+                              const TextSpan(
+                                text: "You canceled your trip ",
+                                style: TextStyle(
+                                    color: AppColors.orange,
+                                    textBaseline: TextBaseline.ideographic),
+                              ),
+                              // TextSpan(
+                              //   text: notificationTitle,
+                              //   style: TextStyle(
+                              //       color: AppColors.black,
+                              //       textBaseline: TextBaseline.ideographic),
+                              // ),
+                            ]),
+                            softWrap: true,
+                          ),
+                          Text(notificationTime,
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Urbanist',
+                                  color: AppColors.darkBlue400)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.more_vert,
+                  size: 30,
+                  color: AppColors.darkBlue300,
+                ),
+              ]),
+        ],
       ),
     );
   }

@@ -16,6 +16,7 @@ class AppFonts {
     color: AppColors.white,
     fontFamily: 'Urbanist',
   );
+  
   static TextStyle medium = const TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w600,

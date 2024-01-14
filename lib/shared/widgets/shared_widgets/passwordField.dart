@@ -3,7 +3,7 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
 class PasswordField extends StatelessWidget {
-   PasswordField({
+    PasswordField({
     super.key,
   });
   
