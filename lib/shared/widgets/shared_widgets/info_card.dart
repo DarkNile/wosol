@@ -11,12 +11,11 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 343,
       height: 149,
       padding: AppConstants.edge(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10)),
       decoration: ShapeDecoration(
-        color: const Color(0xFFFDFBF0),
+        color: AppColors.btnBackColor,
         shape: RoundedRectangleBorder(
           side: const BorderSide(width: 1, color: AppColors.logo),
           borderRadius: BorderRadius.circular(8),
@@ -27,23 +26,35 @@ class InfoCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset("assets/icons/logo.svg"),
+          SvgPicture.asset(
+            "assets/icons/logo.svg",
+            width: 64,
+            height: 43,
+          ),
           const SizedBox(height: 10),
           Text('For more edits you should Call Wosol'.tr,
               textAlign: TextAlign.center,
-              style: AppFonts.medium
-                  .copyWith(color: AppColors.black.withOpacity(.64))),
+              style: AppFonts.medium.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.black.withOpacity(.64))),
           const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset("assets/icons/call.svg"),
+              SvgPicture.asset(
+                "assets/icons/call.svg",
+                width: 40,
+                height: 40,
+              ),
               const SizedBox(width: 10),
               Text('+966 123 456 789',
                   textAlign: TextAlign.center,
-                  style: AppFonts.medium.copyWith(color: AppColors.logo)),
+                  style: AppFonts.medium.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.logo)),
             ],
           ),
         ],

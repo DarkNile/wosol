@@ -18,7 +18,7 @@ class ManageMyTripUsersScreen extends StatelessWidget {
             padding:
                 const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 14),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ...List.generate(
                     3,

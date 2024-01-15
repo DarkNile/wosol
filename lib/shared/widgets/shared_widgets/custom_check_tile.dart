@@ -25,7 +25,7 @@ class CustomCheckTileWidget extends StatelessWidget {
             withCircularCheckBox ? Alignment.center : Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(horizontal: 12),
         decoration: ShapeDecoration(
-          color: isChecked ? AppColors.btnBackColor : const Color(0xFFF5F6F9),
+          color: isChecked ? AppColors.btnBackColor : AppColors.dividerColor,
           shape: RoundedRectangleBorder(
             side: BorderSide(
                 width: 1,

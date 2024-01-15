@@ -4,8 +4,8 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 
-class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({super.key});
+class ProfileCard extends StatelessWidget {
+  const ProfileCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +17,14 @@ class ProfileContainer extends StatelessWidget {
             height: 67,
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             child: CustomProfileRowWidget(
               image: '',
               onTapEdit: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return EditProfile();
+                  return const EditProfile();
                 }));
               },
               title: 'Hossam Essam',
@@ -38,10 +38,10 @@ class ProfileContainer extends StatelessWidget {
           Container(
             height: 195,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
             ),
-            child:  Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CustomProfileRowWidget(
@@ -50,7 +50,7 @@ class ProfileContainer extends StatelessWidget {
                   subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
                   isProfile: false,
                 ),
-                Divider(
+                const Divider(
                   height: 1,
                   color: AppColors.darkBlue100,
                 ),
@@ -60,7 +60,7 @@ class ProfileContainer extends StatelessWidget {
                   subTitle: "Mecca, Jedaha  ",
                   isProfile: false,
                 ),
-                Divider(
+                const Divider(
                   height: 1,
                   color: AppColors.darkBlue100,
                 ),

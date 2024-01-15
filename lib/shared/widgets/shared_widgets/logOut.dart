@@ -13,8 +13,10 @@ class LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24,horizontal: 12),
-      child: Row(
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+      child:
+          // Todo : User Our Custom Button
+          Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

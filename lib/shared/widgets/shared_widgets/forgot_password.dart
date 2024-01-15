@@ -10,13 +10,13 @@ class ForgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Todo : Remove Row ! and fix this space   =>  "Forgot Password?     "
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
           "Forgot Password?     ".tr,
-          style:
-              AppFonts.button.copyWith(fontSize: 13, color: AppColors.logo),
+          style: AppFonts.button.copyWith(fontSize: 13, color: AppColors.logo),
         ),
       ],
     );

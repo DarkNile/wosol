@@ -21,13 +21,18 @@ class EditProfile extends StatelessWidget {
             CustomHeaderWithBackButton(header: "Edit Personal Information".tr),
             Container(
               height: 472,
-              margin: EdgeInsets.symmetric(vertical: 16),
+              margin: const EdgeInsets.symmetric(vertical: 16),
+              // Todo : missing padding should be 24 vertical check figma
               padding: AppConstants.edge(
-                  padding: EdgeInsets.symmetric(horizontal: 16)),
+                  padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              )),
               color: Colors.white,
               child: Column(
                 children: [
                   const PersonalPicture(),
+                  // Todo : Sized Box Missing
+                  // Todo : label not like figma please check figma ☺️
                   CustomTextField(
                     validate: true,
                     textEditingController: TextEditingController(),
@@ -44,10 +49,14 @@ class EditProfile extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  CustomPhoneField(),
+                  // Todo : label not like figma please check figma ☺️
+                  const CustomPhoneField(),
+
+                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 24,
                   ),
+                  // Todo : label not like figma please check figma ☺️
                   CustomTextField(
                     validate: true,
                     textEditingController: TextEditingController(),
@@ -65,9 +74,12 @@ class EditProfile extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 16,
                   ),
+                  // Todo : use our custom button
+                  // Todo : user height from figma and style of button
                   CustomButton(
                     text: "Save".tr,
                   )

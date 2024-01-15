@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
-import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
 import 'package:wosol/view/shared_screens/main_screens/layout_screen/layout_screen.dart';
 
 import 'controllers/shared_controllers/main_controllers/localization_controller.dart';

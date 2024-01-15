@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
-import 'package:wosol/shared/widgets/user_widgets/bottomNavigationBar.dart';
+import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomNavigationBarr(
+      bottomNavigationBar: const BottomNavigationBarCaptain(
         index: 3,
       ),
       backgroundColor: Colors.grey[100],
@@ -29,19 +29,20 @@ class SettingsScreen extends StatelessWidget {
             isHome: true,
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditProfile();
+                return const EditProfile();
               }));
             }),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              ProfileContainer(),
+              const ProfileCard(),
               Padding(
                 padding: const EdgeInsets.only(top: 24, bottom: 12),
                 child: Row(
                   children: [
                     SvgPicture.asset("assets/icons/setting.svg"),
+                    // Todo : missing sized box check figma please 😅
                     Text(
                       "Settings".tr,
                       style: AppFonts.medium
@@ -50,8 +51,8 @@ class SettingsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SettingsCard(),
-              LogOut()
+              const SettingsCard(),
+              const LogOut()
             ],
           ),
         ),
