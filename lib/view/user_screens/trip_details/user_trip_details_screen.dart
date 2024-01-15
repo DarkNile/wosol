@@ -26,12 +26,13 @@ class UserTripDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TripDetailsCard(
-                    date: 'Dec 22  - 08:10 am',
-                    fromCity:
-                        'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
-                    toCity:
-                        'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
-                    isCaptain: false),
+                  date: 'Dec 22  - 08:10 am',
+                  fromCity:
+                      'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
+                  toCity:
+                      'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
+                  isCaptain: false,
+                ),
                 customDivider(),
                 const RateCardWidget(),
                 customDivider(),

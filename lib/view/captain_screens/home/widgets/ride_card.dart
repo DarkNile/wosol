@@ -34,7 +34,7 @@ class RideCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: isNextRide ? AppColors.logo : AppColors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(10),
       ),
       width: AppConstants.screenWidth(context),
       height: 122,
@@ -44,7 +44,7 @@ class RideCard extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -53,8 +53,12 @@ class RideCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
                   style: AppFonts.header.copyWith(
+                    fontSize: isNextRide ? 18 : 14,
                     color: isNextRide ? AppColors.white : AppColors.black,
                   ),
+                ),
+                const SizedBox(
+                  height: 12,
                 ),
                 Row(
                   children: [
@@ -90,7 +94,7 @@ class RideCard extends StatelessWidget {
               ],
             ),
           ),
-          SvgPicture.asset(imgPath)
+          SvgPicture.asset(imgPath),
         ],
       ),
     );

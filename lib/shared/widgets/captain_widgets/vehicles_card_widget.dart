@@ -49,6 +49,9 @@ class VehiclesCardWidget extends StatelessWidget {
                   width: 14,
                   height: 14,
                 ),
+                const SizedBox(
+                  width: 4,
+                ),
                 Text(
                   seats,
                   style: AppFonts.medium.copyWith(

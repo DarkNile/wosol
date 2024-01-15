@@ -39,8 +39,11 @@ class CustomRowWithArrowWidget extends StatelessWidget {
                     color: AppColors.darkBlue500Base,
                   )),
               const SizedBox(width: 10),
-              const Icon(Icons.arrow_forward,
-                  color: AppColors.darkBlue500Base, size: 18),
+              SvgPicture.asset(
+                'assets/icons/arrow-right.svg',
+                width: 18,
+                height: 18,
+              ),
             ]),
           )
         : Row(

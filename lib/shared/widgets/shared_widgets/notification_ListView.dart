@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wosol/shared/widgets/user_widgets/bottomNavigationBar.dart';
+import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/notification_card.dart';
 
+// Todo : Should be NotificationScreen
 class NotificationListView extends StatelessWidget {
   const NotificationListView({super.key});
 
@@ -12,7 +14,7 @@ class NotificationListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      bottomNavigationBar: const BottomNavigationBarr(
+      bottomNavigationBar: const BottomNavigationBarCaptain(
         index: 2,
       ),
       body: Column(
@@ -24,12 +26,15 @@ class NotificationListView extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
+              // Todo : padding top should be 13 not 16 look at figma please
               padding: const EdgeInsets.only(top: 16.0),
               child: Container(
+                // Todo : Hard Color
                 color: Colors.white,
                 child: ListView.separated(
                     separatorBuilder: (context, index) => const Divider(
-                          thickness: 1 / 2,
+                          height: 1,
+                          color: AppColors.dividerColor,
                         ),
                     shrinkWrap: true,
                     itemCount: 20,

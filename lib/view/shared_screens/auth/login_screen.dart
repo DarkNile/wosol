@@ -15,7 +15,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body:
+          // Todo : Should have SafeArea
+          // Todo : Use AppColors  Not Colors.white,
+          // Todo : missing Padding look at figma
+          // Todo : 👋 Should be Svg not text
+
+          Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 67.0),
@@ -26,6 +32,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           Padding(
+            // Todo look at figma should be 28 not 24
             padding: const EdgeInsets.only(top: 24),
             child: Column(
               children: [
@@ -48,6 +55,8 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(
             height: 24,
           ),
+          // Todo : Label not like figma  -> fill color and icon color missing when user write
+          // Todo : height should be 48 default is 58
           EmailField(
             hint: "Email".tr,
             label: "Email".tr,

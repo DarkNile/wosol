@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class DriverBottomNavigationBarr extends StatelessWidget {
-  const DriverBottomNavigationBarr({
-    super.key, required this.index,
-  });
- final int index;
+// TODO : label style and svg height and width same not found
+class BottomNavigationBarCaptain extends StatelessWidget {
+  final int index;
+  const BottomNavigationBarCaptain({Key? key, required this.index})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(currentIndex: index,
+    return BottomNavigationBar(
+      currentIndex: index,
       onTap: (int index) {
         index = index;
       },
@@ -21,10 +22,6 @@ class DriverBottomNavigationBarr extends StatelessWidget {
             activeIcon: SvgPicture.asset("assets/icons/Activehome.svg"),
             label: "Home"),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/NA-note.svg"),
-            activeIcon: SvgPicture.asset("assets/icons/Activenote.svg"),
-            label: "Trips"),
-        BottomNavigationBarItem(
             icon: SvgPicture.asset("assets/icons/rotate-left.svg"),
             activeIcon: SvgPicture.asset("assets/icons/Activerotate-left.svg"),
             label: "History"),
@@ -34,14 +31,17 @@ class DriverBottomNavigationBarr extends StatelessWidget {
             label: "Notifications"),
         BottomNavigationBarItem(
             icon: Stack(children: [
-              CircleAvatar(
-                radius: 12,
-                backgroundColor: const Color(0xFFF5F6F9),
-                child: SvgPicture.asset("assets/icons/nonActiveuser.svg"),
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: CircleAvatar(
+                  backgroundColor: const Color(0xFFF5F6F9),
+                  child: SvgPicture.asset("assets/icons/nonActiveuser.svg"),
+                ),
               ),
               Positioned(
-                  top: 15,
-                  left: 15,
+                  bottom: 0,
+                  right: 0,
                   child: SvgPicture.asset("assets/icons/menu.svg"))
             ]),
             activeIcon: Stack(children: [
@@ -51,8 +51,8 @@ class DriverBottomNavigationBarr extends StatelessWidget {
                 child: SvgPicture.asset("assets/icons/User.svg"),
               ),
               Positioned(
-                  top: 15,
-                  left: 15,
+                  bottom: 0,
+                  right: 0,
                   child: SvgPicture.asset("assets/icons/menu.svg"))
             ]),
             label: "More"),

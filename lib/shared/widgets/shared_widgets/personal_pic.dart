@@ -1,52 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wosol/shared/constants/constants.dart';
-import 'package:wosol/shared/constants/style/colors.dart';
 
 class PersonalPicture extends StatelessWidget {
   const PersonalPicture({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: AppConstants.edge(padding: EdgeInsets.all(30)),
-      child: Stack(
-        children: [
-          Container(
+    return Stack(
+      children: [
+        const SizedBox(
             width: 96,
             height: 96,
-            decoration: const ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/avatar.png"),
-                fit: BoxFit.fill,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlfGVufDB8fDB8fHww",
               ),
-              shape: OvalBorder(),
-            ),
+            )),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: SvgPicture.asset(
+            "assets/icons/upload_image.svg",
+            height: 32,
+            width: 32,
           ),
-          Positioned(
-            top: 64,
-            left: 64.5,
-            right: -.5,
-            child: Container(
-              width: 32,
-              height: 32,
-              padding: const EdgeInsets.all(10),
-              decoration: ShapeDecoration(
-                color: AppColors.logo,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(
-                    width: 2,
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                    color: Colors.white,
-                  ),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-              ),
-              child: SvgPicture.asset("assets/icons/gallery-add.svg"),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

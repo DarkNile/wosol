@@ -29,7 +29,7 @@ class UserTripsScreen extends StatelessWidget {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(
-                        top: 10.0,
+                        top: 10,
                         bottom: 24,
                       ),
                       child: TripCardWidget(),

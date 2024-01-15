@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/constants/style/fonts.dart';
 
 class NotificationCard extends StatelessWidget {
-  NotificationCard(
+  const NotificationCard(
       {super.key,
       required this.notificationTitle,
       required this.notificationTime,
@@ -46,9 +44,10 @@ class NotificationCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text.rich(
+                          // Todo : Replace Text.rich with Row to fix overflow check figma text style
+                          const Text.rich(
                             TextSpan(children: [
-                              const TextSpan(
+                              TextSpan(
                                 text: "You canceled your trip ",
                                 style: TextStyle(
                                     color: AppColors.orange,
@@ -56,7 +55,7 @@ class NotificationCard extends StatelessWidget {
                               ),
                               // TextSpan(
                               //   text: notificationTitle,
-                              //   style: TextStyle(
+                              //   style: const TextStyle(
                               //       color: AppColors.black,
                               //       textBaseline: TextBaseline.ideographic),
                               // ),
@@ -65,21 +64,28 @@ class NotificationCard extends StatelessWidget {
                           ),
                           Text(notificationTime,
                               softWrap: true,
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Urbanist',
-                                  color: AppColors.darkBlue400)),
+                              style:
+                                  // Todo use Appfonts with copyWith
+                                  const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Urbanist',
+                                      color: AppColors.darkBlue400)),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const Icon(
-                  Icons.more_vert,
-                  size: 30,
-                  color: AppColors.darkBlue300,
+                SvgPicture.asset(
+                  'assets/icons/list_mobile.svg',
+                  height: 24,
+                  width: 24,
                 ),
+                // const Icon(
+                //   Icons.more_vert,
+                //   size: 30,
+                //   color: AppColors.darkBlue300,
+                // ),
               ]),
         ],
       ),
