@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -29,7 +28,7 @@ class CustomPhoneField extends StatelessWidget {
       textInputType: TextInputType.number,
       textEditingController: TextEditingController(),
       onSubmit: (v) {},
-      label: "Phone Number".tr,
+      label: '',
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(

@@ -13,37 +13,25 @@ class VehiclesScreen extends StatelessWidget {
       body: ListView(
         children: [
           CustomHeaderWithBackButton(header: "Vehicles".tr),
-          const Padding(
-            // Todo : Padding From top should be 18 so we have 10 her and and margin: 5 on Card !! it's 15 not 18
-            // Todo : Use ListView.separated Instead of Column and margin
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-            child: Column(children: [
-              VehiclesCardWidget(
-                carType: 'White Toyota Hiace 2023',
-                seats: '28 Seats',
-                carNumberImage: 'assets/images/car_number.png',
-                carImage: 'assets/images/car.png',
-              ),
-              VehiclesCardWidget(
-                carType: 'White Toyota Hiace 2023',
-                seats: '28 Seats',
-                carNumberImage: 'assets/images/car_number.png',
-                carImage: 'assets/images/car_image.png',
-              ),
-              VehiclesCardWidget(
-                carType: 'White Toyota Hiace 2023',
-                seats: '28 Seats',
-                carNumberImage: 'assets/images/car_number.png',
-                carImage: 'assets/images/car.png',
-              ),
-              VehiclesCardWidget(
-                carType: 'White Toyota Hiace 2023',
-                seats: '28 Seats',
-                carNumberImage: 'assets/images/car_number.png',
-                carImage: 'assets/images/car_image.png',
-              )
-            ]),
-          )
+          Padding(
+              // Todo : Padding From top should be 18 so we have 10 her and and margin: 5 on Card !! it's 15 not 18
+              // Todo : Use ListView.separated Instead of Column and margin
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
+              child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                        height: 10,
+                      ),
+                  shrinkWrap: true,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const VehiclesCardWidget(
+                      carType: 'White Toyota Hiace 2023',
+                      seats: '28 Seats',
+                      carNumberImage: 'assets/images/car_number.png',
+                      carImage: 'assets/images/car.png',
+                    );
+                  }))
         ],
       ),
     );
