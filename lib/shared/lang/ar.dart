@@ -42,4 +42,7 @@ const Map<String, String> ar = {
   "enter email":"ادخل البريد الإلكتروني",
   "Save":"حفظ",
   'For more edits you should Call Wosol':"لمزيد من المعلومات اتصل بوسل",
+  "endTrip": "نهاية الرحلة",
+  "confirmPickup": "تأكيد الاستلام",
+  "canceled": "ألغيت"
 };
