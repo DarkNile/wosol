@@ -82,7 +82,7 @@ class EmailTextField extends StatelessWidget {
               ),
             ),
             padding: const EdgeInsets.only(top: 4),
-            height: 58,
+            height: 48,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -121,7 +121,8 @@ class EmailTextField extends StatelessWidget {
                     : null,
                 labelText: label,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
-                labelStyle: AppFonts.small.copyWith(
+                labelStyle: AppFonts.medium.copyWith(
+                  fontSize: 12,
                   color: AppColors.darkBlue500Base,
                 ),
                 hintText: hint,
@@ -268,7 +269,7 @@ class PasswordTextField extends StatelessWidget {
               bottom: marginBottom,
             )),
             padding: const EdgeInsets.only(top: 4),
-            height: 58,
+            height: 48,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -293,7 +294,8 @@ class PasswordTextField extends StatelessWidget {
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 labelText: label,
-                labelStyle: AppFonts.small.copyWith(
+                labelStyle: AppFonts.medium.copyWith(
+                  fontSize: 12,
                   color: AppColors.darkBlue500Base,
                 ),
                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -515,7 +517,7 @@ class CustomTextField extends StatelessWidget {
                 },
                 decoration: InputDecoration(
                   labelText: label,
-                  labelStyle: AppFonts.small
+                  labelStyle: AppFonts.medium
                       .copyWith(color: AppColors.darkBlue500Base, fontSize: 12),
                   floatingLabelBehavior: FloatingLabelBehavior.always,
                   //suffixIcon: SvgPicture.asset("assets/icons/eye.svg"),

@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wosol/shared/widgets/shared_widgets/settingsCard.dart';
+import 'package:wosol/view/captain_screens/vehicles/vehicles_screen.dart';
+import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
+import 'package:wosol/view/shared_screens/auth/login_screen.dart';
+import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
+import 'package:wosol/view/shared_screens/notification_screen.dart';
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
@@ -7,7 +13,7 @@ class LayoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: const SafeArea(child: Center()),
+      body: const SafeArea(child: VehiclesScreen()),
     );
   }
 }

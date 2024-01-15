@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
+import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
 import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
@@ -43,6 +45,9 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset("assets/icons/setting.svg"),
                     // Todo : missing sized box check figma please 😅
+                    const SizedBox(
+                      width: 6,
+                    ),
                     Text(
                       "Settings".tr,
                       style: AppFonts.medium
@@ -52,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               const SettingsCard(),
-              const LogOut()
+              LogOut(),
             ],
           ),
         ),

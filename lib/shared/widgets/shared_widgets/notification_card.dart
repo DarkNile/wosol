@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/constants/style/fonts.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard(
@@ -45,32 +46,33 @@ class NotificationCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Todo : Replace Text.rich with Row to fix overflow check figma text style
-                          const Text.rich(
-                            TextSpan(children: [
-                              TextSpan(
-                                text: "You canceled your trip ",
-                                style: TextStyle(
-                                    color: AppColors.orange,
-                                    textBaseline: TextBaseline.ideographic),
+
+                          Row(children: [
+                            Text(
+                              "You canceled your trip ",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: AppColors.orange,
+                                textBaseline: TextBaseline.ideographic,
                               ),
-                              // TextSpan(
-                              //   text: notificationTitle,
-                              //   style: const TextStyle(
-                              //       color: AppColors.black,
-                              //       textBaseline: TextBaseline.ideographic),
-                              // ),
-                            ]),
-                            softWrap: true,
-                          ),
+                            ),
+                            Text(
+                              notificationTitle,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: AppColors.black,
+                                textBaseline: TextBaseline.ideographic,
+                              ),
+                            ),
+                          ]),
+
                           Text(notificationTime,
                               softWrap: true,
                               style:
                                   // Todo use Appfonts with copyWith
-                                  const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Urbanist',
-                                      color: AppColors.darkBlue400)),
+                                  AppFonts.style12Urb),
                         ],
                       ),
                     ),

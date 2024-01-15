@@ -15,15 +15,12 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 10, bottom: 10, right: 12, left: 12),
-      child: EmailTextField(
-          controller: textEditingController,
-          onSubmit: (String value) {},
-          hint: hint,
-          label: label,
-          validateText: "user.info@mail.com",
-          fieldValidation: TextFieldValidation.valid),
-    );
+    return EmailTextField(
+        controller: textEditingController,
+        onSubmit: (String value) {},
+        hint: hint,
+        label: label, 
+        validateText: "user.info@mail.com",
+        fieldValidation: TextFieldValidation.valid);
   }
 }

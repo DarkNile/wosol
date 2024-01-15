@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/constants/style/fonts.dart';
 
 // TODO : label style and svg height and width same not found
 class BottomNavigationBarUser extends StatelessWidget {
@@ -18,22 +20,60 @@ class BottomNavigationBarUser extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       showUnselectedLabels: true,
       showSelectedLabels: true,
+      selectedFontSize: 10,
+      unselectedFontSize: 10,
+      selectedLabelStyle: AppFonts.SelectedStyle,
+      unselectedLabelStyle: AppFonts.unSelectedStyle,
+      selectedItemColor: AppColors.logo,
+      unselectedItemColor: AppColors.darkBlue300,
       items: [
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/home.svg"),
-            activeIcon: SvgPicture.asset("assets/icons/Activehome.svg"),
+            icon: SvgPicture.asset(
+              "assets/icons/home.svg",
+              width: 24,
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activehome.svg",
+              width: 24,
+              height: 24,
+            ),
             label: "Home"),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/NA-note.svg"),
-            activeIcon: SvgPicture.asset("assets/icons/Activenote.svg"),
+            icon: SvgPicture.asset(
+              "assets/icons/NA-note.svg",
+              width: 24,
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activenote.svg",
+              width: 24,
+              height: 24,
+            ),
             label: "Trips"),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/rotate-left.svg"),
-            activeIcon: SvgPicture.asset("assets/icons/Activerotate-left.svg"),
+            icon: SvgPicture.asset(
+              "assets/icons/rotate-left.svg",
+              width: 24,
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activerotate-left.svg",
+              width: 24,
+              height: 24,
+            ),
             label: "History"),
         BottomNavigationBarItem(
-            icon: SvgPicture.asset("assets/icons/navNotification.svg"),
-            activeIcon: SvgPicture.asset("assets/icons/Activenotification.svg"),
+            icon: SvgPicture.asset(
+              "assets/icons/navNotification.svg",
+              width: 24,
+              height: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activenotification.svg",
+              width: 24,
+              height: 24,
+            ),
             label: "Notifications"),
         BottomNavigationBarItem(
             icon: Stack(children: [
@@ -43,7 +83,11 @@ class BottomNavigationBarUser extends StatelessWidget {
                 child: CircleAvatar(
                   // radius: 12,
                   backgroundColor: const Color(0xFFF5F6F9),
-                  child: SvgPicture.asset("assets/icons/nonActiveuser.svg"),
+                  child: SvgPicture.asset(
+                    "assets/icons/nonActiveuser.svg",
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
               ),
               Positioned(
@@ -55,7 +99,11 @@ class BottomNavigationBarUser extends StatelessWidget {
               CircleAvatar(
                 radius: 12,
                 backgroundColor: const Color(0xFFF5F6F9),
-                child: SvgPicture.asset("assets/icons/User.svg"),
+                child: SvgPicture.asset(
+                  "assets/icons/User.svg",
+                  width: 24,
+                  height: 24,
+                ),
               ),
               Positioned(
                   bottom: 0,

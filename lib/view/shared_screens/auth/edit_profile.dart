@@ -20,69 +20,105 @@ class EditProfile extends StatelessWidget {
           children: [
             CustomHeaderWithBackButton(header: "Edit Personal Information".tr),
             Container(
-              height: 472,
-              margin: const EdgeInsets.symmetric(vertical: 16),
-              // Todo : missing padding should be 24 vertical check figma
+              height: AppConstants.screenHeight(context) * .62,
+              margin: const EdgeInsets.only(top: 16),
               padding: AppConstants.edge(
-                  padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              )),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 24)),
               color: Colors.white,
               child: Column(
                 children: [
                   const PersonalPicture(),
-                  // Todo : Sized Box Missing
-                  // Todo : label not like figma please check figma ☺️
-                  CustomTextField(
-                    validate: true,
-                    textEditingController: TextEditingController(),
-                    onSubmit: (v) {},
-                    label: "Username".tr,
-                    expands: false,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: AppColors.darkBlue200,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  // Todo : label not like figma please check figma ☺️
-                  const CustomPhoneField(),
-
-                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 24,
                   ),
-                  // Todo : label not like figma please check figma ☺️
-                  CustomTextField(
-                    validate: true,
-                    textEditingController: TextEditingController(),
-                    onSubmit: (v) {},
-                    label: "Email".tr,
-                    expands: false,
-                    hint: "enter email".tr,
-                    hintStyle: AppFonts.small.copyWith(
-                      color: AppColors.darkBlue400,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(
-                        color: AppColors.darkBlue200,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Username".tr,
+                        style: AppFonts.style12Urb.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.darkBlue500Base),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      CustomTextField(
+                        validate: true,
+                        textEditingController: TextEditingController(),
+                        onSubmit: (v) {},
+                        label: '',
+                        expands: false,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: AppColors.darkBlue200,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 16,
                   ),
-                  // Todo : use our custom button
-                  // Todo : user height from figma and style of button
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Password".tr,
+                        style: AppFonts.style12Urb.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.darkBlue500Base),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const CustomPhoneField(),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Email".tr,
+                        style: AppFonts.style12Urb.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.darkBlue500Base),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      CustomTextField(
+                        validate: true,
+                        textEditingController: TextEditingController(),
+                        onSubmit: (v) {},
+                        label: '',
+                        expands: false,
+                        hint: "enter email".tr,
+                        hintStyle: AppFonts.small.copyWith(
+                          color: AppColors.darkBlue400,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: AppColors.darkBlue200,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   CustomButton(
                     text: "Save".tr,
-                  )
+                    color: AppColors.logo,
+                    height: 44,
+                  ),
                 ],
               ),
             )
