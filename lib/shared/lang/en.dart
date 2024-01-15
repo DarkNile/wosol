@@ -41,5 +41,9 @@ const Map<String, String> en = {
   "Phone Number": "Phone Number",
   "enter email": "enter email",
   "Save": "Save",
-  'For more edits you should Call Wosol': 'For more edits you should Call Wosol'
+  'For more edits you should Call Wosol':
+      'For more edits you should Call Wosol',
+  "endTrip": "End Trip",
+  "confirmPickup": "Confirm Pickup",
+  "canceled": "Canceled"
 };

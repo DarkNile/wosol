@@ -39,7 +39,7 @@ const Map<String, String> ar = {
   "Edit Personal Information": "تعديل البيانات الشخصية",
   "Username": "اسم المستخدم",
   "Phone Number": "رقم الهاتف",
-  "enter email": "ادخل البريد الإلكتروني",
-  "Save": "حفظ",
-  'For more edits you should Call Wosol': "لمزيد من المعلومات اتصل بوسل",
+  "enter email":"ادخل البريد الإلكتروني",
+  "Save":"حفظ",
+  'For more edits you should Call Wosol':"لمزيد من المعلومات اتصل بوسل",
 };
