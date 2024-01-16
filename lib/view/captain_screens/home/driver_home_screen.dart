@@ -70,7 +70,7 @@ class DriverHomeScreen extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: 110),
+            padding: const EdgeInsets.only(bottom: 16),
             itemCount: 5,
             itemBuilder: (context, index) {
               return RideCard(

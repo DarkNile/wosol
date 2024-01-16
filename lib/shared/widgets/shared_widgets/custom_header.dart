@@ -180,62 +180,64 @@ class CustomHeaderWithBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: elevation,
-      child: Container(
-        height: height,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: const BoxDecoration(
-          color: AppColors.white,
+    return Container(
+      height: height,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.darkBlue100,
+            width: elevation,
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              onTap: onBackPressed ??
-                  () {
-                    Navigator.pop(context);
-                  },
-              child: SvgPicture.asset(
-                AppConstants.localizationController.currentLocale
-                            .languageCode ==
-                        'en'
-                    ? 'assets/icons/arrow-left.svg'
-                    : 'assets/icons/arrow-right.svg',
-                width: 24,
-                height: 24,
-                fit: BoxFit.fill,
-                colorFilter: itemsColor == null
-                    ? null
-                    : ColorFilter.mode(
-                        itemsColor ?? AppColors.black,
-                        // (AppConstants.themeController.isDarkMode.value
-                        //     ? AppColors.whiteColor
-                        //     : AppColors.redItem),
-                        BlendMode.srcIn),
-              ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            onTap: onBackPressed ??
+                () {
+                  Navigator.pop(context);
+                },
+            child: SvgPicture.asset(
+              AppConstants.localizationController.currentLocale.languageCode ==
+                      'en'
+                  ? 'assets/icons/arrow-left.svg'
+                  : 'assets/icons/arrow-right.svg',
+              width: 24,
+              height: 24,
+              fit: BoxFit.fill,
+              colorFilter: itemsColor == null
+                  ? null
+                  : ColorFilter.mode(
+                      itemsColor ?? AppColors.black,
+                      // (AppConstants.themeController.isDarkMode.value
+                      //     ? AppColors.whiteColor
+                      //     : AppColors.redItem),
+                      BlendMode.srcIn),
             ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              header,
-              style: AppFonts.header.copyWith(
-                fontSize: headerSize,
-                color: headerColor ?? AppColors.black800,
-                // (AppConstants.themeController.isDarkMode.value
-                //     ? AppColors.whiteColor
-                //     : AppColors.primaryColor),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            header,
+            style: AppFonts.header.copyWith(
+              fontSize: headerSize,
+              color: headerColor ?? AppColors.black800,
+              // (AppConstants.themeController.isDarkMode.value
+              //     ? AppColors.whiteColor
+              //     : AppColors.primaryColor),
 
-                fontWeight: FontWeight.w600,
-              ),
+              fontWeight: FontWeight.w600,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
