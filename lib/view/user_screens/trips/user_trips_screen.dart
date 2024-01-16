@@ -10,41 +10,45 @@ class UserTripsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomHeaderWithBackButton(header: "trips".tr),
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(16),
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "start".tr,
-                  style: AppFonts.header,
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomHeaderWithBackButton(header: "trips".tr),
+            SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "start".tr,
+                      style: AppFonts.header,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(
+                        top: 10,
+                        bottom: 24,
+                      ),
+                      child: TripCardWidget(),
+                    ),
+                    Text(
+                      "return".tr,
+                      style: AppFonts.header,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const TripCardWidget(),
+                  ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 24,
-                  ),
-                  child: TripCardWidget(),
-                ),
-                Text(
-                  "return".tr,
-                  style: AppFonts.header,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const TripCardWidget(),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
