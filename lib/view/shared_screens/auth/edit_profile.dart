@@ -9,6 +9,7 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
 import 'package:wosol/shared/widgets/shared_widgets/personal_pic.dart';
 
+// Todo : check figma height of all TextFiled
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
 
@@ -20,12 +21,14 @@ class EditProfile extends StatelessWidget {
           children: [
             CustomHeaderWithBackButton(header: "Edit Personal Information".tr),
             Container(
+              // Todo : check figma height
               height: AppConstants.screenHeight(context) * .62,
+              // Todo : margin check figma
               margin: const EdgeInsets.only(top: 16),
               padding: AppConstants.edge(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 24)),
-              color: Colors.white,
+              color: AppColors.white,
               child: Column(
                 children: [
                   const PersonalPicture(),
@@ -50,8 +53,11 @@ class EditProfile extends StatelessWidget {
                         onSubmit: (v) {},
                         label: '',
                         expands: false,
+                        hintStyle: AppFonts.small.copyWith(
+                          color: AppColors.darkBlue400,
+                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(
                             color: AppColors.darkBlue200,
                           ),
@@ -59,9 +65,11 @@ class EditProfile extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   const SizedBox(
                     height: 16,
                   ),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -103,7 +111,7 @@ class EditProfile extends StatelessWidget {
                           color: AppColors.darkBlue400,
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(
                             color: AppColors.darkBlue200,
                           ),
@@ -111,9 +119,12 @@ class EditProfile extends StatelessWidget {
                       ),
                     ],
                   ),
+                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 24,
                   ),
+                  // Todo : use our custom button
+                  // Todo : Missing borderRadius 8 not 10
                   CustomButton(
                     text: "Save".tr,
                     color: AppColors.logo,

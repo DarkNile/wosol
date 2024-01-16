@@ -10,14 +10,14 @@ class VehiclesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      body: ListView(
+      body:
+          // Todo : Are You Serious ! Please ListView on Our Header !!
+          ListView(
         children: [
           CustomHeaderWithBackButton(header: "Vehicles".tr),
           Padding(
-              // Todo : Padding From top should be 18 so we have 10 her and and margin: 5 on Card !! it's 15 not 18
-              // Todo : Use ListView.separated Instead of Column and margin
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0)
+                  .copyWith(top: 18),
               child: ListView.separated(
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 10,

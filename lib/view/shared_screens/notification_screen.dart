@@ -6,7 +6,6 @@ import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/notification_card.dart';
 
-// Todo : Should be NotificationScreen
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
 
@@ -26,10 +25,8 @@ class NotificationsScreen extends StatelessWidget {
           ),
           Expanded(
             child: Padding(
-              // Todo : padding top should be 13 not 16 look at figma please
-              padding: const EdgeInsets.only(top: 13.0),
+              padding: const EdgeInsets.only(top: 13),
               child: Container(
-                // Todo : Hard Color
                 color: AppColors.white,
                 child: ListView.separated(
                     separatorBuilder: (context, index) => const Divider(
@@ -39,7 +36,10 @@ class NotificationsScreen extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: 20,
                     itemBuilder: (context, index) {
-                      return const NotificationCard(
+                      return NotificationCard(
+                        color: (index == 0 || index == 2)
+                            ? AppColors.btnBackColor
+                            : AppColors.white,
                         notificationTime: "15 min ago",
                         notificationTitle:
                             "from Home to King Abdelaziz University",
