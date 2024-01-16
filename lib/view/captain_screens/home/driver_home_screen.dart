@@ -36,18 +36,8 @@ class DriverHomeScreen extends StatelessWidget {
           ),
         ),
         RideCard(
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => RideStartBottomSheet(
-                firstButtonFunction: () {},
-                headTitle: '${"rideStartWithin".tr} 59 sec',
-                formTime: '10:05 am',
-                toTime: '11:30 am',
-                formPlace: 'Mecca ',
-                toPlace: 'King Abdelaziz University',
-              ),
-            );
+          onTap: () async {
+            await onTapRideCard(context);
           },
           title: 'Mecca Center',
           imgPath: "assets/images/home/upcoming_ride_icon.svg",
@@ -97,6 +87,103 @@ class DriverHomeScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Future<void> onTapRideCard(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => RideStartBottomSheet(
+        firstButtonFunction: () {
+          Get.back();
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => ConfirmPickupBottomSheet(
+                    title: 'confirmPickup'.tr,
+                    subTitle: 'canceled'.tr,
+                    firstButtonFunction: () {
+                      Get.back();
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) => SelectUsersToPickupBottomSheet(
+                                function: () {
+                                  Get.back();
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) =>
+                                          const RideAndTripEndBottomSheet(
+                                            headTitle: 'Ride end',
+                                            imagePath:
+                                                'assets/images/celebrate.png',
+                                            headerMsg: 'Congratulations ',
+                                            subHeaderMsg:
+                                                'ride completed successfully, Thank you',
+                                          ));
+                                },
+                                headTitle: 'Select users to pickup',
+                                titles: const ['Hossam', 'Mostafa Ahmed'],
+                                subTitles: const [
+                                  'Future st, building no 13',
+                                  'Future st, building no 13'
+                                ],
+                              ));
+                    },
+                    secondButtonFunction: () {
+                      Get.back();
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) =>
+                              CancellationReasonAndReportRideBottomSheet(
+                                function: () {
+                                  Get.back();
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) =>
+                                          (SelectUsersToPickupBottomSheet(
+                                            function: () {
+                                              Get.back();
+                                              showModalBottomSheet(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      const RideAndTripEndBottomSheet(
+                                                        headTitle: 'Ride end',
+                                                        imagePath:
+                                                            'assets/images/celebrate.png',
+                                                        headerMsg:
+                                                            'Congratulations',
+                                                        subHeaderMsg:
+                                                            'ride completed successfully, Thank you',
+                                                      ));
+                                            },
+                                            headTitle: 'Select users to pickup',
+                                            titles: const [
+                                              'Hossam',
+                                              'Mostafa Ahmed'
+                                            ],
+                                            subTitles: const [
+                                              'Future st, building no 13',
+                                              'Future st, building no 13'
+                                            ],
+                                          )));
+                                },
+                                headTitle: 'Cancelation reason',
+                                reasons: const [
+                                  'No Show',
+                                  'User canceled the trip',
+                                  'Canceled by customer support',
+                                  'Other'
+                                ],
+                                reasonsSelectedIndex: 3,
+                              ));
+                    },
+                  ));
+        },
+        headTitle: '${"rideStartWithin".tr} 59 sec',
+        formTime: '10:05 am',
+        toTime: '11:30 am',
+        formPlace: 'Mecca ',
+        toPlace: 'King Abdelaziz University',
+      ),
     );
   }
 }

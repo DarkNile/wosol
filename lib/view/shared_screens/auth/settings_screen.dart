@@ -5,7 +5,6 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
-import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
 import 'package:wosol/shared/widgets/shared_widgets/settingsCard.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
@@ -52,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               const SettingsCard(),
-            const  SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               DefaultRowButton(

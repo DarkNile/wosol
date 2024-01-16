@@ -34,4 +34,5 @@ class AppColors {
 
   static const Color black300 = Color.fromRGBO(0, 0, 0, 0.24);
   static const Color orange50 = Color(0xffFEFBF1);
+  static const Color popUpBottomSideColor = Color(0xFFF2F4F7);
 }

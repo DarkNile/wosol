@@ -65,7 +65,8 @@ class _MenuItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
           border: text == "canceled".tr
               ? null
-              : const Border(bottom: BorderSide(color: Color(0xFFF2F4F7)))),
+              : const Border(
+                  bottom: BorderSide(color: AppColors.popUpBottomSideColor))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,

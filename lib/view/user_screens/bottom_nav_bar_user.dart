@@ -18,6 +18,7 @@ class BottomNavigationBarUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return BottomNavigationBar(
+        backgroundColor: AppColors.white,
         currentIndex: userLayoutController.navBarIndex.value,
         onTap: (int index) {
           userLayoutController.changeNavBarIndexValue(index);
