@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
-// TODO : label style and svg height and width same not found
+// Todo : label style
 class BottomNavigationBarCaptain extends StatelessWidget {
   final int index;
   const BottomNavigationBarCaptain({Key? key, required this.index})
@@ -19,13 +19,19 @@ class BottomNavigationBarCaptain extends StatelessWidget {
       showUnselectedLabels: true,
       showSelectedLabels: true,
       selectedFontSize: 10,
+      // Todo : Use This Font Weight is Missing
+      //       TextStyle? selectedLabelStyle,
+      // TextStyle? unselectedLabelStyle,
       unselectedFontSize: 10,
-      selectedLabelStyle:AppFonts.SelectedStyle ,
-      unselectedLabelStyle:AppFonts.unSelectedStyle ,
+      selectedLabelStyle: AppFonts.SelectedStyle,
+      unselectedLabelStyle: AppFonts.unSelectedStyle,
       selectedItemColor: AppColors.logo,
       unselectedItemColor: AppColors.darkBlue300,
       items: [
         BottomNavigationBarItem(
+          // Todo : missing label Padding from top 3 like figma so make it Colum and remove label
+          // Todo : missing localization
+
           icon: SvgPicture.asset(
             "assets/icons/home.svg",
             height: 24,

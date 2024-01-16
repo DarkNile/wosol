@@ -17,10 +17,8 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body:
-            // Todo : Should have SafeArea
-            // Todo : Use AppColors  Not Colors.white,
-            // Todo : missing Padding look at figma
-            // Todo : 👋 Should be Svg not text
+            // Todo :  SafeArea should be inside Scaffold
+            // Todo : Use AppColors  Not Colors.white
 
             Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -29,6 +27,7 @@ class LoginScreen extends StatelessWidget {
             children: [
               Center(
                 child: Padding(
+                  // Todo : After SafeArea look at figma it't not 67
                   padding: const EdgeInsets.only(top: 67.0),
                   child: SvgPicture.asset(
                     "assets/icons/logo.svg",
@@ -39,7 +38,6 @@ class LoginScreen extends StatelessWidget {
               ),
               Center(
                 child: Padding(
-                  // Todo look at figma should be 28 not 24
                   padding: const EdgeInsets.only(top: 28),
                   child: Column(
                     children: [
@@ -50,10 +48,13 @@ class LoginScreen extends StatelessWidget {
                             "Welcome ".tr,
                             style: AppFonts.header.copyWith(fontSize: 20),
                           ),
+                          const SizedBox(
+                            width: 2,
+                          ),
                           Image.asset(
                             "assets/images/welcome.png",
-                            width: 23,
-                            height: 23,
+                            width: 22,
+                            height: 22,
                           )
                         ],
                       ),
@@ -73,7 +74,7 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              // Todo : Label not like figma  -> fill color and icon color missing when user write
+
               // Todo : height should be 48 default is 58
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                         color: AppColors.darkBlue500Base),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   PasswordField(),
@@ -122,6 +123,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const CustomButton(
                 text: "Login",
+                // Todo : borderRadius 8 but default is 10
                 color: AppColors.logo,
                 height: 48,
               ),

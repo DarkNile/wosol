@@ -12,7 +12,7 @@ enum TextFieldValidation {
   notValid,
 }
 
-class EmailTextField extends StatelessWidget {
+class EmailTextField extends StatefulWidget {
   final FocusNode? focusNode;
   final double marginTop;
   final double marginLeft;
@@ -25,7 +25,7 @@ class EmailTextField extends StatelessWidget {
   final String validateText;
   final bool enabled;
   final bool isWithIcon;
-  final TextInputType textInputType;
+
   final TextInputAction textInputAction;
   final TextEditingController controller;
   final Function(String value)? onSubmit;
@@ -54,7 +54,6 @@ class EmailTextField extends StatelessWidget {
     required this.controller,
     this.validateText = 'This email is invalid',
     required this.onSubmit,
-    this.textInputType = TextInputType.emailAddress,
     this.onChange,
     this.onTap,
     this.textCapitalization = TextCapitalization.none,
@@ -64,9 +63,27 @@ class EmailTextField extends StatelessWidget {
   });
 
   @override
+  State<EmailTextField> createState() => _EmailTextFieldState();
+}
+
+class _EmailTextFieldState extends State<EmailTextField> {
+  bool isTextFieldEmpty = true;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      setState(() {
+        isTextFieldEmpty = (widget.controller.text.isEmpty ||
+            widget.controller.text.trim() == "");
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,108 +92,116 @@ class EmailTextField extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             margin: AppConstants.edge(
               padding: EdgeInsets.only(
-                top: marginTop,
-                bottom: marginBottom,
-                right: marginRight,
-                left: marginLeft,
+                top: widget.marginTop,
+                bottom: widget.marginBottom,
+                right: widget.marginRight,
+                left: widget.marginLeft,
               ),
             ),
             padding: const EdgeInsets.only(top: 4),
             height: 48,
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: TextFormField(
               expands: true,
               maxLines: null,
               minLines: null,
-              focusNode: focusNode,
-              onChanged: onChange,
+              focusNode: widget.focusNode,
+              onChanged: widget.onChange,
               onTapOutside: (pointerDownEvent) {
-                onTapOutside;
+                widget.onTapOutside;
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               autocorrect: false,
-              textCapitalization: textCapitalization,
-              textInputAction: textInputAction,
-              onFieldSubmitted: onSubmit,
-              autofillHints: autofill,
-              style: AppFonts.small.copyWith(
-                fontSize: 14,
-                color: AppColors.black,
-              ),
-              controller: enabled ? controller : TextEditingController(),
-              keyboardType: textInputType,
+              textCapitalization: widget.textCapitalization,
+              textInputAction: widget.textInputAction,
+              onFieldSubmitted: widget.onSubmit,
+              autofillHints: widget.autofill,
+              style:
+                  AppFonts.small.copyWith(fontSize: 14, color: AppColors.logo),
+              controller:
+                  widget.enabled ? widget.controller : TextEditingController(),
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                prefixIcon: isWithIcon
+                fillColor: !(widget.enabled)
+                    ? AppColors.darkBlue200
+                    : isTextFieldEmpty
+                        ? AppColors.white
+                        : AppColors.orange50,
+                prefixIcon: widget.isWithIcon
                     ? FittedBox(
                         fit: BoxFit.scaleDown,
                         child: SvgPicture.asset(
                           'assets/icons/sms.svg',
                           width: 24,
                           height: 24,
+                          colorFilter: isTextFieldEmpty
+                              ? null
+                              : const ColorFilter.mode(
+                                  AppColors.logo, BlendMode.srcIn),
                         ),
                       )
                     : null,
-                labelText: label,
+                labelText: widget.label,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelStyle: AppFonts.medium.copyWith(
                   fontSize: 12,
                   color: AppColors.darkBlue500Base,
                 ),
-                hintText: hint,
+                hintText: widget.hint,
                 hintStyle: AppFonts.small.copyWith(
                   fontSize: 16,
                   color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
                     padding: const EdgeInsets.only(
-                  left: 16,
+                  left: 12,
                   right: 12,
                 )),
-                disabledBorder: border ??
+                disabledBorder: widget.border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
                         color: AppColors.darkBlue200,
                       ),
                     ),
-                border: border ??
+                border: widget.border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
                         color: AppColors.darkBlue200,
                       ),
                     ),
-                focusedBorder: border ??
+                focusedBorder: widget.border ??
                     OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(
                         color: AppColors.logo,
                       ),
                     ),
-                fillColor: enabled ? AppColors.white : AppColors.black,
-                enabled: enabled,
+                enabled: widget.enabled,
                 filled: true,
-                enabledBorder: (fieldValidation == TextFieldValidation.notValid)
-                    ? OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: AppColors.logo,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    : border ??
-                        OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(
-                            color: AppColors.darkBlue200,
-                          ),
-                        ),
+                enabledBorder:
+                    (widget.fieldValidation == TextFieldValidation.notValid)
+                        ? OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: AppColors.logo,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                        : widget.border ??
+                            OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: AppColors.darkBlue200,
+                              ),
+                            ),
               ),
             ),
           ),
-          if (fieldValidation == TextFieldValidation.notValid)
+          if (widget.fieldValidation == TextFieldValidation.notValid)
             Padding(
               padding: AppConstants.edge(
                   padding: const EdgeInsets.only(
@@ -185,7 +210,7 @@ class EmailTextField extends StatelessWidget {
                 top: 8,
               )),
               child: Text(
-                validateText,
+                widget.validateText,
                 style: AppFonts.small.copyWith(
                   fontSize: 14,
                   color: AppColors.logo,
@@ -198,7 +223,7 @@ class EmailTextField extends StatelessWidget {
   }
 }
 
-class PasswordTextField extends StatelessWidget {
+class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
   final TextFieldValidation fieldValidation;
   final bool enabled;
@@ -209,13 +234,12 @@ class PasswordTextField extends StatelessWidget {
   final double marginBottom;
   final String? validateText;
   final String? hintText;
-  final Function() onIconPress;
+
   final Function()? onTextFieldTap;
   final FocusNode? focusNode;
   final String label;
   final double validatePadding;
   final double hintTextSize;
-  final bool isObscureText;
   final Function(String value) onSubmit;
   final Function(String value) onChange;
   final Iterable<String>? autofill;
@@ -226,9 +250,7 @@ class PasswordTextField extends StatelessWidget {
     Key? key,
     required this.controller,
     required this.fieldValidation,
-    required this.onIconPress,
     this.suffixIconColor = AppColors.black,
-    this.isObscureText = true,
     this.enabled = true,
     this.marginLeft = 0,
     this.marginRight = 0,
@@ -249,13 +271,32 @@ class PasswordTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool isTextFieldEmpty = true;
+  bool isObscureText = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      setState(() {
+        isTextFieldEmpty = (widget.controller.text.isEmpty ||
+            widget.controller.text.trim() == "");
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       hoverColor: Colors.transparent,
       focusColor: Colors.transparent,
-      onTap: onTextFieldTap,
+      onTap: widget.onTextFieldTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -263,10 +304,10 @@ class PasswordTextField extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             margin: AppConstants.edge(
                 padding: EdgeInsets.only(
-              right: marginRight,
-              left: marginLeft,
-              top: marginTop,
-              bottom: marginBottom,
+              right: widget.marginRight,
+              left: widget.marginLeft,
+              top: widget.marginTop,
+              bottom: widget.marginBottom,
             )),
             padding: const EdgeInsets.only(top: 4),
             height: 48,
@@ -275,25 +316,29 @@ class PasswordTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextFormField(
-              focusNode: focusNode,
-              onChanged: onChange,
+              focusNode: widget.focusNode,
+              onChanged: widget.onChange,
               onTapOutside: (pointerDownEvent) {
-                onTapOutside;
+                widget.onTapOutside;
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               textInputAction: TextInputAction.done,
               obscuringCharacter: '●',
-              onFieldSubmitted: onSubmit,
+              onFieldSubmitted: widget.onSubmit,
               obscureText: isObscureText,
-              autofillHints: autofill,
-              style: AppFonts.small.copyWith(
-                fontSize: 14,
-                color: AppColors.black,
-              ),
-              controller: enabled ? controller : TextEditingController(),
+              autofillHints: widget.autofill,
+              style:
+                  AppFonts.small.copyWith(fontSize: 14, color: AppColors.logo),
+              controller:
+                  widget.enabled ? widget.controller : TextEditingController(),
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
-                labelText: label,
+                fillColor: !(widget.enabled)
+                    ? AppColors.darkBlue200
+                    : isTextFieldEmpty
+                        ? AppColors.white
+                        : AppColors.orange50,
+                labelText: widget.label,
                 labelStyle: AppFonts.medium.copyWith(
                   fontSize: 12,
                   color: AppColors.darkBlue500Base,
@@ -307,7 +352,11 @@ class PasswordTextField extends StatelessWidget {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     icon: SvgPicture.asset("assets/icons/eye.svg"),
-                    onPressed: onIconPress,
+                    onPressed: () {
+                      setState(() {
+                        isObscureText = !isObscureText;
+                      });
+                    },
                     color: AppColors.black,
                   ),
                 ),
@@ -317,11 +366,15 @@ class PasswordTextField extends StatelessWidget {
                     'assets/icons/lock.svg',
                     width: 24,
                     height: 24,
+                    colorFilter: isTextFieldEmpty
+                        ? null
+                        : const ColorFilter.mode(
+                            AppColors.logo, BlendMode.srcIn),
                   ),
                 ),
-                hintText: hintText ?? "Password",
+                hintText: widget.hintText ?? "Password",
                 hintStyle: AppFonts.small.copyWith(
-                  fontSize: hintTextSize,
+                  fontSize: widget.hintTextSize,
                   color: AppColors.darkBlue400,
                 ),
                 contentPadding: AppConstants.edge(
@@ -342,27 +395,27 @@ class PasswordTextField extends StatelessWidget {
                     color: AppColors.logo,
                   ),
                 ),
-                fillColor: AppColors.white,
-                enabled: enabled,
+                enabled: widget.enabled,
                 filled: true,
-                enabledBorder: (fieldValidation == TextFieldValidation.notValid)
-                    ? OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: AppColors.logo,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      )
-                    : OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: AppColors.darkBlue200,
-                        ),
-                      ),
+                enabledBorder:
+                    (widget.fieldValidation == TextFieldValidation.notValid)
+                        ? OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: AppColors.logo,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                        : OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              color: AppColors.darkBlue200,
+                            ),
+                          ),
               ),
             ),
           ),
-          if (fieldValidation == TextFieldValidation.notValid &&
-              validateText != null)
+          if (widget.fieldValidation == TextFieldValidation.notValid &&
+              widget.validateText != null)
             Align(
               alignment: AppConstants
                           .localizationController.currentLocale.languageCode ==
@@ -372,12 +425,12 @@ class PasswordTextField extends StatelessWidget {
               child: Padding(
                 padding: AppConstants.edge(
                     padding: EdgeInsets.only(
-                  left: validatePadding,
-                  right: validatePadding,
+                  left: widget.validatePadding,
+                  right: widget.validatePadding,
                   top: 8,
                 )),
                 child: Text(
-                  validateText ?? '',
+                  widget.validateText ?? '',
                   style: AppFonts.small.copyWith(
                     fontSize: 14,
                     color: AppColors.logo,

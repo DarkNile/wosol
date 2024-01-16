@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 
+// Todo : What different between EmailField and EmailTextField !! 😃
 class EmailField extends StatelessWidget {
   EmailField({
     super.key,
@@ -19,7 +20,7 @@ class EmailField extends StatelessWidget {
         controller: textEditingController,
         onSubmit: (String value) {},
         hint: hint,
-        label: label, 
+        label: label,
         validateText: "user.info@mail.com",
         fieldValidation: TextFieldValidation.valid);
   }

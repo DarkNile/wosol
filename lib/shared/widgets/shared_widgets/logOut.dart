@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
-import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
 
 class LogOut extends StatelessWidget {
   const LogOut({
@@ -13,6 +11,7 @@ class LogOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Todo : User Our Custom Button it's DefaultRowButton And remove LogOutWidget
     return Padding(
       padding: const EdgeInsets.only(top: 24.0),
       child: Row(

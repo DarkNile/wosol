@@ -44,7 +44,6 @@ class SettingsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     SvgPicture.asset("assets/icons/setting.svg"),
-                    // Todo : missing sized box check figma please 😅
                     const SizedBox(
                       width: 6,
                     ),

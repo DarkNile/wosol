@@ -8,14 +8,17 @@ class NotificationCard extends StatelessWidget {
       {super.key,
       required this.notificationTitle,
       required this.notificationTime,
-      this.isHover});
+      this.isHover,
+      required this.color});
   final String notificationTitle;
   final String notificationTime;
+  final Color color;
   final bool? isHover;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 87,
+      color: color,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -45,29 +48,31 @@ class NotificationCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Todo : Replace Text.rich with Row to fix overflow check figma text style
-
-                          Row(children: [
-                            Text(
-                              "You canceled your trip ",
-                              maxLines: 2,
+                          SizedBox(
+                            width: 262,
+                            child: Text.rich(
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: AppColors.orange,
-                                textBaseline: TextBaseline.ideographic,
+                              maxLines: 2,
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: 'You canceled ',
+                                    style: TextStyle(
+                                      color: AppColors.orange,
+                                      textBaseline: TextBaseline.ideographic,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: notificationTitle,
+                                    style: const TextStyle(
+                                      color: AppColors.black,
+                                      textBaseline: TextBaseline.ideographic,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            Text(
-                              notificationTitle,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: AppColors.black,
-                                textBaseline: TextBaseline.ideographic,
-                              ),
-                            ),
-                          ]),
-
+                          ),
                           Text(notificationTime,
                               softWrap: true,
                               style:
@@ -83,11 +88,6 @@ class NotificationCard extends StatelessWidget {
                   height: 24,
                   width: 24,
                 ),
-                // const Icon(
-                //   Icons.more_vert,
-                //   size: 30,
-                //   color: AppColors.darkBlue300,
-                // ),
               ]),
         ],
       ),
