@@ -35,6 +35,7 @@ class TripCardWidget extends StatelessWidget {
                       function: () {},
                       textColor: AppColors.error600,
                       borderRadius: 8,
+                      containIcon: true,
                       svgPic: 'assets/icons/close_red.svg',
                     )
                   : DefaultRowButton(
@@ -42,6 +43,7 @@ class TripCardWidget extends StatelessWidget {
                       color: AppColors.error600,
                       function: () {},
                       borderRadius: 8,
+                      containIcon: true,
                       svgPic: 'assets/icons/close_white.svg',
                     )
           ],

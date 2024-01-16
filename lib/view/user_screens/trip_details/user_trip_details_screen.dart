@@ -11,48 +11,52 @@ class UserTripDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomHeaderWithBackButton(
-          header: "tripDetails".tr,
-        ),
-        const SizedBox(
-          height: 14,
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TripDetailsCard(
-                  date: 'Dec 22  - 08:10 am',
-                  fromCity:
-                      'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
-                  toCity:
-                      'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
-                  isCaptain: false,
-                ),
-                customDivider(),
-                const RateCardWidget(),
-                customDivider(),
-                const RateCardWidget(
-                  withRateButton: true,
-                ),
-                customDivider(),
-                DefaultRowButton(
-                    color: Colors.transparent,
-                    text: 'Report a Problem'.tr,
-                    textColor: AppColors.error600,
-                    fontSize: 14,
-                    containIcon: true,
-                    svgPic: "assets/icons/flag.svg",
-                    function: () {}),
-              ],
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomHeaderWithBackButton(
+              header: "tripDetails".tr,
             ),
-          ),
+            const SizedBox(
+              height: 14,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TripDetailsCard(
+                      date: 'Dec 22  - 08:10 am',
+                      fromCity:
+                          'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
+                      toCity:
+                          'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
+                      isCaptain: false,
+                    ),
+                    customDivider(),
+                    const RateCardWidget(),
+                    customDivider(),
+                    const RateCardWidget(
+                      withRateButton: true,
+                    ),
+                    customDivider(),
+                    DefaultRowButton(
+                        color: Colors.transparent,
+                        text: 'Report a Problem'.tr,
+                        textColor: AppColors.error600,
+                        fontSize: 14,
+                        containIcon: true,
+                        svgPic: "assets/icons/flag.svg",
+                        function: () {}),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 

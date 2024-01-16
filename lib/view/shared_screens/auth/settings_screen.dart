@@ -3,9 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
-import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
-import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
-import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
@@ -17,12 +14,9 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const BottomNavigationBarCaptain(
-        index: 3,
-      ),
-      backgroundColor: Colors.grey[100],
-      body: ListView(children: [
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         CustomHeader(
             header: "Farah",
             svgIcon: 'assets/icons/logo.svg',
@@ -34,9 +28,10 @@ class SettingsScreen extends StatelessWidget {
                 return const EditProfile();
               }));
             }),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
+        Expanded(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(16.0),
             children: [
               const ProfileCard(),
               Padding(
@@ -56,11 +51,11 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               const SettingsCard(),
-              LogOut(),
+              const LogOut(),
             ],
           ),
         ),
-      ]),
+      ],
     );
   }
 }

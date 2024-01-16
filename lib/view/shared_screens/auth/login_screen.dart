@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/emailTextField.dart';
 import 'package:wosol/shared/widgets/shared_widgets/forgot_password.dart';
-import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
 import 'package:wosol/shared/widgets/shared_widgets/passwordField.dart';
+import 'package:wosol/view/captain_screens/user_layout_screen.dart';
+import 'package:wosol/view/user_screens/user_layout_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -121,9 +124,14 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              const CustomButton(
+              DefaultButton(
+                function: () {
+                  Get.to(() => AppConstants.isCaptain
+                      ? DriverLayoutScreen()
+                      : UserLayoutScreen());
+                },
                 text: "Login",
-                // Todo : borderRadius 8 but default is 10
+                borderRadius: 8,
                 color: AppColors.logo,
                 height: 48,
               ),

@@ -10,6 +10,8 @@ class AppConstants {
   static double screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
+  static bool isCaptain = true;
+
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
       localizationController.currentLocale.languageCode == 'en';
