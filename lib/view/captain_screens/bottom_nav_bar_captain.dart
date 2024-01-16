@@ -6,7 +6,7 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 
 import '../../controllers/captain_controllers/driver_layout_controller.dart';
 
-// Todo : label style
+
 class BottomNavigationBarCaptain extends StatelessWidget {
   final DriverLayoutController driverLayoutController;
 
@@ -27,9 +27,6 @@ class BottomNavigationBarCaptain extends StatelessWidget {
         showUnselectedLabels: true,
         showSelectedLabels: true,
         selectedFontSize: 10,
-        // Todo : Use This Font Weight is Missing
-        //       TextStyle? selectedLabelStyle,
-        // TextStyle? unselectedLabelStyle,
         unselectedFontSize: 10,
         selectedLabelStyle: AppFonts.SelectedStyle,
         unselectedLabelStyle: AppFonts.unSelectedStyle,
@@ -40,10 +37,14 @@ class BottomNavigationBarCaptain extends StatelessWidget {
             // Todo : missing label Padding from top 3 like figma so make it Colum and remove label
             // Todo : missing localization
 
-            icon: SvgPicture.asset(
-              "assets/icons/home.svg",
-              height: 24,
-              width: 24,
+            icon: Column(
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/home.svg",
+                  height: 24,
+                  width: 24,
+                ),
+              ],
             ),
             activeIcon: SvgPicture.asset(
               "assets/icons/Activehome.svg",

@@ -77,7 +77,7 @@ class NotificationCard extends StatelessWidget {
                               softWrap: true,
                               style:
                                   // Todo use Appfonts with copyWith
-                                  AppFonts.style12Urb),
+                                  AppFonts.medium.copyWith(fontSize: 12,fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),

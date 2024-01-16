@@ -6,7 +6,12 @@ import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
+import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
+import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
+import 'package:wosol/view/shared_screens/main_screens/layout_screen/layout_screen.dart';
+import 'package:wosol/view/shared_screens/notification_screen.dart';
+import 'package:wosol/view/shared_screens/trip_history/trip_history_screen.dart';
 
 import 'controllers/shared_controllers/main_controllers/localization_controller.dart';
 
@@ -50,7 +55,7 @@ class MyApp extends StatelessWidget {
       translations: Localization(),
       locale: Locale(CacheHelper.getData(key: 'locale') ?? "en"),
       fallbackLocale: const Locale("en"),
-      home: const LoginScreen(),
+      home: const LayoutScreen(),
     );
   }
 }
