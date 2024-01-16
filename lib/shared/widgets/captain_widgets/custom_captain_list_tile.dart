@@ -38,7 +38,7 @@ class CustomCaptainListTileWidget extends StatelessWidget {
                       _checked = val ?? false;
                     });
                   },
-                  activeColor: AppColors.darkBlue300),
+                  activeColor: AppColors.logo),
             ),
           Container(
             width: isUserList ? 24 : 46,

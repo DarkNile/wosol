@@ -528,18 +528,23 @@ class RateBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Todo : ME
     return BottomSheetBase(
       headTitle: headTitle,
       buttonsContainIcon: false,
       firstButtonFunction: function,
       firstButtonText: 'Submit',
       withCloseIcon: true,
-      height: selectIssue ? 485 : 243,
+      height: selectIssue
+          ? 485 //485
+          : 250, //243,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Align(
+            alignment: selectIssue ? Alignment.topLeft : Alignment.center,
             child: RatingBarWidget(
+              itemSize: !selectIssue ? 60 : null,
               onRatingUpdate: onRatingUpdate,
             ),
           ),

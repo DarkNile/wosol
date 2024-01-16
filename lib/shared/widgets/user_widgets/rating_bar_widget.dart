@@ -18,7 +18,7 @@ class RatingBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RatingBar.builder(
-      initialRating: 3,
+      initialRating: 5,
       minRating: 1,
       itemSize: itemSize ?? 40,
       direction: Axis.horizontal,

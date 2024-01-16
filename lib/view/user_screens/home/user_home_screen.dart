@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/trips_card_widget.dart';
 import '../../../shared/constants/constants.dart';
@@ -34,9 +35,12 @@ class UserHomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const TripCardWidget(
+                TripCardWidget(
                   withCancel: true,
                   withBorder: false,
+                  onCancel: () async {
+                    onTapCancel(context);
+                  },
                 ),
                 Padding(
                   padding: AppConstants.edge(
@@ -52,8 +56,11 @@ class UserHomeScreen extends StatelessWidget {
                 ),
                 ...List.generate(
                     5,
-                    (index) => const TripCardWidget(
+                    (index) => TripCardWidget(
                           withCancel: true,
+                          onCancel: () async {
+                            onTapCancel(context);
+                          },
                         )),
               ],
             ),
@@ -61,5 +68,34 @@ class UserHomeScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> onTapCancel(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => RideCanceledAndReportedBottomSheet(
+              headTitle: 'Cancel Ride',
+              isCancelFirstStep: true,
+              imagePath: 'assets/images/thinking.png',
+              headerMsg: 'You are about to cancel your ride, are you sure?',
+              subHeaderMsg: 'Note: today trip only will be canceled',
+              firstButtonFunction: () {
+                Get.back();
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        const RideCanceledAndReportedBottomSheet(
+                          headTitle: 'Ride Canceled',
+                          isReportFirstStep: true,
+                          imagePath: 'assets/images/smile.png',
+                          headerMsg: 'Ride has been canceled',
+                          subHeaderMsg:
+                              "Thank you for being kind and save others' time.",
+                        ));
+              },
+              secondButtonFunction: () {
+                Get.back();
+              },
+            ));
   }
 }

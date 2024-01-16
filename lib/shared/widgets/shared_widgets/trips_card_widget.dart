@@ -8,8 +8,12 @@ import 'package:wosol/shared/widgets/user_widgets/user_trip_detail_widget.dart';
 class TripCardWidget extends StatelessWidget {
   final bool withCancel;
   final bool withBorder;
+  final void Function()? onCancel;
   const TripCardWidget(
-      {super.key, this.withCancel = false, this.withBorder = true});
+      {super.key,
+      this.withCancel = false,
+      this.withBorder = true,
+      this.onCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class TripCardWidget extends StatelessWidget {
                         color: AppColors.error600,
                       ),
                       color: AppColors.white,
-                      function: () {},
+                      function: onCancel,
                       textColor: AppColors.error600,
                       borderRadius: 8,
                       containIcon: true,
@@ -41,7 +45,7 @@ class TripCardWidget extends StatelessWidget {
                   : DefaultRowButton(
                       height: 42,
                       color: AppColors.error600,
-                      function: () {},
+                      function: onCancel,
                       borderRadius: 8,
                       containIcon: true,
                       svgPic: 'assets/icons/close_white.svg',

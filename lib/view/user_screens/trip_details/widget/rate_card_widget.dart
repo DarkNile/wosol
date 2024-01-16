@@ -7,8 +7,10 @@ import 'package:wosol/shared/widgets/user_widgets/rating_bar_widget.dart';
 
 class RateCardWidget extends StatelessWidget {
   final bool withRateButton;
+  final void Function()? onRateTap;
 
-  const RateCardWidget({super.key, this.withRateButton = false});
+  const RateCardWidget(
+      {super.key, this.withRateButton = false, this.onRateTap});
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +57,12 @@ class RateCardWidget extends StatelessWidget {
                           color: AppColors.btnBackColor,
                           fontWeight: FontWeight.w500,
                           textColor: AppColors.logo,
-                          function: () {})
+                          function: onRateTap)
                     ],
                   )
                 : RatingBarWidget(
                     itemSize: 48,
+                    ignoreGestures: true,
                     itemPadding: const EdgeInsets.all(0),
                     onRatingUpdate: (double rate) {},
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/tripDetailsCard.dart';
@@ -38,9 +39,11 @@ class UserTripDetailsScreen extends StatelessWidget {
                     customDivider(),
                     const RateCardWidget(),
                     customDivider(),
-                    const RateCardWidget(
-                      withRateButton: true,
-                    ),
+                    RateCardWidget(
+                        withRateButton: true,
+                        onRateTap: () async {
+                          await onRateTap(context);
+                        }),
                     customDivider(),
                     DefaultRowButton(
                         color: Colors.transparent,
@@ -49,7 +52,9 @@ class UserTripDetailsScreen extends StatelessWidget {
                         fontSize: 14,
                         containIcon: true,
                         svgPic: "assets/icons/flag.svg",
-                        function: () {}),
+                        function: () async {
+                          await onReport(context);
+                        }),
                   ],
                 ),
               ),
@@ -58,6 +63,48 @@ class UserTripDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  onRateTap(BuildContext context) async {
+    await showModalBottomSheet(
+        context: context,
+        builder: (context) => RateBottomSheet(
+            function: () {
+              Get.back();
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const RideCanceledAndReportedBottomSheet(
+                      headTitle: 'Ride Reported',
+                      imagePath: 'assets/images/star.png',
+                      headerMsg: 'Rated submitted successfully',
+                      subHeaderMsg:
+                          'Thank you, hope you have enjoyed your ride with us',
+                      isReportFirstStep: true));
+            },
+            onRatingUpdate: (double) {},
+            headTitle: 'Rate your trip',
+            selectIssue: false));
+  }
+
+  onReport(BuildContext context) async {
+    await showModalBottomSheet(
+        context: context,
+        builder: (context) => RateBottomSheet(
+            function: () {
+              Get.back();
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const RideCanceledAndReportedBottomSheet(
+                      headTitle: 'Ride Reported',
+                      imagePath: 'assets/images/sad.png',
+                      headerMsg: 'We feel sorry for you',
+                      subHeaderMsg:
+                          'We received your report successfully, and we will try to resolve the issue very soon.',
+                      isReportFirstStep: true));
+            },
+            onRatingUpdate: (double) {},
+            headTitle: 'Rate your trip',
+            selectIssue: true));
   }
 
   Widget customDivider() {
