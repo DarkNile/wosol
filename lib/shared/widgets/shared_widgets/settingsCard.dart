@@ -36,11 +36,11 @@ class SettingsCard extends StatelessWidget {
               isSwitcher: false,
               title: 'Terms & Conditions'.tr,
             ),
-            Divider(
+            const Divider(
               height: 1,
               color: AppColors.darkBlue100,
             ),
-            CustomSettingRowWidget(
+            const CustomSettingRowWidget(
               isSwitcher: false,
               lang: true,
               title: 'Change Language',

@@ -9,16 +9,15 @@ class VehiclesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body:
-          // Todo : Are You Serious ! Please ListView on Our Header !!
-          ListView(
-        children: [
-          CustomHeaderWithBackButton(header: "Vehicles".tr),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0)
-                  .copyWith(top: 18),
+      body: SafeArea(
+        child: Column(
+          children: [
+            CustomHeaderWithBackButton(header: "Vehicles".tr),
+            Expanded(
               child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
                       ),
@@ -31,8 +30,10 @@ class VehiclesScreen extends StatelessWidget {
                       carNumberImage: 'assets/images/car_number.png',
                       carImage: 'assets/images/car.png',
                     );
-                  }))
-        ],
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }

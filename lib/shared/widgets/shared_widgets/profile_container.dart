@@ -1,14 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/models/profile_custom_model.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
+import 'package:wosol/view/captain_screens/routes/routes_screen.dart';
+import 'package:wosol/view/captain_screens/vehicles/vehicles_screen.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
+import 'package:wosol/view/user_screens/locations/user_locations_screen.dart';
+import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart';
+import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<ProfileCustomModel> userProfileItems = [
+      ProfileCustomModel(
+        imagePath: "assets/icons/location.svg",
+        title: "Location",
+        subTitle: "home, university",
+        onTap: () {
+          Get.to(() => const UserLocationsScreen());
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/receipt.svg",
+        title: "Subscriptions",
+        subTitle: "Monthly",
+        onTap: () {
+          Get.to(() => const SubscriptionsScreen());
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/routing.svg",
+        title: "My Routes",
+        subTitle: "Start, return",
+        onTap: () {
+          Get.to(() => const UserTripsScreen());
+        },
+      ),
+    ];
+    List<ProfileCustomModel> captainProfileItems = [
+      ProfileCustomModel(
+        imagePath: "assets/icons/bus.svg",
+        title: "Vehicles",
+        subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
+        onTap: () {
+          Get.to(() => const VehiclesScreen());
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/routing.svg",
+        title: "Routes",
+        subTitle: "Mecca, Jedaha  ",
+        onTap: () {
+          Get.to(() => const CaptainRoutesScreen());
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/personalcard.svg",
+        title: "License",
+        subTitle: "driving license, car license",
+        onTap: () {},
+      ),
+    ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
@@ -41,36 +98,34 @@ class ProfileCard extends StatelessWidget {
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CustomProfileRowWidget(
-                  image: "assets/images/bus.png",
-                  title: "Vehicles".tr,
-                  subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
-                  isProfile: false,
-                ),
-                const Divider(
+            child: ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              separatorBuilder: (context, index) {
+                return const Divider(
                   height: 1,
                   color: AppColors.darkBlue100,
-                ),
-                CustomProfileRowWidget(
-                  image: "assets/images/routing.png",
-                  title: "Routes".tr,
-                  subTitle: "Mecca, Jedaha  ",
+                );
+              },
+              itemCount: AppConstants.isCaptain
+                  ? captainProfileItems.length
+                  : userProfileItems.length,
+              itemBuilder: (context, index) {
+                return CustomProfileRowWidget(
+                  image: AppConstants.isCaptain
+                      ? captainProfileItems[index].imagePath
+                      : userProfileItems[index].imagePath,
+                  title: AppConstants.isCaptain
+                      ? captainProfileItems[index].title
+                      : userProfileItems[index].title,
+                  subTitle: AppConstants.isCaptain
+                      ? captainProfileItems[index].subTitle
+                      : userProfileItems[index].subTitle,
+                  onTap: AppConstants.isCaptain
+                      ? captainProfileItems[index].onTap
+                      : userProfileItems[index].onTap,
                   isProfile: false,
-                ),
-                const Divider(
-                  height: 1,
-                  color: AppColors.darkBlue100,
-                ),
-                CustomProfileRowWidget(
-                  image: "assets/images/personalcard.png",
-                  title: "License".tr,
-                  subTitle: "Tdriving license, car license",
-                  isProfile: false,
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
