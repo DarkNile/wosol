@@ -5,6 +5,7 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
+import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/emailTextField.dart';
 import 'package:wosol/shared/widgets/shared_widgets/forgot_password.dart';
 import 'package:wosol/shared/widgets/shared_widgets/passwordField.dart';
@@ -16,14 +17,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body:
-            // Todo :  SafeArea should be inside Scaffold
-            // Todo : Use AppColors  Not Colors.white
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body:
+          // Todo :  SafeArea should be inside Scaffold
+          // Todo : Use AppColors  Not Colors.white
+          //done
 
-            Padding(
+          SafeArea(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -31,7 +33,8 @@ class LoginScreen extends StatelessWidget {
               Center(
                 child: Padding(
                   // Todo : After SafeArea look at figma it't not 67
-                  padding: const EdgeInsets.only(top: 67.0),
+                  //done
+                  padding: const EdgeInsets.only(top: 46.9),
                   child: SvgPicture.asset(
                     "assets/icons/logo.svg",
                     width: 97,
@@ -79,6 +82,7 @@ class LoginScreen extends StatelessWidget {
               ),
 
               // Todo : height should be 48 default is 58
+              //default is 48
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -91,10 +95,14 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  EmailField(
-                    hint: "Email".tr,
-                    label: '',
-                  ),
+                  EmailTextField(
+                      controller: TextEditingController(),
+                      onSubmit: (String value) {},
+                      hint: 'Email'.tr,
+                      label: '',
+                      
+                      validateText: "user.info@mail.com",
+                      fieldValidation: TextFieldValidation.valid),
                 ],
               ),
 
@@ -113,7 +121,13 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  PasswordField(),
+                  PasswordTextField(
+                      controller: TextEditingController(),
+                      fieldValidation: TextFieldValidation.valid,
+                      onSubmit: (val) {},
+                      label: '',
+                      hintText: 'Password'.tr,
+                      onChange: (val) {}),
                 ],
               ),
 

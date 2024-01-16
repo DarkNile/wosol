@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/logOut.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
@@ -51,7 +52,19 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
               const SettingsCard(),
-              const LogOut(),
+            const  SizedBox(
+                height: 24,
+              ),
+              DefaultRowButton(
+                function: () {},
+                text: "Logout".tr,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                textColor: AppColors.error600,
+                containIcon: true,
+                svgPic: "assets/icons/logout.svg",
+                color: Colors.transparent,
+              ),
             ],
           ),
         ),

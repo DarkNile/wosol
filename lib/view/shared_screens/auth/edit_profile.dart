@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_phone_field.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
@@ -10,6 +11,7 @@ import 'package:wosol/shared/widgets/shared_widgets/loginButton.dart';
 import 'package:wosol/shared/widgets/shared_widgets/personal_pic.dart';
 
 // Todo : check figma height of all TextFiled
+//done
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
 
@@ -22,9 +24,11 @@ class EditProfile extends StatelessWidget {
             CustomHeaderWithBackButton(header: "Edit Personal Information".tr),
             Container(
               // Todo : check figma height
-              height: AppConstants.screenHeight(context) * .62,
+              //done
+              height: 472,
               // Todo : margin check figma
-              margin: const EdgeInsets.only(top: 16),
+              //done
+              margin: const EdgeInsets.only(top: 14),
               padding: AppConstants.edge(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 24)),
@@ -49,6 +53,7 @@ class EditProfile extends StatelessWidget {
                       ),
                       CustomTextField(
                         validate: true,
+                        height: 42,
                         textEditingController: TextEditingController(),
                         onSubmit: (v) {},
                         label: '',
@@ -105,6 +110,7 @@ class EditProfile extends StatelessWidget {
                         textEditingController: TextEditingController(),
                         onSubmit: (v) {},
                         label: '',
+                        height: 42,
                         expands: false,
                         hint: "enter email".tr,
                         hintStyle: AppFonts.small.copyWith(
@@ -119,17 +125,19 @@ class EditProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Todo :  Sized Box height not like figma
                   const SizedBox(
                     height: 24,
                   ),
                   // Todo : use our custom button
                   // Todo : Missing borderRadius 8 not 10
-                  CustomButton(
-                    text: "Save".tr,
-                    color: AppColors.logo,
+                  //done
+                  DefaultButton(
+                    function: () {},
                     height: 44,
-                  ),
+                    text: 'Save'.tr,
+                    color: AppColors.logo,
+                    borderRadius: 8,
+                  )
                 ],
               ),
             )

@@ -29,6 +29,7 @@ class CustomPhoneField extends StatelessWidget {
       textEditingController: TextEditingController(),
       onSubmit: (v) {},
       label: '',
+      height: 42,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
