@@ -98,9 +98,10 @@ class BottomNavigationBarCaptain extends StatelessWidget {
                     ))
               ]),
               activeIcon: Stack(children: [
+                // Todo : "assets/icons/User.svg" Not found
                 CircleAvatar(
                   radius: 12,
-                  backgroundColor: const Color(0xFFF5F6F9),
+                  backgroundColor: AppColors.dividerColor,
                   child: SvgPicture.asset(
                     "assets/icons/User.svg",
                     height: 24,

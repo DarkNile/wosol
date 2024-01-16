@@ -45,11 +45,17 @@ class CustomProfileRowWidget extends StatelessWidget {
                       ))
                   : Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.5),
-                      child: Image.asset(
-                        image,
-                        height: 24,
-                        width: 24,
-                      ),
+                      child: image.endsWith("svg")
+                          ? SvgPicture.asset(
+                              image,
+                              height: 24,
+                              width: 24,
+                            )
+                          : Image.asset(
+                              image,
+                              height: 24,
+                              width: 24,
+                            ),
                     ),
               const SizedBox(
                 width: 12,
