@@ -60,7 +60,7 @@ class CustomBottomSheetWidget extends StatelessWidget {
                       width: 56,
                       height: 5,
                       decoration: ShapeDecoration(
-                        color: const Color(0xFFD1D7E6),
+                        color: AppColors.darkBlue200,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),

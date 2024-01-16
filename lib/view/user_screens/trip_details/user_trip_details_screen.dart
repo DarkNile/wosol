@@ -89,6 +89,7 @@ class UserTripDetailsScreen extends StatelessWidget {
   onReport(BuildContext context) async {
     await showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (context) => RateBottomSheet(
             function: () {
               Get.back();

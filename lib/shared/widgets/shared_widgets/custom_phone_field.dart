@@ -19,16 +19,18 @@ class CustomPhoneField extends StatelessWidget {
       hint: "",
       prefixIcon: Padding(
         padding: AppConstants.edge(
-            padding: const EdgeInsets.only(left: 14, right: 5)),
+            padding:
+                const EdgeInsets.only(left: 14, right: 5, top: 10, bottom: 8)),
         child: Text(
           "+965",
-          style: AppFonts.small.copyWith(color: AppColors.logo),
+          style: AppFonts.small.copyWith(color: AppColors.logo, fontSize: 14),
         ),
       ),
       textInputType: TextInputType.number,
       textEditingController: TextEditingController(),
       onSubmit: (v) {},
       label: '',
+      height: 42,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(

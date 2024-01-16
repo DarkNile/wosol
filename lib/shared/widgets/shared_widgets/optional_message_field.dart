@@ -18,7 +18,6 @@ class OptionalMessage extends StatelessWidget {
           "Message(optional)",
           style: AppFonts.medium.copyWith(color: AppColors.darkBlue500Base),
         ),
-
         Container(
           width: 343,
           height: 102,
@@ -31,7 +30,7 @@ class OptionalMessage extends StatelessWidget {
           decoration: ShapeDecoration(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 1, color: Color(0xFFD1D7E6)),
+              side: const BorderSide(width: 1, color: AppColors.darkBlue200),
               borderRadius: BorderRadius.circular(8),
             ),
           ),

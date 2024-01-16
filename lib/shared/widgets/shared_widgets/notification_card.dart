@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -49,7 +50,7 @@ class NotificationCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 262,
+                            width: AppConstants.screenWidth(context) * .68,
                             child: Text.rich(
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -77,7 +78,9 @@ class NotificationCard extends StatelessWidget {
                               softWrap: true,
                               style:
                                   // Todo use Appfonts with copyWith
-                                  AppFonts.style12Urb),
+                                  AppFonts.medium.copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),

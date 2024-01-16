@@ -6,7 +6,6 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 
 import '../../controllers/captain_controllers/driver_layout_controller.dart';
 
-// Todo : label style
 class BottomNavigationBarCaptain extends StatelessWidget {
   final DriverLayoutController driverLayoutController;
 
@@ -19,6 +18,7 @@ class BottomNavigationBarCaptain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       return BottomNavigationBar(
+        backgroundColor: AppColors.white,
         currentIndex: driverLayoutController.navBarIndex.value,
         onTap: (int index) {
           driverLayoutController.changeNavBarIndexValue(index);
@@ -27,9 +27,6 @@ class BottomNavigationBarCaptain extends StatelessWidget {
         showUnselectedLabels: true,
         showSelectedLabels: true,
         selectedFontSize: 10,
-        // Todo : Use This Font Weight is Missing
-        //       TextStyle? selectedLabelStyle,
-        // TextStyle? unselectedLabelStyle,
         unselectedFontSize: 10,
         selectedLabelStyle: AppFonts.SelectedStyle,
         unselectedLabelStyle: AppFonts.unSelectedStyle,
@@ -37,7 +34,6 @@ class BottomNavigationBarCaptain extends StatelessWidget {
         unselectedItemColor: AppColors.darkBlue300,
         items: [
           BottomNavigationBarItem(
-            // Todo : missing label Padding from top 3 like figma so make it Colum and remove label
             // Todo : missing localization
 
             icon: SvgPicture.asset(
@@ -45,6 +41,7 @@ class BottomNavigationBarCaptain extends StatelessWidget {
               height: 24,
               width: 24,
             ),
+
             activeIcon: SvgPicture.asset(
               "assets/icons/Activehome.svg",
               height: 24,
@@ -82,7 +79,7 @@ class BottomNavigationBarCaptain extends StatelessWidget {
                   width: 24,
                   height: 24,
                   child: CircleAvatar(
-                    backgroundColor: const Color(0xFFF5F6F9),
+                    backgroundColor: AppColors.dividerColor,
                     child: SvgPicture.asset(
                       "assets/icons/nonActiveuser.svg",
                       height: 24,
@@ -98,7 +95,6 @@ class BottomNavigationBarCaptain extends StatelessWidget {
                     ))
               ]),
               activeIcon: Stack(children: [
-                // Todo : "assets/icons/User.svg" Not found
                 CircleAvatar(
                   radius: 12,
                   backgroundColor: AppColors.dividerColor,
