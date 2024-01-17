@@ -110,7 +110,7 @@ class BottomNavigationBarUser extends StatelessWidget {
                 radius: 12,
                 backgroundColor: AppColors.dividerColor,
                 child: SvgPicture.asset(
-                  "assets/icons/User.svg",
+                  "assets/icons/user.svg",
                   width: 24,
                   height: 24,
                 ),
