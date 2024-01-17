@@ -284,8 +284,9 @@ class DefaultRowButton extends StatelessWidget {
                       mainAxisAlignment: mainAxisAlignment,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if (containIcon) SvgPicture.asset(svgPic!),
-                        if (containIcon)
+                        if (containIcon && AppConstants.isEnLocale)
+                          SvgPicture.asset(svgPic!),
+                        if (containIcon && AppConstants.isEnLocale)
                           SizedBox(
                             width: sizedBoxWidth,
                           ),
@@ -303,6 +304,12 @@ class DefaultRowButton extends StatelessWidget {
                                 textAlign: TextAlign.center,
                               ),
                         ),
+                        if (containIcon && !AppConstants.isEnLocale)
+                          SizedBox(
+                            width: sizedBoxWidth,
+                          ),
+                        if (containIcon && !AppConstants.isEnLocale)
+                          SvgPicture.asset(svgPic!),
                       ],
                     ),
         ),

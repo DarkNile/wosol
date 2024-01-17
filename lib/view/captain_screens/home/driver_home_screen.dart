@@ -125,6 +125,7 @@ class DriverHomeScreen extends StatelessWidget {
                       Get.back();
                       showModalBottomSheet(
                           context: context,
+                          isScrollControlled: true,
                           builder: (context) =>
                               CancellationReasonAndReportRideBottomSheet(
                                 function: () {
@@ -177,7 +178,7 @@ class DriverHomeScreen extends StatelessWidget {
     return RideAndTripEndBottomSheet(
       headTitle: 'rideEnd'.tr,
       imagePath: 'assets/images/celebrate.png',
-      headerMsg:  '${"congrats".tr} ',
+      headerMsg: '${"congrats".tr} ',
       subHeaderMsg: 'rideCompletedSuccessfully'.tr,
     );
   }
