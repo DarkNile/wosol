@@ -417,8 +417,9 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           if (widget.fieldValidation == TextFieldValidation.notValid &&
               widget.validateText != null)
             Align(
-              alignment: AppConstants
-                          .localizationController.currentLocale.languageCode ==
+              alignment: AppConstants.localizationController
+                          .currentLocale()
+                          .languageCode ==
                       'en'
                   ? Alignment.centerLeft
                   : Alignment.centerRight,

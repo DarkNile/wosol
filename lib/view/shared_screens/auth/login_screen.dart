@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          "Enter your account here",
+                          "Enter your account here".tr,
                           style: AppFonts.medium.copyWith(
                               fontWeight: FontWeight.w400,
                               color: AppColors.darkBlue500Base),
@@ -131,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                         ? DriverLayoutScreen()
                         : UserLayoutScreen());
                   },
-                  text: "Login",
+                  text: "Login".tr,
                   borderRadius: 8,
                   color: AppColors.logo,
                   height: 48,

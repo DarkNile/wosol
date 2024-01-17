@@ -12,11 +12,13 @@ class CustomSettingRowWidget extends StatelessWidget {
     required this.title,
     this.lang = false,
     this.isManageScreen = false,
+    this.onTapChangeLanguage,
   });
   final bool isSwitcher;
   final String title;
   final bool lang;
   final bool isManageScreen;
+  final void Function()? onTapChangeLanguage;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class CustomSettingRowWidget extends StatelessWidget {
                         color: AppColors.black800,
                       )),
                   InkWell(
-                      onTap: () {},
+                      onTap: onTapChangeLanguage,
                       child: lang
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.start,

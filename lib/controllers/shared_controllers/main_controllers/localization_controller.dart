@@ -6,15 +6,21 @@ import '../../../shared/services/local/cache_helper.dart';
 class LocalizationController extends GetxController {
   var _locale = const Locale('en');
 
-  Locale get currentLocale => _locale;
+  Locale currentLocale() {
+    String lan = CacheHelper.getData(
+          key: 'locale',
+        ) ??
+        "en";
+    return Locale(lan);
+  }
 
-  void changeLocale(Locale newLocale) {
+  Future<void> changeLocale(Locale newLocale) async {
     _locale = newLocale;
-    CacheHelper.setData(
+    await CacheHelper.setData(
       key: 'locale',
       value: newLocale.languageCode,
     );
-    Get.updateLocale(newLocale);
+    await Get.updateLocale(newLocale);
     update();
   }
 
