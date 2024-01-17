@@ -55,6 +55,7 @@ class InfoCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text('+966 123 456 789',
+                  textDirection: TextDirection.ltr,
                   textAlign: TextAlign.center,
                   style: AppFonts.medium.copyWith(
                       fontSize: 16,

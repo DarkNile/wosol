@@ -17,26 +17,29 @@ class RatingBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RatingBar.builder(
-      initialRating: 5,
-      minRating: 1,
-      itemSize: itemSize ?? 40,
-      direction: Axis.horizontal,
-      allowHalfRating: true,
-      maxRating: 5,
-      itemCount: 5,
-      itemPadding: itemPadding ?? const EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => SvgPicture.asset('assets/icons/star.svg'),
-      //  Icon(
-      //   Icons.star,
-      //   color: AppColors.starColor,
-      // ),
-      unratedColor: AppColors.darkBlue100,
-      // make it read-only
-      ignoreGestures: ignoreGestures ?? false,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: RatingBar.builder(
+        initialRating: 5,
+        minRating: 1,
+        itemSize: itemSize ?? 40,
+        direction: Axis.horizontal,
+        allowHalfRating: true,
+        maxRating: 5,
+        itemCount: 5,
+        itemPadding: itemPadding ?? const EdgeInsets.symmetric(horizontal: 4.0),
+        itemBuilder: (context, _) => SvgPicture.asset('assets/icons/star.svg'),
+        //  Icon(
+        //   Icons.star,
+        //   color: AppColors.starColor,
+        // ),
+        unratedColor: AppColors.darkBlue100,
+        // make it read-only
+        ignoreGestures: ignoreGestures ?? false,
 
-      onRatingUpdate: onRatingUpdate,
-      updateOnDrag: true,
+        onRatingUpdate: onRatingUpdate,
+        updateOnDrag: true,
+      ),
     );
   }
 }

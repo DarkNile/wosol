@@ -600,7 +600,7 @@ class DriverComingSheetWidget extends StatelessWidget {
       firstButtonFunction: () {},
       firstTextColor: AppColors.error600,
       firstButtonColor: Colors.transparent,
-      firstButtonText: 'Report a Problem',
+      firstButtonText: 'reportAProblem'.tr,
       withCloseIcon: false,
       spaceBeforeButtons: 12,
       height: 352,

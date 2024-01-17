@@ -47,7 +47,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                     customDivider(),
                     DefaultRowButton(
                         color: Colors.transparent,
-                        text: 'Report a Problem'.tr,
+                        text: 'reportAProblem'.tr,
                         textColor: AppColors.error600,
                         fontSize: 14,
                         containIcon: true,
