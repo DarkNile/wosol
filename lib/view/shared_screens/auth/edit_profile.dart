@@ -25,7 +25,6 @@ class EditProfile extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 472,
                       margin: const EdgeInsets.only(top: 14),
                       padding: AppConstants.edge(
                           padding: const EdgeInsets.symmetric(
@@ -50,6 +49,7 @@ class EditProfile extends StatelessWidget {
                                 height: 8,
                               ),
                               CustomTextField(
+                                hint: "name".tr,
                                 validate: true,
                                 height: 42,
                                 textEditingController: TextEditingController(),

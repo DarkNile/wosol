@@ -41,7 +41,7 @@ class DriverHomeScreen extends StatelessWidget {
           },
           title: 'Mecca Center',
           imgPath: "assets/images/home/upcoming_ride_icon.svg",
-          time: "10 mins",
+          time: "10 ${"mins".tr}",
           isNextRide: true,
         ),
         Padding(
@@ -111,16 +111,16 @@ class DriverHomeScreen extends StatelessWidget {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) =>
-                                          const RideAndTripEndBottomSheet(
-                                            headTitle: 'Ride end',
+                                          RideAndTripEndBottomSheet(
+                                            headTitle: 'rideEnd'.tr,
                                             imagePath:
                                                 'assets/images/celebrate.png',
-                                            headerMsg: 'Congratulations ',
+                                            headerMsg: '${"congrats".tr} ',
                                             subHeaderMsg:
-                                                'ride completed successfully, Thank you',
+                                                'rideCompletedSuccessfully'.tr,
                                           ));
                                 },
-                                headTitle: 'Select users to pickup',
+                                headTitle: 'selectUsersToPickup'.tr,
                                 titles: const ['Hossam', 'Mostafa Ahmed'],
                                 subTitles: const [
                                   'Future st, building no 13',
@@ -145,17 +145,18 @@ class DriverHomeScreen extends StatelessWidget {
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
-                                                      const RideAndTripEndBottomSheet(
-                                                        headTitle: 'Ride end',
+                                                      RideAndTripEndBottomSheet(
+                                                        headTitle: 'rideEnd'.tr,
                                                         imagePath:
                                                             'assets/images/celebrate.png',
                                                         headerMsg:
-                                                            'Congratulations',
+                                                            '${"congrats".tr} ',
                                                         subHeaderMsg:
-                                                            'ride completed successfully, Thank you',
+                                                            'rideCompletedSuccessfully'
+                                                                .tr,
                                                       ));
                                             },
-                                            headTitle: 'Select users to pickup',
+                                            headTitle: 'selectUsersToPickup'.tr,
                                             titles: const [
                                               'Hossam',
                                               'Mostafa Ahmed'
@@ -166,12 +167,12 @@ class DriverHomeScreen extends StatelessWidget {
                                             ],
                                           )));
                                 },
-                                headTitle: 'Cancelation reason',
-                                reasons: const [
-                                  'No Show',
-                                  'User canceled the trip',
-                                  'Canceled by customer support',
-                                  'Other'
+                                headTitle: 'cancellationReason'.tr,
+                                reasons: [
+                                  "noShow".tr,
+                                  "userCanceledTheTrip".tr,
+                                  "canceledByCustomer".tr,
+                                  'other'.tr,
                                 ],
                                 reasonsSelectedIndex: 3,
                               ));

@@ -1,10 +1,13 @@
 //
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
+
+import '../../constants/constants.dart';
 
 class CustomProfileRowWidget extends StatelessWidget {
   const CustomProfileRowWidget({
@@ -98,10 +101,12 @@ class CustomProfileRowWidget extends StatelessWidget {
                       width: 60,
                       height: 32,
                     )
-                  : SvgPicture.asset(
-                      'assets/icons/arrow-right.svg',
-                      height: 16,
-                      width: 16,
+                  : Icon(
+                      AppConstants.isEnLocale
+                          ? CupertinoIcons.arrow_right
+                          : CupertinoIcons.arrow_left,
+                      size: 16,
+                      color: AppColors.darkBlue500Base,
                     ),
             ],
           ),

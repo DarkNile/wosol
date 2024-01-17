@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -48,7 +49,7 @@ class TripDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Student Trip",
+                          "studentTrip".tr,
                           style: AppFonts.header
                               .copyWith(color: AppColors.black800),
                         ),
@@ -87,12 +88,12 @@ class TripDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Trip with",
+                          "tripWith".tr,
                           style: AppFonts.header
                               .copyWith(color: AppColors.black800),
                         ),
                         Text(
-                          captainName ?? "Captain Name",
+                          captainName ?? "captainName".tr,
                           style: AppFonts.header
                               .copyWith(color: AppColors.black800),
                         ),

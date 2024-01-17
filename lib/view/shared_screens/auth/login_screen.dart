@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Welcome ".tr,
+                              "${"Welcome".tr} ",
                               style: AppFonts.header.copyWith(fontSize: 20),
                             ),
                             const SizedBox(

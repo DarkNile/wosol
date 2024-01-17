@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -29,7 +30,7 @@ class RideCard extends StatelessWidget {
           top: 18,
           left: 18,
           right: isNextRide ? 15 : 18,
-          bottom: 18,
+          // bottom: 18,
         ),
       ),
       decoration: BoxDecoration(
@@ -39,16 +40,17 @@ class RideCard extends StatelessWidget {
       width: AppConstants.screenWidth(context),
       height: 122,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             flex: 4,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "From $title\n${isNextRide ? "Within $time" : "at $time"}",
+                  "${"from".tr} $title\n${isNextRide ? "${"within".tr} $time" : "${"at".tr} $time"}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -68,7 +70,7 @@ class RideCard extends StatelessWidget {
                       textAsWidget: Row(
                         children: [
                           Text(
-                            'Ride Details',
+                            'rideDetails'.tr,
                             style: AppFonts.small.copyWith(
                               fontSize: 14,
                               color: isNextRide
@@ -80,12 +82,14 @@ class RideCard extends StatelessWidget {
                             width: 10,
                           ),
                           Icon(
-                            CupertinoIcons.arrow_right,
+                            AppConstants.isEnLocale
+                                ? CupertinoIcons.arrow_right
+                                : CupertinoIcons.arrow_left,
                             size: 18,
                             color: isNextRide
                                 ? AppColors.white
                                 : AppColors.darkBlue500Base,
-                          )
+                          ),
                         ],
                       ),
                     ),
