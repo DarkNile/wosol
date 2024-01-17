@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:wosol/controllers/shared_controllers/icon_controller.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -15,18 +13,21 @@ class CustomSettingRowWidget extends StatelessWidget {
     this.lang = false,
     this.isManageScreen = false,
     this.onTapChangeLanguage,
+    this.toggleIcon,
     this.isWithArrow = true,
+    this.isSwitcherOn = false,
   });
   final bool isSwitcher;
+  final bool isSwitcherOn;
   final String title;
   final bool lang;
   final bool isManageScreen;
   final bool isWithArrow;
   final void Function()? onTapChangeLanguage;
+  final void Function()? toggleIcon;
 
   @override
   Widget build(BuildContext context) {
-    final IconController iconController = Get.put(IconController());
     return SizedBox(
       height: isManageScreen ? 26 : 51,
       child: Padding(
@@ -40,22 +41,18 @@ class CustomSettingRowWidget extends StatelessWidget {
                         color: AppColors.black800,
                       )),
                   InkWell(
-                    onTap: () {
-                      iconController.toggleIcon();
-                    },
-                    child: Obx(() {
-                      return iconController.isIconOn.value
-                          ? SvgPicture.asset(
-                              "assets/icons/GToggle.svg",
-                              height: 26,
-                              width: 49,
-                            )
-                          : SvgPicture.asset(
-                              "assets/icons/Toggle.svg",
-                              height: 26,
-                              width: 49,
-                            );
-                    }),
+                    onTap: toggleIcon ?? () {},
+                    child: isSwitcherOn
+                        ? SvgPicture.asset(
+                            "assets/icons/GToggle.svg",
+                            height: 26,
+                            width: 49,
+                          )
+                        : SvgPicture.asset(
+                            "assets/icons/Toggle.svg",
+                            height: 26,
+                            width: 49,
+                          ),
                   )
                 ],
               )

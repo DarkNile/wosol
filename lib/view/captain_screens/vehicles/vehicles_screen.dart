@@ -15,7 +15,7 @@ class VehiclesScreen extends StatelessWidget {
             CustomHeaderWithBackButton(header: "Vehicles".tr),
             Expanded(
               child: ListView.separated(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const PageScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
                       horizontal: 16.0, vertical: 18),
                   separatorBuilder: (context, index) => const SizedBox(

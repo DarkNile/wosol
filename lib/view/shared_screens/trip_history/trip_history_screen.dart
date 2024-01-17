@@ -29,7 +29,7 @@ class TripHistoryScreen extends StatelessWidget {
         ),
         Expanded(
           child: ListView.separated(
-            physics: const BouncingScrollPhysics(),
+            physics: const PageScrollPhysics(),
             padding: const EdgeInsets.only(
               top: 13,
               left: 16,
@@ -43,9 +43,9 @@ class TripHistoryScreen extends StatelessWidget {
                 toCity: " King Abdelaziz University",
                 buttonText: 'rideDetails'.tr,
                 onTap: () {
-                  if(AppConstants.isCaptain) {
+                  if (AppConstants.isCaptain) {
                     Get.to(() => const CaptainTripDetailsScreen());
-                  }else{
+                  } else {
                     Get.to(() => const UserTripDetailsScreen());
                   }
                 },

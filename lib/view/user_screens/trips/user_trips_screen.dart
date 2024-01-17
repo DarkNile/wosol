@@ -18,7 +18,7 @@ class UserTripsScreen extends StatelessWidget {
             CustomHeaderWithBackButton(header: "trips".tr),
             Expanded(
               child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

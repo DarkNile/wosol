@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/view/captain_screens/home/driver_home_screen.dart';
-import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
+import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
 import 'package:wosol/view/shared_screens/notification_screen.dart';
 
 import '../../controllers/captain_controllers/driver_layout_controller.dart';

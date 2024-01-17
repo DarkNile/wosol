@@ -25,7 +25,7 @@ class UserTripDetailWidget extends StatelessWidget {
       ),
       const _DotWidget(false),
        _CustomRowWidget(
-        location: 'King Abdelaziz University ',
+        location: 'King Abdelaziz University',
         time: '04:05 ${"pm".tr}',
         isFrom: false,
       ),
@@ -81,9 +81,13 @@ class _CustomRowWidget extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text(location,
-            style: AppFonts.button.copyWith(
-                fontSize: 16.0.sp(context), color: AppColors.black800)),
+        Expanded(
+          child: Text(location,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppFonts.button.copyWith(
+                  fontSize: 16.0.sp(context), color: AppColors.black800)),
+        ),
       ]),
     );
   }

@@ -287,7 +287,7 @@ class CancellationReasonAndReportRideBottomSheet extends StatelessWidget {
       firstButtonText: containTextField ? 'Send'.tr : 'Confirm'.tr,
       height: containTextField ? 570 : 415,
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const PageScrollPhysics(),
         child: Column(
           children: [
             ...List.generate(
@@ -340,7 +340,7 @@ class SelectUsersToPickupBottomSheet extends StatelessWidget {
       firstButtonFunction: function,
       height: 317,
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const PageScrollPhysics(),
         child: Column(
           children: List.generate(
             titles.length,

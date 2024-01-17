@@ -28,7 +28,7 @@ class ProfileCard extends StatelessWidget {
       ProfileCustomModel(
         imagePath: "assets/icons/receipt.svg",
         title: "subscriptions".tr,
-        subTitle: "monthly",
+        subTitle: "monthly".tr,
         onTap: () {
           Get.to(() => const SubscriptionsScreen());
         },
