@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/shared_controllers/icon_controller.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -13,11 +15,13 @@ class CustomSettingRowWidget extends StatelessWidget {
     this.lang = false,
     this.isManageScreen = false,
     this.onTapChangeLanguage,
+    this.isWithArrow = true,
   });
   final bool isSwitcher;
   final String title;
   final bool lang;
   final bool isManageScreen;
+  final bool isWithArrow;
   final void Function()? onTapChangeLanguage;
 
   @override
@@ -63,38 +67,39 @@ class CustomSettingRowWidget extends StatelessWidget {
                         color: AppColors.black800,
                       )),
                   InkWell(
-                      onTap: onTapChangeLanguage,
-                      child: lang
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "العربيه",
-                                  style: AppFonts.medium.copyWith(
-                                    color: AppColors.darkBlue400,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                    onTap: onTapChangeLanguage,
+                    child: lang
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppConstants.isEnLocale ? "العربيه" : "English",
+                                style: AppFonts.medium.copyWith(
+                                  color: AppColors.darkBlue400,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
                                 ),
+                              ),
+                              if (isWithArrow)
                                 const SizedBox(
                                   width: 6,
                                 ),
+                              if (isWithArrow)
                                 SvgPicture.asset(
                                   "assets/icons/arrow-right.svg",
                                   width: 16,
                                   height: 16,
                                 ),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/arrow-right.svg",
-                                  width: 16,
-                                  height: 16,
-                                )
-                              ],
-                            ))
+                            ],
+                          )
+                        : Icon(
+                            AppConstants.isEnLocale
+                                ? CupertinoIcons.arrow_right
+                                : CupertinoIcons.arrow_left,
+                            size: 16,
+                            color: AppColors.black800,
+                          ),
+                  ),
                 ],
               ),
       ),

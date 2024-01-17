@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -44,14 +45,14 @@ class _UserTripsTabBarWidgetState extends State<UserTripsTabBarWidget>
             5,
             (index) => _TabWidget(
                 text: index == 1
-                    ? "Sat"
+                    ? "Sat".tr
                     : index == 2
-                        ? 'Sun'
+                        ? 'Sun'.tr
                         : index == 3
-                            ? 'Mon'
+                            ? 'Mon'.tr
                             : index == 4
-                                ? "Tue"
-                                : 'All',
+                                ? "Tue".tr
+                                : 'all'.tr,
                 isSelected: index == 0)).toList());
   }
 }

@@ -41,7 +41,7 @@ class DriverHomeScreen extends StatelessWidget {
           },
           title: 'Mecca Center',
           imgPath: "assets/images/home/upcoming_ride_icon.svg",
-          time: "10 mins",
+          time: "10 ${"mins".tr}",
           isNextRide: true,
         ),
         Padding(
@@ -154,10 +154,10 @@ class DriverHomeScreen extends StatelessWidget {
                                 },
                                 headTitle: "cancelationReason".tr,
                                 reasons: [
-                                  'No Show'.tr,
-                                  'User canceled the trip'.tr,
-                                  'Canceled by customer support'.tr,
-                                  'Other'.tr
+                                  "noShow".tr,
+                                  "userCanceledTheTrip".tr,
+                                  "canceledByCustomer".tr,
+                                  'other'.tr,
                                 ],
                                 reasonsSelectedIndex: 3,
                               ));
@@ -175,10 +175,10 @@ class DriverHomeScreen extends StatelessWidget {
 
   Widget _rideAndTripEndBottomSheet() {
     return RideAndTripEndBottomSheet(
-      headTitle: 'Ride end'.tr,
+      headTitle: 'rideEnd'.tr,
       imagePath: 'assets/images/celebrate.png',
-      headerMsg: 'Congratulations'.tr,
-      subHeaderMsg: 'ride completed successfully, Thank you'.tr,
+      headerMsg:  '${"congrats".tr} ',
+      subHeaderMsg: 'rideCompletedSuccessfully'.tr,
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -10,33 +11,31 @@ class UserTripDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _CustomLocationRowWidget(
-            location: 'FR8C+HXF, At Taniem, Makkah 24224',
-            time: 'Today',
-            isFrom: true,
-          ),
-          _DotWidget(true),
-          _CustomRowWidget(
-            location: 'Home',
-            time: '10:05 am',
-            isFrom: true,
-          ),
-          _DotWidget(false),
-          _CustomRowWidget(
-            location: 'King Abdelaziz University ',
-            time: '04:05 pm',
-            isFrom: false,
-          ),
-          _DotWidget(true),
-          _CustomLocationRowWidget(
-            location: 'FR8C+HXF, At Taniem, Makkah 24224',
-            time: null,
-            isFrom: false,
-          ),
-        ]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      _CustomLocationRowWidget(
+        location: 'FR8C+HXF, At Taniem, Makkah 24224',
+        time: 'today'.tr,
+        isFrom: true,
+      ),
+      const _DotWidget(true),
+      _CustomRowWidget(
+        location: 'home'.tr,
+        time: '10:05 ${"am".tr}',
+        isFrom: true,
+      ),
+      const _DotWidget(false),
+       _CustomRowWidget(
+        location: 'King Abdelaziz University ',
+        time: '04:05 ${"pm".tr}',
+        isFrom: false,
+      ),
+      const _DotWidget(true),
+      const _CustomLocationRowWidget(
+        location: 'FR8C+HXF, At Taniem, Makkah 24224',
+        time: null,
+        isFrom: false,
+      ),
+    ]);
   }
 }
 

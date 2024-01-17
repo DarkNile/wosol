@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+
+import '../../constants/constants.dart';
 
 class CustomRowWithArrowWidget extends StatelessWidget {
   final String from;
@@ -39,10 +42,12 @@ class CustomRowWithArrowWidget extends StatelessWidget {
                     color: AppColors.darkBlue500Base,
                   )),
               const SizedBox(width: 10),
-              SvgPicture.asset(
-                'assets/icons/arrow-right.svg',
-                width: 18,
-                height: 18,
+              Icon(
+                AppConstants.isEnLocale
+                    ? CupertinoIcons.arrow_right
+                    : CupertinoIcons.arrow_left,
+                size: 18,
+                color:  AppColors.darkBlue500Base,
               ),
             ]),
           )

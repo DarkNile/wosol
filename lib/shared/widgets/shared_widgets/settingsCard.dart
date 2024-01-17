@@ -54,7 +54,8 @@ class SettingsCard extends StatelessWidget {
               },
               isSwitcher: false,
               lang: true,
-              title: 'Change Language',
+              isWithArrow: false,
+              title: 'changeLanguage'.tr,
             ),
           ],
         ));

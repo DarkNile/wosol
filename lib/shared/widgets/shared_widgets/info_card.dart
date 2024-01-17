@@ -13,7 +13,12 @@ class InfoCard extends StatelessWidget {
     return Container(
       height: 149,
       padding: AppConstants.edge(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10)),
+        padding: const EdgeInsets.only(
+          top: 12,
+          left: 10,
+          right: 10,
+        ),
+      ),
       decoration: ShapeDecoration(
         color: AppColors.btnBackColor,
         shape: RoundedRectangleBorder(
@@ -23,7 +28,7 @@ class InfoCard extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(

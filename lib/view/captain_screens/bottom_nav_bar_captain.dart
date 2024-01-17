@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -34,84 +34,84 @@ class BottomNavigationBarCaptain extends StatelessWidget {
         unselectedItemColor: AppColors.darkBlue300,
         items: [
           BottomNavigationBarItem(
-            // Todo : missing localization
-
             icon: SvgPicture.asset(
               "assets/icons/home.svg",
               height: 24,
               width: 24,
             ),
-
             activeIcon: SvgPicture.asset(
               "assets/icons/Activehome.svg",
               height: 24,
               width: 24,
             ),
-            label: "Home",
+            label: "homeNavBar".tr,
           ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/icons/rotate-left.svg",
-                height: 24,
-                width: 24,
-              ),
-              activeIcon: SvgPicture.asset(
-                "assets/icons/Activerotate-left.svg",
-                height: 24,
-                width: 24,
-              ),
-              label: "History"),
+            icon: SvgPicture.asset(
+              "assets/icons/rotate-left.svg",
+              height: 24,
+              width: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activerotate-left.svg",
+              height: 24,
+              width: 24,
+            ),
+            label: "history".tr,
+          ),
           BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                "assets/icons/navNotification.svg",
-                height: 24,
-                width: 24,
-              ),
-              activeIcon: SvgPicture.asset(
-                "assets/icons/Activenotification.svg",
-                height: 24,
-                width: 24,
-              ),
-              label: "Notifications"),
+            icon: SvgPicture.asset(
+              "assets/icons/navNotification.svg",
+              height: 24,
+              width: 24,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/icons/Activenotification.svg",
+              height: 24,
+              width: 24,
+            ),
+            label: "notifications".tr,
+          ),
           BottomNavigationBarItem(
-              icon: Stack(children: [
-                SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.dividerColor,
-                    child: SvgPicture.asset(
-                      "assets/icons/nonActiveuser.svg",
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                ),
-                Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: SvgPicture.asset(
-                      "assets/icons/menu.svg",
-                    ))
-              ]),
-              activeIcon: Stack(children: [
-                CircleAvatar(
-                  radius: 12,
+            icon: Stack(children: [
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: CircleAvatar(
                   backgroundColor: AppColors.dividerColor,
                   child: SvgPicture.asset(
-                    "assets/icons/User.svg",
+                    "assets/icons/nonActiveuser.svg",
                     height: 24,
                     width: 24,
                   ),
                 ),
-                Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: SvgPicture.asset(
-                      "assets/icons/menu.svg",
-                    ))
-              ]),
-              label: "More"),
+              ),
+              Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    "assets/icons/menu.svg",
+                  ))
+            ]),
+            activeIcon: Stack(children: [
+              CircleAvatar(
+                radius: 12,
+                backgroundColor: AppColors.dividerColor,
+                child: SvgPicture.asset(
+                  "assets/icons/User.svg",
+                  height: 24,
+                  width: 24,
+                ),
+              ),
+              Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    "assets/icons/menu.svg",
+                  ))
+            ]),
+            label: "more".tr,
+          ),
         ],
       );
     });

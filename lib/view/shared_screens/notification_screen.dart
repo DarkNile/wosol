@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/notification_card.dart';
@@ -34,7 +35,9 @@ class NotificationsScreen extends StatelessWidget {
                       color: (index == 0 || index == 2)
                           ? AppColors.btnBackColor
                           : AppColors.white,
-                      notificationTime: "15 min ago",
+                      notificationTime: AppConstants.isEnLocale
+                          ? "15 ${"minsAgo".tr}"
+                          : "${"ago".tr} 15 ${"min".tr}",
                       notificationTitle:
                           "from Home to King Abdelaziz University",
                     );

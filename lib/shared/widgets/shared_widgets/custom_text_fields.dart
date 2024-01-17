@@ -380,7 +380,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 contentPadding: AppConstants.edge(
                   padding: const EdgeInsets.only(
                     left: 20,
-                    bottom: 30,
+                    bottom: 18,
                   ),
                 ),
                 border: OutlineInputBorder(

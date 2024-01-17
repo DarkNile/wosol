@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/captain_widgets/custom_captain_list_tile.dart';
@@ -27,8 +28,8 @@ class UserListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _CustomUserHeader(
-                title: 'Confirmed (11 users)',
-                subTitle: 'from 14 users',
+                title: '${"confirmed".tr} (11 ${"users".tr})',
+                subTitle: '${"from".tr} 14 ${"users".tr}',
                 hasSubTitle: hasSubTitle),
             const SizedBox(
               height: 6,

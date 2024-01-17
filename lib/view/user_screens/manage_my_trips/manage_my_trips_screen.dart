@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/info_card.dart';
@@ -26,7 +27,7 @@ class ManageMyTripUsersScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Saturday',
+                            Text('saturday'.tr,
                                 style: AppFonts.header
                                     .copyWith(color: AppColors.black800)),
                             const SizedBox(
