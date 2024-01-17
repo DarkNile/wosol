@@ -14,7 +14,7 @@ class AppConstants {
 
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
-      localizationController.currentLocale.languageCode == 'en';
+      localizationController.currentLocale().languageCode == 'en';
 
   static EdgeInsets edge({
     EdgeInsets padding = EdgeInsets.zero,
@@ -38,7 +38,7 @@ class AppConstants {
     const englishDigits = '0123456789';
     const arabicDigits = '٠١٢٣٤٥٦٧٨٩';
 
-    if (localizationController.currentLocale.languageCode == 'ar') {
+    if (localizationController.currentLocale().languageCode == 'ar') {
       for (int i = 0; i < englishDigits.length; i++) {
         input = input.replaceAll(englishDigits[i], arabicDigits[i]);
       }

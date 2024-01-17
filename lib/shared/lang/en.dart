@@ -45,5 +45,5 @@ const Map<String, String> en = {
       'For more edits you should Call Wosol',
   "endTrip": "End Trip",
   "confirmPickup": "Confirm Pickup",
-  "canceled": "Canceled"
+  "canceled": "Canceled",
 };

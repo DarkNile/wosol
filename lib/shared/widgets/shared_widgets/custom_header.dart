@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -60,7 +61,7 @@ class CustomHeader extends StatelessWidget {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Welcome,',
+                              text: '${"Welcome".tr},',
                               style: AppFonts.medium.copyWith(
                                 fontSize: headerSize,
                                 color: headerColor ?? AppColors.black800,
@@ -205,7 +206,9 @@ class CustomHeaderWithBackButton extends StatelessWidget {
                   Navigator.pop(context);
                 },
             child: SvgPicture.asset(
-              AppConstants.localizationController.currentLocale.languageCode ==
+              AppConstants.localizationController
+                          .currentLocale()
+                          .languageCode ==
                       'en'
                   ? 'assets/icons/arrow-left.svg'
                   : 'assets/icons/arrow-right.svg',
