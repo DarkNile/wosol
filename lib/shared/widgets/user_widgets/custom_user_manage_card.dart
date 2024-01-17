@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get_utils/get_utils.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
@@ -28,21 +30,21 @@ class CustomUserManageCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: CustomSettingRowWidget(
                   isSwitcher: true,
                   isManageScreen: true,
-                  title: '10:05 am',
+                  title: '10:05 ${"am".tr}',
                 ),
               ),
               const SizedBox(
                 height: 8,
               ),
-              const Expanded(
+              Expanded(
                 child: CustomRowWithArrowWidget(
                     isHeader: false,
                     from: 'King Abdelaziz University',
-                    to: 'Home'),
+                    to: 'home'.tr),
               ),
               if (hasHint) ...[
                 const SizedBox(
@@ -59,7 +61,7 @@ class CustomUserManageCardWidget extends StatelessWidget {
                       const SizedBox(
                         width: 6,
                       ),
-                      Text('Next trip will be on Jan 03, 2023',
+                      Text('${"nextTripWillBeOn".tr} Jan 03, 2023',
                           style: AppFonts.small.copyWith(
                             color: AppColors.logo,
                             fontSize: 12,
@@ -78,7 +80,7 @@ class CustomUserManageCardWidget extends StatelessWidget {
                     containIcon: true,
                     svgPic: 'assets/icons/refresh.svg',
                     fontSize: 14,
-                    text: 'Turn back on for Jan 03, 2023 ?',
+                    text: '${"turnBackOnFor".tr} Jan 03, 2023 ${AppConstants.isEnLocale ? "?": "؟"}',
                     borderRadius: 8,
                     function: () {}),
               ]

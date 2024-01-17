@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 
 import '../../../shared/widgets/captain_widgets/custom_route_card_widget.dart';
@@ -13,7 +14,7 @@ class CaptainRoutesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomHeaderWithBackButton(header: "Routes"),
+            CustomHeaderWithBackButton(header: "routes".tr),
             Expanded(
               child: ListView.separated(
                   padding: const EdgeInsets.symmetric(

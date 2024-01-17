@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
@@ -40,7 +41,7 @@ class CustomRouteCardWidget extends StatelessWidget {
                 height: 11,
               ),
               CustomRowWithArrowWidget(
-                from: 'View on map',
+                from: 'viewOnMap'.tr,
                 isButton: true,
                 onTapButton: () {},
                 to: '',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
@@ -55,7 +56,7 @@ class LocationCardWidget extends StatelessWidget {
                 height: 8,
               ),
               CustomRowWithArrowWidget(
-                  from: 'View on map',
+                  from: 'viewOnMap'.tr,
                   to: '',
                   isButton: true,
                   onTapButton: () {})

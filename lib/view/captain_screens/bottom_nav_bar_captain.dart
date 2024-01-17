@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -45,7 +44,7 @@ class BottomNavigationBarCaptain extends StatelessWidget {
               height: 24,
               width: 24,
             ),
-            label: "home".tr,
+            label: "homeNavBar".tr,
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(

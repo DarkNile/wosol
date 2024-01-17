@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -65,33 +66,33 @@ class SubscriptionsWidget extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const _CustomRowWidget(
-                      name: 'Price',
-                      value: '134.50 SAR',
+                    _CustomRowWidget(
+                      name: 'price'.tr,
+                      value: '134.50 ${"SAR".tr}',
                     ),
-                    const _CustomRowWidget(
+                    _CustomRowWidget(
                       isBackGroundWhite: false,
-                      name: 'Start Date',
+                      name: 'startDate'.tr,
                       value: '13 Sep, 2023',
                     ),
-                    const _CustomRowWidget(
-                      name: 'End Date',
+                     _CustomRowWidget(
+                      name: 'endDate'.tr,
                       value: '25 Jun, 2024',
                     ),
-                    const _CustomRowWidget(
+                     _CustomRowWidget(
                       isBackGroundWhite: false,
-                      name: 'Trip Type',
-                      value: 'Round Trip',
+                      name: 'tripType'.tr,
+                      value: 'roundTrip'.tr,
                     ),
-                    const _CustomRowWidget(
+                     _CustomRowWidget(
                       isLocation: true,
-                      name: 'From',
+                      name: 'from'.tr,
                       value: 'Mecca Center',
                     ),
-                    const _CustomRowWidget(
+                     _CustomRowWidget(
                       isLocation: true,
                       isBackGroundWhite: false,
-                      name: 'To',
+                      name: 'to'.tr,
                       value: 'King Abdelaziz Univesity',
                     ),
                   ],
@@ -108,8 +109,7 @@ class _CustomRowWidget extends StatelessWidget {
   final String value;
   final bool isBackGroundWhite;
   const _CustomRowWidget(
-      {super.key,
-      this.isLocation = false,
+      {this.isLocation = false,
       required this.name,
       required this.value,
       this.isBackGroundWhite = true});

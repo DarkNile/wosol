@@ -19,24 +19,24 @@ class ProfileCard extends StatelessWidget {
     List<ProfileCustomModel> userProfileItems = [
       ProfileCustomModel(
         imagePath: "assets/icons/location.svg",
-        title: "Location",
-        subTitle: "home, university",
+        title: "location".tr,
+        subTitle: "homeUniversity".tr,
         onTap: () {
           Get.to(() => const UserLocationsScreen());
         },
       ),
       ProfileCustomModel(
         imagePath: "assets/icons/receipt.svg",
-        title: "Subscriptions",
-        subTitle: "Monthly",
+        title: "subscriptions".tr,
+        subTitle: "monthly",
         onTap: () {
           Get.to(() => const SubscriptionsScreen());
         },
       ),
       ProfileCustomModel(
         imagePath: "assets/icons/routing.svg",
-        title: "My Routes",
-        subTitle: "Start, return",
+        title: "myRoutes".tr,
+        subTitle: "startReturn".tr,
         onTap: () {
           Get.to(() => const UserTripsScreen());
         },
@@ -45,7 +45,7 @@ class ProfileCard extends StatelessWidget {
     List<ProfileCustomModel> captainProfileItems = [
       ProfileCustomModel(
         imagePath: "assets/icons/bus.svg",
-        title: "Vehicles",
+        title: "vehicles".tr,
         subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
         onTap: () {
           Get.to(() => const VehiclesScreen());
@@ -53,7 +53,7 @@ class ProfileCard extends StatelessWidget {
       ),
       ProfileCustomModel(
         imagePath: "assets/icons/routing.svg",
-        title: "Routes",
+        title: "routes".tr,
         subTitle: "Mecca, Jedaha  ",
         onTap: () {
           Get.to(() => const CaptainRoutesScreen());
@@ -61,8 +61,8 @@ class ProfileCard extends StatelessWidget {
       ),
       ProfileCustomModel(
         imagePath: "assets/icons/personalcard.svg",
-        title: "License",
-        subTitle: "driving license, car license",
+        title: "license".tr,
+        subTitle: "drivingAndCarLicense".tr,
         onTap: () {},
       ),
     ];

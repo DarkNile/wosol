@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
@@ -93,7 +94,7 @@ class CustomProfileRowWidget extends StatelessWidget {
                   ? DefaultButton(
                       borderRadius: 6,
                       function: onTapEdit,
-                      text: "Edit",
+                      text: "edit".tr,
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       textColor: AppColors.btnEditColor,
@@ -106,7 +107,7 @@ class CustomProfileRowWidget extends StatelessWidget {
                           ? CupertinoIcons.arrow_right
                           : CupertinoIcons.arrow_left,
                       size: 16,
-                      color: AppColors.darkBlue500Base,
+                      color: AppColors.black800,
                     ),
             ],
           ),

@@ -15,18 +15,18 @@ class VehiclesScreen extends StatelessWidget {
             CustomHeaderWithBackButton(header: "Vehicles".tr),
             Expanded(
               child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 18),
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 10,
                       ),
                   shrinkWrap: true,
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return const VehiclesCardWidget(
+                    return VehiclesCardWidget(
                       carType: 'White Toyota Hiace 2023',
-                      seats: '28 Seats',
+                      seats: '28 ${"seats".tr}',
                       carNumberImage: 'assets/images/car_number.png',
                       carImage: 'assets/images/car.png',
                     );

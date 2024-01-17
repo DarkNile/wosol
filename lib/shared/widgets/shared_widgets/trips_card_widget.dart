@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
@@ -31,6 +32,7 @@ class TripCardWidget extends StatelessWidget {
             if (withCancel)
               withBorder
                   ? DefaultRowButton(
+                      text: "cancelTrip".tr,
                       height: 42,
                       border: Border.all(
                         color: AppColors.error600,
@@ -43,6 +45,7 @@ class TripCardWidget extends StatelessWidget {
                       svgPic: 'assets/icons/close_red.svg',
                     )
                   : DefaultRowButton(
+                      text: "cancelTrip".tr,
                       height: 42,
                       color: AppColors.error600,
                       function: onCancel,

@@ -37,7 +37,7 @@ class NotificationsScreen extends StatelessWidget {
                           : AppColors.white,
                       notificationTime: AppConstants.isEnLocale
                           ? "15 ${"minsAgo".tr}"
-                          : "${"ago".tr} 15 ${"mins".tr}",
+                          : "${"ago".tr} 15 ${"min".tr}",
                       notificationTitle:
                           "from Home to King Abdelaziz University",
                     );

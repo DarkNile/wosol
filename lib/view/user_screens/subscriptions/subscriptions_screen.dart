@@ -43,7 +43,8 @@ class SubscriptionsScreen extends StatelessWidget {
                       ...List.generate(
                           4,
                           (index) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: SubscriptionsWidget(),
                               ))
                     ],
