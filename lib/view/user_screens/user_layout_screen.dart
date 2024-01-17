@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/user_controllers/user_layout_controller.dart';
-import 'package:wosol/view/shared_screens/auth/settings_screen.dart';
+import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
 import 'package:wosol/view/shared_screens/notification_screen.dart';
 import 'package:wosol/view/user_screens/home/user_home_screen.dart';
 import 'package:wosol/view/user_screens/manage_my_trips/manage_my_trips_screen.dart';

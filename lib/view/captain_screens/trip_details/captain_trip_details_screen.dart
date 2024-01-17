@@ -19,7 +19,7 @@ class CaptainTripDetailsScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                physics: const BouncingScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 children: [
                   const TripDetailsCard(
                       date: 'Dec 22  - 08:10 am',

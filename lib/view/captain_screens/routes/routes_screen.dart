@@ -21,7 +21,7 @@ class CaptainRoutesScreen extends StatelessWidget {
                     vertical: 18,
                     horizontal: 16,
                   ),
-                  physics: const BouncingScrollPhysics(),
+                  physics: const PageScrollPhysics(),
                   itemBuilder: (context, index) =>
                       const CustomRouteCardWidget(),
                   separatorBuilder: (context, index) => const SizedBox(

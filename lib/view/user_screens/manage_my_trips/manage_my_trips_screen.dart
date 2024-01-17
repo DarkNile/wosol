@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:get/get.dart';
+import 'package:wosol/controllers/user_controllers/manage_trips_controller.dart';
+import 'package:wosol/models/manage_trips_model.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/info_card.dart';
 import 'package:wosol/shared/widgets/user_widgets/custom_user_manage_card.dart';
 import 'package:wosol/shared/widgets/user_widgets/manage_my_trips_header_widget.dart';
 
-class ManageMyTripUsersScreen extends StatelessWidget {
+class ManageMyTripUsersScreen extends StatefulWidget {
   const ManageMyTripUsersScreen({super.key});
 
+  @override
+  State<ManageMyTripUsersScreen> createState() =>
+      _ManageMyTripUsersScreenState();
+}
+
+class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen> {
+  final UserManageTripsController userManageTripsController =
+      Get.put<UserManageTripsController>(UserManageTripsController());
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -34,12 +44,28 @@ class ManageMyTripUsersScreen extends StatelessWidget {
                               height: 10,
                             ),
                             CustomUserManageCardWidget(
+                              manageTrips: ManageTripsModel(
+                                from: "King Abdelaziz University",
+                                isToggleOn: false.obs,
+                                time: "10:00",
+                                to: "Home".tr,
+                              ),
+                              userManageTripsController:
+                                  userManageTripsController,
                               hasHint: index == 1 ? true : false,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             CustomUserManageCardWidget(
+                              manageTrips: ManageTripsModel(
+                                from: "King Abdelaziz University",
+                                isToggleOn: false.obs,
+                                time: "10:00",
+                                to: "Home".tr,
+                              ),
+                              userManageTripsController:
+                                  userManageTripsController,
                               hasButton: index == 1 ? true : false,
                             ),
                             const SizedBox(

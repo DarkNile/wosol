@@ -8,6 +8,7 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
 import 'package:wosol/shared/widgets/shared_widgets/settingsCard.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
+import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -30,7 +31,6 @@ class SettingsScreen extends StatelessWidget {
             }),
         Expanded(
           child: ListView(
-            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(16.0),
             children: [
               const ProfileCard(),
@@ -55,7 +55,9 @@ class SettingsScreen extends StatelessWidget {
                 height: 24,
               ),
               DefaultRowButton(
-                function: () {},
+                function: () {
+                  Get.offAll(() => const LoginScreen());
+                },
                 text: "Logout".tr,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

@@ -47,23 +47,39 @@ class CustomRowWithArrowWidget extends StatelessWidget {
                     ? CupertinoIcons.arrow_right
                     : CupertinoIcons.arrow_left,
                 size: 18,
-                color:  AppColors.darkBlue500Base,
+                color: AppColors.darkBlue500Base,
               ),
             ]),
           )
         : Row(
             children: [
-              Text(from, style: textStyle()),
-              const SizedBox(width: 10),
-              SvgPicture.asset(
-                isHeader
-                    ? 'assets/icons/arrow_right_header.svg'
-                    : 'assets/icons/arrow-right.svg',
-                width: 16,
-                height: 16,
+              Flexible(
+                child: Text(
+                  from,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textStyle(),
+                ),
               ),
-              const SizedBox(width: 10),
-              Text(to, style: textStyle())
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SvgPicture.asset(
+                  isHeader
+                      ? 'assets/icons/arrow_right_header.svg'
+                      : 'assets/icons/arrow-right.svg',
+                  width: 16,
+                  height: 16,
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  to,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textStyle(),
+                ),
+              ),
             ],
           );
   }

@@ -142,4 +142,10 @@ const Map<String, String> ar = {
   "nextTripWillBeOn": "سيكون الرحيل التالي في",
   "turnBackOnFor": "العودة متاحة في",
   "homeNavBar": "الرئيسية",
+  "price": "السعر",
+  "SAR": "ريال سعودي",
+  "startDate": "تاريخ البداية",
+  "endDate": "تاريخ النهاية",
+  "tripType": "نوع الرحلة",
+  "roundTrip": "رحلة ذهاب وإياب"
 };

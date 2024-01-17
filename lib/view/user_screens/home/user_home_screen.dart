@@ -23,7 +23,7 @@ class UserHomeScreen extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const PageScrollPhysics(),
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

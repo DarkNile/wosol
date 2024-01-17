@@ -50,7 +50,9 @@ class NotificationCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: AppConstants.screenWidth(context) * .68,
+                            width: AppConstants.screenWidth(context) <= 353
+                                ? AppConstants.screenWidth(context) * .64
+                                : AppConstants.screenWidth(context) * .68,
                             child: Text.rich(
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,

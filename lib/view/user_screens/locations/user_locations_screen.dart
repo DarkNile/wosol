@@ -23,7 +23,7 @@ class UserLocationsScreen extends StatelessWidget {
                   left: 16,
                   right: 16,
                 ),
-                physics: const BouncingScrollPhysics(),
+                physics: const PageScrollPhysics(),
                 itemBuilder: (context, index) => const LocationCardWidget(),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 10,
