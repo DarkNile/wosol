@@ -111,16 +111,9 @@ class DriverHomeScreen extends StatelessWidget {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) =>
-                                          RideAndTripEndBottomSheet(
-                                            headTitle: 'rideEnd'.tr,
-                                            imagePath:
-                                                'assets/images/celebrate.png',
-                                            headerMsg: '${"congrats".tr} ',
-                                            subHeaderMsg:
-                                                'rideCompletedSuccessfully'.tr,
-                                          ));
+                                          _rideAndTripEndBottomSheet());
                                 },
-                                headTitle: 'selectUsersToPickup'.tr,
+                                headTitle: 'Select users to pickup'.tr,
                                 titles: const ['Hossam', 'Mostafa Ahmed'],
                                 subTitles: const [
                                   'Future st, building no 13',
@@ -145,18 +138,10 @@ class DriverHomeScreen extends StatelessWidget {
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
-                                                      RideAndTripEndBottomSheet(
-                                                        headTitle: 'rideEnd'.tr,
-                                                        imagePath:
-                                                            'assets/images/celebrate.png',
-                                                        headerMsg:
-                                                            '${"congrats".tr} ',
-                                                        subHeaderMsg:
-                                                            'rideCompletedSuccessfully'
-                                                                .tr,
-                                                      ));
+                                                      _rideAndTripEndBottomSheet());
                                             },
-                                            headTitle: 'selectUsersToPickup'.tr,
+                                            headTitle:
+                                                'Select users to pickup'.tr,
                                             titles: const [
                                               'Hossam',
                                               'Mostafa Ahmed'
@@ -167,7 +152,7 @@ class DriverHomeScreen extends StatelessWidget {
                                             ],
                                           )));
                                 },
-                                headTitle: 'cancellationReason'.tr,
+                                headTitle: "cancelationReason".tr,
                                 reasons: [
                                   "noShow".tr,
                                   "userCanceledTheTrip".tr,
@@ -185,6 +170,15 @@ class DriverHomeScreen extends StatelessWidget {
         formPlace: 'Mecca ',
         toPlace: 'King Abdelaziz University',
       ),
+    );
+  }
+
+  Widget _rideAndTripEndBottomSheet() {
+    return RideAndTripEndBottomSheet(
+      headTitle: 'rideEnd'.tr,
+      imagePath: 'assets/images/celebrate.png',
+      headerMsg:  '${"congrats".tr} ',
+      subHeaderMsg: 'rideCompletedSuccessfully'.tr,
     );
   }
 }
