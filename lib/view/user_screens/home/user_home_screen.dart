@@ -74,23 +74,23 @@ class UserHomeScreen extends StatelessWidget {
     showModalBottomSheet(
         context: context,
         builder: (context) => RideCanceledAndReportedBottomSheet(
-              headTitle: 'Cancel Ride',
+              headTitle: 'Cancel Ride'.tr,
               isCancelFirstStep: true,
               imagePath: 'assets/images/thinking.png',
-              headerMsg: 'You are about to cancel your ride, are you sure?',
-              subHeaderMsg: 'Note: today trip only will be canceled',
+              headerMsg: 'You are about to cancel your ride, are you sure?'.tr,
+              subHeaderMsg: 'Note: today trip only will be canceled'.tr,
               firstButtonFunction: () {
                 Get.back();
                 showModalBottomSheet(
                     context: context,
-                    builder: (context) =>
-                        const RideCanceledAndReportedBottomSheet(
-                          headTitle: 'Ride Canceled',
+                    builder: (context) => RideCanceledAndReportedBottomSheet(
+                          headTitle: 'Ride Canceled'.tr,
                           isReportFirstStep: true,
                           imagePath: 'assets/images/smile.png',
-                          headerMsg: 'Ride has been canceled',
+                          headerMsg: 'Ride has been canceled'.tr,
                           subHeaderMsg:
-                              "Thank you for being kind and save others' time.",
+                              "Thank you for being kind and save others' time."
+                                  .tr,
                         ));
               },
               secondButtonFunction: () {

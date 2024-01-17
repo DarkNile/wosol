@@ -111,16 +111,9 @@ class DriverHomeScreen extends StatelessWidget {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) =>
-                                          const RideAndTripEndBottomSheet(
-                                            headTitle: 'Ride end',
-                                            imagePath:
-                                                'assets/images/celebrate.png',
-                                            headerMsg: 'Congratulations ',
-                                            subHeaderMsg:
-                                                'ride completed successfully, Thank you',
-                                          ));
+                                          _rideAndTripEndBottomSheet());
                                 },
-                                headTitle: 'Select users to pickup',
+                                headTitle: 'Select users to pickup'.tr,
                                 titles: const ['Hossam', 'Mostafa Ahmed'],
                                 subTitles: const [
                                   'Future st, building no 13',
@@ -145,17 +138,10 @@ class DriverHomeScreen extends StatelessWidget {
                                               showModalBottomSheet(
                                                   context: context,
                                                   builder: (context) =>
-                                                      const RideAndTripEndBottomSheet(
-                                                        headTitle: 'Ride end',
-                                                        imagePath:
-                                                            'assets/images/celebrate.png',
-                                                        headerMsg:
-                                                            'Congratulations',
-                                                        subHeaderMsg:
-                                                            'ride completed successfully, Thank you',
-                                                      ));
+                                                      _rideAndTripEndBottomSheet());
                                             },
-                                            headTitle: 'Select users to pickup',
+                                            headTitle:
+                                                'Select users to pickup'.tr,
                                             titles: const [
                                               'Hossam',
                                               'Mostafa Ahmed'
@@ -166,12 +152,12 @@ class DriverHomeScreen extends StatelessWidget {
                                             ],
                                           )));
                                 },
-                                headTitle: 'Cancelation reason',
-                                reasons: const [
-                                  'No Show',
-                                  'User canceled the trip',
-                                  'Canceled by customer support',
-                                  'Other'
+                                headTitle: "cancelationReason".tr,
+                                reasons: [
+                                  'No Show'.tr,
+                                  'User canceled the trip'.tr,
+                                  'Canceled by customer support'.tr,
+                                  'Other'.tr
                                 ],
                                 reasonsSelectedIndex: 3,
                               ));
@@ -184,6 +170,15 @@ class DriverHomeScreen extends StatelessWidget {
         formPlace: 'Mecca ',
         toPlace: 'King Abdelaziz University',
       ),
+    );
+  }
+
+  Widget _rideAndTripEndBottomSheet() {
+    return RideAndTripEndBottomSheet(
+      headTitle: 'Ride end'.tr,
+      imagePath: 'assets/images/celebrate.png',
+      headerMsg: 'Congratulations'.tr,
+      subHeaderMsg: 'ride completed successfully, Thank you'.tr,
     );
   }
 }

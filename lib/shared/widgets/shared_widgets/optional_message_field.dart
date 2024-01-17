@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -15,7 +16,7 @@ class OptionalMessage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Message(optional)",
+          "Message(optional)".tr,
           style: AppFonts.medium.copyWith(color: AppColors.darkBlue500Base),
         ),
         Container(
@@ -38,7 +39,7 @@ class OptionalMessage extends StatelessWidget {
             // keyboardType: TextInputType.multiline,
             controller: TextEditingController(),
             decoration: InputDecoration(
-              hintText: 'enter your message',
+              hintText: 'enter your message'.tr,
               hintStyle: AppFonts.small,
               border: InputBorder.none,
             ),

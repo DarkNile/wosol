@@ -73,16 +73,17 @@ class UserTripDetailsScreen extends StatelessWidget {
               Get.back();
               showModalBottomSheet(
                   context: context,
-                  builder: (context) => const RideCanceledAndReportedBottomSheet(
-                      headTitle: 'Ride Reported',
+                  builder: (context) => RideCanceledAndReportedBottomSheet(
+                      headTitle: 'Ride Reported'.tr,
                       imagePath: 'assets/images/star.png',
-                      headerMsg: 'Rated submitted successfully',
+                      headerMsg: 'Rated submitted successfully'.tr,
                       subHeaderMsg:
-                          'Thank you, hope you have enjoyed your ride with us',
+                          'Thank you, hope you have enjoyed your ride with us'
+                              .tr,
                       isReportFirstStep: true));
             },
-            onRatingUpdate: (double) {},
-            headTitle: 'Rate your trip',
+            onRatingUpdate: (double rate) {},
+            headTitle: 'Rate your trip'.tr,
             selectIssue: false));
   }
 
@@ -90,22 +91,30 @@ class UserTripDetailsScreen extends StatelessWidget {
     await showModalBottomSheet(
         context: context,
         isScrollControlled: true,
-        builder: (context) => RateBottomSheet(
-            function: () {
-              Get.back();
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) => const RideCanceledAndReportedBottomSheet(
-                      headTitle: 'Ride Reported',
-                      imagePath: 'assets/images/sad.png',
-                      headerMsg: 'We feel sorry for you',
-                      subHeaderMsg:
-                          'We received your report successfully, and we will try to resolve the issue very soon.',
-                      isReportFirstStep: true));
-            },
-            onRatingUpdate: (double) {},
-            headTitle: 'Rate your trip',
-            selectIssue: true));
+        builder: (context) => CancellationReasonAndReportRideBottomSheet(
+              function: () {
+                Get.back();
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => RideCanceledAndReportedBottomSheet(
+                        headTitle: 'Ride Reported'.tr,
+                        imagePath: 'assets/images/sad.png',
+                        headerMsg: 'We feel sorry for you'.tr,
+                        subHeaderMsg:
+                            'We received your report successfully, and we will try to resolve the issue very soon.'
+                                .tr,
+                        isReportFirstStep: true));
+              },
+              headTitle: 'Report ride'.tr,
+              reasons: [
+                "Driver behaviour".tr,
+                "Driver arrived late".tr,
+                "Car propblem".tr,
+                "Other".tr
+              ],
+              containTextField: true,
+              reasonsSelectedIndex: 3,
+            ));
   }
 
   Widget customDivider() {
