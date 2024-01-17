@@ -51,6 +51,8 @@ class EditProfile extends StatelessWidget {
                               CustomTextField(
                                 hint: "name".tr,
                                 validate: true,
+                                enabled: false,
+                                fillColor: AppColors.dividerColor,
                                 height: 42,
                                 textEditingController: TextEditingController(),
                                 onSubmit: (v) {},
@@ -103,6 +105,8 @@ class EditProfile extends StatelessWidget {
                               ),
                               CustomTextField(
                                 validate: true,
+                                enabled: false,
+                                fillColor: AppColors.dividerColor,
                                 textEditingController: TextEditingController(),
                                 onSubmit: (v) {},
                                 label: '',
@@ -125,7 +129,9 @@ class EditProfile extends StatelessWidget {
                             height: 24,
                           ),
                           DefaultButton(
-                            function: () {},
+                            function: () {
+                              Get.back();
+                            },
                             height: 44,
                             text: 'Save'.tr,
                             color: AppColors.logo,

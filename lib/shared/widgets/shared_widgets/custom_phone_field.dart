@@ -17,6 +17,7 @@ class CustomPhoneField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10)),
       validate: true,
       hint: "",
+      enabled: false,
       prefixIcon: Padding(
         padding: AppConstants.edge(
             padding:
@@ -31,6 +32,7 @@ class CustomPhoneField extends StatelessWidget {
       onSubmit: (v) {},
       label: '',
       height: 42,
+      fillColor: AppColors.dividerColor,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
