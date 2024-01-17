@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -88,7 +89,7 @@ class _FromOrToWidget extends StatelessWidget {
     return SizedBox(
       width: 67,
       child: Row(children: [
-        Text(isFrom ? 'From' : 'To',
+        Text(isFrom ? "from".tr : "to".tr,
             style: AppFonts.button.copyWith(
                 fontSize: 13.0.sp(context),
                 fontWeight: FontWeight.w500,

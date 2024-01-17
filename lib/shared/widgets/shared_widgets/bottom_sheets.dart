@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/user_widgets/captain_number.dart';
 
@@ -16,6 +17,9 @@ import 'custom_from_to_widget.dart';
 import 'custom_status_widget.dart';
 import 'optional_message_field.dart';
 import 'or_widget.dart';
+
+String _firstButtonText = "Start Ride".tr;
+String _secondButtonText = "canceled".tr;
 
 class BottomSheetBase extends StatelessWidget {
   const BottomSheetBase({
@@ -166,8 +170,8 @@ class RideStartBottomSheet extends StatelessWidget {
       buttonsContainIcon: fromUser,
       showButtons: true,
       containTwoButtons: fromUser,
-      firstButtonText: fromUser ? 'I’m Ready' : 'Start Ride',
-      secondButtonText: 'Cancel Ride',
+      firstButtonText: fromUser ? "I’m Ready".tr : "Start Ride".tr,
+      secondButtonText: 'Cancel Ride'.tr,
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},
       withCloseIcon: true,
@@ -236,9 +240,10 @@ class ConfirmPickupBottomSheet extends StatelessWidget {
     return BottomSheetBase(
       headTitle: '',
       draggable: true,
+      secondButtonText: _secondButtonText,
       buttonsContainIcon: true,
       containTwoButtons: true,
-      firstButtonText: 'Confirm Pickup',
+      firstButtonText: "Confirm Pickup".tr,
       padding: AppConstants.edge(
           padding: const EdgeInsets.only(top: 24, bottom: 30)),
       spaceBeforeButtons: 24,
@@ -279,7 +284,7 @@ class CancellationReasonAndReportRideBottomSheet extends StatelessWidget {
       buttonsContainIcon: false,
       firstButtonFunction: function,
       withCloseIcon: true,
-      firstButtonText: containTextField ? 'Send' : 'Confirm',
+      firstButtonText: containTextField ? 'Send'.tr : 'Confirm'.tr,
       height: containTextField ? 570 : 415,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -331,7 +336,7 @@ class SelectUsersToPickupBottomSheet extends StatelessWidget {
     return BottomSheetBase(
       headTitle: headTitle,
       buttonsContainIcon: false,
-      firstButtonText: 'Confirm',
+      firstButtonText: 'Confirm'.tr,
       firstButtonFunction: function,
       height: 317,
       child: SingleChildScrollView(
@@ -473,8 +478,8 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
       headTitle: headTitle,
       showButtons: isCancelFirstStep,
       containTwoButtons: true,
-      firstButtonText: showOrButton ? 'Turn off' : 'Yes, Cancel ride',
-      secondButtonText: 'No, Keep ride',
+      firstButtonText: showOrButton ? 'Turn off'.tr : 'Yes, Cancel ride'.tr,
+      secondButtonText: 'No, Keep ride'.tr,
       firstButtonsFlex: 1,
       secondButtonsFlex: 1,
       withCloseIcon: true,
@@ -509,13 +514,13 @@ class RateBottomSheet extends StatelessWidget {
   final Function() function;
   final Function(double) onRatingUpdate;
   final List<String> issues = [
-    'Aggressive Driving',
-    'Car wasn’t clean',
-    'Ride arrive late',
-    'Driver behaviour',
-    'Driver behaviour',
-    'The driver wasn’t the same',
-    'Wrong vehicle arrived',
+    'Aggressive Driving'.tr,
+    'Car wasn’t clean'.tr,
+    'Ride arrive late'.tr,
+    'Driver behaviour'.tr,
+    'Driver behaviour'.tr,
+    'The driver wasn’t the same'.tr,
+    'Wrong vehicle arrived'.tr,
   ];
 
   RateBottomSheet({
@@ -533,7 +538,7 @@ class RateBottomSheet extends StatelessWidget {
       headTitle: headTitle,
       buttonsContainIcon: false,
       firstButtonFunction: function,
-      firstButtonText: 'Submit',
+      firstButtonText: 'Submit'.tr,
       withCloseIcon: true,
       height: selectIssue
           ? 485 //485
@@ -551,7 +556,7 @@ class RateBottomSheet extends StatelessWidget {
           if (selectIssue)
             Padding(
               padding: const EdgeInsets.only(top: 24, bottom: 12),
-              child: Text('Select Issue (select one or more)',
+              child: Text('Select Issue (select one or more)'.tr,
                   style: AppFonts.header),
             ),
           if (selectIssue)
