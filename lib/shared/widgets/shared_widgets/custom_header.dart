@@ -10,6 +10,7 @@ class CustomHeader extends StatelessWidget {
     super.key,
     required this.header,
     this.onPressed,
+    this.hasIcon = true,
     this.height = 48,
     this.textAlignment,
     this.headerSize = 18,
@@ -36,6 +37,7 @@ class CustomHeader extends StatelessWidget {
   final double iconHeight;
   final Color? headerColor;
   final bool hasPadding;
+  final bool hasIcon;
   final double elevation;
   final Alignment? textAlignment;
 
@@ -124,30 +126,32 @@ class CustomHeader extends StatelessWidget {
                             //     : AppColors.redItem),
                             BlendMode.srcIn),
                   )
-                : InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    onTap: onPressed ??
-                        () {
-                          Navigator.pop(context);
-                        },
-                    child: SvgPicture.asset(
-                      svgIcon,
-                      width: iconWidth,
-                      height: iconHeight,
-                      fit: BoxFit.fill,
-                      colorFilter: itemsColor == null
-                          ? null
-                          : ColorFilter.mode(
-                              itemsColor ?? AppColors.black,
-                              // (AppConstants.themeController.isDarkMode.value
-                              //     ? AppColors.whiteColor
-                              //     : AppColors.redItem),
-                              BlendMode.srcIn),
-                    ),
-                  ),
+                : (hasIcon)
+                    ? InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        onTap: onPressed ??
+                            () {
+                              Navigator.pop(context);
+                            },
+                        child: SvgPicture.asset(
+                          svgIcon,
+                          width: iconWidth,
+                          height: iconHeight,
+                          fit: BoxFit.fill,
+                          colorFilter: itemsColor == null
+                              ? null
+                              : ColorFilter.mode(
+                                  itemsColor ?? AppColors.black,
+                                  // (AppConstants.themeController.isDarkMode.value
+                                  //     ? AppColors.whiteColor
+                                  //     : AppColors.redItem),
+                                  BlendMode.srcIn),
+                        ),
+                      )
+                    : const SizedBox(),
           ],
         ),
       ),

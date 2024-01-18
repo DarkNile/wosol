@@ -11,62 +11,64 @@ class UserHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomHeader(
-          header: "Hossam",
-          svgIcon: "",
-          iconWidth: 0,
-          iconHeight: 0,
-          isHome: true,
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            physics: const PageScrollPhysics(),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "nextRide".tr,
-                  style: AppFonts.header,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TripCardWidget(
-                  withCancel: true,
-                  withBorder: false,
-                  onCancel: () async {
-                    onTapCancel(context);
-                  },
-                ),
-                Padding(
-                  padding: AppConstants.edge(
-                    padding: const EdgeInsets.only(
-                      top: 24,
-                      bottom: 10,
-                    ),
-                  ),
-                  child: Text(
-                    "thisWeekTrips".tr,
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomHeader(
+            header: "Hossam",
+            svgIcon: "",
+            iconWidth: 0,
+            iconHeight: 0,
+            isHome: true,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const PageScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "nextRide".tr,
                     style: AppFonts.header,
                   ),
-                ),
-                ...List.generate(
-                    5,
-                    (index) => TripCardWidget(
-                          withCancel: true,
-                          onCancel: () async {
-                            onTapCancel(context);
-                          },
-                        )),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TripCardWidget(
+                    withCancel: true,
+                    withBorder: false,
+                    onCancel: () async {
+                      onTapCancel(context);
+                    },
+                  ),
+                  Padding(
+                    padding: AppConstants.edge(
+                      padding: const EdgeInsets.only(
+                        top: 24,
+                        bottom: 10,
+                      ),
+                    ),
+                    child: Text(
+                      "thisWeekTrips".tr,
+                      style: AppFonts.header,
+                    ),
+                  ),
+                  ...List.generate(
+                      5,
+                      (index) => TripCardWidget(
+                            withCancel: true,
+                            onCancel: () async {
+                              onTapCancel(context);
+                            },
+                          )),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

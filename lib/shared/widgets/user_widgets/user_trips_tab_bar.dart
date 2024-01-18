@@ -5,8 +5,11 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 class UserTripsTabBarWidget extends StatefulWidget {
-  const UserTripsTabBarWidget({super.key, this.controller});
+  const UserTripsTabBarWidget(
+      {super.key, this.controller, this.onTap, required this.selectIndex});
   final TabController? controller;
+  final void Function(int)? onTap;
+  final int selectIndex;
 
   @override
   State<UserTripsTabBarWidget> createState() => _UserTripsTabBarWidgetState();
@@ -17,7 +20,7 @@ class _UserTripsTabBarWidgetState extends State<UserTripsTabBarWidget>
   @override
   Widget build(BuildContext context) {
     return TabBar(
-        onTap: (index) {},
+        onTap: widget.onTap,
         tabAlignment: TabAlignment.start,
         splashFactory: NoSplash.splashFactory,
         overlayColor: MaterialStateProperty.resolveWith<Color?>(
@@ -53,7 +56,7 @@ class _UserTripsTabBarWidgetState extends State<UserTripsTabBarWidget>
                             : index == 4
                                 ? "Tue".tr
                                 : 'all'.tr,
-                isSelected: index == 0)).toList());
+                isSelected: widget.selectIndex == index)).toList());
   }
 }
 

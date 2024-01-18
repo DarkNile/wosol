@@ -12,81 +12,83 @@ class DriverHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomHeader(
-          header: "Mostafa",
-          svgIcon: "",
-          iconWidth: 0,
-          iconHeight: 0,
-          isHome: true,
-        ),
-        Padding(
-          padding: AppConstants.edge(
-            padding: const EdgeInsets.only(
-              top: 14,
-              bottom: 10,
-              left: 16,
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomHeader(
+            header: "Mostafa",
+            svgIcon: "",
+            iconWidth: 0,
+            iconHeight: 0,
+            isHome: true,
+          ),
+          Padding(
+            padding: AppConstants.edge(
+              padding: const EdgeInsets.only(
+                top: 14,
+                bottom: 10,
+                left: 16,
+              ),
+            ),
+            child: Text(
+              "nextRide".tr,
+              style: AppFonts.header,
             ),
           ),
-          child: Text(
-            "nextRide".tr,
-            style: AppFonts.header,
-          ),
-        ),
-        RideCard(
-          onTap: () async {
-            await onTapRideCard(context);
-          },
-          title: 'Mecca Center',
-          imgPath: "assets/images/home/upcoming_ride_icon.svg",
-          time: "10 ${"mins".tr}",
-          isNextRide: true,
-        ),
-        Padding(
-          padding: AppConstants.edge(
-            padding: const EdgeInsets.only(
-              top: 24,
-              bottom: 10,
-              left: 16,
-            ),
-          ),
-          child: Text(
-            "upcomingRides".tr,
-            style: AppFonts.header,
-          ),
-        ),
-        Expanded(
-          child: ListView.separated(
-            physics: const PageScrollPhysics(),
-            padding: const EdgeInsets.only(bottom: 16),
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return RideCard(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => UpcomingRideBottomSheet(
-                      headTitle: 'upcomingRide'.tr,
-                      formTime: '10:05 am',
-                      toTime: '11:30 am',
-                      formPlace: 'Mecca ',
-                      toPlace: 'King Abdelaziz University ',
-                    ),
-                  );
-                },
-                title: 'Mecca Center',
-                imgPath: "assets/images/home/education_trip_icon.svg",
-                time: "10:00 am",
-              );
+          RideCard(
+            onTap: () async {
+              await onTapRideCard(context);
             },
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12,
+            title: 'Mecca Center',
+            imgPath: "assets/images/home/upcoming_ride_icon.svg",
+            time: "10 ${"mins".tr}",
+            isNextRide: true,
+          ),
+          Padding(
+            padding: AppConstants.edge(
+              padding: const EdgeInsets.only(
+                top: 24,
+                bottom: 10,
+                left: 16,
+              ),
+            ),
+            child: Text(
+              "upcomingRides".tr,
+              style: AppFonts.header,
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: ListView.separated(
+              physics: const PageScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 16),
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return RideCard(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => UpcomingRideBottomSheet(
+                        headTitle: 'upcomingRide'.tr,
+                        formTime: '10:05 am',
+                        toTime: '11:30 am',
+                        formPlace: 'Mecca ',
+                        toPlace: 'King Abdelaziz University ',
+                      ),
+                    );
+                  },
+                  title: 'Mecca Center',
+                  imgPath: "assets/images/home/education_trip_icon.svg",
+                  time: "10:00 am",
+                );
+              },
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 12,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

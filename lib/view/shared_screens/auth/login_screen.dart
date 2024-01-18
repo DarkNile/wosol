@@ -7,7 +7,7 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/forgot_password.dart';
-import 'package:wosol/view/captain_screens/user_layout_screen.dart';
+import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 import 'package:wosol/view/user_screens/user_layout_screen.dart';
 
 class LoginScreen extends StatelessWidget {

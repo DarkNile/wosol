@@ -22,19 +22,20 @@ class DriverLayoutScreen extends StatelessWidget {
       const SettingsScreen(),
     ];
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Obx(() {
-              return Expanded(
-                  child: screens[driverLayoutController.navBarIndex.value]);
-            }),
-            BottomNavigationBarCaptain(
-              driverLayoutController: driverLayoutController,
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(() {
+            return Expanded(
+                child: screens[driverLayoutController.navBarIndex.value]);
+          }),
+          BottomNavigationBarCaptain(
+            driverLayoutController: driverLayoutController,
+          ),
+        ],
       ),
     );
   }
