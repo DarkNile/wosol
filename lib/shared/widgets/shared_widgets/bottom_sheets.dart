@@ -289,6 +289,7 @@ class CancellationReasonAndReportRideBottomSheet extends StatelessWidget {
       child: SingleChildScrollView(
         physics: const PageScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ...List.generate(
               reasons.length,

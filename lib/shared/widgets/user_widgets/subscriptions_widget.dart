@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -75,21 +74,21 @@ class SubscriptionsWidget extends StatelessWidget {
                       name: 'startDate'.tr,
                       value: '13 Sep, 2023',
                     ),
-                     _CustomRowWidget(
+                    _CustomRowWidget(
                       name: 'endDate'.tr,
                       value: '25 Jun, 2024',
                     ),
-                     _CustomRowWidget(
+                    _CustomRowWidget(
                       isBackGroundWhite: false,
                       name: 'tripType'.tr,
                       value: 'roundTrip'.tr,
                     ),
-                     _CustomRowWidget(
+                    _CustomRowWidget(
                       isLocation: true,
                       name: 'from'.tr,
                       value: 'Mecca Center',
                     ),
-                     _CustomRowWidget(
+                    _CustomRowWidget(
                       isLocation: true,
                       isBackGroundWhite: false,
                       name: 'to'.tr,
@@ -146,16 +145,15 @@ class _CustomRowWidget extends StatelessWidget {
                     const SizedBox(
                       width: 4,
                     ),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        color: AppColors.error500,
-                        fontSize: 14.0.sp(context),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                    Text(value,
+                        style: AppFonts.medium.copyWith(
+                          color: AppColors.error500,
+                          fontWeight: FontWeight.w500,
+                        )
+                        // const TextStyle(
+                        // decoration: TextDecoration.underline,
+                        // ),
+                        ),
                   ],
                 )
         ],

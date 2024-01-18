@@ -351,7 +351,13 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                     splashColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    icon: SvgPicture.asset("assets/icons/eye.svg"),
+                    icon: isObscureText
+                        ? const Icon(
+                            Icons.visibility_off_outlined,
+                            size: 24,
+                            color: AppColors.logo,
+                          )
+                        : SvgPicture.asset("assets/icons/eye.svg"),
                     onPressed: () {
                       setState(() {
                         isObscureText = !isObscureText;

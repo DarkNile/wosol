@@ -14,7 +14,8 @@ class TripHistoryCard extends StatelessWidget {
     required this.toCity,
     required this.onTap,
     required this.buttonText,
-    this.middleWidget, this.height,
+    this.middleWidget,
+    this.height,
   });
   final String date;
 
@@ -27,37 +28,40 @@ class TripHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainerCardWithBorderWidget(
-      height: height,
-      child: Padding(
-        padding: AppConstants.edge(padding: const EdgeInsets.all(10)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const CustomMapImageWidget(
-              image: "assets/images/map_details.png",
-            ),
-            const SizedBox(height: 13),
-            CustomRowWithArrowWidget(
-              from: fromCity,
-              to: toCity,
-            ),
-            const SizedBox(height: 8),
-            middleWidget ??
-                Text(
-                  date,
-                  style: AppFonts.small.copyWith(color: AppColors.darkBlue300),
-                ),
-            const SizedBox(height: 8),
-            CustomRowWithArrowWidget(
-              from: buttonText,
-              to: 'toCity',
-              isHeader: false,
-              isButton: true,
-              onTapButton: onTap,
-            ),
-          ],
+    return InkWell(
+      onTap: onTap,
+      child: CustomContainerCardWithBorderWidget(
+        height: height,
+        child: Padding(
+          padding: AppConstants.edge(padding: const EdgeInsets.all(10)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const CustomMapImageWidget(
+                image: "assets/images/map_details.png",
+              ),
+              const SizedBox(height: 13),
+              CustomRowWithArrowWidget(
+                from: fromCity,
+                to: toCity,
+              ),
+              const SizedBox(height: 8),
+              middleWidget ??
+                  Text(
+                    date,
+                    style:
+                        AppFonts.small.copyWith(color: AppColors.darkBlue300),
+                  ),
+              const SizedBox(height: 8),
+              CustomRowWithArrowWidget(
+                from: buttonText,
+                to: 'toCity',
+                isHeader: false,
+                isButton: true,
+              ),
+            ],
+          ),
         ),
       ),
     );

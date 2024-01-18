@@ -1,4 +1,5 @@
 // import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,11 @@ class MyApp extends StatelessWidget {
       useInheritedMediaQuery: true,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          color: AppColors.white,
+        ),
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.logo),
-        scaffoldBackgroundColor: Colors.grey[100],
+        scaffoldBackgroundColor: AppColors.dividerColor, // Colors.grey[100],
         useMaterial3: true,
       ),
       initialBinding: BindingsBuilder(() {

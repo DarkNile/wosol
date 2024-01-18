@@ -23,12 +23,13 @@ class CustomBottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: height ?? 294,
+      // + 16 for padding
+      height: (height != null) ? (height! + 16) : 294 + 16,
       padding: EdgeInsets.only(
         top: draggable ? 14 : 20,
         left: 16,
         right: 16,
-        bottom: 0,
+        bottom: 16,
       ),
       clipBehavior: Clip.antiAlias,
       decoration: const ShapeDecoration(

@@ -20,7 +20,7 @@ class OptionalMessage extends StatelessWidget {
           style: AppFonts.medium.copyWith(color: AppColors.darkBlue500Base),
         ),
         Container(
-          width: 343,
+          // width: 343,
           height: 102,
           margin: const EdgeInsets.only(top: 8),
           padding: const EdgeInsets.only(

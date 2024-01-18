@@ -28,21 +28,21 @@ class CustomSettingRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: isManageScreen ? 26 : 51,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: isManageScreen ? 0 : 12),
-        child: isSwitcher
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(title,
-                      style: AppFonts.medium.copyWith(
-                        color: AppColors.black800,
-                      )),
-                  InkWell(
-                    onTap: toggleIcon ?? () {},
-                    child: isSwitcherOn
+    return InkWell(
+      onTap: lang ? onTapChangeLanguage : toggleIcon ?? () {},
+      child: SizedBox(
+        height: isManageScreen ? 26 : 51,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: isManageScreen ? 0 : 12),
+          child: isSwitcher
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title,
+                        style: AppFonts.medium.copyWith(
+                          color: AppColors.black800,
+                        )),
+                    isSwitcherOn
                         ? SvgPicture.asset(
                             "assets/icons/GToggle.svg",
                             height: 26,
@@ -52,20 +52,17 @@ class CustomSettingRowWidget extends StatelessWidget {
                             "assets/icons/Toggle.svg",
                             height: 26,
                             width: 49,
-                          ),
-                  )
-                ],
-              )
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(title,
-                      style: AppFonts.medium.copyWith(
-                        color: AppColors.black800,
-                      )),
-                  InkWell(
-                    onTap: onTapChangeLanguage,
-                    child: lang
+                          )
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(title,
+                        style: AppFonts.medium.copyWith(
+                          color: AppColors.black800,
+                        )),
+                    lang
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -96,9 +93,9 @@ class CustomSettingRowWidget extends StatelessWidget {
                             size: 16,
                             color: AppColors.black800,
                           ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+        ),
       ),
     );
   }
