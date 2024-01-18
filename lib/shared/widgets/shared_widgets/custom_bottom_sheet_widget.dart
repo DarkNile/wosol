@@ -78,7 +78,7 @@ class CustomBottomSheetWidget extends StatelessWidget {
                             child: SvgPicture.asset('assets/icons/close.svg'))
                     ],
                   ),
-            draggable ? const SizedBox(height: 14) : const SizedBox(height: 11),
+            draggable ? const SizedBox(height: 14) : const SizedBox(height: 8),
 
             if (!draggable)
               const Divider(height: 1, color: AppColors.darkBlue100),

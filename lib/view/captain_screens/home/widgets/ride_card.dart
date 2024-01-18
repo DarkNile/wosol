@@ -39,7 +39,7 @@ class RideCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         width: AppConstants.screenWidth(context),
-        height: 122,
+        // height: 123,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

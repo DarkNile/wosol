@@ -276,7 +276,7 @@ class PasswordTextField extends StatefulWidget {
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
   bool isTextFieldEmpty = true;
-  bool isObscureText = false;
+  bool isObscureText = true;
 
   @override
   void initState() {
@@ -352,12 +352,12 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     icon: isObscureText
-                        ? const Icon(
+                        ? SvgPicture.asset("assets/icons/eye.svg")
+                        : const Icon(
                             Icons.visibility_off_outlined,
                             size: 24,
                             color: AppColors.logo,
-                          )
-                        : SvgPicture.asset("assets/icons/eye.svg"),
+                          ),
                     onPressed: () {
                       setState(() {
                         isObscureText = !isObscureText;
