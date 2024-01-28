@@ -20,6 +20,7 @@ dependencies:
   # For Rating
   flutter_rating_bar: ^4.0.1
   device_preview: ^1.1.0
+  another_flushbar: ^1.12.30
 
 dev_dependencies:
   flutter_test:

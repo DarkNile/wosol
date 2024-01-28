@@ -3,20 +3,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
+import 'package:wosol/shared/services/network/dio_helper.dart';
+import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
+import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
+import 'package:wosol/view/user_screens/user_layout_screen.dart';
 
 import 'controllers/shared_controllers/main_controllers/localization_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
+  AppConstants.token = await CacheHelper.getData(key: 'token')?? '';
+  AppConstants.isCaptain = await CacheHelper.getData(key: 'userType')?? true;
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.white,
     statusBarIconBrightness: Brightness.dark,
   ));
+  DioHelper.init();
 
   // runApp(DevicePreview(
   //   enabled: !kReleaseMode,
@@ -49,11 +57,17 @@ class MyApp extends StatelessWidget {
           LocalizationController(),
           permanent: true,
         );
+         Get.put(
+                      UserRepository(),
+                      permanent: true,
+                    );
       }),
       translations: Localization(),
       locale: Locale(CacheHelper.getData(key: 'locale') ?? "en"),
       fallbackLocale: const Locale("en"),
-      home: const LoginScreen(),
+      home: AppConstants.token.isEmpty? LoginScreen() : (AppConstants.isCaptain
+          ? DriverLayoutScreen()
+          : UserLayoutScreen()),
     );
   }
 }
