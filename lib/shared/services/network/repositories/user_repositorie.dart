@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
@@ -30,14 +31,36 @@ class UserRepository extends GetxService {
     lastLogin: '',
     userAgent: '',
     loginType: '',
+    token: '',
   );
 
-  Future<UserModel> signIn({
+  DriverData driverData = DriverData(
+    driverId: "",
+    firstName: "",
+    lastName: "",
+    telephone: "",
+    userEmail: "",
+    userName: "",
+    password: "",
+    birthDate: "",
+    idNo: "",
+    idEndDate: "",
+    licenseType: "",
+    licenseEndDate: "",
+    licenseCity: "",
+    vehicles: "",
+    active: "",
+    lastLogin: "",
+    userAgent: "",
+    loginType: "",
+    token: "",
+  );
+
+  Future<Response> signIn({
     required String email,
     required String password,
   }) async {
-
-    try{
+    try {
       Response response = await DioHelper.postData(
         url: 'login',
         data: {
@@ -46,12 +69,13 @@ class UserRepository extends GetxService {
         },
       );
       if (response.statusCode == 200) {
-        return UserModel.fromJson(response.data);
+        return response;
       } else {
         throw (response.data['data']['error']);
       }
-    }on DioException catch (e) {
+    } on DioException catch (e) {
       throw e.response!.data['data']['error'];
     }
   }
+
 }

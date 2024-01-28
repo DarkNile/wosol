@@ -38,6 +38,7 @@ class UserData {
   String lastLogin;
   String userAgent;
   String loginType;
+  String token;
 
   UserData({
     required this.userId,
@@ -65,6 +66,7 @@ class UserData {
     required this.lastLogin,
     required this.userAgent,
     required this.loginType,
+    required this.token,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -94,6 +96,7 @@ class UserData {
       lastLogin: json['last_login'] ?? "",
       userAgent: json['user_agent'] ?? "",
       loginType: json['login_type'] ?? "",
+      token: json['token'] ?? "",
     );
   }
 }

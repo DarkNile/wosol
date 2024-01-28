@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/models/driver_model.dart';
+import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
@@ -12,63 +14,83 @@ class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-    TextFieldValidation emailValidation = TextFieldValidation.normal;
-    TextFieldValidation passwordValidate = TextFieldValidation.normal;
+  TextFieldValidation emailValidation = TextFieldValidation.normal;
+  TextFieldValidation passwordValidate = TextFieldValidation.normal;
 
-    void clearData (){
-      emailController = TextEditingController();
-      passwordController = TextEditingController();
-      emailValidation = TextFieldValidation.normal;
-      passwordValidate = TextFieldValidation.normal;
-    }
+  void clearData() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    emailValidation = TextFieldValidation.normal;
+    passwordValidate = TextFieldValidation.normal;
+  }
 
-   void checkEmailValidation() {
-      if (emailController.text.isNotEmpty) {
-        emailController.text = emailController.text.toLowerCase();
-        emailController.text = emailController.text.removeAllWhitespace;
-        emailController.selection = TextSelection.fromPosition(
-            TextPosition(offset: emailController.text.length));
+  void checkEmailValidation() {
+    if (emailController.text.isNotEmpty) {
+      emailController.text = emailController.text.toLowerCase();
+      emailController.text = emailController.text.removeAllWhitespace;
+      emailController.selection = TextSelection.fromPosition(
+          TextPosition(offset: emailController.text.length));
 
-        if (emailController.text.isEmail) {
-          emailValidation = TextFieldValidation.valid;
-        } else {
-          emailValidation = TextFieldValidation.notValid;
-        }
+      if (emailController.text.isEmail) {
+        emailValidation = TextFieldValidation.valid;
       } else {
         emailValidation = TextFieldValidation.notValid;
       }
-      update();
+    } else {
+      emailValidation = TextFieldValidation.notValid;
     }
+    update();
+  }
 
-    void checkPasswordValidation() {
-      if (passwordController.text.length < 5) {
-        passwordValidate = TextFieldValidation.notValid;
-      } else {
-        passwordValidate = TextFieldValidation.valid;
-      }
-      update();
+  void checkPasswordValidation() {
+    if (passwordController.text.length < 5) {
+      passwordValidate = TextFieldValidation.notValid;
+    } else {
+      passwordValidate = TextFieldValidation.valid;
     }
+    update();
+  }
+
+  RxBool isLoginLoading = false.obs;
 
   Future<void> signInAPI(BuildContext context) async {
+    isLoginLoading.value = true;
     try {
-      if(
-      emailValidation == TextFieldValidation.valid &&
-      passwordValidate == TextFieldValidation.valid
-      ){
-        await AppConstants.userRepository.signIn(
+      if (emailValidation == TextFieldValidation.valid &&
+          passwordValidate == TextFieldValidation.valid) {
+        await AppConstants.userRepository
+            .signIn(
           email: emailController.text,
           password: passwordController.text,
-        ).then((value) {
-          CacheHelper.setData(key: 'token', value: value.data.userId);
-          CacheHelper.setData(key: 'userType', value: value.data.loginType != 'Student');
-          AppConstants.userRepository.userData = value.data;
-          AppConstants.isCaptain = AppConstants.userRepository.userData.loginType != 'Student';
+        )
+            .then((response) {
+          isLoginLoading.value = false;
+          if (response.data['data']['login_type'] == 'Student') {
+            UserModel value = UserModel.fromJson(response.data);
+            AppConstants.userRepository.userData = value.data;
+            CacheHelper.setData(key: 'token', value: value.data.token);
+            CacheHelper.setData(
+              key: 'userType',
+              value: false,
+            );
+            AppConstants.isCaptain = false;
+          } else {
+            DriverModel value = DriverModel.fromJson(response.data);
+            AppConstants.userRepository.driverData = value.data;
+            CacheHelper.setData(key: 'token', value: value.data.token);
+            CacheHelper.setData(
+              key: 'userType',
+              value: true,
+            );
+            AppConstants.isCaptain = true;
+          }
           Get.to(() => AppConstants.isCaptain
               ? DriverLayoutScreen()
               : UserLayoutScreen());
         });
       }
-    }catch (e) {
+    } catch (e) {
+      isLoginLoading.value = false;
       if (context.mounted) {
         defaultErrorSnackBar(
           context: context,
@@ -77,5 +99,4 @@ class AuthController extends GetxController {
       }
     }
   }
-
 }
