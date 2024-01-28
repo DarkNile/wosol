@@ -187,7 +187,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     (widget.fieldValidation == TextFieldValidation.notValid)
                         ? OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: AppColors.logo,
+                              color: AppColors.error600,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           )
@@ -213,7 +213,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                 widget.validateText,
                 style: AppFonts.small.copyWith(
                   fontSize: 14,
-                  color: AppColors.logo,
+                  color: AppColors.error600,
                 ),
               ),
             ),
@@ -407,7 +407,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                     (widget.fieldValidation == TextFieldValidation.notValid)
                         ? OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: AppColors.logo,
+                              color: AppColors.error600,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           )
@@ -440,7 +440,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                   widget.validateText ?? '',
                   style: AppFonts.small.copyWith(
                     fontSize: 14,
-                    color: AppColors.logo,
+                    color: AppColors.error600,
                   ),
                 ),
               ),

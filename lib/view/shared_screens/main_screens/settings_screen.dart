@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 DefaultRowButton(
                   function: () {
-                    Get.offAll(() => const LoginScreen());
+                    Get.offAll(() => LoginScreen());
                   },
                   text: "Logout".tr,
                   fontSize: 14,

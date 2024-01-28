@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 
 import '../../controllers/shared_controllers/main_controllers/localization_controller.dart';
 
@@ -11,7 +12,9 @@ class AppConstants {
       MediaQuery.of(context).size.height;
 
   static bool isCaptain = true;
-
+  static String token = '';
+  
+  static final userRepository = Get.find<UserRepository>();
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
       localizationController.currentLocale().languageCode == 'en';
