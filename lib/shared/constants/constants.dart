@@ -13,6 +13,8 @@ class AppConstants {
 
   static bool isCaptain = true;
   static String token = '';
+
+  static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
   
   static final userRepository = Get.find<UserRepository>();
   static final localizationController = Get.find<LocalizationController>();
