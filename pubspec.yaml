@@ -17,11 +17,20 @@ dependencies:
   flutter_svg: ^2.0.9
   shared_preferences: ^2.2.2
   lottie: ^3.0.0
+  google_maps_flutter: ^2.5.3
+  geolocator: ^10.1.0
+  flutter_polyline_points: ^2.0.0
   # For Rating
   flutter_rating_bar: ^4.0.1
   device_preview: ^1.1.0
   another_flushbar: ^1.12.30
+  
+  launcher_name: ^1.0.2
 
+launcher_name:
+  default: "WOSOL"
+  ar: "وسل"
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

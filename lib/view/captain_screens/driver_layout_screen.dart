@@ -16,7 +16,7 @@ class DriverLayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      const DriverHomeScreen(),
+      DriverHomeScreen(),
       const TripHistoryScreen(),
       const NotificationsScreen(),
       const SettingsScreen(),
