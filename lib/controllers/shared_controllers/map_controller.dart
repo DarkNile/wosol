@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -9,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../shared/constants/constants.dart';
-import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
+import '../../shared/services/network/dio_helper.dart';
 
 class MapController extends GetxController{
   Completer<GoogleMapController> googleMapController =
@@ -73,7 +72,6 @@ class MapController extends GetxController{
     if(permission == LocationPermission.deniedForever){
       return Future.error('Location Services Are Permanently Denied, We Cannot Request Permission For The Location');
     }
-
     update();
     return await Geolocator.getCurrentPosition();
   }
@@ -86,14 +84,35 @@ class MapController extends GetxController{
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
+
       if(LatLng(position.latitude, position.longitude) != currentLatLng){
         currentLatLng = LatLng(position.latitude, position.longitude);
         getCurrentTargetPolylinePoints();
+        getEstimatedTime(originLatLng: currentLatLng, destinationLatLng: targetLatLng);
         cameraToPosition(currentLatLng);
         update();
       }
     });
   }
+
+  String timeTrack = '';
+  String distantTrack = '';
+   Future<void> getEstimatedTime({required LatLng originLatLng,required LatLng destinationLatLng,}) async {
+     print("caaaaallll");
+    final url =
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
+    final response = await DioHelper.getData(url: url,);
+
+    if (response.statusCode == 200) {
+      distantTrack = response.data['rows'][0]['elements'][0]['distance']['text'];
+      timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
+      print("ressponseeee ${response.data}");
+    } else {
+      throw Exception('Failed to load place details');
+    }
+    update();
+  }
+
 
   late Uint8List markerIcon;
   late Uint8List currentIcon;

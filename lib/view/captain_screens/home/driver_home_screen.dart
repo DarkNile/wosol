@@ -116,6 +116,7 @@ class DriverHomeScreen extends StatelessWidget {
               target: mapController.currentLatLng,
               zoom: 12,
             );
+            mapController.getEstimatedTime(originLatLng: mapController.currentLatLng, destinationLatLng: mapController.targetLatLng);
             mapController.liveLocation();
           });
           Get.back();
