@@ -60,7 +60,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             withCancel: true,
                             withBorder: false,
                             onCancel: () async {
-                              onTapCancel(context);
+                              onTapCancel(context, true);
                             },
                           ),
                           Padding(
@@ -80,7 +80,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               (index) => TripCardWidget(
                                     withCancel: true,
                                     onCancel: () async {
-                                      onTapCancel(context);
+                                      onTapCancel(context, false);
                                     },
                                   )),
                         ],
@@ -93,7 +93,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     );
   }
 
-  Future<void> onTapCancel(BuildContext context) async {
+  Future<void> onTapCancel(BuildContext context, bool isTrip) async {
     showModalBottomSheet(
         context: context,
         builder: (context) => RideCanceledAndReportedBottomSheet(
@@ -103,21 +103,44 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               headerMsg: 'You are about to cancel your ride, are you sure?'.tr,
               subHeaderMsg: 'Note: today trip only will be canceled'.tr,
               firstButtonFunction: () async{
-                /// todo Put the data here int the 2 functions and the condition if this cancel or not
-                await userHomeController.tripCancelByDateAPI(
-                  context: context,
-                  userId: '247',
-                  date: '2024-02-18',
-                  cancel: '1',
-                  cancelReason: 'سبب الالغاء',
-                );
-                /// todo not ready from Api
-                // await userHomeController.tripCancelByDateAPI(
-                //   context: context,
-                //   userId: '247',
-                //   date: '2024-02-18',
-                //   cancel: '0',
-                // );
+                if(isTrip){
+                  /// todo Put the data here int the 2 functions and the condition if this cancel or not
+                  if(true /*isNotCanceled*/) {
+                    await userHomeController.tripCancelByDateAPI(
+                    context: context,
+                    userId: '247',
+                    date: '2024-02-18',
+                    cancel: '1',
+                    cancelReason: 'سبب الالغاء',
+                  );
+                  }else{
+                    /// todo not ready from Api
+                    await userHomeController.tripCancelByDateAPI(
+                      context: context,
+                      userId: '247',
+                      date: '2024-02-18',
+                      cancel: '0',
+                    );
+                  }
+                }else{
+                  if(true /*isNotCanceled*/) {
+                    await userHomeController.calendarCancelByDateAPI(
+                      context: context,
+                      userId: '247',
+                      date: '2024-02-18',
+                      cancel: '1',
+                      cancelReason: 'سبب الالغاء',
+                    );
+                  }else{
+                    /// todo not ready from Api
+                    await userHomeController.calendarCancelByDateAPI(
+                      context: context,
+                      userId: '247',
+                      date: '2024-02-18',
+                      cancel: '0',
+                    );
+                  }
+                }
               },
               secondButtonFunction: () {
                 Get.back();
