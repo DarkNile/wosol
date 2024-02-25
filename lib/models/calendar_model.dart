@@ -78,7 +78,7 @@ class SubData {
       lastName: json['last_name'] ?? "",
       date: json['date'] ?? "",
       time: json['time'] ?? "",
-      cancelRequest: json['cancel_request'] ?? "",
+      cancelRequest: json['cancel_request'] ?? "0",
       cancelReason: json['cancel_reason'] ?? "",
       cancelDate: json['cancel_date'] ?? "",
       from: json['From'] ?? "",
