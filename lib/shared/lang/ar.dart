@@ -147,5 +147,6 @@ const Map<String, String> ar = {
   "startDate": "تاريخ البداية",
   "endDate": "تاريخ النهاية",
   "tripType": "نوع الرحلة",
-  "roundTrip": "رحلة ذهاب وإياب"
+  "roundTrip": "رحلة ذهاب وإياب",
+  "No Trips": "لا توجد رحلات"
 };
