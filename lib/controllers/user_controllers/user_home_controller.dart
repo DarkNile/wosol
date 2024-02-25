@@ -5,6 +5,7 @@ import 'package:get/get.dart' hide Response;
 import '../../models/calendar_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
+import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class UserHomeController extends GetxController {
@@ -83,7 +84,7 @@ class UserHomeController extends GetxController {
     try {
       await AppConstants.studentRepository
           .cancelByDate(
-        endPoint: cancelReason == null? '/un_cancel_trip_user_by_date' : '/cancel_trip_user_by_date',
+        endPoint: cancelReason == null? '/student/trips/un_cancel_trip_user_by_date' : '/student/trips/cancel_trip_user_by_date',
         date: date,
         userId: userId,
         cancel: cancel,
@@ -91,6 +92,18 @@ class UserHomeController extends GetxController {
       )
           .then((response) {
         tripCancelByDateLoading.value = false;
+        Get.back();
+        showModalBottomSheet(
+            context: context,
+            builder: (context) => RideCanceledAndReportedBottomSheet(
+              headTitle: 'Ride Canceled'.tr,
+              isReportFirstStep: true,
+              imagePath: 'assets/images/smile.png',
+              headerMsg: 'Ride has been canceled'.tr,
+              subHeaderMsg:
+              "Thank you for being kind and save others' time."
+                  .tr,
+            ));
         if (context.mounted) {
           defaultSuccessSnackBar(
             context: context,
