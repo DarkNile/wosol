@@ -26,6 +26,7 @@ dependencies:
   another_flushbar: ^1.12.30
   
   launcher_name: ^1.0.2
+  intl: ^0.18.1
 
 launcher_name:
   default: "WOSOL"
