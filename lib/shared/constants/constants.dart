@@ -4,6 +4,7 @@ import 'package:wosol/shared/services/network/repositories/home_driver_repositor
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 
 import '../../controllers/shared_controllers/main_controllers/localization_controller.dart';
+import '../services/network/repositories/student_repositorie.dart';
 
 class AppConstants {
   static Size screenSize(BuildContext context) => MediaQuery.of(context).size;
@@ -19,6 +20,7 @@ class AppConstants {
 
   static final userRepository = Get.find<UserRepository>();
   static final homeDriverRepository = Get.find<HomeDriverRepository>();
+  static final studentRepository = Get.find<StudentRepository>();
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
       localizationController.currentLocale().languageCode == 'en';

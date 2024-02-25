@@ -10,6 +10,7 @@ import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 import 'package:wosol/shared/services/network/repositories/home_driver_repository.dart';
+import 'package:wosol/shared/services/network/repositories/student_repositorie.dart';
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
@@ -69,6 +70,9 @@ class MyApp extends StatelessWidget {
         );
         Get.put(
           HomeDriverRepository(),
+        );
+        Get.put(
+          StudentRepository(),
           permanent: true,
         );
       }),

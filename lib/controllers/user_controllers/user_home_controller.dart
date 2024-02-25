@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:wosol/models/trip_info_user_model.dart';
 
 import '../../models/calendar_model.dart';
+import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
+import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
+import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class UserHomeController extends GetxController {
   List<CalendarData> calendarData = [];
@@ -52,6 +56,98 @@ class UserHomeController extends GetxController {
     } on DioException catch (e) {
       isGettingTripInfo.value = false;
       throw e.response!.data['data']['error'];
+    }
+  }
+
+  // ? ===== Trip Cancel API =====
+  RxBool tripCancelLoading = false.obs;
+  Future<void> tripCancelAPI({
+    required BuildContext context,
+    required String tripUserId,
+    required String userId,
+    required String tripId,
+    required String cancel,
+    String? cancelReason,
+  }) async {
+    tripCancelLoading.value = true;
+    try {
+      await AppConstants.studentRepository
+          .tripCancel(
+        tripUserId: tripUserId,
+        userId: userId,
+        tripId: tripId,
+        cancel: cancel,
+        cancelReason: cancelReason,
+      )
+          .then((response) {
+        tripCancelLoading.value = false;
+        if (context.mounted) {
+          defaultSuccessSnackBar(
+            context: context,
+            message: 'Trip canceled',
+          );
+        }
+      });
+    } catch (e) {
+      tripCancelLoading.value = false;
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+    }
+  }
+
+  // ? ===== Trip Cancel By Date API =====
+  RxBool tripCancelByDateLoading = false.obs;
+  Future<void> tripCancelByDateAPI({
+    required BuildContext context,
+    required String date,
+    required String userId,
+    required String cancel,
+    String? cancelReason,
+  }) async {
+    tripCancelByDateLoading.value = true;
+    try {
+      await AppConstants.studentRepository
+          .cancelByDate(
+        endPoint: cancelReason == null
+            ? '/student/trips/un_cancel_trip_user_by_date'
+            : '/student/trips/cancel_trip_user_by_date',
+        date: date,
+        userId: userId,
+        cancel: cancel,
+        cancelReason: cancelReason,
+      )
+          .then((response) {
+        tripCancelByDateLoading.value = false;
+        Get.back();
+        showModalBottomSheet(
+            context: context,
+            builder: (context) => RideCanceledAndReportedBottomSheet(
+                  headTitle: 'Ride Canceled'.tr,
+                  isReportFirstStep: true,
+                  imagePath: 'assets/images/smile.png',
+                  headerMsg: 'Ride has been canceled'.tr,
+                  subHeaderMsg:
+                      "Thank you for being kind and save others' time.".tr,
+                ));
+        if (context.mounted) {
+          defaultSuccessSnackBar(
+            context: context,
+            message: 'Trip canceled',
+          );
+        }
+      });
+    } catch (e) {
+      tripCancelByDateLoading.value = false;
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
     }
   }
 }
