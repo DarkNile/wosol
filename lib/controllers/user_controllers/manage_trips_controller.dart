@@ -60,7 +60,7 @@ class UserManageTripsController extends GetxController {
     try {
       await AppConstants.studentRepository
           .cancelByDate(
-        endPoint: cancelReason == null? '/calendar_un_cancel_by_date' : '/calendar_cancel_by_date',
+        endPoint: cancelReason == null? '/student/calendar/calendar_un_cancel_by_date' : '/student/calendar/calendar_cancel_by_date',
         date: date,
         userId: userId,
         cancel: cancel,

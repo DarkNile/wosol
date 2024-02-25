@@ -60,13 +60,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             withCancel: true,
                             withBorder: false,
                             onCancel: () async {
-                              // userHomeController.tripCancelByDateAPI(
-                              //   context: context,
-                              //   userId: '247',
-                              //   date: '2024-02-18',
-                              //   cancel: '1',
-                              //   cancelReason: 'سبب الالغاء',
-                              // );
                               onTapCancel(context);
                             },
                           ),
@@ -109,19 +102,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               imagePath: 'assets/images/thinking.png',
               headerMsg: 'You are about to cancel your ride, are you sure?'.tr,
               subHeaderMsg: 'Note: today trip only will be canceled'.tr,
-              firstButtonFunction: () {
-                Get.back();
-                showModalBottomSheet(
-                    context: context,
-                    builder: (context) => RideCanceledAndReportedBottomSheet(
-                          headTitle: 'Ride Canceled'.tr,
-                          isReportFirstStep: true,
-                          imagePath: 'assets/images/smile.png',
-                          headerMsg: 'Ride has been canceled'.tr,
-                          subHeaderMsg:
-                              "Thank you for being kind and save others' time."
-                                  .tr,
-                        ));
+              firstButtonFunction: () async{
+                /// todo Put the data here int the 2 functions and the condition if this cancel or not
+                await userHomeController.tripCancelByDateAPI(
+                  context: context,
+                  userId: '247',
+                  date: '2024-02-18',
+                  cancel: '1',
+                  cancelReason: 'سبب الالغاء',
+                );
+                /// todo not ready from Api
+                // await userHomeController.tripCancelByDateAPI(
+                //   context: context,
+                //   userId: '247',
+                //   date: '2024-02-18',
+                //   cancel: '0',
+                // );
               },
               secondButtonFunction: () {
                 Get.back();
