@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_utils/get_utils.dart';
+import 'package:wosol/controllers/user_controllers/user_home_controller.dart';
 import 'package:wosol/models/manage_trips_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
@@ -12,23 +11,27 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_b
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 
-import '../../../controllers/user_controllers/manage_trips_controller.dart';
-
 // ignore: must_be_immutable
 class CustomUserManageCardWidget extends StatelessWidget {
   final bool hasHint;
   final bool hasButton;
   final void Function()? buttonFunction;
-  final UserManageTripsController userManageTripsController;
+  final UserHomeController userHomeController;
+  final String userId;
+  final String calenderId;
+
   final ManageTripsModel manageTrips;
 
   CustomUserManageCardWidget({
     super.key,
     this.hasHint = false,
     this.hasButton = false,
-    required this.userManageTripsController,
+    // required this.userManageTripsController,
     required this.manageTrips,
+    required this.userHomeController,
     this.buttonFunction,
+    required this.userId,
+    required this.calenderId,
   });
 
   RxBool withHint = RxBool(false);
@@ -54,8 +57,24 @@ class CustomUserManageCardWidget extends StatelessWidget {
                     isSwitcher: true,
                     isManageScreen: true,
                     isSwitcherOn: manageTrips.isToggleOn.value,
-                    toggleIcon: () => userManageTripsController
-                        .changeToggleValue(manageTrips),
+                    toggleIcon: () async {
+                      if (manageTrips.isToggleOn.value) {
+                        await userHomeController.calendarCancelAPI(
+                          context: context,
+                          userId: userId,
+                          calendarId: calenderId,
+                          cancel: '1',
+                          cancelReason: 'سبب الالغاء',
+                        );
+                      } else {
+                        await userHomeController.calendarCancelAPI(
+                          context: context,
+                          userId: userId,
+                          calendarId: calenderId,
+                          cancel: '0',
+                        );
+                      }
+                    },
                     title: '${manageTrips.time} ${"am".tr}',
                   ),
                 ),

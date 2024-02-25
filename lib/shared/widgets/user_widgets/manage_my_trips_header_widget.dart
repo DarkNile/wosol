@@ -7,9 +7,15 @@ import 'package:wosol/shared/widgets/user_widgets/user_trips_tab_bar.dart';
 class ManageMyTripsHeaderWidget extends StatelessWidget {
   final TabController? controller;
   final void Function(int)? onTap;
+  final List<String> availableDays;
   final int selectIndex;
-  const ManageMyTripsHeaderWidget(
-      {super.key, this.controller, this.onTap, required this.selectIndex});
+  const ManageMyTripsHeaderWidget({
+    super.key,
+    this.controller,
+    this.onTap,
+    required this.selectIndex,
+    required this.availableDays,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +46,7 @@ class ManageMyTripsHeaderWidget extends StatelessWidget {
                 height: 20,
               ),
               UserTripsTabBarWidget(
+                availableDays: availableDays,
                 controller: controller,
                 onTap: onTap,
                 selectIndex: selectIndex,

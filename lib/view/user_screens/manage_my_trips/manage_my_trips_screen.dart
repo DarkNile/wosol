@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wosol/controllers/user_controllers/manage_trips_controller.dart';
 import 'package:wosol/models/manage_trips_model.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/info_card.dart';
@@ -9,6 +9,7 @@ import 'package:wosol/shared/widgets/user_widgets/custom_user_manage_card.dart';
 import 'package:wosol/shared/widgets/user_widgets/manage_my_trips_header_widget.dart';
 
 import '../../../controllers/user_controllers/user_home_controller.dart';
+import '../../../models/calendar_model.dart';
 
 class ManageMyTripUsersScreen extends StatefulWidget {
   const ManageMyTripUsersScreen({super.key});
@@ -20,14 +21,13 @@ class ManageMyTripUsersScreen extends StatefulWidget {
 
 class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
     with TickerProviderStateMixin {
-  final UserManageTripsController userManageTripsController =
-      Get.put<UserManageTripsController>(UserManageTripsController());
-  final UserHomeController userHomeController =
-  Get.put<UserHomeController>(UserHomeController());
+  final UserHomeController userHomeController = Get.find<UserHomeController>();
+
   late TabController tabController;
   @override
   void initState() {
-    tabController = TabController(length: 5, vsync: this);
+    tabController = TabController(
+        length: userHomeController.calendarData.length + 1, vsync: this);
     super.initState();
   }
 
@@ -39,6 +39,14 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
       child: Obx(
         () => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           ManageMyTripsHeaderWidget(
+            availableDays: userHomeController.calendarData
+                .map(
+                  (element) => AppConstants.formatDateToWeekday(
+                    element.date,
+                    AppConstants.localizationController.currentLocale(),
+                  ),
+                )
+                .toList(),
             controller: tabController,
             selectIndex: selectIndex.value,
             onTap: (index) {
@@ -50,11 +58,23 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
               child: TabBarView(
             controller: tabController,
             children: [
-              AllWidget(userManageTripsController: userManageTripsController),
-              AllWidget(userManageTripsController: userManageTripsController),
-              AllWidget(userManageTripsController: userManageTripsController),
-              AllWidget(userManageTripsController: userManageTripsController),
-              AllWidget(userManageTripsController: userManageTripsController),
+              ...List.generate(
+                userHomeController.calendarData.length + 1,
+                (index) {
+                  if (index == 0) {
+                    return AllWidget(
+                        homeController: userHomeController,
+                        calendarData: userHomeController.calendarData);
+                  } else {
+                    return AllWidget(
+                      homeController: userHomeController,
+                      calendarData: [
+                        userHomeController.calendarData[index - 1]
+                      ],
+                    );
+                  }
+                },
+              ),
             ],
           ))
         ]),
@@ -66,10 +86,12 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
 class AllWidget extends StatelessWidget {
   const AllWidget({
     super.key,
-    required this.userManageTripsController,
+    required this.calendarData,
+    required this.homeController,
   });
 
-  final UserManageTripsController userManageTripsController;
+  final List<CalendarData> calendarData;
+  final UserHomeController homeController;
 
   @override
   Widget build(BuildContext context) {
@@ -79,46 +101,63 @@ class AllWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ...List.generate(
-                3,
-                (index) => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('saturday'.tr,
-                            style: AppFonts.header
-                                .copyWith(color: AppColors.black800)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomUserManageCardWidget(
-                          manageTrips: ManageTripsModel(
-                            from: "King Abdelaziz University",
-                            isToggleOn: false.obs,
-                            time: "10:00",
-                            to: "Home".tr,
-                          ),
-                          userManageTripsController: userManageTripsController,
-                          hasHint: index == 1 ? true : false,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomUserManageCardWidget(
-                          manageTrips: ManageTripsModel(
-                            from: "King Abdelaziz University",
-                            isToggleOn: false.obs,
-                            time: "10:00",
-                            to: "Home".tr,
-                          ),
-                          userManageTripsController: userManageTripsController,
-                          hasButton: index == 1 ? true : false,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                      ],
-                    )),
+            ...List.generate(calendarData.length, (index) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      AppConstants.formatDateToWeekday(
+                        calendarData[index].date,
+                        AppConstants.localizationController.currentLocale(),
+                      ),
+                      style:
+                          AppFonts.header.copyWith(color: AppColors.black800)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomUserManageCardWidget(
+                    calenderId: calendarData[index].subData[0].calendarId,
+                    userId: calendarData[index].subData[0].userId,
+                    manageTrips: ManageTripsModel(
+                      from: calendarData[index].subData.first.from,
+                      isToggleOn:
+                          calendarData[index].subData[0].cancelRequest == '0'
+                              ? true.obs
+                              : false.obs,
+                      time: calendarData[index].subData.first.time,
+                      to: calendarData[index].subData.first.universityName,
+                    ),
+                    // userManageTripsController: userManageTripsController,
+                    hasHint: false, userHomeController: homeController,
+                  ),
+                  if (calendarData[index].subData.length > 1)
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  if (calendarData[index].subData.length > 1)
+                    CustomUserManageCardWidget(
+                      calenderId: calendarData[index].subData[1].calendarId,
+                      userId: calendarData[index].subData[1].userId,
+                      userHomeController: homeController,
+                      manageTrips: ManageTripsModel(
+                        from: calendarData[index].subData[1].from,
+                        isToggleOn:
+                            calendarData[index].subData[1].cancelRequest == '0'
+                                ? true.obs
+                                : false.obs,
+                        time: calendarData[index].subData[1].time,
+                        to: calendarData[index].subData[1].universityName,
+                      ),
+                      // userManageTripsController: userManageTripsController,
+                      hasHint: false,
+                    ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                ],
+              );
+            }),
             const InfoCard(),
             const SizedBox(
               height: 24,

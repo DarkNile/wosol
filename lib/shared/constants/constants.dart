@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:wosol/shared/services/network/repositories/home_driver_repository.dart';
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 
@@ -59,6 +60,36 @@ class AppConstants {
 
     return input;
   }
+
+  static String formatDateToWeekday(String date, Locale locale) {
+    final String formattedDate = DateFormat('EEEE',).format(
+      DateTime.parse(date),
+    );
+
+    if (locale.languageCode == 'ar') {
+      switch (formattedDate) {
+        case 'Saturday':
+          return 'السبت';
+        case 'Sunday':
+          return 'الأحد';
+        case 'Monday':
+          return 'الاثنين';
+        case 'Tuesday':
+          return 'الثلاثاء';
+        case 'Wednesday':
+          return 'الأربعاء';
+        case 'Thursday':
+          return 'الخميس';
+        case 'Friday':
+          return 'الجمعة';
+        default:
+          return formattedDate;
+      }
+    }
+
+    return formattedDate;
+  }
+
 }
 
 extension ResponsiveText on double {
