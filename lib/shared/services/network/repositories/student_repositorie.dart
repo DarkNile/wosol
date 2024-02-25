@@ -12,7 +12,7 @@ class StudentRepository extends GetxService{
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: cancelReason == null? '/student/calendar/calendar_un_cancel' : '/student/calendar/calendar_cancel',
+        url: cancelReason == null? 'student/calendar/calendar_un_cancel' : 'student/calendar/calendar_cancel',
         data: {
           "calendar_id" : calendarId,
           "user_id" : userId,

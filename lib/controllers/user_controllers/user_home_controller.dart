@@ -81,6 +81,7 @@ class UserHomeController extends GetxController {
       )
           .then((response) {
         tripCancelLoading.value = false;
+        Get.back();
         if (context.mounted) {
           defaultSuccessSnackBar(
             context: context,
@@ -142,6 +143,95 @@ class UserHomeController extends GetxController {
       });
     } catch (e) {
       tripCancelByDateLoading.value = false;
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+    }
+  }
+
+  // ? ===== Calendar Cancel API =====
+  RxBool calendarCancelLoading = false.obs;
+  Future<void> calendarCancelAPI({
+    required BuildContext context,
+    required String calendarId,
+    required String userId,
+    required String cancel,
+    String? cancelReason,
+  }) async {
+    calendarCancelLoading.value = true;
+    try {
+      await AppConstants.studentRepository
+          .calendarCancel(
+        calendarId: calendarId,
+        userId: userId,
+        cancel: cancel,
+        cancelReason: cancelReason,
+      )
+          .then((response) {
+        calendarCancelLoading.value = false;
+        Get.back();
+        if (context.mounted) {
+          defaultSuccessSnackBar(
+            context: context,
+            message: 'Trip canceled',
+          );
+        }
+      });
+    } catch (e) {
+      calendarCancelLoading.value = false;
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+    }
+  }
+
+  // ? ===== Calendar Cancel By Date API =====
+  RxBool calendarCancelByDateLoading = false.obs;
+  Future<void> calendarCancelByDateAPI({
+    required BuildContext context,
+    required String date,
+    required String userId,
+    required String cancel,
+    String? cancelReason,
+  }) async {
+    calendarCancelByDateLoading.value = true;
+    try {
+      await AppConstants.studentRepository
+          .cancelByDate(
+        endPoint: cancelReason == null? '/student/calendar/calendar_un_cancel_by_date' : '/student/calendar/calendar_cancel_by_date',
+        date: date,
+        userId: userId,
+        cancel: cancel,
+        cancelReason: cancelReason,
+      )
+          .then((response) {
+        calendarCancelByDateLoading.value = false;
+        Get.back();
+        showModalBottomSheet(
+            context: context,
+            builder: (context) => RideCanceledAndReportedBottomSheet(
+              headTitle: 'Ride Canceled'.tr,
+              isReportFirstStep: true,
+              imagePath: 'assets/images/smile.png',
+              headerMsg: 'Ride has been canceled'.tr,
+              subHeaderMsg:
+              "Thank you for being kind and save others' time.".tr,
+            ));
+        if (context.mounted) {
+          defaultSuccessSnackBar(
+            context: context,
+            message: 'Trip canceled',
+          );
+        }
+      });
+    } catch (e) {
+      calendarCancelByDateLoading.value = false;
       if (context.mounted) {
         defaultErrorSnackBar(
           context: context,

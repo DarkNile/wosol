@@ -8,6 +8,8 @@ import 'package:wosol/shared/widgets/shared_widgets/info_card.dart';
 import 'package:wosol/shared/widgets/user_widgets/custom_user_manage_card.dart';
 import 'package:wosol/shared/widgets/user_widgets/manage_my_trips_header_widget.dart';
 
+import '../../../controllers/user_controllers/user_home_controller.dart';
+
 class ManageMyTripUsersScreen extends StatefulWidget {
   const ManageMyTripUsersScreen({super.key});
 
@@ -20,6 +22,8 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
     with TickerProviderStateMixin {
   final UserManageTripsController userManageTripsController =
       Get.put<UserManageTripsController>(UserManageTripsController());
+  final UserHomeController userHomeController =
+  Get.put<UserHomeController>(UserHomeController());
   late TabController tabController;
   @override
   void initState() {
@@ -125,3 +129,41 @@ class AllWidget extends StatelessWidget {
     );
   }
 }
+
+// /// todo This for Turn off Button
+//  if(true /*isNotCanceled*/) {
+//             await userHomeController.calendarCancelByDateAPI(
+//             context: context,
+//             userId: '247',
+//             date: '2024-02-18',
+//             cancel: '1',
+//             cancelReason: 'سبب الالغاء',
+//           );
+//           }else{
+//             /// todo not ready from Api
+//             await userHomeController.calendarCancelByDateAPI(
+//               context: context,
+//               userId: '247',
+//               date: '2024-02-18',
+//               cancel: '0',
+//             );
+//           }
+
+// /// todo This for Turn Off this week only Button
+// if(true /*isNotCanceled*/) {
+//   await userHomeController.calendarCancelAPI(
+//     context: context,
+//     userId: '248',
+//     calendarId: '3078',
+//     cancel: '1',
+//     cancelReason: 'سبب الالغاء',
+//   );
+// }else{
+//   /// todo not ready from Api
+//   await userHomeController.calendarCancelAPI(
+//     context: context,
+//     userId: '248',
+//     calendarId: '3078',
+//     cancel: '0',
+//   );
+// }
