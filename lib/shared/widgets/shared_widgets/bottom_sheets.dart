@@ -143,6 +143,9 @@ class BottomSheetBase extends StatelessWidget {
 
 class RideStartBottomSheet extends StatelessWidget {
   final String headTitle;
+  final String? toTitle;
+  final String? fromTitle;
+  final String? date;
   final String? formTime;
   final String? toTime;
   final String? formPlace;
@@ -161,6 +164,9 @@ class RideStartBottomSheet extends StatelessWidget {
     this.formPlace,
     this.toPlace,
     this.fromUser = false,
+    this.toTitle,
+    this.fromTitle,
+    this.date,
   });
 
   @override
@@ -177,7 +183,15 @@ class RideStartBottomSheet extends StatelessWidget {
       withCloseIcon: true,
       height: fromUser ? 301 : null,
       child: fromUser
-          ? const UserTripDetailWidget()
+          ? UserTripDetailWidget(
+              fromTime: formTime!,
+              toTime: toTime!,
+              fromLocation: formPlace!,
+              toLocation: toPlace!,
+              fromTitle: fromTitle!,
+              toTitle: toTitle!,
+              date: date!,
+            )
           : CustomFromToWidget(
               formTime: formTime!,
               toTime: toTime!,

@@ -35,7 +35,15 @@ class UserTripsScreen extends StatelessWidget {
                         top: 10,
                         bottom: 24,
                       ),
-                      child: TripCardWidget(),
+                      child: TripCardWidget(
+                        fromLocation: '',
+                        fromTitle: '',
+                        toLocation: '',
+                        toTitle: '',
+                        date: '',
+                        fromTime: '',
+                        toTime: '',
+                      ),
                     ),
                     Text(
                       "return".tr,
@@ -44,7 +52,15 @@ class UserTripsScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const TripCardWidget(),
+                    const TripCardWidget(
+                      fromLocation: '',
+                      fromTitle: '',
+                      toLocation: '',
+                      toTitle: '',
+                      date: '',
+                      fromTime: '',
+                      toTime: '',
+                    ),
                   ],
                 ),
               ),
