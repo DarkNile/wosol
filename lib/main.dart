@@ -9,6 +9,7 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
+import 'package:wosol/shared/services/network/repositories/student_repositorie.dart';
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
@@ -66,6 +67,10 @@ class MyApp extends StatelessWidget {
                       UserRepository(),
                       permanent: true,
                     );
+        Get.put(
+          StudentRepository(),
+          permanent: true,
+        );
       }),
       translations: Localization(),
       locale: Locale(CacheHelper.getData(key: 'locale') ?? "en"),

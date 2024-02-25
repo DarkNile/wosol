@@ -60,6 +60,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                             withCancel: true,
                             withBorder: false,
                             onCancel: () async {
+                              // userHomeController.tripCancelByDateAPI(
+                              //   context: context,
+                              //   userId: '247',
+                              //   date: '2024-02-18',
+                              //   cancel: '1',
+                              //   cancelReason: 'سبب الالغاء',
+                              // );
                               onTapCancel(context);
                             },
                           ),
