@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/trip_info_user_model.dart';
 
 import '../../models/calendar_model.dart';
 import '../../shared/constants/constants.dart';
@@ -32,6 +33,33 @@ class UserHomeController extends GetxController {
     }
   }
 
+  // ? ===== Get Trip Info =====
+  RxBool isGettingTripInfo = false.obs;
+  RxList<TripInfoUserModel> tripInfo = <TripInfoUserModel>[].obs;
+  Future<void> getTripInfo({required String tripId}) async {
+    try {
+      isGettingTripInfo.value = true;
+      // var token = await CacheHelper.getData(key: 'token');
+      Response response = await DioHelper.postData(
+          url: 'trips/trip_user_id',
+          // data: {'user_id': token, "trip_id": tripId},
+          data: {"user_id": "247", "trip_id": "30"});
+      if (response.statusCode == 200) {
+        List data = response.data["data"];
+        tripInfo.value =
+            data.map((e) => TripInfoUserModel.fromJson(e)).toList().obs;
+        isGettingTripInfo.value = false;
+      } else {
+        isGettingTripInfo.value = false;
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      isGettingTripInfo.value = false;
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  // ? ===== Trip Cancel API =====
   RxBool tripCancelLoading = false.obs;
   Future<void> tripCancelAPI({
     required BuildContext context,
@@ -71,8 +99,8 @@ class UserHomeController extends GetxController {
     }
   }
 
+  // ? ===== Trip Cancel By Date API =====
   RxBool tripCancelByDateLoading = false.obs;
-
   Future<void> tripCancelByDateAPI({
     required BuildContext context,
     required String date,
@@ -84,7 +112,9 @@ class UserHomeController extends GetxController {
     try {
       await AppConstants.studentRepository
           .cancelByDate(
-        endPoint: cancelReason == null? '/student/trips/un_cancel_trip_user_by_date' : '/student/trips/cancel_trip_user_by_date',
+        endPoint: cancelReason == null
+            ? '/student/trips/un_cancel_trip_user_by_date'
+            : '/student/trips/cancel_trip_user_by_date',
         date: date,
         userId: userId,
         cancel: cancel,
@@ -96,14 +126,13 @@ class UserHomeController extends GetxController {
         showModalBottomSheet(
             context: context,
             builder: (context) => RideCanceledAndReportedBottomSheet(
-              headTitle: 'Ride Canceled'.tr,
-              isReportFirstStep: true,
-              imagePath: 'assets/images/smile.png',
-              headerMsg: 'Ride has been canceled'.tr,
-              subHeaderMsg:
-              "Thank you for being kind and save others' time."
-                  .tr,
-            ));
+                  headTitle: 'Ride Canceled'.tr,
+                  isReportFirstStep: true,
+                  imagePath: 'assets/images/smile.png',
+                  headerMsg: 'Ride has been canceled'.tr,
+                  subHeaderMsg:
+                      "Thank you for being kind and save others' time.".tr,
+                ));
         if (context.mounted) {
           defaultSuccessSnackBar(
             context: context,

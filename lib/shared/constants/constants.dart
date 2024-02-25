@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/services/network/repositories/home_driver_repository.dart';
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 
 import '../../controllers/shared_controllers/main_controllers/localization_controller.dart';
@@ -16,8 +17,9 @@ class AppConstants {
   static String token = '';
 
   static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
-  
+
   static final userRepository = Get.find<UserRepository>();
+  static final homeDriverRepository = Get.find<HomeDriverRepository>();
   static final studentRepository = Get.find<StudentRepository>();
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
