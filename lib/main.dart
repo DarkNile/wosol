@@ -22,7 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   AppConstants.token = await CacheHelper.getData(key: 'token') ?? '';
-  AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
+  // AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.white,
     statusBarIconBrightness: Brightness.dark,

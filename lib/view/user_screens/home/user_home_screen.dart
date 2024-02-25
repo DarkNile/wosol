@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -20,6 +22,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   void initState() {
+    log("user");
+    userHomeController.getTrips();
     userHomeController.getCalendarData();
     super.initState();
   }
@@ -42,49 +46,112 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               child: SingleChildScrollView(
                 physics: const PageScrollPhysics(),
                 padding: const EdgeInsets.all(16),
-                child: userHomeController.isGettingCalendar.value
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "nextRide".tr,
-                            style: AppFonts.header,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TripCardWidget(
-                            withCancel: true,
-                            withBorder: false,
-                            onCancel: () async {
-                              onTapCancel(context, true);
-                            },
-                          ),
-                          Padding(
-                            padding: AppConstants.edge(
-                              padding: const EdgeInsets.only(
-                                top: 24,
-                                bottom: 10,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "nextRide".tr,
+                      style: AppFonts.header,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    userHomeController.isGettingTrips.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Column(
+                            children: [
+                              ...List.generate(
+                                userHomeController.tripsList.length <= 2
+                                    ? userHomeController.tripsList.length
+                                    : 2,
+                                (index) => TripCardWidget(
+                                  withCancel: true,
+                                  withBorder: false,
+                                  onCancel: () async {
+                                    onTapCancel(context, true);
+                                  },
+                                  fromLocation: '',
+                                  fromTitle:
+                                      userHomeController.tripsList[index].from!,
+                                  toLocation: '',
+                                  toTitle: userHomeController
+                                      .tripsList[index].universityName!,
+                                  date: userHomeController
+                                      .tripsList[index].tripDate!,
+                                  fromTime: userHomeController
+                                      .tripsList[index].tripTime!,
+                                  toTime: userHomeController
+                                      .tripsList[index].tripTime!,
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              "thisWeekTrips".tr,
-                              style: AppFonts.header,
-                            ),
+                            ],
                           ),
-                          ...List.generate(
-                              5,
-                              (index) => TripCardWidget(
-                                    withCancel: true,
-                                    onCancel: () async {
-                                      onTapCancel(context, false);
-                                    },
-                                  )),
-                        ],
+                    Padding(
+                      padding: AppConstants.edge(
+                        padding: const EdgeInsets.only(
+                          top: 24,
+                          bottom: 10,
+                        ),
                       ),
+                      child: Text(
+                        "thisWeekTrips".tr,
+                        style: AppFonts.header,
+                      ),
+                    ),
+                    userHomeController.isGettingCalendar.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Column(
+                            children: [
+                              ...List.generate(
+                                  userHomeController.calendarData.length <= 5
+                                      ? userHomeController.calendarData.length
+                                      : 5,
+                                  (index) => Column(
+                                        children: [
+                                          ...List.generate(
+                                            userHomeController
+                                                .calendarData[index]
+                                                .subData
+                                                .length,
+                                            (indexSubData) => TripCardWidget(
+                                              fromLocation: '',
+                                              fromTitle: userHomeController
+                                                  .calendarData[index]
+                                                  .subData[indexSubData]
+                                                  .from,
+                                              toLocation: '',
+                                              toTitle: userHomeController
+                                                  .calendarData[index]
+                                                  .subData[indexSubData]
+                                                  .universityName,
+                                              date: userHomeController
+                                                  .calendarData[index]
+                                                  .subData[indexSubData]
+                                                  .date,
+                                              fromTime: userHomeController
+                                                  .calendarData[index]
+                                                  .subData[indexSubData]
+                                                  .time,
+                                              toTime: userHomeController
+                                                  .calendarData[index]
+                                                  .subData[indexSubData]
+                                                  .time,
+                                              withCancel: true,
+                                              onCancel: () async {
+                                                onTapCancel(context, false);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                            ],
+                          ),
+                  ],
+                ),
               ),
             );
           }),
@@ -102,18 +169,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               imagePath: 'assets/images/thinking.png',
               headerMsg: 'You are about to cancel your ride, are you sure?'.tr,
               subHeaderMsg: 'Note: today trip only will be canceled'.tr,
-              firstButtonFunction: () async{
-                if(isTrip){
+              firstButtonFunction: () async {
+                if (isTrip) {
                   /// todo Put the data here int the 2 functions and the condition if this cancel or not
-                  if(true /*isNotCanceled*/) {
+                  if (true /*isNotCanceled*/) {
                     await userHomeController.tripCancelByDateAPI(
-                    context: context,
-                    userId: '247',
-                    date: '2024-02-18',
-                    cancel: '1',
-                    cancelReason: 'سبب الالغاء',
-                  );
-                  }else{
+                      context: context,
+                      userId: '247',
+                      date: '2024-02-18',
+                      cancel: '1',
+                      cancelReason: 'سبب الالغاء',
+                    );
+                  } else {
                     /// todo not ready from Api
                     await userHomeController.tripCancelByDateAPI(
                       context: context,
@@ -122,8 +189,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       cancel: '0',
                     );
                   }
-                }else{
-                  if(true /*isNotCanceled*/) {
+                } else {
+                  if (true /*isNotCanceled*/) {
                     await userHomeController.calendarCancelByDateAPI(
                       context: context,
                       userId: '247',
@@ -131,7 +198,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       cancel: '1',
                       cancelReason: 'سبب الالغاء',
                     );
-                  }else{
+                  } else {
                     /// todo not ready from Api
                     await userHomeController.calendarCancelByDateAPI(
                       context: context,

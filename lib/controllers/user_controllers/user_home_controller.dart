@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:wosol/models/trip_info_user_model.dart';
+import 'package:wosol/models/trip_model.dart';
 
 import '../../models/calendar_model.dart';
 import '../../shared/constants/constants.dart';
@@ -17,8 +19,8 @@ class UserHomeController extends GetxController {
     isGettingCalendar.value = true;
     try {
       Response response = await DioHelper.postData(
-        url: 'calendar',
-        data: {"user_id": "185"},
+        url: 'student/calendar',
+        data: {"user_id": "248"},
       );
       if (response.statusCode == 200) {
         isGettingCalendar.value = false;
@@ -33,21 +35,50 @@ class UserHomeController extends GetxController {
     }
   }
 
+  // ? ===== Get Trips =====
+  RxBool isGettingTrips = false.obs;
+  RxList<TripModel> tripsList = <TripModel>[].obs;
+  Future<void> getTrips() async {
+    try {
+      log("Get Trips Loading");
+      isGettingTrips.value = true;
+      // var token = await CacheHelper.getData(key: 'token');
+      Response response = await DioHelper.postData(
+          url: 'student/trips',
+          // data: {'user_id': token, "trip_id": tripId},
+          data: {"user_id": "247"});
+      log("response ${response.data}");
+      if (response.statusCode == 200) {
+        List data = response.data["data"][0]["sub_data"];
+        tripsList.value = data.map((e) => TripModel.fromJson(e)).toList().obs;
+        isGettingTrips.value = false;
+        log("200");
+      } else {
+        isGettingTrips.value = false;
+        log("error ${response.data['data']['error']}");
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      isGettingTripInfo.value = false;
+      log("error ${e.response!.data['data']['error']}");
+      throw e.response!.data['data']['error'];
+    }
+  }
+
   // ? ===== Get Trip Info =====
   RxBool isGettingTripInfo = false.obs;
-  RxList<TripInfoUserModel> tripInfo = <TripInfoUserModel>[].obs;
+  RxList<TripModel> tripInfo = <TripModel>[].obs;
   Future<void> getTripInfo({required String tripId}) async {
     try {
       isGettingTripInfo.value = true;
       // var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(
-          url: 'trips/trip_user_id',
+          url: 'student/trips/trip_info',
           // data: {'user_id': token, "trip_id": tripId},
           data: {"user_id": "247", "trip_id": "30"});
       if (response.statusCode == 200) {
         List data = response.data["data"];
-        tripInfo.value =
-            data.map((e) => TripInfoUserModel.fromJson(e)).toList().obs;
+        tripInfo.value = data.map((e) => TripModel.fromJson(e)).toList().obs;
         isGettingTripInfo.value = false;
       } else {
         isGettingTripInfo.value = false;
@@ -204,7 +235,9 @@ class UserHomeController extends GetxController {
     try {
       await AppConstants.studentRepository
           .cancelByDate(
-        endPoint: cancelReason == null? '/student/calendar/calendar_un_cancel_by_date' : '/student/calendar/calendar_cancel_by_date',
+        endPoint: cancelReason == null
+            ? '/student/calendar/calendar_un_cancel_by_date'
+            : '/student/calendar/calendar_cancel_by_date',
         date: date,
         userId: userId,
         cancel: cancel,
@@ -216,13 +249,13 @@ class UserHomeController extends GetxController {
         showModalBottomSheet(
             context: context,
             builder: (context) => RideCanceledAndReportedBottomSheet(
-              headTitle: 'Ride Canceled'.tr,
-              isReportFirstStep: true,
-              imagePath: 'assets/images/smile.png',
-              headerMsg: 'Ride has been canceled'.tr,
-              subHeaderMsg:
-              "Thank you for being kind and save others' time.".tr,
-            ));
+                  headTitle: 'Ride Canceled'.tr,
+                  isReportFirstStep: true,
+                  imagePath: 'assets/images/smile.png',
+                  headerMsg: 'Ride has been canceled'.tr,
+                  subHeaderMsg:
+                      "Thank you for being kind and save others' time.".tr,
+                ));
         if (context.mounted) {
           defaultSuccessSnackBar(
             context: context,

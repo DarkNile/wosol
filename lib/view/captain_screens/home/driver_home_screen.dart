@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,12 +12,14 @@ import '../../../shared/constants/constants.dart';
 import '../../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'widgets/ride_card.dart';
 
+// ignore: must_be_immutable
 class DriverHomeScreen extends StatelessWidget {
   DriverHomeScreen({super.key});
   MapController mapController = Get.put(MapController());
 
   @override
   Widget build(BuildContext context) {
+    log("DriverHomeScreen");
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,23 +104,31 @@ class DriverHomeScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       builder: (context) => RideStartBottomSheet(
-        firstButtonFunction: () async{
-          mapController.targetLatLng = const LatLng(28.155398589482964, 30.73015619069338);
-          if(AppConstants.isCaptain){
-            mapController.markerIcon = await mapController.getBytesFromAsset('assets/images/location_on.png', 70);
-            mapController.currentIcon = await mapController.getBytesFromAsset('assets/images/navigation_arrow.png', 70);
-          }else{
-            mapController.markerIcon = await mapController.getBytesFromAsset('assets/images/where_to_vote.png', 70);
-            mapController.currentIcon = await mapController.getBytesFromAsset('assets/images/person_pin_circle.png', 70);
+        firstButtonFunction: () async {
+          mapController.targetLatLng =
+              const LatLng(28.155398589482964, 30.73015619069338);
+          if (AppConstants.isCaptain) {
+            mapController.markerIcon = await mapController.getBytesFromAsset(
+                'assets/images/location_on.png', 70);
+            mapController.currentIcon = await mapController.getBytesFromAsset(
+                'assets/images/navigation_arrow.png', 70);
+          } else {
+            mapController.markerIcon = await mapController.getBytesFromAsset(
+                'assets/images/where_to_vote.png', 70);
+            mapController.currentIcon = await mapController.getBytesFromAsset(
+                'assets/images/person_pin_circle.png', 70);
           }
           await mapController.getCurrentLocation().then((value) async {
-            mapController.currentLatLng = LatLng(value.latitude, value.longitude);
+            mapController.currentLatLng =
+                LatLng(value.latitude, value.longitude);
             await mapController.getCurrentTargetPolylinePoints();
             mapController.cameraPosition = CameraPosition(
               target: mapController.currentLatLng,
               zoom: 12,
             );
-            mapController.getEstimatedTime(originLatLng: mapController.currentLatLng, destinationLatLng: mapController.targetLatLng);
+            mapController.getEstimatedTime(
+                originLatLng: mapController.currentLatLng,
+                destinationLatLng: mapController.targetLatLng);
             mapController.liveLocation();
           });
           Get.back();

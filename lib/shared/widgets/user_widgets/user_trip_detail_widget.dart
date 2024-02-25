@@ -1,37 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 class UserTripDetailWidget extends StatelessWidget {
-  // will add model as final here
-  const UserTripDetailWidget({super.key});
+  // Details
+  final String fromLocation;
+  final String fromTitle;
+  final String toLocation;
+  final String toTitle;
+  final String date;
+  final String fromTime;
+  final String toTime;
+  const UserTripDetailWidget(
+      {super.key,
+      required this.fromLocation,
+      required this.fromTitle,
+      required this.toLocation,
+      required this.toTitle,
+      required this.date,
+      required this.fromTime,
+      required this.toTime});
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       _CustomLocationRowWidget(
-        location: 'FR8C+HXF, At Taniem, Makkah 24224',
-        time: 'today'.tr,
+        location: fromLocation,
+        time: date,
         isFrom: true,
       ),
       const _DotWidget(true),
       _CustomRowWidget(
-        location: 'home'.tr,
-        time: '10:05 ${"am".tr}',
+        location: fromTitle,
+        time: fromTime,
         isFrom: true,
       ),
       const _DotWidget(false),
-       _CustomRowWidget(
-        location: 'King Abdelaziz University',
-        time: '04:05 ${"pm".tr}',
+      _CustomRowWidget(
+        location: toTitle,
+        time: toTime,
         isFrom: false,
       ),
       const _DotWidget(true),
-      const _CustomLocationRowWidget(
-        location: 'FR8C+HXF, At Taniem, Makkah 24224',
+      _CustomLocationRowWidget(
+        location: toLocation,
         time: null,
         isFrom: false,
       ),

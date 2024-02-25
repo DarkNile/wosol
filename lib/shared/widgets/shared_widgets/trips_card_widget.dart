@@ -7,6 +7,15 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart
 import 'package:wosol/shared/widgets/user_widgets/user_trip_detail_widget.dart';
 
 class TripCardWidget extends StatelessWidget {
+  // Details
+  final String fromLocation;
+  final String fromTitle;
+  final String toLocation;
+  final String toTitle;
+  final String date;
+  final String fromTime;
+  final String toTime;
+
   final bool withCancel;
   final bool withBorder;
   final void Function()? onCancel;
@@ -14,7 +23,14 @@ class TripCardWidget extends StatelessWidget {
       {super.key,
       this.withCancel = false,
       this.withBorder = true,
-      this.onCancel});
+      this.onCancel,
+      required this.fromLocation,
+      required this.fromTitle,
+      required this.toLocation,
+      required this.toTitle,
+      required this.date,
+      required this.fromTime,
+      required this.toTime});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +44,16 @@ class TripCardWidget extends StatelessWidget {
             const SizedBox(
               height: 17,
             ),
-            const Expanded(child: UserTripDetailWidget()),
+            Expanded(
+                child: UserTripDetailWidget(
+              fromTime: fromTime,
+              toTime: toTime,
+              fromLocation: fromLocation,
+              fromTitle: fromTitle,
+              toLocation: toLocation,
+              toTitle: toTitle,
+              date: date,
+            )),
             if (withCancel)
               withBorder
                   ? DefaultRowButton(
