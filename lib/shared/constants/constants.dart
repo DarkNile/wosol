@@ -14,7 +14,7 @@ class AppConstants {
   static double screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
-  static bool isCaptain = true;
+  static bool isCaptain = false;
   static String token = '';
 
   static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
@@ -62,7 +62,9 @@ class AppConstants {
   }
 
   static String formatDateToWeekday(String date, Locale locale) {
-    final String formattedDate = DateFormat('EEEE',).format(
+    final String formattedDate = DateFormat(
+      'EEEE',
+    ).format(
       DateTime.parse(date),
     );
 
@@ -89,7 +91,6 @@ class AppConstants {
 
     return formattedDate;
   }
-
 }
 
 extension ResponsiveText on double {

@@ -60,34 +60,41 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : Column(
-                            children: [
-                              ...List.generate(
-                                userHomeController.tripsList.length <= 2
-                                    ? userHomeController.tripsList.length
-                                    : 2,
-                                (index) => TripCardWidget(
-                                  withCancel: true,
-                                  withBorder: false,
-                                  onCancel: () async {
-                                    onTapCancel(context, true);
-                                  },
-                                  fromLocation: '',
-                                  fromTitle:
-                                      userHomeController.tripsList[index].from!,
-                                  toLocation: '',
-                                  toTitle: userHomeController
-                                      .tripsList[index].universityName!,
-                                  date: userHomeController
-                                      .tripsList[index].tripDate!,
-                                  fromTime: userHomeController
-                                      .tripsList[index].tripTime!,
-                                  toTime: userHomeController
-                                      .tripsList[index].tripTime!,
+                        : userHomeController.tripsList.isEmpty
+                            ? Center(
+                                child: Text(
+                                  "No Trips".tr,
+                                  style: AppFonts.medium,
                                 ),
+                              )
+                            : Column(
+                                children: [
+                                  ...List.generate(
+                                    userHomeController.tripsList.length <= 2
+                                        ? userHomeController.tripsList.length
+                                        : 2,
+                                    (index) => TripCardWidget(
+                                      withCancel: true,
+                                      withBorder: false,
+                                      onCancel: () async {
+                                        onTapCancel(context, true);
+                                      },
+                                      fromLocation: '',
+                                      fromTitle: userHomeController
+                                          .tripsList[index].from!,
+                                      toLocation: '',
+                                      toTitle: userHomeController
+                                          .tripsList[index].universityName!,
+                                      date: userHomeController
+                                          .tripsList[index].tripDate!,
+                                      fromTime: userHomeController
+                                          .tripsList[index].tripTime!,
+                                      toTime: userHomeController
+                                          .tripsList[index].tripTime!,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
                     Padding(
                       padding: AppConstants.edge(
                         padding: const EdgeInsets.only(
@@ -104,52 +111,62 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : Column(
-                            children: [
-                              ...List.generate(
-                                  userHomeController.calendarData.length <= 5
-                                      ? userHomeController.calendarData.length
-                                      : 5,
-                                  (index) => Column(
-                                        children: [
-                                          ...List.generate(
-                                            userHomeController
-                                                .calendarData[index]
-                                                .subData
-                                                .length,
-                                            (indexSubData) => TripCardWidget(
-                                              fromLocation: '',
-                                              fromTitle: userHomeController
-                                                  .calendarData[index]
-                                                  .subData[indexSubData]
-                                                  .from,
-                                              toLocation: '',
-                                              toTitle: userHomeController
-                                                  .calendarData[index]
-                                                  .subData[indexSubData]
-                                                  .universityName,
-                                              date: userHomeController
-                                                  .calendarData[index]
-                                                  .subData[indexSubData]
-                                                  .date,
-                                              fromTime: userHomeController
-                                                  .calendarData[index]
-                                                  .subData[indexSubData]
-                                                  .time,
-                                              toTime: userHomeController
-                                                  .calendarData[index]
-                                                  .subData[indexSubData]
-                                                  .time,
-                                              withCancel: true,
-                                              onCancel: () async {
-                                                onTapCancel(context, false);
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                            ],
-                          ),
+                        : (userHomeController.calendarData.isEmpty ||
+                                userHomeController
+                                    .calendarData[0].subData.isEmpty)
+                            ? Center(
+                                child:
+                                    Text("No Trips".tr, style: AppFonts.medium),
+                              )
+                            : Column(
+                                children: [
+                                  ...List.generate(
+                                      userHomeController.calendarData.length <=
+                                              5
+                                          ? userHomeController
+                                              .calendarData.length
+                                          : 5,
+                                      (index) => Column(
+                                            children: [
+                                              ...List.generate(
+                                                userHomeController
+                                                    .calendarData[index]
+                                                    .subData
+                                                    .length,
+                                                (indexSubData) =>
+                                                    TripCardWidget(
+                                                  fromLocation: '',
+                                                  fromTitle: userHomeController
+                                                      .calendarData[index]
+                                                      .subData[indexSubData]
+                                                      .from,
+                                                  toLocation: '',
+                                                  toTitle: userHomeController
+                                                      .calendarData[index]
+                                                      .subData[indexSubData]
+                                                      .universityName,
+                                                  date: userHomeController
+                                                      .calendarData[index]
+                                                      .subData[indexSubData]
+                                                      .date,
+                                                  fromTime: userHomeController
+                                                      .calendarData[index]
+                                                      .subData[indexSubData]
+                                                      .time,
+                                                  toTime: userHomeController
+                                                      .calendarData[index]
+                                                      .subData[indexSubData]
+                                                      .time,
+                                                  withCancel: true,
+                                                  onCancel: () async {
+                                                    onTapCancel(context, false);
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          )),
+                                ],
+                              ),
                   ],
                 ),
               ),
