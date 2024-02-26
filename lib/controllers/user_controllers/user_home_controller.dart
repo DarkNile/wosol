@@ -116,10 +116,11 @@ class UserHomeController extends GetxController {
         tripCancelLoading.value = false;
         Get.back();
         if (context.mounted) {
-          defaultSuccessSnackBar(
-            context: context,
-            message: 'Trip canceled',
-          );
+          !(cancel == "0")
+              ? defaultErrorSnackBar(
+                  context: context, message: 'Trip Canceled'.tr)
+              : defaultSuccessSnackBar(
+                  context: context, message: 'Trip Un Canceled'.tr);
         }
       });
     } catch (e) {
@@ -176,11 +177,11 @@ class UserHomeController extends GetxController {
                         "Thank you for being kind and save others' time.".tr,
                   ));
           if (context.mounted) {
-            defaultSuccessSnackBar(
-              context: context,
-              message:
-                  !(cancel == "0") ? 'Trip Canceled'.tr : 'Trip Un Canceled'.tr,
-            );
+            !(cancel == "0")
+                ? defaultErrorSnackBar(
+                    context: context, message: 'Trip Canceled'.tr)
+                : defaultSuccessSnackBar(
+                    context: context, message: 'Trip Un Canceled'.tr);
           }
           getTrips();
         }
@@ -219,10 +220,11 @@ class UserHomeController extends GetxController {
         calendarCancelLoading.value = false;
         Get.back();
         if (context.mounted) {
-          defaultSuccessSnackBar(
-            context: context,
-            message: 'Trip canceled',
-          );
+          !(cancel == "0")
+              ? defaultErrorSnackBar(
+                  context: context, message: 'Trip Canceled'.tr)
+              : defaultSuccessSnackBar(
+                  context: context, message: 'Trip Un Canceled'.tr);
         }
       });
     } catch (e) {
@@ -274,10 +276,11 @@ class UserHomeController extends GetxController {
                         "Thank you for being kind and save others' time.".tr,
                   ));
           if (context.mounted) {
-            defaultSuccessSnackBar(
-              context: context,
-              message: 'Trip canceled',
-            );
+            !(cancel == "0")
+                ? defaultErrorSnackBar(
+                    context: context, message: 'Trip Canceled'.tr)
+                : defaultSuccessSnackBar(
+                    context: context, message: 'Trip Un Canceled'.tr);
           }
           getCalendarData();
         }
