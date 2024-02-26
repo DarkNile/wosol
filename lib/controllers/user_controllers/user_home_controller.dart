@@ -20,11 +20,12 @@ class UserHomeController extends GetxController {
     try {
       Response response = await DioHelper.postData(
         url: 'student/calendar',
-        data: {"user_id": "248"},
+        data: {"user_id": AppConstants.userId},
       );
       if (response.statusCode == 200) {
+        calendarData.clear();
         isGettingCalendar.value = false;
-        calendarData = CalendarModel.fromJson(response.data).data;
+        calendarData = CalendarModel.fromJson(response.data).data ?? [];
       } else {
         isGettingCalendar.value = false;
         throw (response.data['data']['error']);
@@ -46,10 +47,11 @@ class UserHomeController extends GetxController {
       Response response = await DioHelper.postData(
           url: 'student/trips',
           // data: {'user_id': token, "trip_id": tripId},
-          data: {"user_id": "247"});
+          data: {"user_id": AppConstants.userId});
       log("response ${response.data}");
       if (response.statusCode == 200) {
-        List data = response.data["data"][0]["sub_data"];
+        tripsList.clear();
+        List data = response.data["data"];
         tripsList.value = data.map((e) => TripModel.fromJson(e)).toList().obs;
         isGettingTrips.value = false;
         log("200");
@@ -75,7 +77,7 @@ class UserHomeController extends GetxController {
       Response response = await DioHelper.postData(
           url: 'student/trips/trip_info',
           // data: {'user_id': token, "trip_id": tripId},
-          data: {"user_id": "247", "trip_id": "30"});
+          data: {"user_id": AppConstants.userId, "trip_id": "30"});
       if (response.statusCode == 200) {
         List data = response.data["data"];
         tripInfo.value = data.map((e) => TripModel.fromJson(e)).toList().obs;
@@ -145,7 +147,7 @@ class UserHomeController extends GetxController {
       await AppConstants.studentRepository
           .cancelByDate(
         endPoint: cancelReason == null
-            ? '/student/trips/un_cancel_trip_user_by_date'
+            ? '/student/trips/un_cancel_trip_by_date'
             : '/student/trips/cancel_trip_user_by_date',
         date: date,
         userId: userId,
@@ -153,27 +155,39 @@ class UserHomeController extends GetxController {
         cancelReason: cancelReason,
       )
           .then((response) {
+        log("Trip Cancel By Date API statusCode ${response.statusCode}");
+        log("response ${response.data}");
         tripCancelByDateLoading.value = false;
-        Get.back();
-        showModalBottomSheet(
-            context: context,
-            builder: (context) => RideCanceledAndReportedBottomSheet(
-                  headTitle: 'Ride Canceled'.tr,
-                  isReportFirstStep: true,
-                  imagePath: 'assets/images/smile.png',
-                  headerMsg: 'Ride has been canceled'.tr,
-                  subHeaderMsg:
-                      "Thank you for being kind and save others' time.".tr,
-                ));
-        if (context.mounted) {
-          defaultSuccessSnackBar(
-            context: context,
-            message: 'Trip canceled',
-          );
+        if (response.statusCode == 200) {
+          Get.back();
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => RideCanceledAndReportedBottomSheet(
+                    isCancel: !(cancel == "0"),
+                    headTitle: !(cancel == "0")
+                        ? 'Ride Canceled'.tr
+                        : 'Ride UnCanceled',
+                    isReportFirstStep: true,
+                    imagePath: 'assets/images/smile.png',
+                    headerMsg: !(cancel == "0")
+                        ? 'Ride has been canceled'.tr
+                        : 'Ride has been un canceled'.tr,
+                    subHeaderMsg:
+                        "Thank you for being kind and save others' time.".tr,
+                  ));
+          if (context.mounted) {
+            defaultSuccessSnackBar(
+              context: context,
+              message:
+                  !(cancel == "0") ? 'Trip Canceled'.tr : 'Trip Un Canceled'.tr,
+            );
+          }
+          getTrips();
         }
       });
     } catch (e) {
       tripCancelByDateLoading.value = false;
+      log("e ${e.toString()}");
       if (context.mounted) {
         defaultErrorSnackBar(
           context: context,
@@ -244,23 +258,28 @@ class UserHomeController extends GetxController {
         cancelReason: cancelReason,
       )
           .then((response) {
+        log("Calendar Cancel By Date API statusCode ${response.statusCode}");
         calendarCancelByDateLoading.value = false;
-        Get.back();
-        showModalBottomSheet(
-            context: context,
-            builder: (context) => RideCanceledAndReportedBottomSheet(
-                  headTitle: 'Ride Canceled'.tr,
-                  isReportFirstStep: true,
-                  imagePath: 'assets/images/smile.png',
-                  headerMsg: 'Ride has been canceled'.tr,
-                  subHeaderMsg:
-                      "Thank you for being kind and save others' time.".tr,
-                ));
-        if (context.mounted) {
-          defaultSuccessSnackBar(
-            context: context,
-            message: 'Trip canceled',
-          );
+        if (response.statusCode == 200) {
+          Get.back();
+
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => RideCanceledAndReportedBottomSheet(
+                    headTitle: 'Ride Canceled'.tr,
+                    isReportFirstStep: true,
+                    imagePath: 'assets/images/smile.png',
+                    headerMsg: 'Ride has been canceled'.tr,
+                    subHeaderMsg:
+                        "Thank you for being kind and save others' time.".tr,
+                  ));
+          if (context.mounted) {
+            defaultSuccessSnackBar(
+              context: context,
+              message: 'Trip canceled',
+            );
+          }
+          getCalendarData();
         }
       });
     } catch (e) {

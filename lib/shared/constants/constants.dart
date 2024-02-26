@@ -15,6 +15,7 @@ class AppConstants {
       MediaQuery.of(context).size.height;
 
   static bool isCaptain = false;
+  static String userId = '247';
   static String token = '';
 
   static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';

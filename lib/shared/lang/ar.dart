@@ -148,5 +148,16 @@ const Map<String, String> ar = {
   "endDate": "تاريخ النهاية",
   "tripType": "نوع الرحلة",
   "roundTrip": "رحلة ذهاب وإياب",
-  "No Trips": "لا توجد رحلات"
+  "No Trips": "لا توجد رحلات",
+  "unCancelTrip": "استعادة الرحلة",
+  "Un Cancel Ride": "استعادة الرحلة",
+  'You are about to un cancel your ride, are you sure?':
+      'هل أنت متأكد من استعادة الرحلة؟',
+  'Note: today trip only will be un canceled':
+      'ملاحظة: الرحلة اليوم فقط ستتم استعادتها',
+  'Ride UnCanceled': 'رحلة استعادتها',
+  'Ride has been un canceled': 'لم يتم إلغاء الرحلة',
+  'Trip Canceled': 'تم ألغاء الرحلة',
+  'Trip Un Canceled': 'رحلة غير ملغاة',
+  'No, Keep': 'لا، احتفظ'
 };

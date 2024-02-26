@@ -1,4 +1,36 @@
 class TripModel {
+  String? date;
+  String? startTime;
+  String? endTime;
+  List<SubData>? subData;
+
+  TripModel({this.date, this.startTime, this.endTime, this.subData});
+
+  TripModel.fromJson(Map<String, dynamic> json) {
+    date = json['date'];
+    startTime = json['start_time'];
+    endTime = json['end_time'];
+    if (json['sub_data'] != null) {
+      subData = <SubData>[];
+      json['sub_data'].forEach((v) {
+        subData!.add(SubData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['date'] = date;
+    data['start_time'] = startTime;
+    data['end_time'] = endTime;
+    if (subData != null) {
+      data['sub_data'] = subData!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class SubData {
   String? tripId;
   String? userId;
   String? userType;
@@ -7,6 +39,7 @@ class TripModel {
   String? userLname;
   String? tripDate;
   String? tripTime;
+  String? tripRound;
   String? driverName;
   String? driverPhone;
   String? plateNumber;
@@ -26,7 +59,7 @@ class TripModel {
   String? carModel;
   String? carSeats;
 
-  TripModel(
+  SubData(
       {this.tripId,
       this.userId,
       this.userType,
@@ -35,6 +68,7 @@ class TripModel {
       this.userLname,
       this.tripDate,
       this.tripTime,
+      this.tripRound,
       this.driverName,
       this.driverPhone,
       this.plateNumber,
@@ -54,7 +88,7 @@ class TripModel {
       this.carModel,
       this.carSeats});
 
-  TripModel.fromJson(Map<String, dynamic> json) {
+  SubData.fromJson(Map<String, dynamic> json) {
     tripId = json['trip_id'];
     userId = json['user_id'];
     userType = json['user_type'];
@@ -63,6 +97,7 @@ class TripModel {
     userLname = json['user_lname'];
     tripDate = json['trip_date'];
     tripTime = json['trip_time'];
+    tripRound = json['trip_round'];
     driverName = json['driver_name'];
     driverPhone = json['driver_phone'];
     plateNumber = json['plate_number'];
@@ -93,6 +128,7 @@ class TripModel {
     data['user_lname'] = userLname;
     data['trip_date'] = tripDate;
     data['trip_time'] = tripTime;
+    data['trip_round'] = tripRound;
     data['driver_name'] = driverName;
     data['driver_phone'] = driverPhone;
     data['plate_number'] = plateNumber;
