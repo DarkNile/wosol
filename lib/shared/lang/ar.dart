@@ -151,9 +151,9 @@ const Map<String, String> ar = {
   "No Trips": "لا توجد رحلات",
   "unCancelTrip": "استعادة الرحلة",
   "Un Cancel Ride": "استعادة الرحلة",
-  'You are about to un cancel your ride, are you sure?':
+  'You are about to unCancel your ride, are you sure?':
       'هل أنت متأكد من استعادة الرحلة؟',
-  'Note: today trip only will be un canceled':
+  'Note: today trip only will be uncanceled':
       'ملاحظة: الرحلة اليوم فقط ستتم استعادتها',
   'Ride UnCanceled': 'رحلة استعادتها',
   'Ride has been un canceled': 'لم يتم إلغاء الرحلة',

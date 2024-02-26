@@ -274,10 +274,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 imagePath: 'assets/images/thinking.png',
                 headerMsg: isCancel
                     ? 'You are about to cancel your ride, are you sure?'.tr
-                    : 'You are about to un cancel your ride, are you sure?'.tr,
+                    : 'You are about to unCancel your ride, are you sure?'.tr,
                 subHeaderMsg: isCancel
                     ? 'Note: today trip only will be canceled'.tr
-                    : 'Note: today trip only will be un canceled'.tr,
+                    : 'Note: today trip only will be uncanceled'.tr,
                 firstButtonLoading: (isTrip &&
                         userHomeController.tripCancelByDateLoading.value) ||
                     (!isTrip &&

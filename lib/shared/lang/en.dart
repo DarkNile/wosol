@@ -152,15 +152,15 @@ const Map<String, String> en = {
   "tripType": "Trip Type",
   "roundTrip": "Round Trip",
   "No Trips": "No Trips!",
-  "unCancelTrip": "Un Cancel Trip",
-  "Un Cancel Ride": "Un Cancel Ride",
-  'You are about to un cancel your ride, are you sure?':
-      'You are about to un cancel your ride, are you sure?',
-  'Note: today trip only will be un canceled':
-      'Note: today trip only will be un canceled',
-  'Ride UnCanceled': 'Ride UnCanceled',
-  'Ride has been un canceled': 'Ride has been un canceled',
+  "unCancelTrip": "Uncancel Trip",
+  "Un Cancel Ride": "Uncancel Ride",
+  'You are about to unCancel your ride, are you sure?':
+      'You are about to Uncancel your ride, are you sure?',
+  'Note: today trip only will be uncanceled':
+      'Note: today trip only will be uncanceled',
+  'Ride UnCanceled': 'Ride Uncanceled',
+  'Ride has been un canceled': 'Ride has been uncanceled',
   'Trip Canceled': 'Trip Canceled',
-  'Trip Un Canceled': 'Trip Un Canceled',
+  'Trip Un Canceled': 'Trip Uncanceled',
   'No, Keep': 'No, Keep'
 };
