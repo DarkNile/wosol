@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -100,7 +101,8 @@ class _CustomRowWidget extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: AppFonts.button.copyWith(
-                  fontSize: 16.0.sp(context), color: AppColors.black800)),
+                  fontSize: Get.width > 375 ? 16.0.sp(context) : 13.5,
+                  color: AppColors.black800)),
         ),
       ]),
     );
@@ -125,7 +127,8 @@ class _CustomLocationRowWidget extends StatelessWidget {
             if (time != null)
               Text(time ?? "",
                   style: AppFonts.button.copyWith(
-                      fontSize: 11.0.sp(context),
+                      fontSize:
+                          Get.width > 375 ? 11.0.sp(context) : 8.5.sp(context),
                       color: AppColors.darkBlue400)),
             const Spacer(),
             isFrom
