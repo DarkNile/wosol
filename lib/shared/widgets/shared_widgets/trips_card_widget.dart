@@ -19,6 +19,7 @@ class TripCardWidget extends StatelessWidget {
   final bool withCancel;
   final bool withBorder;
   final void Function()? onCancel;
+  final bool isCancel;
   const TripCardWidget(
       {super.key,
       this.withCancel = false,
@@ -30,7 +31,8 @@ class TripCardWidget extends StatelessWidget {
       required this.toTitle,
       required this.date,
       required this.fromTime,
-      required this.toTime});
+      required this.toTime,
+      this.isCancel = true});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class TripCardWidget extends StatelessWidget {
             if (withCancel)
               withBorder
                   ? DefaultRowButton(
-                      text: "cancelTrip".tr,
+                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
                       height: 42,
                       border: Border.all(
                         color: AppColors.error600,
@@ -70,7 +72,7 @@ class TripCardWidget extends StatelessWidget {
                       svgPic: 'assets/icons/close_red.svg',
                     )
                   : DefaultRowButton(
-                      text: "cancelTrip".tr,
+                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
                       height: 42,
                       color: AppColors.error600,
                       function: onCancel,

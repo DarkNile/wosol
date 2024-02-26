@@ -147,7 +147,7 @@ class UserHomeController extends GetxController {
       await AppConstants.studentRepository
           .cancelByDate(
         endPoint: cancelReason == null
-            ? '/student/trips/un_cancel_trip_user_by_date'
+            ? '/student/trips/un_cancel_trip_by_date'
             : '/student/trips/cancel_trip_user_by_date',
         date: date,
         userId: userId,
@@ -160,23 +160,29 @@ class UserHomeController extends GetxController {
         tripCancelByDateLoading.value = false;
         if (response.statusCode == 200) {
           Get.back();
-          getTrips();
           showModalBottomSheet(
               context: context,
               builder: (context) => RideCanceledAndReportedBottomSheet(
-                    headTitle: 'Ride Canceled'.tr,
+                    isCancel: !(cancel == "0"),
+                    headTitle: !(cancel == "0")
+                        ? 'Ride Canceled'.tr
+                        : 'Ride UnCanceled',
                     isReportFirstStep: true,
                     imagePath: 'assets/images/smile.png',
-                    headerMsg: 'Ride has been canceled'.tr,
+                    headerMsg: !(cancel == "0")
+                        ? 'Ride has been canceled'.tr
+                        : 'Ride has been un canceled'.tr,
                     subHeaderMsg:
                         "Thank you for being kind and save others' time.".tr,
                   ));
           if (context.mounted) {
             defaultSuccessSnackBar(
               context: context,
-              message: 'Trip canceled',
+              message:
+                  !(cancel == "0") ? 'Trip Canceled'.tr : 'Trip Un Canceled'.tr,
             );
           }
+          getTrips();
         }
       });
     } catch (e) {
@@ -256,7 +262,7 @@ class UserHomeController extends GetxController {
         calendarCancelByDateLoading.value = false;
         if (response.statusCode == 200) {
           Get.back();
-          getCalendarData();
+
           showModalBottomSheet(
               context: context,
               builder: (context) => RideCanceledAndReportedBottomSheet(
@@ -273,6 +279,7 @@ class UserHomeController extends GetxController {
               message: 'Trip canceled',
             );
           }
+          getCalendarData();
         }
       });
     } catch (e) {

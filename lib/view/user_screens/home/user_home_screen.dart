@@ -85,16 +85,23 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                   .length
                                               : 2,
                                           (indexSubData) => TripCardWidget(
+                                            isCancel: userHomeController
+                                                    .tripsList[index]
+                                                    .subData![indexSubData]
+                                                    .cancelRequest! ==
+                                                "0",
                                             withCancel: true,
                                             withBorder: false,
                                             onCancel: () async {
                                               onTapCancel(
                                                   context: context,
                                                   isTrip: true,
-                                                  cancel: userHomeController
-                                                      .tripsList[index]
-                                                      .subData![indexSubData]
-                                                      .cancelRequest!,
+                                                  isCancel: userHomeController
+                                                          .tripsList[index]
+                                                          .subData![
+                                                              indexSubData]
+                                                          .cancelRequest! ==
+                                                      "0",
                                                   tripDate: userHomeController
                                                       .tripsList[index]
                                                       .subData![indexSubData]
@@ -173,6 +180,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                     .length,
                                                 (indexSubData) =>
                                                     TripCardWidget(
+                                                  isCancel: userHomeController
+                                                          .calendarData[index]
+                                                          .subData![
+                                                              indexSubData]
+                                                          .cancelRequest! ==
+                                                      "0",
                                                   fromLocation:
                                                       userHomeController
                                                           .calendarData[index]
@@ -218,11 +231,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                               indexSubData]
                                                           .userId!,
                                                       isTrip: false,
-                                                      cancel: userHomeController
-                                                          .calendarData[index]
-                                                          .subData![
-                                                              indexSubData]
-                                                          .cancelRequest!,
+                                                      isCancel: userHomeController
+                                                              .calendarData[
+                                                                  index]
+                                                              .subData![
+                                                                  indexSubData]
+                                                              .cancelRequest! ==
+                                                          "0",
                                                     );
                                                   },
                                                 ),
@@ -246,33 +261,33 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     required bool isTrip,
     String? tripDate,
     String? calendarDate,
-    required String cancel,
+    required bool isCancel,
     required String userId,
   }) async {
     showModalBottomSheet(
         context: context,
         builder: (context) => Obx(
               () => RideCanceledAndReportedBottomSheet(
-                headTitle: 'Cancel Ride'.tr,
+                isCancel: isCancel,
+                headTitle: isCancel ? 'Cancel Ride'.tr : 'Un Cancel Ride'.tr,
                 isCancelFirstStep: true,
                 imagePath: 'assets/images/thinking.png',
-                headerMsg:
-                    'You are about to cancel your ride, are you sure?'.tr,
-                subHeaderMsg: 'Note: today trip only will be canceled'.tr,
+                headerMsg: isCancel
+                    ? 'You are about to cancel your ride, are you sure?'.tr
+                    : 'You are about to un cancel your ride, are you sure?'.tr,
+                subHeaderMsg: isCancel
+                    ? 'Note: today trip only will be canceled'.tr
+                    : 'Note: today trip only will be un canceled'.tr,
                 firstButtonLoading: (isTrip &&
                         userHomeController.tripCancelByDateLoading.value) ||
                     (!isTrip &&
                         userHomeController.calendarCancelByDateLoading.value),
                 firstButtonFunction: () async {
                   log("UserID $userId");
-                  log("Cancel $cancel");
+                  log("isCancel $isCancel");
                   if (isTrip) {
-                    log("trip");
-
-                    /// todo Put the data here int the 2 functions and the condition if this cancel or not
-
-                    if (cancel == "0") {
-                      log("s0000");
+                    //  Cancel
+                    if (isCancel) {
                       await userHomeController.tripCancelByDateAPI(
                         context: context,
                         userId: userId,
@@ -281,10 +296,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         cancelReason: 'سبب الالغاء',
                       );
                     } else {
-                      log("else");
-
-                      /// todo not ready from Api
-                      /// Un Cancel
+                      // Un Cancel
                       await userHomeController.tripCancelByDateAPI(
                         context: context,
                         userId: userId,
@@ -293,8 +305,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       );
                     }
                   } else {
-                    log("Calender");
-                    if (cancel == "0") {
+                    //  Cancel
+                    if (isCancel) {
                       await userHomeController.calendarCancelByDateAPI(
                         context: context,
                         userId: userId,
@@ -303,8 +315,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         cancelReason: 'سبب الالغاء',
                       );
                     } else {
-                      /// todo not ready from Api
-                      /// unCancel
+                      /// Un Cancel
                       await userHomeController.calendarCancelByDateAPI(
                         context: context,
                         userId: userId,

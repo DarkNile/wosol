@@ -477,6 +477,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
   final bool showOrButton;
   final bool firstButtonLoading;
   final bool secondButtonLoading;
+  final bool isCancel;
 
   final Function()? firstButtonFunction;
   final Function()? secondButtonFunction;
@@ -496,6 +497,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
     this.thirdButtonFunction,
     this.firstButtonLoading = false,
     this.secondButtonLoading = false,
+    this.isCancel = true,
   });
 
   @override
@@ -504,8 +506,12 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
       headTitle: headTitle,
       showButtons: isCancelFirstStep,
       containTwoButtons: true,
-      firstButtonText: showOrButton ? 'Turn off'.tr : 'Yes, Cancel ride'.tr,
-      secondButtonText: 'No, Keep ride'.tr,
+      firstButtonText: showOrButton
+          ? 'Turn off'.tr
+          : isCancel
+              ? 'Yes, Cancel ride'.tr
+              : 'Un Cancel Ride'.tr,
+      secondButtonText: isCancel ? 'No, Keep ride'.tr : 'No, Keep'.tr,
       firstButtonsFlex: 1,
       secondButtonsFlex: 1,
       withCloseIcon: true,
