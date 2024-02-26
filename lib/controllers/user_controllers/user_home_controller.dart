@@ -252,19 +252,18 @@ class UserHomeController extends GetxController {
       await AppConstants.studentRepository
           .cancelByDate(
         endPoint: cancelReason == null
-            ? '/student/calendar/calendar_un_cancel_by_date'
-            : '/student/calendar/calendar_cancel_by_date',
+            ? 'student/calendar/calendar_un_cancel_by_date'
+            : 'student/calendar/calendar_cancel_by_date',
         date: date,
         userId: userId,
         cancel: cancel,
         cancelReason: cancelReason,
       )
           .then((response) {
-        log("Calendar Cancel By Date API statusCode ${response.statusCode}");
         calendarCancelByDateLoading.value = false;
         if (response.statusCode == 200) {
           Get.back();
-
+          getCalendarData();
           showModalBottomSheet(
               context: context,
               builder: (context) => RideCanceledAndReportedBottomSheet(

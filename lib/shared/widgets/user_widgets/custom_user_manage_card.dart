@@ -11,14 +11,18 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_b
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 
+import '../shared_widgets/bottom_sheets.dart';
+
 // ignore: must_be_immutable
 class CustomUserManageCardWidget extends StatelessWidget {
   final bool hasHint;
   final bool hasButton;
+  final bool isCancel;
   final void Function()? buttonFunction;
   final UserHomeController userHomeController;
   final String userId;
   final String calenderId;
+  final String calenderDate;
 
   final ManageTripsModel manageTrips;
 
@@ -26,12 +30,14 @@ class CustomUserManageCardWidget extends StatelessWidget {
     super.key,
     this.hasHint = false,
     this.hasButton = false,
+    this.isCancel = true,
     // required this.userManageTripsController,
     required this.manageTrips,
     required this.userHomeController,
     this.buttonFunction,
     required this.userId,
     required this.calenderId,
+    required this.calenderDate,
   });
 
   RxBool withHint = RxBool(false);
@@ -57,23 +63,15 @@ class CustomUserManageCardWidget extends StatelessWidget {
                     isSwitcher: true,
                     isManageScreen: true,
                     isSwitcherOn: manageTrips.isToggleOn.value,
-                    toggleIcon: () async {
-                      if (manageTrips.isToggleOn.value) {
-                        await userHomeController.calendarCancelAPI(
-                          context: context,
-                          userId: userId,
-                          calendarId: calenderId,
-                          cancel: '1',
-                          cancelReason: 'سبب الالغاء',
-                        );
-                      } else {
-                        await userHomeController.calendarCancelAPI(
-                          context: context,
-                          userId: userId,
-                          calendarId: calenderId,
-                          cancel: '0',
-                        );
-                      }
+                    toggleIcon: () {
+                      onTapCancel(
+                        calendarDate: calenderDate,
+                        context: context,
+                        calendarId: calenderId,
+                        userId: userId,
+                        isTrip: false,
+                        isCancel: manageTrips.isToggleOn.value,
+                      );
                     },
                     title: '${manageTrips.time} ${"am".tr}',
                   ),
@@ -134,5 +132,88 @@ class CustomUserManageCardWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> onTapCancel({
+    required BuildContext context,
+    required bool isTrip,
+    String? tripDate,
+    required String calendarId,
+    required String calendarDate,
+    required bool isCancel,
+    required String userId,
+  }) async {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => Obx(
+              () => RideCanceledAndReportedBottomSheet(
+                showOrButton: true,
+                isCancel: isCancel,
+                headTitle: isCancel ? 'Cancel Ride'.tr : 'Un Cancel Ride'.tr,
+                isCancelFirstStep: true,
+                imagePath: 'assets/images/thinking.png',
+                headerMsg: isCancel
+                    ? 'You are about to cancel your ride, are you sure?'.tr
+                    : 'You are about to unCancel your ride, are you sure?'.tr,
+                subHeaderMsg: isCancel
+                    ? 'Note: today trip only will be canceled'.tr
+                    : 'Note: today trip only will be uncanceled'.tr,
+                firstButtonLoading: (isTrip &&
+                        userHomeController.tripCancelByDateLoading.value) ||
+                    (!isTrip && userHomeController.calendarCancelLoading.value),
+                firstButtonFunction: () async {
+                  //  Cancel
+                  if (isCancel) {
+                    await userHomeController
+                        .calendarCancelAPI(
+                          context: context,
+                          userId: userId,
+                          calendarId: calendarId,
+                          cancel: '1',
+                          cancelReason: 'سبب الالغاء',
+                        )
+                        .then(
+                          (value) => manageTrips.isToggleOn.value = false,
+                        );
+                  } else {
+                    /// Un Cancel
+                    await userHomeController
+                        .calendarCancelAPI(
+                          context: context,
+                          userId: userId,
+                          calendarId: calendarId,
+                          cancel: '0',
+                        )
+                        .then(
+                          (value) => manageTrips.isToggleOn.value = true,
+                        );
+                  }
+                },
+                secondButtonFunction: () {
+                  Get.back();
+                },
+                thirdButtonLoading:
+                    userHomeController.calendarCancelByDateLoading.value,
+                thirdButtonFunction: () async {
+                  if (manageTrips.isToggleOn.value) {
+                    await userHomeController.calendarCancelByDateAPI(
+                      context: context,
+                      userId: userId,
+                      date: calenderDate,
+                      cancel: '1',
+                      cancelReason: 'سبب الالغاء',
+                    );
+                  } else {
+                    await userHomeController.calendarCancelByDateAPI(
+                      context: context,
+                      userId: userId,
+                      date: calenderDate,
+                      cancel: '0',
+                    );
+                  }
+                },
+              ),
+            ));
   }
 }

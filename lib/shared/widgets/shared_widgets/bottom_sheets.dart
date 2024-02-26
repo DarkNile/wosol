@@ -28,6 +28,7 @@ class BottomSheetBase extends StatelessWidget {
     required this.child,
     this.firstButtonText = 'Start Ride',
     this.secondButtonText = 'Canceled',
+    this.thirdButtonText = 'Turn Off this week only',
     this.firstButtonFunction,
     this.secondButtonFunction,
     this.thirdButtonFunction,
@@ -50,6 +51,7 @@ class BottomSheetBase extends StatelessWidget {
     this.firstTextColor,
     this.firstButtonLoading = false,
     this.secondButtonLoading = false,
+    this.thirdButtonLoading = false,
   });
   final String headTitle;
   final Color? firstTextColor;
@@ -57,6 +59,7 @@ class BottomSheetBase extends StatelessWidget {
   final String? svgSecondIconPath;
   final String firstButtonText;
   final String secondButtonText;
+  final String thirdButtonText;
   final Widget child;
   final bool draggable;
   final bool withCloseIcon;
@@ -66,6 +69,7 @@ class BottomSheetBase extends StatelessWidget {
   final bool showOrButton;
   final bool firstButtonLoading;
   final bool secondButtonLoading;
+  final bool thirdButtonLoading;
   final double? height;
   final double spaceBeforeButtons;
   final int firstButtonsFlex;
@@ -137,8 +141,9 @@ class BottomSheetBase extends StatelessWidget {
               ),
             if (showOrButton)
               DefaultRowButton(
+                loading: thirdButtonLoading,
                 function: thirdButtonFunction ?? () {},
-                text: 'Turn Off this week only',
+                text: thirdButtonText,
               ),
           ],
         ),
@@ -477,6 +482,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
   final bool showOrButton;
   final bool firstButtonLoading;
   final bool secondButtonLoading;
+  final bool thirdButtonLoading;
   final bool isCancel;
 
   final Function()? firstButtonFunction;
@@ -497,6 +503,7 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
     this.thirdButtonFunction,
     this.firstButtonLoading = false,
     this.secondButtonLoading = false,
+    this.thirdButtonLoading = false,
     this.isCancel = true,
   });
 
@@ -507,25 +514,29 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
       showButtons: isCancelFirstStep,
       containTwoButtons: true,
       firstButtonText: showOrButton
-          ? 'Turn off'.tr
+          ? (isCancel ? 'Turn off'.tr : 'Turn on'.tr)
           : isCancel
               ? 'Yes, Cancel ride'.tr
               : 'Un Cancel Ride'.tr,
       secondButtonText: isCancel ? 'No, Keep ride'.tr : 'No, Keep'.tr,
+      thirdButtonText: isCancel ? 'turnOffThisWeek'.tr : "turnOnThisWeek".tr,
       firstButtonsFlex: 1,
       secondButtonsFlex: 1,
       withCloseIcon: true,
       showOrButton: showOrButton,
       secondButtonTextColor: AppColors.blueGray,
-      firstButtonColor: showOrButton ? AppColors.error600 : AppColors.logo,
+      firstButtonColor: showOrButton
+          ? (isCancel ? AppColors.error600 : AppColors.success600)
+          : AppColors.logo,
       svgFirstIconPath: 'assets/images/tick-circle.svg',
       firstButtonLoading: firstButtonLoading,
       firstButtonFunction: firstButtonFunction ?? () {},
       secondButtonLoading: secondButtonLoading,
+      thirdButtonLoading: thirdButtonLoading,
       secondButtonFunction: secondButtonFunction ?? () {},
       thirdButtonFunction: thirdButtonFunction ?? () {},
       height: showOrButton
-          ? 434
+          ? 460
           : (isCancelFirstStep
               ? 362 + 12
               : isReportFirstStep
