@@ -78,11 +78,11 @@ class MyApp extends StatelessWidget {
       translations: Localization(),
       locale: Locale(CacheHelper.getData(key: 'locale') ?? "en"),
       fallbackLocale: const Locale("en"),
-      home: AppConstants.token.isEmpty
-          ? LoginScreen()
-          : (AppConstants.isCaptain
-              ? DriverLayoutScreen()
-              : UserLayoutScreen()),
+      home:
+          //  AppConstants.token.isEmpty
+          //     ? LoginScreen()
+          //     :
+          (AppConstants.isCaptain ? DriverLayoutScreen() : UserLayoutScreen()),
     );
   }
 }

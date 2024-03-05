@@ -10,7 +10,7 @@ class CustomContainerCardWithBorderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: height ?? 216,
+        height: height ?? 216 + 4,
         decoration: BoxDecoration(
           color: AppColors.white,
           border: Border.all(width: 1, color: AppColors.darkBlue100),

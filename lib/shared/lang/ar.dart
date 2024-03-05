@@ -162,5 +162,6 @@ const Map<String, String> ar = {
   'Ride has been un canceled': 'لم يتم إلغاء الرحلة',
   'Trip Canceled': 'تم ألغاء الرحلة',
   'Trip Un Canceled': 'رحلة غير ملغاة',
-  'No, Keep': 'لا، احتفظ'
+  'No, Keep': 'لا، احتفظ',
+  'No Vehicles': 'لا مركبات'
 };

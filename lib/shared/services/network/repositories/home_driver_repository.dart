@@ -9,7 +9,7 @@ class HomeDriverRepository extends GetxService {
     try {
       var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(
-        url: 'trips',
+        url: 'driver/trips/trip_student',
         data: {
           'user_id': token,
         },

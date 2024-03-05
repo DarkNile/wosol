@@ -61,7 +61,7 @@ class UserHomeController extends GetxController {
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
-      isGettingTripInfo.value = false;
+      isGettingTrips.value = false;
       log("error ${e.response!.data['data']['error']}");
       throw e.response!.data['data']['error'];
     }
