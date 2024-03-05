@@ -48,7 +48,7 @@ class ProfileCard extends StatelessWidget {
         title: "vehicles".tr,
         subTitle: "Toyota Hiace, Toyota Coaster, .. etc",
         onTap: () {
-          Get.to(() => const VehiclesScreen());
+          Get.to(() => VehiclesScreen());
         },
       ),
       ProfileCustomModel(

@@ -41,7 +41,7 @@ class TripHistoryCard extends StatelessWidget {
               const CustomMapImageWidget(
                 image: "assets/images/map_details.png",
               ),
-              const SizedBox(height: 13),
+              const SizedBox(height: 12),
               CustomRowWithArrowWidget(
                 from: fromCity,
                 to: toCity,

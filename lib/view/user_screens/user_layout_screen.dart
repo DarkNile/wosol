@@ -19,7 +19,7 @@ class UserLayoutScreen extends StatelessWidget {
     List<Widget> screens = [
       const UserHomeScreen(),
       const ManageMyTripUsersScreen(),
-      const TripHistoryScreen(),
+      TripHistoryScreen(),
       const NotificationsScreen(),
       const SettingsScreen(),
     ];

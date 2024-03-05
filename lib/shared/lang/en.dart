@@ -97,9 +97,8 @@ const Map<String, String> en = {
       "Thank you for being kind and save others' time.",
   'Turn off': 'Turn off',
   'Turn on': 'Turn on',
-  "turnOffThisWeek":'Turn Off this week only',
-  "turnOnThisWeek":'Turn On this week only',
-
+  "turnOffThisWeek": 'Turn Off this week only',
+  "turnOnThisWeek": 'Turn On this week only',
   "Yes, Cancel ride": "Yes, Cancel ride",
   "No, Keep ride": "No, Keep ride",
   "Ride Reported": "Ride Reported",
@@ -167,6 +166,7 @@ const Map<String, String> en = {
   'Trip Canceled': 'Trip Canceled',
   'Trip Un Canceled': 'Trip Uncanceled',
   'No, Keep': 'No, Keep',
+  'No Vehicles': 'No Vehicles',
   'generalWrongMsg': 'Ops something went wrong please try again later',
   'generalSuccessMsg': 'Order success',
 };

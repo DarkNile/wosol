@@ -163,6 +163,7 @@ const Map<String, String> ar = {
   'Trip Canceled': 'تم ألغاء الرحلة',
   'Trip Un Canceled': 'رحلة غير ملغاة',
   'No, Keep': 'لا، احتفظ',
+  'No Vehicles': 'لا مركبات',
   'generalWrongMsg': 'عفوًا، حدث خطأ ما، يُرجى إعادة المحاولة لاحقًا',
   'generalSuccessMsg': 'تمت العملية بنجاح',
 };

@@ -14,7 +14,7 @@ class AppConstants {
   static double screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
-  static bool isCaptain = false;
+  static bool isCaptain = true;
   static String userId = '247';
   static String token = '';
 
