@@ -166,5 +166,7 @@ const Map<String, String> en = {
   'Ride has been un canceled': 'Ride has been uncanceled',
   'Trip Canceled': 'Trip Canceled',
   'Trip Un Canceled': 'Trip Uncanceled',
-  'No, Keep': 'No, Keep'
+  'No, Keep': 'No, Keep',
+  'generalWrongMsg': 'Ops something went wrong please try again later',
+  'generalSuccessMsg': 'Order success',
 };
