@@ -41,4 +41,33 @@ class HomeDriverRepository extends GetxService {
       throw e.response!.data['data']['error'];
     }
   }
+
+  // ? ===== Trip States =====
+  Future<Response> tripStates({
+    required String tripId,
+    String? tripUserId,
+    String? attendance,
+    required int state,
+  }) async {
+    List<String> endPoints = ['trip_start', 'trip_cancel', 'trip_end', 'trip_attendace'];
+    try {
+      Response response = await DioHelper.postData(
+        url: '/driver/trips/${endPoints[state]}',
+        data: {
+          "trip_id": tripId,
+          if(tripUserId != null)
+            "trip_user_id" : tripUserId,
+          if(attendance != null)
+            "attendance" : attendance,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
 }
