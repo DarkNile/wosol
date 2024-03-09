@@ -10,6 +10,13 @@ class UserModel {
       data: UserData.fromJson(json['data']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'data': data.toJson(),
+    };
+  }
 }
 
 class UserData {
@@ -98,5 +105,35 @@ class UserData {
       loginType: json['login_type'] ?? "",
       token: json['token'] ?? "",
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'user_id': userId,
+      'user_type': userType,
+      'user_fname': userFname,
+      'user_lname': userLname,
+      'company_name': companyName,
+      'user_email': userEmail,
+      'user_pass': userPass,
+      'telephone': telephone,
+      'supervisor_id': supervisorId,
+      'user_nationality': userNationality,
+      'national_id': nationalId,
+      'gender': gender,
+      'address': address,
+      'user_zone': userZone,
+      'user_city': userCity,
+      'user_district': userDistrict,
+      'parent_name': parentName,
+      'parent_type': parentType,
+      'parnt_national_id': parntNationalId,
+      'parent_phone': parentPhone,
+      'parent_email': parentEmail,
+      'date_added': dateAdded,
+      'last_login': lastLogin,
+      'user_agent': userAgent,
+      'login_type': loginType,
+      'token': token,
+    };
   }
 }

@@ -1,8 +1,12 @@
 // import 'package:device_preview/device_preview.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
+import 'package:wosol/models/driver_model.dart';
+import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/lang/localization.dart';
@@ -20,8 +24,19 @@ import 'controllers/shared_controllers/main_controllers/localization_controller.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
+  Get.put(
+    UserRepository(),
+    permanent: true,
+  );
   AppConstants.token = await CacheHelper.getData(key: 'token') ?? '';
-  // AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
+  AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
+  if (AppConstants.isCaptain && AppConstants.token.isNotEmpty) {
+    AppConstants.userRepository.driverData = DriverData.fromJson(
+        jsonDecode(await CacheHelper.getData(key: 'DriverData')));
+  } else if (AppConstants.token.isNotEmpty) {
+    AppConstants.userRepository.userData = UserData.fromJson(
+        jsonDecode(await CacheHelper.getData(key: 'UserData')));
+  }
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.white,
     statusBarIconBrightness: Brightness.dark,
@@ -63,10 +78,7 @@ class MyApp extends StatelessWidget {
           LocalizationController(),
           permanent: true,
         );
-        Get.put(
-          UserRepository(),
-          permanent: true,
-        );
+
         Get.put(
           HomeDriverRepository(),
         );
@@ -78,11 +90,11 @@ class MyApp extends StatelessWidget {
       translations: Localization(),
       locale: Locale(CacheHelper.getData(key: 'locale') ?? "en"),
       fallbackLocale: const Locale("en"),
-      home:
-          //  AppConstants.token.isEmpty
-          //     ? LoginScreen()
-          //     :
-          (AppConstants.isCaptain ? DriverLayoutScreen() : UserLayoutScreen()),
+      home: AppConstants.token.isEmpty
+          ? LoginScreen()
+          : (AppConstants.isCaptain
+              ? DriverLayoutScreen()
+              : UserLayoutScreen()),
     );
   }
 }

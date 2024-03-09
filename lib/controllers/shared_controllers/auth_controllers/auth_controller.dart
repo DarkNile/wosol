@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/models/driver_model.dart';
@@ -68,6 +70,8 @@ class AuthController extends GetxController {
           if (response.data['data']['login_type'] == 'Student') {
             UserModel value = UserModel.fromJson(response.data);
             AppConstants.userRepository.userData = value.data;
+            CacheHelper.setData(
+                key: 'UserData', value: jsonEncode(value.data.toJson()));
             CacheHelper.setData(key: 'token', value: value.data.token);
             CacheHelper.setData(
               key: 'userType',
@@ -77,6 +81,8 @@ class AuthController extends GetxController {
           } else {
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.driverData = value.data;
+            CacheHelper.setData(
+                key: 'DriverData', value: jsonEncode(value.data.toJson()));
             CacheHelper.setData(key: 'token', value: value.data.token);
             CacheHelper.setData(
               key: 'userType',

@@ -18,9 +18,10 @@ class UserHomeController extends GetxController {
   Future<void> getCalendarData() async {
     isGettingCalendar.value = true;
     try {
+      String userId = AppConstants.userRepository.userData.userId;
       Response response = await DioHelper.postData(
         url: 'student/calendar',
-        data: {"user_id": AppConstants.userId},
+        data: {"user_id": userId},
       );
       if (response.statusCode == 200) {
         calendarData.clear();
@@ -43,11 +44,12 @@ class UserHomeController extends GetxController {
     try {
       log("Get Trips Loading");
       isGettingTrips.value = true;
+      String userId = AppConstants.userRepository.userData.userId;
       // var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(
           url: 'student/trips',
           // data: {'user_id': token, "trip_id": tripId},
-          data: {"user_id": AppConstants.userId});
+          data: {"user_id": userId});
       log("response ${response.data}");
       if (response.statusCode == 200) {
         tripsList.clear();
@@ -73,11 +75,12 @@ class UserHomeController extends GetxController {
   Future<void> getTripInfo({required String tripId}) async {
     try {
       isGettingTripInfo.value = true;
+      String userId = AppConstants.userRepository.userData.userId;
       // var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(
           url: 'student/trips/trip_info',
           // data: {'user_id': token, "trip_id": tripId},
-          data: {"user_id": AppConstants.userId, "trip_id": "30"});
+          data: {"user_id": userId, "trip_id": "30"});
       if (response.statusCode == 200) {
         List data = response.data["data"];
         tripInfo.value = data.map((e) => TripModel.fromJson(e)).toList().obs;
