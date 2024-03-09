@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:get/state_manager.dart';
 import 'package:wosol/models/vehicle_model.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
 class VehicleController extends GetxController {
@@ -12,8 +13,9 @@ class VehicleController extends GetxController {
     try {
       log("Get Vehicles Loading");
       isGettingVehicles.value = true;
+      String driverId = AppConstants.userRepository.driverData.driverId;
       Response response = await DioHelper.postData(
-          url: 'driver/trips/driver_vehicle', data: {"driver_id": "27"});
+          url: 'driver/trips/driver_vehicle', data: {"driver_id": driverId});
       log("response ${response.data}");
       if (response.statusCode == 200) {
         vehiclesList.clear();

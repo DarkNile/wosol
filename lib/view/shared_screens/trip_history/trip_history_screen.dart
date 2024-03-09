@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wosol/controllers/captain_controllers/trip_history_driver_controller.dart';
+import 'package:wosol/controllers/user_controllers/trip_history_student_controller.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/view/captain_screens/trip_details/captain_trip_details_screen.dart';
@@ -15,16 +16,21 @@ class TripHistoryScreen extends StatelessWidget {
   TripHistoryScreen({super.key});
   final TripHistoryDriverController tripHistoryDriverController =
       Get.put(TripHistoryDriverController());
+  final TripHistoryStudentController tripHistoryStudentController =
+      Get.put(TripHistoryStudentController());
 
   Future<void> getTrips() async {
     if (AppConstants.isCaptain) {
       tripHistoryDriverController.getTripsHistory();
+    } else {
+      tripHistoryStudentController.getTripsHistory();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     log("Trip History Screen");
+    AppConstants.isCaptain ? log("Captain") : log("Student");
     getTrips();
     return SafeArea(
       child: Column(
@@ -44,14 +50,16 @@ class TripHistoryScreen extends StatelessWidget {
           Obx(
             () {
               // add or to user
-              if (tripHistoryDriverController.isGettingTrips.value) {
+              if (tripHistoryDriverController.isGettingTrips.value ||
+                  tripHistoryStudentController.isGettingTrips.value) {
                 return Center(
                   child: Padding(
                       padding: EdgeInsets.only(top: Get.height / 3),
                       child: const CircularProgressIndicator()),
                 );
               } // add or to user
-              return tripHistoryDriverController.tripsList.isEmpty
+              return tripHistoryDriverController.tripsList.isEmpty &&
+                      tripHistoryStudentController.tripsList.isEmpty
                   ? Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: Get.height / 3),
@@ -71,13 +79,27 @@ class TripHistoryScreen extends StatelessWidget {
                           bottom: 16,
                         ),
                         itemBuilder: (context, index) {
-                          String dateString = tripHistoryDriverController
-                              .tripsList[index].tripDate!;
-                          String time = tripHistoryDriverController
-                              .tripsList[index].tripTime!;
+                          String dateString = AppConstants.isCaptain
+                              ? tripHistoryDriverController
+                                  .tripsList[index].tripDate!
+                              : tripHistoryStudentController
+                                  .tripsList[index].subData![0].tripDate!;
+                          String time = AppConstants.isCaptain
+                              ? tripHistoryDriverController
+                                  .tripsList[index].tripTime!
+                              : tripHistoryStudentController
+                                  .tripsList[index].subData![0].tripTime!;
 
-                          String toCity = tripHistoryDriverController
-                              .tripsList[index].universityName!;
+                          String toCity = AppConstants.isCaptain
+                              ? tripHistoryDriverController
+                                  .tripsList[index].universityName!
+                              : tripHistoryStudentController
+                                  .tripsList[index].subData![0].universityName!;
+
+                          String fromCity = AppConstants.isCaptain
+                              ? ''
+                              : tripHistoryStudentController
+                                  .tripsList[index].subData![0].from!;
 
                           DateTime originalDate = DateTime.parse(dateString);
 
@@ -85,7 +107,7 @@ class TripHistoryScreen extends StatelessWidget {
                               DateFormat('MMM dd').format(originalDate);
                           return TripHistoryCard(
                             date: '$date  - $time',
-                            fromCity: "",
+                            fromCity: fromCity,
                             toCity: toCity,
                             buttonText: 'rideDetails'.tr,
                             onTap: () {
@@ -100,7 +122,9 @@ class TripHistoryScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12,
                         ),
-                        itemCount: tripHistoryDriverController.tripsList.length,
+                        itemCount: AppConstants.isCaptain
+                            ? tripHistoryDriverController.tripsList.length
+                            : tripHistoryStudentController.tripsList.length,
                       ),
                     );
             },

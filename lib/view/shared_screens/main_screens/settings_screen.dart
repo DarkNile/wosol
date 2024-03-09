@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/profile_container.dart';
@@ -56,7 +57,8 @@ class SettingsScreen extends StatelessWidget {
                   height: 24,
                 ),
                 DefaultRowButton(
-                  function: () {
+                  function: () async {
+                    await CacheHelper.clearAll();
                     Get.offAll(() => LoginScreen());
                   },
                   text: "Logout".tr,

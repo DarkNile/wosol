@@ -78,4 +78,28 @@ class DriverData {
       token: json['token'] ?? "",
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'driver_id': driverId,
+      'first_name': firstName,
+      'last_name': lastName,
+      'telephone': telephone,
+      'user_email': userEmail,
+      'user_name': userName,
+      'password': password,
+      'birth_date': birthDate,
+      'id_no': idNo,
+      'id_end_date': idEndDate,
+      'license_type': licenseType,
+      'license_end_date': licenseEndDate,
+      'license_city': licenseCity,
+      'vehicles': vehicles,
+      'active': active,
+      'last_login': lastLogin,
+      'user_agent': userAgent,
+      'login_type': loginType,
+      'token': token,
+    };
+  }
 }

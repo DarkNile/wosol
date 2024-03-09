@@ -7,10 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:wosol/controllers/user_controllers/trip_history_student_controller.dart';
 
 import 'package:wosol/main.dart';
+import 'package:wosol/shared/services/network/dio_helper.dart';
 
 void main() {
+  test('TripHistoryStudentController', () async {
+    DioHelper.init();
+    await TripHistoryStudentController().getTripsHistory();
+  });
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
