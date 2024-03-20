@@ -8,23 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:wosol/controllers/captain_controllers/notification_driver_controller.dart';
-import 'package:wosol/controllers/captain_controllers/tracking_driver_controller.dart';
 
 import 'package:wosol/main.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
 void main() {
   group("Just Test", () {
-    test('Tracking Add', () async {
-      DioHelper.init();
-      // await TripHistoryStudentController().getTripsHistory();
-      await TrackingDriverController().trackingAdd(
-        tripId: '27',
-        vehicleId: '1',
-        mapLat: '30.115545',
-        mapLong: '31.115545',
-      );
-    });
 
     test('Get Notifications', () async {
       DioHelper.init();

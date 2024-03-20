@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/captain_controllers/notification_driver_controller.dart';
-import 'package:wosol/controllers/captain_controllers/tracking_driver_controller.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
@@ -86,10 +85,6 @@ class MyApp extends StatelessWidget {
         );
         Get.put(
           StudentRepository(),
-          permanent: true,
-        );
-        Get.put(
-          TrackingDriverController(),
           permanent: true,
         );
         Get.put(
