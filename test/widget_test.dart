@@ -7,16 +7,40 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wosol/controllers/user_controllers/trip_history_student_controller.dart';
+import 'package:wosol/controllers/captain_controllers/notification_driver_controller.dart';
+import 'package:wosol/controllers/captain_controllers/tracking_driver_controller.dart';
 
 import 'package:wosol/main.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
 void main() {
-  test('TripHistoryStudentController', () async {
-    DioHelper.init();
-    await TripHistoryStudentController().getTripsHistory();
+  group("Just Test", () {
+    test('Tracking Add', () async {
+      DioHelper.init();
+      // await TripHistoryStudentController().getTripsHistory();
+      await TrackingDriverController().trackingAdd(
+        tripId: '27',
+        vehicleId: '1',
+        mapLat: '30.115545',
+        mapLong: '31.115545',
+      );
+    });
+
+    test('Get Notifications', () async {
+      DioHelper.init();
+      // await TripHistoryStudentController().getTripsHistory();
+      await NotificationDriverController().getNotifications();
+    });
+
+    test('Notification Set Read', () async {
+      DioHelper.init();
+      // await TripHistoryStudentController().getTripsHistory();
+      await NotificationDriverController().notificationSetRead(
+        notificationId: '1',
+      );
+    });
   });
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
