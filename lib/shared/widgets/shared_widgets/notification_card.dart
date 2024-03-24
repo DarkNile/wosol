@@ -18,7 +18,7 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 87,
+      height: 87 + 3,
       color: color,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Column(
