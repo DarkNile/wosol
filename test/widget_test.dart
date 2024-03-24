@@ -7,26 +7,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:wosol/controllers/captain_controllers/notification_driver_controller.dart';
+import 'package:wosol/controllers/shared_controllers/notification_controller/notification_controller.dart';
 
 import 'package:wosol/main.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
 void main() {
   group("Just Test", () {
-
     test('Get Notifications', () async {
       DioHelper.init();
       // await TripHistoryStudentController().getTripsHistory();
-      await NotificationDriverController().getNotifications();
+      await NotificationController().getNotifications(isCaptain: false);
     });
 
     test('Notification Set Read', () async {
       DioHelper.init();
       // await TripHistoryStudentController().getTripsHistory();
-      await NotificationDriverController().notificationSetRead(
-        notificationId: '1',
-      );
+      await NotificationController()
+          .notificationSetRead(notificationId: '1', isCaptain: true);
     });
   });
 

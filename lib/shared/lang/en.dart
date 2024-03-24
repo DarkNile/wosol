@@ -169,4 +169,5 @@ const Map<String, String> en = {
   'No Vehicles': 'No Vehicles',
   'generalWrongMsg': 'Ops something went wrong please try again later',
   'generalSuccessMsg': 'Order success',
+  'No Notifications!': 'No Notifications!'
 };
