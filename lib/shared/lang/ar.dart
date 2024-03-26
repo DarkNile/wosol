@@ -166,5 +166,7 @@ const Map<String, String> ar = {
   'No Vehicles': 'لا مركبات',
   'generalWrongMsg': 'عفوًا، حدث خطأ ما، يُرجى إعادة المحاولة لاحقًا',
   'generalSuccessMsg': 'تمت العملية بنجاح',
-  'No Notifications!': 'لا إشعارات!'
+  'No Notifications!': 'لا إشعارات!',
+  'Delete': 'حذف',
+  'MarkAsRead': 'ضع إشارة مقروء',
 };
