@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/menu_item_widget.dart';
 
 class CustomPopupMenuButton extends StatefulWidget {
   const CustomPopupMenuButton({super.key});
@@ -30,61 +30,24 @@ class _CustomPopupMenuButtonState extends State<CustomPopupMenuButton> {
               PopupMenuItem(
                   value: "endTrip",
                   height: 42,
-                  child: _MenuItemWidget(
+                  child: MenuItemWidget(
                     svg: 'assets/icons/location-tick.svg',
                     text: "endTrip".tr,
                   )),
               PopupMenuItem(
                   height: 42,
                   value: "confirmPickup",
-                  child: _MenuItemWidget(
+                  child: MenuItemWidget(
                     svg: 'assets/icons/tick-square.svg',
                     text: "confirmPickup".tr,
                   )),
               PopupMenuItem(
                   height: 42,
                   value: "canceled",
-                  child: _MenuItemWidget(
+                  child: MenuItemWidget(
                     svg: 'assets/icons/canceled.svg',
                     text: "canceled".tr,
                   )),
             ]);
-  }
-}
-
-class _MenuItemWidget extends StatelessWidget {
-  final String svg;
-  final String text;
-  const _MenuItemWidget({required this.svg, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 42,
-      padding: const EdgeInsets.symmetric(vertical: 0),
-      decoration: BoxDecoration(
-          border: text == "canceled".tr
-              ? null
-              : const Border(
-                  bottom: BorderSide(color: AppColors.popUpBottomSideColor))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            svg,
-            width: 18,
-            height: 18,
-          ),
-          const SizedBox(width: 8),
-          Text(text,
-              textAlign: TextAlign.center,
-              style: AppFonts.medium.copyWith(
-                color: AppColors.darkBlue700,
-                fontWeight: FontWeight.w400,
-              )),
-        ],
-      ),
-    );
   }
 }

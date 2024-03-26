@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/notification_menu_widget.dart';
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard(
@@ -10,11 +11,14 @@ class NotificationCard extends StatelessWidget {
       required this.notificationTitle,
       required this.notificationTime,
       this.isHover,
-      required this.color});
+      required this.color,
+      required this.onSelected});
   final String notificationTitle;
   final String notificationTime;
   final Color color;
   final bool? isHover;
+
+  final void Function(String)? onSelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,10 +92,8 @@ class NotificationCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SvgPicture.asset(
-                  'assets/icons/list_mobile.svg',
-                  height: 24,
-                  width: 24,
+                NotificationMenuWidget(
+                  onSelected: onSelected,
                 ),
               ]),
         ],

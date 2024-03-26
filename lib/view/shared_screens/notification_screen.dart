@@ -53,32 +53,30 @@ class NotificationsScreen extends StatelessWidget {
                               NotificationModel notification =
                                   notifyController.notifications[index];
                               bool isRead = notification.read == "1";
-                              return InkWell(
-                                onTap: isRead
-                                    ? null
-                                    : () async {
-                                        notifyController.isNotificationsLoading
-                                            .value = true;
-                                        await notifyController
-                                            .notificationSetRead(
-                                                notificationId:
-                                                    notification.nId!,
-                                                isCaptain:
-                                                    AppConstants.isCaptain);
-                                        notifyController
-                                            .notifications[index].read = "1";
-                                        notifyController.isNotificationsLoading
-                                            .value = false;
-                                      },
-                                child: NotificationCard(
-                                  color: !isRead
-                                      ? AppColors.btnBackColor
-                                      : AppColors.white,
-                                  notificationTime: AppConstants.isEnLocale
-                                      ? "15 ${"minsAgo".tr}"
-                                      : "${"ago".tr} 15 ${"min".tr}",
-                                  notificationTitle: notification.text ?? "",
-                                ),
+                              return NotificationCard(
+                                color: !isRead
+                                    ? AppColors.btnBackColor
+                                    : AppColors.white,
+                                notificationTime: AppConstants.isEnLocale
+                                    ? "15 ${"minsAgo".tr}"
+                                    : "${"ago".tr} 15 ${"min".tr}",
+                                notificationTitle: notification.text ?? "",
+                                onSelected: (String value) async {
+                                  if (value == "MarkAsRead") {
+                                    notifyController
+                                        .isNotificationsLoading.value = true;
+                                    await notifyController.notificationSetRead(
+                                        notificationId: notification.nId!,
+                                        isCaptain: AppConstants.isCaptain);
+                                    notifyController.notifications[index].read =
+                                        "1";
+                                    notifyController
+                                        .isNotificationsLoading.value = false;
+                                    Get.back();
+                                  } else {
+                                    Get.back();
+                                  }
+                                },
                               );
                             });
                   },
