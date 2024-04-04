@@ -297,4 +297,36 @@ class UserHomeController extends GetxController {
       }
     }
   }
+
+  RxBool isSendingTripRate = false.obs;
+
+  Future<void> sendTripRate({
+    required String comment,
+    required String numOfStars,
+    required String rea,
+  }) async {
+    isSendingTripRate.value = true;
+    try {
+      String userId = AppConstants.userRepository.userData.userId;
+      Response response = await AppConstants.studentRepository.tripRate(
+        userId: userId,
+        comment: comment,
+        rateStars: numOfStars,
+      );
+      if (response.statusCode == 200) {
+        if (response.data['status'] == "success") {
+          isSendingTripRate.value = false;
+        } else {
+          isSendingTripRate.value = false;
+          throw (response.data['data']['error']);
+        }
+      } else {
+        isSendingTripRate.value = false;
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      isSendingTripRate.value = false;
+      throw e.response!.data['data']['error'];
+    }
+  }
 }

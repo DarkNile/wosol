@@ -88,4 +88,28 @@ class StudentRepository extends GetxService {
       throw e.response!.data['data']['error'];
     }
   }
+
+  Future<Response> tripRate({
+    required String rateStars,
+    required String userId,
+    required String comment,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: "student/rate",
+        data: {
+          "trip_user_id": userId,
+          "rate_stars": rateStars,
+          "rate_comment": comment,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
 }

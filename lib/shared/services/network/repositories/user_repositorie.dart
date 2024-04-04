@@ -78,4 +78,51 @@ class UserRepository extends GetxService {
     }
   }
 
+  Future<Response> changeDriverPassword({
+    required String driverId,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/account/change_password',
+        data: {
+          "driver_id": driverId,
+          "current_password": currentPassword,
+          "new_password": newPassword,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  Future<Response> changeStudentPassword({
+    required String userId,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'student/account/change_password',
+        data: {
+          "user_id": userId,
+          "current_password": currentPassword,
+          "new_password": newPassword,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
 }
