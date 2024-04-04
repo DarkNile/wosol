@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
 
 class DioHelper {
   static late Dio dio;
@@ -12,7 +14,14 @@ class DioHelper {
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
       ),
-    );
+    )..interceptors.add(
+      PrettyDioLogger(
+        requestBody: true,
+        requestHeader: true,
+        responseHeader: true,
+        responseBody: true,
+      ),
+    );;
   }
 
   static Future<Response> postData({
