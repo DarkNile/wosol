@@ -51,7 +51,7 @@ class RideCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${"from".tr} $title\n${isNextRide ? "${"within".tr} $time" : "${"at".tr} $time"}",
+                    "${"from".tr} $title\n${isNextRide ? "${"at".tr} $time" : "${"at".tr} $time"}",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,

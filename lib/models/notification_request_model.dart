@@ -1,3 +1,6 @@
+List<NotificationRequestModel> notificationFromJson(Map<String, dynamic> json) =>
+    List<NotificationRequestModel>.from(json["data"].map((x) => NotificationRequestModel.fromJson(x)));
+
 class NotificationRequestModel {
   String requestId;
   String employeeName;

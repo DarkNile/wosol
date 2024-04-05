@@ -1,42 +1,79 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:wosol/shared/constants/constants.dart';
 
 import '../../models/notification_request_model.dart';
+import '../../models/trip_list_model.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class HomeDriverController extends GetxController {
-  late Timer _notificationTimer;
+  late Timer notificationTimer;
 
-  @override
-  void onInit() {
-    print("On Init");
-    super.onInit();
-    startNotificationTimer();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   startNotificationTimer();
+  // }
 
   @override
   void onClose() {
-    _notificationTimer.cancel();
+    notificationTimer.cancel();
     super.onClose();
   }
 
   void startNotificationTimer() {
-    print("Start NotificationTimer");
-    _notificationTimer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      try {
-        print("Notification");
-        getNotificationRequests(context: Get.context!);
-      } catch (e) {
-        print("Error getting $e");
-      }
+    notificationTimer = Timer.periodic(const Duration(minutes: 3), (timer) {
+      getNotificationRequests(context: Get.context!);
     });
   }
 
-  Future<void> getTrips() async {
-    AppConstants.homeDriverRepository.getTrips();
+  RxBool isGettingTrips = false.obs;
+
+  List<Trip> driverNextRide = [];
+  List<Trip> driverTrips = [];
+
+  Future<void> getTrips(BuildContext context) async {
+    isGettingTrips.value = true;
+    try {
+      Response response = await AppConstants.homeDriverRepository
+          .getTrips(AppConstants.userRepository.driverData.driverId);
+      if (response.statusCode == 200) {
+        if (response.data['status'] == 'success') {
+          driverTrips = tripFromJson(response.data);
+          driverNextRide = [driverTrips[0]];
+          driverTrips.removeAt(0);
+          isGettingTrips.value = false;
+        } else {
+          if (context.mounted) {
+            defaultErrorSnackBar(
+              context: context,
+              message: response.data['data']['error'],
+            );
+          }
+          isGettingTrips.value = false;
+        }
+      } else {
+        if (context.mounted) {
+          defaultErrorSnackBar(
+            context: context,
+            message: response.data['data']['error'],
+          );
+        }
+        isGettingTrips.value = false;
+      }
+    } catch (e) {
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+      isGettingTrips.value = false;
+    }
+    update();
   }
 
   // ? ===== Trip States API =====
@@ -80,8 +117,7 @@ class HomeDriverController extends GetxController {
   }
 
   // ? ===== Notifications Requests =====
-  NotificationRequestModel notificationRequestData =
-      NotificationRequestModel.empty();
+  List<NotificationRequestModel> notificationRequests = [];
   Future<void> getNotificationRequests({
     required BuildContext context,
   }) async {
@@ -91,44 +127,7 @@ class HomeDriverController extends GetxController {
         driverId: AppConstants.userRepository.driverData.driverId,
       )
           .then((response) {
-        notificationRequestData =
-            NotificationRequestModel.fromJson(response.data);
-        if (notificationRequestData.requestId.isNotEmpty) {
-          showDialog(
-            context: context,
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                title: const Text('Notification Requests'),
-                content: Text(
-                    'You have request from ${notificationRequestData.employeeName}.'),
-                actions: <Widget>[
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          approveRequestFromNotification(
-                            context: context,
-                            requestId: notificationRequestData.requestId,
-                          );
-                        },
-                        child: const Text('Accept'),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(dialogContext).pop();
-                        },
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        }
+        notificationRequests = notificationFromJson(response.data);
       });
     } catch (e) {
       if (context.mounted) {

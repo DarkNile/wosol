@@ -5,13 +5,12 @@ import 'package:wosol/shared/services/network/dio_helper.dart';
 
 class HomeDriverRepository extends GetxService {
   // ? ===== Get Trips =====
-  Future<Response> getTrips() async {
+  Future<Response> getTrips(String driverId) async {
     try {
-      var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(
-        url: 'driver/trips/trip_student',
+        url: 'driver/trips',
         data: {
-          'user_id': token,
+          "driver_id": driverId,
         },
       );
       if (response.statusCode == 200) {

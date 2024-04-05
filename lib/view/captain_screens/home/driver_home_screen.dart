@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,19 +9,94 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/view/shared_screens/map_screen.dart';
 
+import '../../../models/trip_list_model.dart';
 import '../../../shared/constants/constants.dart';
 import '../../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'widgets/ride_card.dart';
 
 // ignore: must_be_immutable
-class DriverHomeScreen extends StatelessWidget {
-  DriverHomeScreen({super.key});
+class DriverHomeScreen extends StatefulWidget {
+  const DriverHomeScreen({super.key});
+
+  @override
+  State<DriverHomeScreen> createState() => _DriverHomeScreenState();
+}
+
+class _DriverHomeScreenState extends State<DriverHomeScreen> {
   MapController mapController = Get.put(MapController());
   HomeDriverController homeDriverController = Get.put(HomeDriverController());
 
   @override
+  void initState() {
+    homeDriverController.getTrips(context);
+    homeDriverController.notificationTimer =
+        Timer.periodic(const Duration(minutes: 2), (timer) {
+      homeDriverController
+          .getNotificationRequests(context: context)
+          .then((value) {
+        if (homeDriverController.notificationRequests.first.requestId.isNotEmpty) {
+          showDialog(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                title: const Text('Ride Requests'),
+                content: Text(
+                    'You have request from ${homeDriverController.notificationRequests.first.employeeName}.'),
+                actions: <Widget>[
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          homeDriverController.approveRequestFromNotification(
+                            context: context,
+                            requestId: homeDriverController
+                                .notificationRequests.first.requestId,
+                          );
+                          onTapRideCard(
+                            context: context,
+                            students: [],
+                            fromLatLng: LatLng(
+                              double.parse(homeDriverController
+                                  .notificationRequests.first.mapLat),
+                              double.parse(homeDriverController
+                                  .notificationRequests.first.mapLong),
+                            ),
+                            toLatLng: LatLng(
+                              double.parse(homeDriverController
+                                  .notificationRequests.first.mapLat),
+                              double.parse(homeDriverController
+                                  .notificationRequests.first.mapLong),
+                            ),
+                            tripId: homeDriverController
+                                .notificationRequests.first.tripId,
+                            isEmployee: true,
+                          );
+                        },
+                        child: const Text('Accept'),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    log("DriverHomeScreen");
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,15 +121,41 @@ class DriverHomeScreen extends StatelessWidget {
               style: AppFonts.header,
             ),
           ),
-          RideCard(
-            onTap: () async {
-              await onTapRideCard(context);
-            },
-            title: 'Mecca Center',
-            imgPath: "assets/images/home/upcoming_ride_icon.svg",
-            time: "10 ${"mins".tr}",
-            isNextRide: true,
-          ),
+          Obx(() {
+            return homeDriverController.isGettingTrips.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : homeDriverController.driverNextRide.isNotEmpty
+                    ? RideCard(
+                        onTap: () async {
+                          await onTapRideCard(
+                            context: context,
+                            tripId:
+                                homeDriverController.driverNextRide[0].tripId,
+                            fromLatLng: LatLng(
+                              double.parse(homeDriverController
+                                  .driverNextRide[0].fromLat),
+                              double.parse(homeDriverController
+                                  .driverNextRide[0].fromLong),
+                            ),
+                            toLatLng: LatLng(
+                              double.parse(
+                                  homeDriverController.driverNextRide[0].toLat),
+                              double.parse(homeDriverController
+                                  .driverNextRide[0].toLong),
+                            ),
+                            students:
+                                homeDriverController.driverNextRide[0].students,
+                          );
+                        },
+                        title: homeDriverController.driverNextRide[0].from,
+                        imgPath: "assets/images/home/upcoming_ride_icon.svg",
+                        time: homeDriverController.driverNextRide[0].tripTime,
+                        isNextRide: true,
+                      )
+                    : const SizedBox();
+          }),
           Padding(
             padding: AppConstants.edge(
               padding: const EdgeInsets.only(
@@ -69,40 +170,62 @@ class DriverHomeScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              physics: const PageScrollPhysics(),
-              padding: const EdgeInsets.only(bottom: 16),
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return RideCard(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => UpcomingRideBottomSheet(
-                        headTitle: 'upcomingRide'.tr,
-                        formTime: '10:05 am',
-                        toTime: '11:30 am',
-                        formPlace: 'Mecca ',
-                        toPlace: 'King Abdelaziz University ',
-                      ),
-                    );
-                  },
-                  title: 'Mecca Center',
-                  imgPath: "assets/images/home/education_trip_icon.svg",
-                  time: "10:00 am",
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 12,
-              ),
-            ),
+            child: Obx(() {
+              return homeDriverController.isGettingTrips.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : homeDriverController.driverTrips.isNotEmpty
+                      ? ListView.separated(
+                          physics: const PageScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: 16),
+                          itemCount: homeDriverController.driverTrips.length,
+                          itemBuilder: (context, index) {
+                            return RideCard(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => UpcomingRideBottomSheet(
+                                    headTitle: 'upcomingRide'.tr,
+                                    formTime: homeDriverController
+                                        .driverTrips[index].tripTime,
+                                    toTime: homeDriverController
+                                        .driverTrips[index].tripTime,
+                                    formPlace: homeDriverController
+                                        .driverTrips[index].from,
+                                    toPlace: homeDriverController
+                                        .driverTrips[index].to,
+                                  ),
+                                );
+                              },
+                              title:
+                                  homeDriverController.driverTrips[index].from,
+                              imgPath:
+                                  "assets/images/home/education_trip_icon.svg",
+                              time: homeDriverController
+                                  .driverTrips[index].tripTime,
+                            );
+                          },
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 12,
+                          ),
+                        )
+                      : const SizedBox();
+            }),
           ),
         ],
       ),
     );
   }
 
-  Future<void> onTapRideCard(BuildContext context) async {
+  Future<void> onTapRideCard({
+    required BuildContext context,
+    required String tripId,
+    required LatLng fromLatLng,
+    required LatLng toLatLng,
+    required List<Student> students,
+    bool isEmployee = false,
+  }) async {
     showModalBottomSheet(
       context: context,
       builder: (context) => RideStartBottomSheet(
@@ -130,13 +253,27 @@ class DriverHomeScreen extends StatelessWidget {
           //   state: 3,
           // );
 
-          homeDriverController.tripStatesAPI(
+          homeDriverController
+              .tripStatesAPI(
             context: context,
-            tripId: '32',
+            tripId: tripId,
             state: 0,
-          ).then((value) async{
-            mapController.targetLatLng =
-            const LatLng(28.155398589482964, 30.73015619069338);
+          )
+              .then((value) async {
+            if (isEmployee) {
+              mapController.targetLatLng = toLatLng;
+            } else {
+              mapController.targetLatLng = LatLng(
+                double.parse(
+                  students[0].pickupLat,
+                ),
+                double.parse(
+                  students[0].pickupLong,
+                ),
+              );
+            }
+
+            // mapController.targetLatLng = toLatLng;
             if (AppConstants.isCaptain) {
               mapController.markerIcon = await mapController.getBytesFromAsset(
                   'assets/images/location_on.png', 70);
