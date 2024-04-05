@@ -39,7 +39,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             context: context,
             builder: (BuildContext dialogContext) {
               return AlertDialog(
-                title: const Text('Notification Requests'),
+                title: const Text('Ride Requests'),
                 content: Text(
                     'You have request from ${homeDriverController.notificationRequests.first.employeeName}.'),
                 actions: <Widget>[
