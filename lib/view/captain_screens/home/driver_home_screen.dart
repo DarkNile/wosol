@@ -25,6 +25,7 @@ class DriverHomeScreen extends StatefulWidget {
 class _DriverHomeScreenState extends State<DriverHomeScreen> {
   MapController mapController = Get.put(MapController());
   HomeDriverController homeDriverController = Get.put(HomeDriverController());
+  bool isStartingTrip = false;
 
   @override
   void initState() {
@@ -48,43 +49,57 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   Row(
                     children: [
                       TextButton(
-                        onPressed: () {
-                          Get.back();
+                        child: const Text('Accept'),
+                        onPressed: () async {
                           homeDriverController.approveRequestFromNotification(
                             context: context,
                             requestId: homeDriverController
                                 .notificationRequests.first.requestId,
                           );
-                          onTapRideCard(
-                            context: context,
-                            students: [],
-                            fromLatLng: LatLng(
-                              double.parse(homeDriverController
-                                  .notificationRequests.first.mapLat),
-                              double.parse(homeDriverController
-                                  .notificationRequests.first.mapLong),
+                          mapController.targetLatLng = LatLng(
+                            double.parse(homeDriverController
+                                .notificationRequests.first.mapLat),
+                            double.parse(
+                              homeDriverController
+                                  .notificationRequests.first.mapLong,
                             ),
-                            toLatLng: LatLng(
-                              double.parse(homeDriverController
-                                  .notificationRequests.first.mapLat),
-                              double.parse(homeDriverController
-                                  .notificationRequests.first.mapLong),
-                            ),
-                            tripId: homeDriverController
-                                .notificationRequests.first.tripId,
-                            isEmployee: true,
                           );
+                          if (AppConstants.isCaptain) {
+                            mapController.markerIcon =
+                                await mapController.getBytesFromAsset(
+                                    'assets/images/location_on.png', 70);
+                            mapController.currentIcon =
+                                await mapController.getBytesFromAsset(
+                                    'assets/images/navigation_arrow.png', 70);
+                          } else {
+                            mapController.markerIcon =
+                                await mapController.getBytesFromAsset(
+                                    'assets/images/where_to_vote.png', 70);
+                            mapController.currentIcon =
+                                await mapController.getBytesFromAsset(
+                                    'assets/images/person_pin_circle.png', 70);
+                          }
+                          await mapController
+                              .getCurrentLocation()
+                              .then((value) async {
+                            // mapController.currentLatLng =
+                            //     LatLng(value.latitude, value.longitude);
+                            mapController.currentLatLng =
+                                const LatLng(24.7136, 46.6753);
+                            await mapController
+                                .getCurrentTargetPolylinePoints();
+                            mapController.cameraPosition = CameraPosition(
+                              target: mapController.currentLatLng,
+                              zoom: 12,
+                            );
+                            mapController.getEstimatedTime(
+                                originLatLng: mapController.currentLatLng,
+                                destinationLatLng: mapController.targetLatLng);
+                            mapController.liveLocation();
+                          });
+                          Get.back();
+                          Get.to(() => const MapScreen());
                         },
-                        child: const Text('Accept'),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(dialogContext).pop();
-                        },
-                        child: const Text('Close'),
                       ),
                     ],
                   ),
@@ -147,6 +162,16 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   homeDriverController.driverNextRide[0].toLat),
                               double.parse(homeDriverController
                                   .driverNextRide[0].toLong),
+                            ),
+                            startDate: homeDriverController
+                                .driverNextRide[0].tripStart,
+                            fromPlace:
+                                homeDriverController.driverNextRide[0].from,
+                            toPlace: homeDriverController.driverNextRide[0].to,
+                            fromTime:
+                                homeDriverController.driverNextRide[0].tripTime,
+                            toTime: AppConstants.getTimeFromDateString(
+                              homeDriverController.driverNextRide[0].tripEnd,
                             ),
                             students:
                                 homeDriverController.driverNextRide[0].students,
@@ -224,6 +249,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   Future<void> onTapRideCard({
     required BuildContext context,
     required String tripId,
+    required String fromPlace,
+    required String toPlace,
+    required String fromTime,
+    required String toTime,
+    required String startDate,
     required LatLng fromLatLng,
     required LatLng toLatLng,
     required List<Student> students,
@@ -263,16 +293,16 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             state: 0,
           )
               .then((value) async {
+            setState(() {
+              isStartingTrip = true;
+            });
+
             if (isEmployee) {
               mapController.targetLatLng = toLatLng;
             } else {
               mapController.targetLatLng = LatLng(
-                double.parse(
-                  students[0].pickupLat,
-                ),
-                double.parse(
-                  students[0].pickupLong,
-                ),
+                students[0].pickupLat,
+                students[0].pickupLong,
               );
             }
 
@@ -289,8 +319,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   'assets/images/person_pin_circle.png', 70);
             }
             await mapController.getCurrentLocation().then((value) async {
-              mapController.currentLatLng =
-                  LatLng(value.latitude, value.longitude);
+              // mapController.currentLatLng =
+              //     LatLng(value.latitude, value.longitude);
+              mapController.currentLatLng = const LatLng(24.7136, 46.6753);
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
@@ -301,6 +332,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   destinationLatLng: mapController.targetLatLng);
               mapController.liveLocation();
             });
+            setState(() {
+              isStartingTrip = false;
+            });
+
             Get.back();
             Get.to(() => const MapScreen());
             // showModalBottomSheet(
@@ -373,11 +408,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             //         ));
           });
         },
-        headTitle: '${"rideStartWithin".tr} 59 sec',
-        formTime: '10:05 am',
-        toTime: '11:30 am',
-        formPlace: 'Mecca ',
-        toPlace: 'King Abdelaziz University',
+        headTitle:
+            '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
+        formTime: fromTime,
+        toTime: toTime,
+        formPlace: fromPlace,
+        isLoading: isStartingTrip,
+        toPlace: toPlace,
       ),
     );
   }

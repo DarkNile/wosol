@@ -109,8 +109,8 @@ class Student {
     required this.userZone,
     required this.userCity,
     required this.userDistrict,
-    this.pickupLat,
-    this.pickupLong,
+    required this.pickupLat,
+    required this.pickupLong,
   });
 
   String tripUserId;
@@ -126,8 +126,8 @@ class Student {
   String userZone;
   String userCity;
   String userDistrict;
-  dynamic pickupLat;
-  dynamic pickupLong;
+  double pickupLat;
+  double pickupLong;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         tripUserId: json["trip_user_id"] ?? "",

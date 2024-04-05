@@ -42,6 +42,7 @@ class HomeDriverController extends GetxController {
           .getTrips(AppConstants.userRepository.driverData.driverId);
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
+
           driverTrips = tripFromJson(response.data);
           driverNextRide = [driverTrips[0]];
           driverTrips.removeAt(0);
