@@ -164,6 +164,7 @@ class RideStartBottomSheet extends StatelessWidget {
   final Function() firstButtonFunction;
   final Function()? secondButtonFunction;
   final bool fromUser;
+  final bool isLoading;
 
   const RideStartBottomSheet({
     super.key,
@@ -175,6 +176,7 @@ class RideStartBottomSheet extends StatelessWidget {
     this.formPlace,
     this.toPlace,
     this.fromUser = false,
+    this.isLoading = false,
     this.toTitle,
     this.fromTitle,
     this.date,
@@ -193,6 +195,7 @@ class RideStartBottomSheet extends StatelessWidget {
       secondButtonFunction: secondButtonFunction ?? () {},
       withCloseIcon: true,
       height: fromUser ? 301 : null,
+       firstButtonLoading: isLoading,
       child: fromUser
           ? UserTripDetailWidget(
               fromTime: formTime!,

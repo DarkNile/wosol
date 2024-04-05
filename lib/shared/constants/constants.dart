@@ -92,6 +92,19 @@ class AppConstants {
 
     return formattedDate;
   }
+
+  static String getTimeFromDateString(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    String hours = dateTime.hour.toString().padLeft(2, '0');
+    String minutes = dateTime.minute.toString().padLeft(2, '0');
+    return '$hours:$minutes';
+  }
+
+  static Duration getTimeDifference(String startTime) {
+    DateTime startDateTime = DateTime.parse(startTime);
+    DateTime currentDateTime = DateTime.now();
+    return currentDateTime.difference(startDateTime);
+  }
 }
 
 extension ResponsiveText on double {
@@ -108,4 +121,6 @@ extension ResponsiveText on double {
       return calculatedSize.clamp(this - 2, this);
     }
   }
+
+
 }
