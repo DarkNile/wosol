@@ -34,7 +34,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       homeDriverController
           .getNotificationRequests(context: context)
           .then((value) {
-        if (homeDriverController.notificationRequests.first.requestId.isNotEmpty) {
+        if (homeDriverController
+            .notificationRequests.first.requestId.isNotEmpty) {
+          Navigator.of(context).popUntil((route) => route.isFirst);
           showDialog(
             context: context,
             builder: (BuildContext dialogContext) {
@@ -47,6 +49,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     children: [
                       TextButton(
                         onPressed: () {
+                          Get.back();
                           homeDriverController.approveRequestFromNotification(
                             context: context,
                             requestId: homeDriverController
