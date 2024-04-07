@@ -9,12 +9,15 @@ class VehiclesCardWidget extends StatelessWidget {
   final String carNumberImage;
   final String carImage;
   final String seats;
-  const VehiclesCardWidget(
-      {super.key,
-      required this.carType,
-      required this.seats,
-      required this.carNumberImage,
-      required this.carImage});
+  final String carPlateNumber;
+  const VehiclesCardWidget({
+    super.key,
+    required this.carType,
+    required this.seats,
+    required this.carNumberImage,
+    required this.carImage,
+    required this.carPlateNumber,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +83,17 @@ class VehiclesCardWidget extends StatelessWidget {
                   width: 100,
                   height: 72,
                 ),
-                Image.asset(
-                  carNumberImage,
-                  width: 84,
-                  height: 46,
+                Column(
+                  children: [
+                    Text(carPlateNumber,
+                    style: AppFonts.medium,
+                    ),
+                    Image.asset(
+                      carNumberImage,
+                      width: 84,
+                      height: 46,
+                    ),
+                  ],
                 ),
               ]),
         ],

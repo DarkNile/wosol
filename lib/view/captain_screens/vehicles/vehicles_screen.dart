@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/captain_controllers/vehicle_controller.dart';
@@ -14,7 +12,6 @@ class VehiclesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("VehiclesScreen");
     vehicleController.getDriverVehicles();
     return Scaffold(
       appBar: AppBar(
@@ -56,8 +53,12 @@ class VehiclesScreen extends StatelessWidget {
                             itemCount: vehicleController.vehiclesList.length,
                             itemBuilder: (context, index) {
                               return VehiclesCardWidget(
-                                carType: 'White Toyota Hiace 2023',
-                                seats: '28 ${"seats".tr}',
+                                carType: vehicleController
+                                        .vehiclesList[index].model ??
+                                    "",
+                                seats:
+                                    '${vehicleController.vehiclesList[index].seats} ${"seats".tr}',
+                                carPlateNumber: vehicleController.vehiclesList[index].plateNumber.toString(),
                                 carNumberImage: 'assets/images/car_number.png',
                                 carImage: 'assets/images/car.png',
                               );

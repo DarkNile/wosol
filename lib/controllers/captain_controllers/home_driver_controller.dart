@@ -10,26 +10,6 @@ import '../../models/trip_list_model.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class HomeDriverController extends GetxController {
-  late Timer notificationTimer;
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   startNotificationTimer();
-  // }
-
-  @override
-  void onClose() {
-    notificationTimer.cancel();
-    super.onClose();
-  }
-
-  void startNotificationTimer() {
-    notificationTimer = Timer.periodic(const Duration(minutes: 3), (timer) {
-      getNotificationRequests(context: Get.context!);
-    });
-  }
-
   RxBool isGettingTrips = false.obs;
 
   List<Trip> driverNextRide = [];
@@ -42,7 +22,6 @@ class HomeDriverController extends GetxController {
           .getTrips(AppConstants.userRepository.driverData.driverId);
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
-
           driverTrips = tripFromJson(response.data);
           driverNextRide = [driverTrips[0]];
           driverTrips.removeAt(0);
@@ -129,6 +108,7 @@ class HomeDriverController extends GetxController {
       )
           .then((response) {
         notificationRequests = notificationFromJson(response.data);
+        update();
       });
     } catch (e) {
       if (context.mounted) {
@@ -138,6 +118,7 @@ class HomeDriverController extends GetxController {
         );
       }
     }
+    update();
   }
 
   Future<void> approveRequestFromNotification({

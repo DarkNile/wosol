@@ -126,8 +126,8 @@ class Student {
   String userZone;
   String userCity;
   String userDistrict;
-  double pickupLat;
-  double pickupLong;
+  String pickupLat;
+  String pickupLong;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         tripUserId: json["trip_user_id"] ?? "",
