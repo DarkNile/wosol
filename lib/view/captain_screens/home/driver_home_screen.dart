@@ -30,86 +30,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   @override
   void initState() {
     homeDriverController.getTrips(context);
-    homeDriverController.notificationTimer =
-        Timer.periodic(const Duration(minutes: 2), (timer) {
-      homeDriverController
-          .getNotificationRequests(context: context)
-          .then((value) {
-        if (homeDriverController
-            .notificationRequests.first.requestId.isNotEmpty) {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          showDialog(
-            context: context,
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                title: const Text('Ride Requests'),
-                content: Text(
-                    'You have request from ${homeDriverController.notificationRequests.first.employeeName}.'),
-                actions: <Widget>[
-                  Row(
-                    children: [
-                      TextButton(
-                        child: const Text('Accept'),
-                        onPressed: () async {
-                          homeDriverController.approveRequestFromNotification(
-                            context: context,
-                            requestId: homeDriverController
-                                .notificationRequests.first.requestId,
-                          );
-                          mapController.targetLatLng = LatLng(
-                            double.parse(homeDriverController
-                                .notificationRequests.first.mapLat),
-                            double.parse(
-                              homeDriverController
-                                  .notificationRequests.first.mapLong,
-                            ),
-                          );
-                          if (AppConstants.isCaptain) {
-                            mapController.markerIcon =
-                                await mapController.getBytesFromAsset(
-                                    'assets/images/location_on.png', 70);
-                            mapController.currentIcon =
-                                await mapController.getBytesFromAsset(
-                                    'assets/images/navigation_arrow.png', 70);
-                          } else {
-                            mapController.markerIcon =
-                                await mapController.getBytesFromAsset(
-                                    'assets/images/where_to_vote.png', 70);
-                            mapController.currentIcon =
-                                await mapController.getBytesFromAsset(
-                                    'assets/images/person_pin_circle.png', 70);
-                          }
-                          await mapController
-                              .getCurrentLocation()
-                              .then((value) async {
-                            // mapController.currentLatLng =
-                            //     LatLng(value.latitude, value.longitude);
-                            mapController.currentLatLng =
-                                const LatLng(24.7136, 46.6753);
-                            await mapController
-                                .getCurrentTargetPolylinePoints();
-                            mapController.cameraPosition = CameraPosition(
-                              target: mapController.currentLatLng,
-                              zoom: 12,
-                            );
-                            mapController.getEstimatedTime(
-                                originLatLng: mapController.currentLatLng,
-                                destinationLatLng: mapController.targetLatLng);
-                            mapController.liveLocation();
-                          });
-                          Get.back();
-                          Get.to(() => const MapScreen());
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      });
-    });
     super.initState();
   }
 
@@ -301,8 +221,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               mapController.targetLatLng = toLatLng;
             } else {
               mapController.targetLatLng = LatLng(
-                students[0].pickupLat,
-                students[0].pickupLong,
+                double.parse(
+                  students[mapController.currentStudentIndex.value].pickupLat,
+                ),
+                double.parse(
+                  students[mapController.currentStudentIndex.value].pickupLong,
+                ),
               );
             }
 
@@ -319,18 +243,27 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   'assets/images/person_pin_circle.png', 70);
             }
             await mapController.getCurrentLocation().then((value) async {
-              // mapController.currentLatLng =
-              //     LatLng(value.latitude, value.longitude);
-              mapController.currentLatLng = const LatLng(24.7136, 46.6753);
+              mapController.currentLatLng =
+                  LatLng(value.latitude, value.longitude);
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
                 zoom: 12,
               );
               mapController.getEstimatedTime(
-                  originLatLng: mapController.currentLatLng,
-                  destinationLatLng: mapController.targetLatLng);
-              mapController.liveLocation();
+                originLatLng: mapController.currentLatLng,
+                destinationLatLng: mapController.targetLatLng,
+                students: students,
+                tripId: tripId,
+                endLat: toLatLng.latitude.toString(),
+                endLong: toLatLng.longitude.toString(),
+              );
+              mapController.liveLocation(
+                students: students,
+                tripId: tripId,
+                endLat: toLatLng.latitude.toString(),
+                endLong: toLatLng.longitude.toString(),
+              );
             });
             setState(() {
               isStartingTrip = false;

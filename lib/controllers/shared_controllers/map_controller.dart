@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -8,13 +10,17 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/services/network/repositories/map_repository.dart';
 
+import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
+import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
   Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
+
+  RxInt currentStudentIndex = 0.obs;
 
   late CameraPosition cameraPosition;
   List<LatLng> polylineCurrentTarget = [];
@@ -42,11 +48,15 @@ class MapController extends GetxController {
           polylineCurrentTarget.add(LatLng(point.latitude, point.longitude));
         }
       } else {
-        print(result.errorMessage);
+        if (kDebugMode) {
+          print(result.errorMessage);
+        }
       }
       update();
     } catch (e) {
-      print("eeeeeeeeeeeeeee $e");
+      if (kDebugMode) {
+        print("eeeeeeeeeeeeeee $e");
+      }
     }
   }
 
@@ -84,7 +94,12 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
-  void liveLocation() {
+  void liveLocation({
+    String endLat = '',
+    String endLong = '',
+    String tripId = '',
+    List<Student> students = const [],
+  }) {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 10,
@@ -96,7 +111,13 @@ class MapController extends GetxController {
         currentLatLng = LatLng(position.latitude, position.longitude);
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
-            originLatLng: currentLatLng, destinationLatLng: targetLatLng);
+          originLatLng: currentLatLng,
+          destinationLatLng: targetLatLng,
+          students: students,
+          endLat: endLat,
+          endLong: endLong,
+          tripId: tripId,
+        );
         cameraToPosition(currentLatLng);
         update();
         mapRepository.sendLiveTracking(
@@ -114,8 +135,11 @@ class MapController extends GetxController {
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
+    String endLat = '',
+    String endLong = '',
+    String tripId = '',
+    required List<Student> students,
   }) async {
-    print("caaaaallll");
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
@@ -126,7 +150,136 @@ class MapController extends GetxController {
       distantTrack =
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
-      print("ressponseeee ${response.data}");
+      if (isWithinDistance(distantTrack)) {
+        if (students.isNotEmpty && currentStudentIndex.value == students.length - 1) {
+          showModalBottomSheet(
+            context: Get.context!,
+            builder: (context) {
+              return RideAndTripEndBottomSheet(
+                headTitle: 'rideEnd'.tr,
+                imagePath: 'assets/images/celebrate.png',
+                headerMsg: '${"congrats".tr} ',
+                subHeaderMsg: 'rideCompletedSuccessfully'.tr,
+              );
+            },
+          );
+        } else {
+          showModalBottomSheet(
+            context: Get.context!,
+            backgroundColor: Colors.black.withOpacity(0.3),
+            builder: (context) => ConfirmPickupBottomSheet(
+              title: students[currentStudentIndex.value].userFname,
+              subTitle: students[currentStudentIndex.value].address,
+              firstButtonFunction: () {
+                AppConstants.homeDriverRepository
+                    .sendTripAttendance(
+                  tripId: tripId,
+                  userId: students[currentStudentIndex.value].userId,
+                  isAttended: true,
+                )
+                    .then((value) async {
+                  if (students.length - 1 > currentStudentIndex.value) {
+                    currentStudentIndex.value++;
+                    targetLatLng = LatLng(
+                      double.parse(
+                          students[currentStudentIndex.value].pickupLat),
+                      double.parse(
+                          students[currentStudentIndex.value].pickupLong),
+                    );
+                  } else {
+                    targetLatLng = LatLng(
+                      double.parse(endLat),
+                      double.parse(endLong),
+                    );
+                  }
+                  if (AppConstants.isCaptain) {
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/location_on.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 70);
+                  } else {
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/where_to_vote.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/person_pin_circle.png', 70);
+                  }
+                  await getCurrentLocation().then((value) async {
+                    Get.back();
+                    currentLatLng = LatLng(value.latitude, value.longitude);
+                    await getCurrentTargetPolylinePoints();
+                    cameraPosition = CameraPosition(
+                      target: currentLatLng,
+                      zoom: 12,
+                    );
+                    getEstimatedTime(
+                      originLatLng: currentLatLng,
+                      destinationLatLng: targetLatLng,
+                      tripId: tripId,
+                      students: students,
+                      endLong: endLong,
+                      endLat: endLat,
+                    );
+                    liveLocation();
+                  });
+                });
+              },
+              secondButtonFunction: () {
+                AppConstants.homeDriverRepository
+                    .sendTripAttendance(
+                  tripId: tripId,
+                  userId: students[currentStudentIndex.value].userId,
+                  isAttended: false,
+                )
+                    .then((value) async {
+                  if (students.length - 1 > currentStudentIndex.value) {
+                    currentStudentIndex.value++;
+                    targetLatLng = LatLng(
+                      double.parse(
+                          students[currentStudentIndex.value].pickupLat),
+                      double.parse(
+                          students[currentStudentIndex.value].pickupLong),
+                    );
+                  } else {
+                    targetLatLng = LatLng(
+                      double.parse(endLat),
+                      double.parse(endLong),
+                    );
+                  }
+                  if (AppConstants.isCaptain) {
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/location_on.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 70);
+                  } else {
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/where_to_vote.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/person_pin_circle.png', 70);
+                  }
+                  await getCurrentLocation().then((value) async {
+                    Get.back();
+                    currentLatLng = LatLng(value.latitude, value.longitude);
+                    await getCurrentTargetPolylinePoints();
+                    cameraPosition = CameraPosition(
+                      target: currentLatLng,
+                      zoom: 12,
+                    );
+                    getEstimatedTime(
+                      originLatLng: currentLatLng,
+                      destinationLatLng: targetLatLng,
+                      tripId: tripId,
+                      students: students,
+                      endLong: endLong,
+                      endLat: endLat,
+                    );
+                    liveLocation();
+                  });
+                });
+              },
+            ),
+          );
+        }
+      }
     } else {
       throw Exception('Failed to load place details');
     }
@@ -143,5 +296,21 @@ class MapController extends GetxController {
     return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
         .buffer
         .asUint8List();
+  }
+}
+
+bool isWithinDistance(String distanceString) {
+  List<String> parts = distanceString.split(' ');
+  double value = double.parse(parts[0]);
+  String unit = parts[1];
+  // Convert the string to a double
+  if (unit == 'm') {
+    if (value <= 100) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
   }
 }

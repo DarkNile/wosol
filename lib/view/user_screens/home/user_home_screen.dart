@@ -22,7 +22,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   void initState() {
-    log("user");
     userHomeController.getTrips();
     userHomeController.getCalendarData();
     super.initState();
