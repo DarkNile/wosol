@@ -1,4 +1,4 @@
-package com.example.wosol
+package com.DigitalPartner.wosol
 
 import io.flutter.embedding.android.FlutterActivity
 
