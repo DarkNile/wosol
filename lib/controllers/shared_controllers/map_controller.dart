@@ -151,7 +151,8 @@ class MapController extends GetxController {
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
       if (isWithinDistance(distantTrack)) {
-        if (students.isNotEmpty && currentStudentIndex.value == students.length - 1) {
+        if (students.isNotEmpty &&
+            currentStudentIndex.value == students.length - 1) {
           showModalBottomSheet(
             context: Get.context!,
             builder: (context) {
@@ -301,10 +302,11 @@ class MapController extends GetxController {
 
 bool isWithinDistance(String distanceString) {
   List<String> parts = distanceString.split(' ');
-  double value = double.parse(parts[0]);
   String unit = parts[1];
-  // Convert the string to a double
   if (unit == 'm') {
+    double value = double.parse(
+      parts[0].replaceAll(',', ''),
+    );
     if (value <= 100) {
       return true;
     } else {

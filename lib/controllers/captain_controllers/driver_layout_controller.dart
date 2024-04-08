@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,12 +63,9 @@ class DriverLayoutController extends GetxController {
         }
       });
     } catch (e) {
-      if (context.mounted) {
-        defaultErrorSnackBar(
-          context: context,
-          message: e.toString(),
-        );
-      }
+     if (kDebugMode) {
+       print("ee");
+     }
     }
   }
 }

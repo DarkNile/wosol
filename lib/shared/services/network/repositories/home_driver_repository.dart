@@ -99,7 +99,7 @@ class HomeDriverRepository extends GetxService {
     try {
       Response response = await DioHelper.postData(
         url: 'driver/notifications/reuqest_ride_approved',
-        data: {"driver_id": requestId},
+        data: {"request_id": requestId},
       );
       if (response.statusCode == 200) {
         return response;
@@ -107,7 +107,9 @@ class HomeDriverRepository extends GetxService {
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
-      throw e.response!.data['data']['error'];
+      throw e.response != null
+          ? e.response?.data['data']['error']
+          : e.toString();
     }
   }
 
