@@ -69,6 +69,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         onTap: () async {
                           await onTapRideCard(
                             context: context,
+                            vehicleId:  homeDriverController.driverNextRide[0].vehicleId,
                             tripId:
                                 homeDriverController.driverNextRide[0].tripId,
                             fromLatLng: LatLng(
@@ -176,6 +177,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required String startDate,
     required LatLng fromLatLng,
     required LatLng toLatLng,
+    required String vehicleId,
     required List<Student> students,
     bool isEmployee = false,
   }) async {
@@ -263,6 +265,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 tripId: tripId,
                 endLat: toLatLng.latitude.toString(),
                 endLong: toLatLng.longitude.toString(),
+                vehicleId: vehicleId,
               );
             });
             setState(() {

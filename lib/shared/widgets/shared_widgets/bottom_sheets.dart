@@ -414,15 +414,21 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetBase(
+
       headTitle: headTitle,
       draggable: isTrip,
-      showButtons: isTrip,
+      showButtons: true,
       withCloseIcon: !isTrip,
       firstButtonText: 'Trip Ended',
       buttonsContainIcon: isTrip,
       svgFirstIconPath: 'assets/images/tick-circle.svg',
       firstButtonColor: AppColors.black,
-      firstButtonFunction: function ?? () {},
+      firstButtonFunction: function ?? () {
+
+      },
+      secondButtonFunction: (){
+      },
+      firstButtonsFlex: 1,
       height: isTrip ? 311 : 256,
       child: Center(
         child: CustomStatusWidget(

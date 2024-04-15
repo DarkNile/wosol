@@ -14,6 +14,7 @@ import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
+import '../../view/captain_screens/driver_layout_screen.dart';
 
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
@@ -64,7 +65,7 @@ class MapController extends GetxController {
     final GoogleMapController controller = await googleMapController.future;
     CameraPosition newCameraPosition = CameraPosition(
       target: position,
-      zoom: 12,
+      zoom: 8,
     );
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(newCameraPosition),
@@ -98,13 +99,14 @@ class MapController extends GetxController {
     String endLat = '',
     String endLong = '',
     String tripId = '',
+    String vehicleId = '',
     List<Student> students = const [],
   }) {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 10,
+      distanceFilter: 100,
     );
-    Geolocator.getPositionStream(
+   Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
@@ -121,8 +123,8 @@ class MapController extends GetxController {
         cameraToPosition(currentLatLng);
         update();
         mapRepository.sendLiveTracking(
-          tripId: "27",
-          vehicleId: "1",
+          tripId: tripId,
+          vehicleId: vehicleId,
           mapLat: position.latitude.toString(),
           mapLong: position.longitude.toString(),
         );
@@ -161,6 +163,11 @@ class MapController extends GetxController {
                 imagePath: 'assets/images/celebrate.png',
                 headerMsg: '${"congrats".tr} ',
                 subHeaderMsg: 'rideCompletedSuccessfully'.tr,
+                isTrip: true,
+                function: () {
+                  distantTrack = "10000 km";
+                  Get.offAll(const DriverLayoutScreen());
+                },
               );
             },
           );
