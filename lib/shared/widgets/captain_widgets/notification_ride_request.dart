@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../controllers/captain_controllers/driver_layout_controller.dart';
 import '../../../controllers/shared_controllers/map_controller.dart';
+import '../../../models/trip_list_model.dart';
 import '../../../view/shared_screens/map_screen.dart';
 import '../../constants/constants.dart';
 import '../../constants/style/colors.dart';
@@ -14,10 +15,12 @@ class NotificationRideRequest extends StatelessWidget {
     super.key,
     required this.driverLayoutController,
     required this.mapController,
+    required this.trip,
   });
 
   final DriverLayoutController driverLayoutController;
   final MapController mapController;
+  final Trip trip;
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +64,6 @@ class NotificationRideRequest extends StatelessWidget {
                       requestId: driverLayoutController
                           .notificationRequests.first.requestId,
                     );
-                    mapController.targetLatLng = LatLng(
-                      double.parse(driverLayoutController
-                          .notificationRequests.first.mapLat),
-                      double.parse(
-                        driverLayoutController
-                            .notificationRequests.first.mapLong,
-                      ),
-                    );
                     if (AppConstants.isCaptain) {
                       mapController.markerIcon =
                           await mapController.getBytesFromAsset(
@@ -89,26 +84,28 @@ class NotificationRideRequest extends StatelessWidget {
                         .then((value) async {
                       mapController.currentLatLng =
                           LatLng(value.latitude, value.longitude);
-                      // mapController.currentLatLng =
-                      //     const LatLng(24.7136, 46.6753);
                       await mapController.getCurrentTargetPolylinePoints();
                       mapController.cameraPosition = CameraPosition(
                         target: mapController.currentLatLng,
-                        zoom: 12,
+                        zoom: 14,
                       );
                       mapController.getEstimatedTime(
-                          originLatLng: mapController.currentLatLng,
-                          destinationLatLng: mapController.targetLatLng,
-                      tripId: driverLayoutController
-                          .notificationRequests.first.tripId,
-                        endLat: driverLayoutController
-                            .notificationRequests.first.mapLat,
-                        endLong: driverLayoutController
-                            .notificationRequests.first.mapLong,
-                        students: [],
+                        originLatLng: mapController.currentLatLng,
+                        destinationLatLng: mapController.targetLatLng,
+                        students: trip.students,
+                        tripId: trip.tripId,
+                        endLat: trip.toLat,
+                        endLong: trip.toLong,
                       );
-                      mapController.liveLocation();
+                      mapController.liveLocation(
+                        students: trip.students,
+                        tripId: trip.tripId,
+                        endLat: trip.toLat,
+                        endLong: trip.toLong,
+                        vehicleId: trip.vehicleId,
+                      );
                     });
+
                     Get.back();
                     Get.to(() => const MapScreen());
                   },

@@ -24,14 +24,10 @@ class DriverHomeScreen extends StatefulWidget {
 
 class _DriverHomeScreenState extends State<DriverHomeScreen> {
   MapController mapController = Get.put(MapController());
-  HomeDriverController homeDriverController = Get.put(HomeDriverController());
+  HomeDriverController homeDriverController = Get.find<HomeDriverController>();
+
   bool isStartingTrip = false;
 
-  @override
-  void initState() {
-    homeDriverController.getTrips(context);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +246,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
-                zoom: 12,
+                zoom: 14,
               );
               mapController.getEstimatedTime(
                 originLatLng: mapController.currentLatLng,
