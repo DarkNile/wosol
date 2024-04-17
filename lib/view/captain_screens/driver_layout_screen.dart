@@ -46,7 +46,7 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
           for (var i in homeDriverController.driverTrips) {
             if (driverLayoutController.notificationRequests
                     .any((element) => element.tripId == i.tripId) &&
-                i.tripType == 2) {
+                i.tripType == "2") {
               showDialog(
                 barrierDismissible: false,
                 context: context,
