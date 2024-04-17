@@ -171,5 +171,11 @@ const Map<String, String> en = {
   'generalSuccessMsg': 'Order success',
   'No Notifications!': 'No Notifications!',
   'Delete': 'Delete',
-  'MarkAsRead': 'Mark As Read'
+  'MarkAsRead': 'Mark As Read',
+  'locationPermissionDriverTitle':
+      'Background Location Service is used to track the bus driver by WOSOL company’s staff to be sure he’s on the right track.',
+  'locationPermissionUserTitle':
+      'Location Service is used to track the students’ pick up points by the bus driver to reach their destination.',
+  'Accept': 'Accept',
+  'Deny': 'Deny',
 };

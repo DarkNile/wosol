@@ -65,7 +65,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         onTap: () async {
                           await onTapRideCard(
                             context: context,
-                            vehicleId:  homeDriverController.driverNextRide[0].vehicleId,
+                            vehicleId: homeDriverController
+                                .driverNextRide[0].vehicleId,
                             tripId:
                                 homeDriverController.driverNextRide[0].tripId,
                             fromLatLng: LatLng(

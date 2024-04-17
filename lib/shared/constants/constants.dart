@@ -17,6 +17,7 @@ class AppConstants {
   static bool isCaptain = true;
   static String userId = '247';
   static String token = '';
+  static bool isFirst = true;
 
   static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
 
@@ -121,6 +122,4 @@ extension ResponsiveText on double {
       return calculatedSize.clamp(this - 2, this);
     }
   }
-
-
 }

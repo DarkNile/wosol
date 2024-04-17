@@ -30,6 +30,7 @@ void main() async {
     permanent: true,
   );
   AppConstants.token = await CacheHelper.getData(key: 'token') ?? '';
+  AppConstants.isFirst = await CacheHelper.getData(key: 'isFirst') ?? true;
   AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
   if (AppConstants.isCaptain && AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.driverData = DriverData.fromJson(
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
       home: AppConstants.token.isEmpty
           ? LoginScreen()
           : (AppConstants.isCaptain
-              ? DriverLayoutScreen()
+              ? const DriverLayoutScreen()
               : UserLayoutScreen()),
     );
   }

@@ -28,6 +28,8 @@ dependencies:
 
   launcher_name: ^1.0.2
   intl: ^0.18.1
+  # For location Service 
+  permission_handler: ^11.3.1
 
 launcher_name:
   default: "WOSOL"

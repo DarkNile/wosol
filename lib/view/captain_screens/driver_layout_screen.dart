@@ -1,7 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
+import 'package:wosol/shared/dialogs/location_dialog.dart';
 import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/view/captain_screens/home/driver_home_screen.dart';
 import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
@@ -10,7 +11,6 @@ import 'package:wosol/view/shared_screens/notification_screen.dart';
 import '../../controllers/captain_controllers/driver_layout_controller.dart';
 import '../../controllers/captain_controllers/home_driver_controller.dart';
 import '../../controllers/shared_controllers/map_controller.dart';
-import '../../models/trip_list_model.dart';
 import '../../shared/widgets/captain_widgets/notification_ride_request.dart';
 import '../shared_screens/trip_history/trip_history_screen.dart';
 
@@ -31,6 +31,11 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
   @override
   void initState() {
+    if (AppConstants.isFirst) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        getLocationPermission(context);
+      });
+    }
     homeDriverController.getTrips(context);
     driverLayoutController.notificationTimer =
         Timer.periodic(const Duration(minutes: 2), (timer) {
@@ -40,7 +45,8 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
         if (driverLayoutController.notificationRequests.isNotEmpty) {
           for (var i in homeDriverController.driverTrips) {
             if (driverLayoutController.notificationRequests
-                .any((element) => element.tripId == i.tripId) && i.tripType == 2) {
+                    .any((element) => element.tripId == i.tripId) &&
+                i.tripType == 2) {
               showDialog(
                 barrierDismissible: false,
                 context: context,
@@ -61,6 +67,13 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
       });
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (context.mounted) {}
   }
 
   @override
