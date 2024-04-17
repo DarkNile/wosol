@@ -3,13 +3,15 @@
 <plist version="1.0">
 <dict>
 <key>NSLocationWhenInUseUsageDescription</key>
-<string>This app needs access to location when open.</string>
+<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
 <key>NSLocationAlwaysUsageDescription</key>
-<string>This app needs access to location when in the background.</string>
+<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
 <key>NSLocationTemporaryUsageDescriptionDictionary</key>
 <dict>
-  <key>YourPurposeKey</key>
-  <string>The example App requires temporary access to the device&apos;s precise location.</string>
+  <key>Location Access</key>
+  <string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
 </dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
