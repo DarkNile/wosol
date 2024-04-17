@@ -77,13 +77,13 @@ class HomeDriverController extends GetxController {
           .then((response) {
         tripStatesLoading.value = false;
         Get.back();
-        if (context.mounted) {
-          (response.data["success"] == "false")
-              ? defaultErrorSnackBar(
-                  context: context, message: 'generalWrongMsg'.tr)
-              : defaultSuccessSnackBar(
-                  context: context, message: 'generalSuccessMsg'.tr);
-        }
+        // if (context.mounted) {
+        //   (response.data["success"] == "false")
+        //       ? defaultErrorSnackBar(
+        //           context: context, message: 'generalWrongMsg'.tr)
+        //       : defaultSuccessSnackBar(
+        //           context: context, message: 'generalSuccessMsg'.tr);
+        // }
       });
     } catch (e) {
       tripStatesLoading.value = false;

@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/services/network/repositories/map_repository.dart';
 
@@ -65,7 +66,7 @@ class MapController extends GetxController {
     final GoogleMapController controller = await googleMapController.future;
     CameraPosition newCameraPosition = CameraPosition(
       target: position,
-      zoom: 14,
+      zoom: 19,
     );
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(newCameraPosition),
@@ -102,13 +103,16 @@ class MapController extends GetxController {
     String vehicleId = '',
     List<Student> students = const [],
   }) {
+    Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
+      distanceFilter: 10,
     );
-   Geolocator.getPositionStream(
+
+    Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
+      print("location");
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         currentLatLng = LatLng(position.latitude, position.longitude);
         getCurrentTargetPolylinePoints();
@@ -122,14 +126,48 @@ class MapController extends GetxController {
         );
         cameraToPosition(currentLatLng);
         update();
-        mapRepository.sendLiveTracking(
-          tripId: tripId,
-          vehicleId: vehicleId,
-          mapLat: position.latitude.toString(),
-          mapLong: position.longitude.toString(),
-        );
+        if (previousPosition != null) {
+          double distanceInMeters = Geolocator.distanceBetween(
+            previousPosition!.latitude,
+            previousPosition!.longitude,
+            position.latitude,
+            position.longitude,
+          );
+          if (distanceInMeters >= 100) {
+            mapRepository.sendLiveTracking(
+              tripId: tripId,
+              vehicleId: vehicleId,
+              mapLat: position.latitude.toString(),
+              mapLong: position.longitude.toString(),
+            );
+
+            previousPosition = position;
+          }
+        } else {
+          previousPosition = position;
+        }
       }
     });
+  }
+
+  Future<Response> tripEnd({
+    required String tripId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/trips/trip_end',
+        data: {
+          "trip_id": tripId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
   }
 
   String timeTrack = '';
@@ -165,6 +203,7 @@ class MapController extends GetxController {
                 subHeaderMsg: 'rideCompletedSuccessfully'.tr,
                 isTrip: true,
                 function: () {
+                  tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
                   Get.offAll(const DriverLayoutScreen());
                 },

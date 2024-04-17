@@ -247,7 +247,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
-                zoom: 14,
+                zoom: 19,
               );
               mapController.getEstimatedTime(
                 originLatLng: mapController.currentLatLng,
