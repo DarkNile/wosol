@@ -169,4 +169,10 @@ const Map<String, String> ar = {
   'No Notifications!': 'لا إشعارات!',
   'Delete': 'حذف',
   'MarkAsRead': 'ضع إشارة مقروء',
+  'locationPermissionDriverTitle':
+      'يتم استخدام خدمة الموقع في الخلفية لتتبع سائق الحافلة من قبل موظفي شركة WOSOL للتأكد من أنه على المسار الصحيح.',
+  'locationPermissionUserTitle':
+      'يتم استخدام خدمة الموقع لتتبع نقاط الالتقاء للطلاب من قبل سائق الحافلة للوصول إلى وجهتهم.',
+  'Accept': 'قبول',
+  'Deny': 'يرفض',
 };
