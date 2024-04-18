@@ -30,7 +30,7 @@ getLocationPermission(BuildContext context) {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("locationPermissionDriverTitle".tr,
+                        Text("locationPermissionUserTitle".tr,
                             style: AppFonts.header),
                         const Expanded(child: SizedBox()),
                         Row(

@@ -175,7 +175,7 @@ const Map<String, String> en = {
   'locationPermissionDriverTitle':
       'Background Location Service is used to track the bus driver by WOSOL company’s staff to be sure he’s on the right track.',
   'locationPermissionUserTitle':
-      'Location Service is used to track the students’ pick up points by the bus driver to reach their destination.',
+      'Location Service is used to spot the students’ pick up points by the bus driver to reach their destinations.',
   'Accept': 'Accept',
   'Deny': 'Deny',
 };
