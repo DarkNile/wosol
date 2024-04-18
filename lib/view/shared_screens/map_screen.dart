@@ -4,11 +4,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
+import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/constants/style/colors.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+  const MapScreen({
+    super.key,
+    required this.students,
+  });
+  final List<Student> students;
 
   @override
   Widget build(BuildContext context) {
@@ -69,50 +74,65 @@ class MapScreen extends StatelessWidget {
                             color: AppColors.black.withOpacity(0.10),
                           ),
                         ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration:BoxDecoration(
-                              color: AppColors.offWhite,
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(color: AppColors.black)
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.access_time_rounded,
-                                color: AppColors.black,
-                              ),
-                              const SizedBox(width: 8,),
-                              Text(
-                                mapController.timeTrack,
-                                style: AppFonts.header,
-                              ),
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
+                          child: Text(
+                            "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
+                            style: AppFonts.medium,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration:BoxDecoration(
-                          color: AppColors.offWhite,
-                          borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: AppColors.black)
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_rounded,
-                                color: AppColors.black,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.offWhite,
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: AppColors.black)),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.access_time_rounded,
+                                    color: AppColors.black,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    mapController.timeTrack,
+                                    style: AppFonts.header,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 8,),
-                              Text(
-                                mapController.distantTrack,
-                                style: AppFonts.header,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.offWhite,
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: AppColors.black)),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.location_on_rounded,
+                                    color: AppColors.black,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    mapController.distantTrack,
+                                    style: AppFonts.header,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

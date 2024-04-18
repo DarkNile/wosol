@@ -107,7 +107,9 @@ class NotificationRideRequest extends StatelessWidget {
                     });
 
                     Get.back();
-                    Get.to(() => const MapScreen());
+                    Get.to(() => MapScreen(
+                          students: trip.students,
+                        ));
                   },
                 ),
               ],

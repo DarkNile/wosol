@@ -9,7 +9,7 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 
 getLocationPermission(BuildContext context) {
-  if (AppConstants.isCaptain) {
+  if (false) {
     showDialog(
         context: context,
         builder: (context) {

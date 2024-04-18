@@ -10,6 +10,7 @@ import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/dialogs/location_dialog.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
@@ -54,9 +55,23 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    if (AppConstants.isFirst) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        getLocationPermission(context);
+      });
+    }
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

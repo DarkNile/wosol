@@ -101,10 +101,23 @@ class AppConstants {
     return '$hours:$minutes';
   }
 
-  static Duration getTimeDifference(String startTime) {
+  static String getTimeDifference(String startTime) {
     DateTime startDateTime = DateTime.parse(startTime);
     DateTime currentDateTime = DateTime.now();
-    return currentDateTime.difference(startDateTime);
+    Duration difference = currentDateTime.difference(startDateTime);
+
+    int days = difference.inDays;
+    int hours = difference.inHours % 24;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
+
+    String result = "";
+    if (days > 0) result += "${days}days ";
+    if (hours > 0) result += "${hours}h ";
+    if (minutes > 0) result += "${minutes}m ";
+    if (seconds > 0) result += "${seconds}s";
+
+    return result.isEmpty ? "0 seconds" : result.trim();
   }
 }
 
