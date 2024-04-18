@@ -270,7 +270,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             });
 
             Get.back();
-            Get.to(() => const MapScreen());
+            Get.to(() =>  MapScreen(students: students,));
             // showModalBottomSheet(
             //     context: context,
             //     builder: (context) => ConfirmPickupBottomSheet(

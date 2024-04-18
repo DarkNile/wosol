@@ -178,4 +178,5 @@ const Map<String, String> en = {
       'Location Service is used to track the students’ pick up points by the bus driver to reach their destination.',
   'Accept': 'Accept',
   'Deny': 'Deny',
+  "studentName":"Student Name"
 };

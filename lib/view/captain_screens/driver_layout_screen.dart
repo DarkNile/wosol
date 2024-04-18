@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wosol/shared/constants/constants.dart';
-import 'package:wosol/shared/dialogs/location_dialog.dart';
 import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/view/captain_screens/home/driver_home_screen.dart';
 import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
@@ -31,11 +29,7 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
   @override
   void initState() {
-    if (AppConstants.isFirst) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        getLocationPermission(context);
-      });
-    }
+
     homeDriverController.getTrips(context);
     driverLayoutController.notificationTimer =
         Timer.periodic(const Duration(minutes: 2), (timer) {

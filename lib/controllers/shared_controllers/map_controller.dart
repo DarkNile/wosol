@@ -106,7 +106,7 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 10,
+      distanceFilter: 5,
     );
 
     Geolocator.getPositionStream(
@@ -239,6 +239,7 @@ class MapController extends GetxController {
                       double.parse(endLong),
                     );
                   }
+                  update();
                   if (AppConstants.isCaptain) {
                     markerIcon = await getBytesFromAsset(
                         'assets/images/location_on.png', 70);
