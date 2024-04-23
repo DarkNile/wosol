@@ -29,7 +29,6 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
   @override
   void initState() {
-
     homeDriverController.getTrips(context);
     driverLayoutController.notificationTimer =
         Timer.periodic(const Duration(minutes: 2), (timer) {
@@ -39,8 +38,9 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
         if (driverLayoutController.notificationRequests.isNotEmpty) {
           for (var i in homeDriverController.driverTrips) {
             if (driverLayoutController.notificationRequests
-                    .any((element) => element.tripId == i.tripId) &&
-                i.tripType == "2") {
+                        .any((element) => element.tripId == i.tripId) &&
+                    i.tripType == "2" ||
+                i.tripType == "3") {
               showDialog(
                 barrierDismissible: false,
                 context: context,

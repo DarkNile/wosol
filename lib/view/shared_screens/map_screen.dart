@@ -27,7 +27,11 @@ class MapScreen extends StatelessWidget {
               alignment: AlignmentDirectional.bottomCenter,
               children: [
                 GoogleMap(
+                  padding: const EdgeInsets.only(bottom: 100),
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
                   mapType: MapType.normal,
+                  trafficEnabled: true,
                   zoomControlsEnabled: false,
                   mapToolbarEnabled: false,
                   initialCameraPosition: mapController.cameraPosition,
@@ -78,13 +82,15 @@ class MapScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
-                          child: Text(
-                            "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
-                            style: AppFonts.medium,
-                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 8),
+                          child: students.isNotEmpty
+                              ? Text(
+                                  "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
+                                  style: AppFonts.medium,
+                                )
+                              : Container(),
                         ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

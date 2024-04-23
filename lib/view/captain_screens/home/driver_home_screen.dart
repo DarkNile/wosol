@@ -28,7 +28,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
   bool isStartingTrip = false;
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -63,7 +62,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 : homeDriverController.driverNextRide.isNotEmpty
                     ? RideCard(
                         onTap: () async {
+                          print(
+                              'Trip Type: ${homeDriverController.driverNextRide[0].tripType}');
                           await onTapRideCard(
+                            isEmployee: homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                    '2' ||
+                                homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                    '3',
                             context: context,
                             vehicleId: homeDriverController
                                 .driverNextRide[0].vehicleId,
@@ -270,7 +277,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             });
 
             Get.back();
-            Get.to(() =>  MapScreen(students: students,));
+            Get.to(() => MapScreen(
+                  students: students,
+                ));
             // showModalBottomSheet(
             //     context: context,
             //     builder: (context) => ConfirmPickupBottomSheet(

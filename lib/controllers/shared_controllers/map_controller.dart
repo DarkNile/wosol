@@ -124,7 +124,7 @@ class MapController extends GetxController {
           endLong: endLong,
           tripId: tripId,
         );
-        cameraToPosition(currentLatLng);
+        // cameraToPosition(currentLatLng);
         update();
         if (previousPosition != null) {
           double distanceInMeters = Geolocator.distanceBetween(
