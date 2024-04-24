@@ -364,7 +364,7 @@ bool isWithinDistance(String distanceString) {
     double value = double.parse(
       parts[0].replaceAll(',', ''),
     );
-    if (value <= 100) {
+    if (value <= 25) {
       return true;
     } else {
       return false;
