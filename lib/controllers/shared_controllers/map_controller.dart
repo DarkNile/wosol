@@ -172,6 +172,8 @@ class MapController extends GetxController {
 
   String timeTrack = '';
   String distantTrack = '';
+  bool _isEndTrip = false;
+  bool _isConfirmUser = false;
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
@@ -192,7 +194,9 @@ class MapController extends GetxController {
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
       if (isWithinDistance(distantTrack)) {
         if (students.isNotEmpty &&
-            currentStudentIndex.value == students.length - 1) {
+            currentStudentIndex.value == students.length - 1 &&
+            _isEndTrip == false) {
+          _isEndTrip = true;
           showModalBottomSheet(
             context: Get.context!,
             builder: (context) {
@@ -205,12 +209,14 @@ class MapController extends GetxController {
                 function: () {
                   tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
+                  // _isEndTrip = false;
                   Get.offAll(const DriverLayoutScreen());
                 },
               );
             },
           );
-        } else {
+        } else if (_isEndTrip == false && _isConfirmUser == false) {
+          _isConfirmUser = true;
           showModalBottomSheet(
             context: Get.context!,
             backgroundColor: Colors.black.withOpacity(0.3),
@@ -220,7 +226,8 @@ class MapController extends GetxController {
               firstButtonFunction: () {
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
-                  tripId: tripId,
+                  // tripId: tripId,
+                  tripId: students[currentStudentIndex.value].tripUserId,
                   userId: students[currentStudentIndex.value].userId,
                   isAttended: true,
                 )
@@ -327,6 +334,9 @@ class MapController extends GetxController {
             ),
           );
         }
+      } else {
+        _isConfirmUser = false;
+        _isEndTrip = false;
       }
     } else {
       throw Exception('Failed to load place details');
