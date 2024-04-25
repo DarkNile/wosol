@@ -67,7 +67,10 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (context.mounted) {}
+    if (context.mounted) {
+      homeDriverController.getTrips(context);
+
+    }
   }
 
   @override

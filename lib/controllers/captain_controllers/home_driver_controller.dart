@@ -23,8 +23,7 @@ class HomeDriverController extends GetxController {
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
           driverTrips = tripFromJson(response.data);
-          driverNextRide = [driverTrips.firstWhere((element) => element.students.isNotEmpty)];
-          print("iddddddddd ${driverNextRide.first.tripId}");
+          driverNextRide = [driverTrips[0]];
           driverTrips.removeAt(0);
           isGettingTrips.value = false;
         } else {
