@@ -192,9 +192,12 @@ class MapController extends GetxController {
       distantTrack =
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
+
+      ///End trip bs
       if (isWithinDistance(distantTrack)) {
-        if (students.isNotEmpty &&
-            currentStudentIndex.value == students.length - 1 &&
+        if ((students.isEmpty ||
+                (students.isNotEmpty &&
+                    currentStudentIndex.value == students.length)) &&
             _isEndTrip == false) {
           _isEndTrip = true;
           showModalBottomSheet(
@@ -241,6 +244,7 @@ class MapController extends GetxController {
                           students[currentStudentIndex.value].pickupLong),
                     );
                   } else {
+                    currentStudentIndex.value++;
                     targetLatLng = LatLng(
                       double.parse(endLat),
                       double.parse(endLong),

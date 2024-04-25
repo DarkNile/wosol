@@ -17,136 +17,138 @@ class MapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: AppConstants.screenSize(context).width,
-      height: AppConstants.screenSize(context).height,
-      child: GetBuilder<MapController>(
-          init: MapController(),
-          builder: (mapController) {
-            return Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                GoogleMap(
-                  padding: const EdgeInsets.only(bottom: 100),
-                  myLocationButtonEnabled: true,
-                  myLocationEnabled: true,
-                  mapType: MapType.normal,
-                  trafficEnabled: true,
-                  zoomControlsEnabled: false,
-                  mapToolbarEnabled: false,
-                  initialCameraPosition: mapController.cameraPosition,
-                  markers: {
-                    Marker(
-                      markerId: const MarkerId('target'),
-                      position: mapController.targetLatLng,
-                      icon:
-                          BitmapDescriptor.fromBytes(mapController.markerIcon),
-                    ),
-                    Marker(
-                      markerId: const MarkerId('current'),
-                      position: mapController.currentLatLng,
-                      icon:
-                          BitmapDescriptor.fromBytes(mapController.currentIcon),
-                    ),
-                  },
-                  polylines: {
-                    Polyline(
-                      polylineId: const PolylineId('CT'),
-                      points: mapController.polylineCurrentTarget,
-                      color: AppColors.blue,
-                    ),
-                  },
-                  onMapCreated: (GoogleMapController controller) {
-                    mapController.googleMapController.complete(controller);
-                  },
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    height: 100,
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 2),
-                            spreadRadius: 3,
-                            color: AppColors.black.withOpacity(0.10),
+    return SafeArea(
+      child: SizedBox(
+        width: AppConstants.screenSize(context).width,
+        height: AppConstants.screenSize(context).height,
+        child: GetBuilder<MapController>(
+            init: MapController(),
+            builder: (mapController) {
+              return Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: [
+                  GoogleMap(
+                    padding: const EdgeInsets.only(bottom: 100),
+                    myLocationButtonEnabled: true,
+                    myLocationEnabled: true,
+                    mapType: MapType.normal,
+                    trafficEnabled: true,
+                    zoomControlsEnabled: false,
+                    mapToolbarEnabled: false,
+                    initialCameraPosition: mapController.cameraPosition,
+                    markers: {
+                      Marker(
+                        markerId: const MarkerId('target'),
+                        position: mapController.targetLatLng,
+                        icon:
+                            BitmapDescriptor.fromBytes(mapController.markerIcon),
+                      ),
+                      Marker(
+                        markerId: const MarkerId('current'),
+                        position: mapController.currentLatLng,
+                        icon:
+                            BitmapDescriptor.fromBytes(mapController.currentIcon),
+                      ),
+                    },
+                    polylines: {
+                      Polyline(
+                        polylineId: const PolylineId('CT'),
+                        points: mapController.polylineCurrentTarget,
+                        color: AppColors.blue,
+                      ),
+                    },
+                    onMapCreated: (GoogleMapController controller) {
+                      mapController.googleMapController.complete(controller);
+                    },
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      height: 100,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10)),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 2),
+                              spreadRadius: 3,
+                              color: AppColors.black.withOpacity(0.10),
+                            ),
+                          ]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 8),
+                            child: students.isNotEmpty && (students.length - 1 > mapController.currentStudentIndex.value)
+                                ? Text(
+                                    "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
+                                    style: AppFonts.medium,
+                                  )
+                                : Container(),
                           ),
-                        ]),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 8),
-                          child: students.isNotEmpty
-                              ? Text(
-                                  "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
-                                  style: AppFonts.medium,
-                                )
-                              : Container(),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: AppColors.offWhite,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: AppColors.black)),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.access_time_rounded,
-                                    color: AppColors.black,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    mapController.timeTrack,
-                                    style: AppFonts.header,
-                                  ),
-                                ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: AppColors.offWhite,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: AppColors.black)),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.access_time_rounded,
+                                      color: AppColors.black,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      mapController.timeTrack,
+                                      style: AppFonts.header,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: AppColors.offWhite,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: AppColors.black)),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.location_on_rounded,
-                                    color: AppColors.black,
-                                  ),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  Text(
-                                    mapController.distantTrack,
-                                    style: AppFonts.header,
-                                  ),
-                                ],
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: AppColors.offWhite,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: AppColors.black)),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_rounded,
+                                      color: AppColors.black,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      mapController.distantTrack,
+                                      style: AppFonts.header,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          }),
+                ],
+              );
+            }),
+      ),
     );
   }
 }
