@@ -22,6 +22,7 @@ const Map<String, String> en = {
   "manageMyTrips": "Manage my trips",
   "Welcome ": "Welcome",
   "Enter your account here": "Enter your account here",
+  "Enter your email here": "Enter your email here",
   "Email": "Email",
   "Password": "Password",
   "Login": "Login",
@@ -178,5 +179,11 @@ const Map<String, String> en = {
       'Location Service is used to spot the students’ pick up points by the bus driver to reach their destinations.',
   'Accept': 'Accept',
   'Deny': 'Deny',
-  "studentName":"Student Name"
+  "studentName":"Student Name",
+  "otp" : "OTP",
+  "Enter the OTP" : "Enter the OTP",
+  "change your password":"Change your password",
+  "confirm password":"Confirm password",
+  "current password":"Current password",
+  "new password":"New password",
 };
