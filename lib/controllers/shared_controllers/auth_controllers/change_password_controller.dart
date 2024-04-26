@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
+import 'package:wosol/view/shared_screens/main_screens/layout_screen/layout_screen.dart';
 
 import '../../../shared/constants/constants.dart';
 
@@ -58,7 +59,7 @@ class ChangePasswordController extends GetxController {
           print('*********************');
           print(response.data);
           print('*********************');
-          Get.to(() => LoginScreen());
+          Get.offAll(() => LoginScreen());
         });
       }
     } catch (e) {
@@ -88,7 +89,7 @@ class ChangePasswordController extends GetxController {
           print('*********************');
           print(response.data);
           print('*********************');
-          Get.to(() => LoginScreen());
+          Get.back();
         });
       }
     } catch (e) {

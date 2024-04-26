@@ -14,6 +14,7 @@ class CustomSettingRowWidget extends StatelessWidget {
     this.isManageScreen = false,
     this.onTapChangeLanguage,
     this.toggleIcon,
+    this.function,
     this.isWithArrow = true,
     this.isSwitcherOn = false,
   });
@@ -25,11 +26,12 @@ class CustomSettingRowWidget extends StatelessWidget {
   final bool isWithArrow;
   final void Function()? onTapChangeLanguage;
   final void Function()? toggleIcon;
+  final void Function()? function;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: lang ? onTapChangeLanguage : toggleIcon ?? () {},
+      onTap: lang ? onTapChangeLanguage : toggleIcon ?? function,
       child: SizedBox(
         height: isManageScreen ? 26 : 51,
         child: Padding(

@@ -12,14 +12,14 @@ import '../../../shared/constants/constants.dart';
 class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key,
   required this.fromProfile,
-  required this.id,
-  required this.isDriver,
-  required this.activationCode,});
+  this.id,
+  this.isDriver,
+  this.activationCode,});
 
   final bool fromProfile;
-  final bool isDriver;
-  final String id;
-  final String activationCode;
+  final bool? isDriver;
+  final String? id;
+  final String? activationCode;
 
   final ChangePasswordController changePasswordController = Get.put(ChangePasswordController())..clearData();
 
@@ -183,7 +183,7 @@ class ChangePasswordScreen extends StatelessWidget {
                       if(fromProfile){
                         changePasswordController.changeProfilePasswordAPI(context);
                       }else {
-                        changePasswordController.changeAuthPasswordAPI(context, isDriver, activationCode, id);
+                        changePasswordController.changeAuthPasswordAPI(context, isDriver!, activationCode!, id!);
                       }
                     },
                     text: "Confirm".tr,

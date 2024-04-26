@@ -182,7 +182,7 @@ const Map<String, String> en = {
   "studentName":"Student Name",
   "otp" : "OTP",
   "Enter the OTP" : "Enter the OTP",
-  "change your password":"Change your password",
+  "change your password":"Change password",
   "confirm password":"Confirm password",
   "current password":"Current password",
   "new password":"New password",
