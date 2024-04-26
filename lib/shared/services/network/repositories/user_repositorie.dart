@@ -4,6 +4,8 @@ import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
+import '../../../constants/constants.dart';
+
 class UserRepository extends GetxService {
   UserData userData = UserData(
     userId: '',
@@ -80,16 +82,66 @@ class UserRepository extends GetxService {
     }
   }
 
-  Future<Response> changeDriverPassword({
-    required String driverId,
+  Future<Response> forgetPassword({
+    required String email,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'forget_password',
+        data: {
+          'email': email,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  Future<Response> changeAuthPassword({
+    required bool isDriver,
+    required String id,
+    required String activationCode,
+    required String newPassword,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: isDriver? 'forget_password/driver_change_password' : 'forget_password/student_change_password',
+        data: {
+          if(isDriver)
+            "driver_id": id,
+          if(!isDriver)
+            "student_id": id,
+          "activation_code": activationCode,
+          "new_password": newPassword,
+        },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  Future<Response> changeProfilePassword({
     required String currentPassword,
     required String newPassword,
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: 'driver/account/change_password',
+        url: AppConstants.isCaptain? 'driver/account/change_password' : 'student/account/change_password',
         data: {
-          "driver_id": driverId,
+          if(AppConstants.isCaptain)
+            "driver_id": driverData.driverId,
+          if(!AppConstants.isCaptain)
+            "user_id": userData.userId,
           "current_password": currentPassword,
           "new_password": newPassword,
         },
@@ -104,27 +156,4 @@ class UserRepository extends GetxService {
     }
   }
 
-  Future<Response> changeStudentPassword({
-    required String userId,
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    try {
-      Response response = await DioHelper.postData(
-        url: 'student/account/change_password',
-        data: {
-          "user_id": userId,
-          "current_password": currentPassword,
-          "new_password": newPassword,
-        },
-      );
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        throw (response.data['data']['error']);
-      }
-    } on DioException catch (e) {
-      throw e.response!.data['data']['error'];
-    }
-  }
 }

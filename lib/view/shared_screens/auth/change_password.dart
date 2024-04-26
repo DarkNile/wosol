@@ -5,14 +5,23 @@ import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
-import 'package:wosol/shared/widgets/shared_widgets/forgot_password.dart';
 
-import '../../../controllers/shared_controllers/auth_controllers/auth_controller.dart';
+import '../../../controllers/shared_controllers/auth_controllers/change_password_controller.dart';
+import '../../../shared/constants/constants.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class ChangePasswordScreen extends StatelessWidget {
+  ChangePasswordScreen({super.key,
+  required this.fromProfile,
+  this.id,
+  this.isDriver,
+  this.activationCode,});
 
-  final AuthController loginController = Get.put(AuthController())..clearData();
+  final bool fromProfile;
+  final bool? isDriver;
+  final String? id;
+  final String? activationCode;
+
+  final ChangePasswordController changePasswordController = Get.put(ChangePasswordController())..clearData();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +35,34 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      onTap:
+                          () {
+                        Navigator.pop(context);
+                      },
+                      child: SvgPicture.asset(
+                        AppConstants.localizationController
+                            .currentLocale()
+                            .languageCode ==
+                            'en'
+                            ? 'assets/icons/arrow-left.svg'
+                            : 'assets/icons/arrow-right.svg',
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.fill,
+                        colorFilter: const ColorFilter.mode( AppColors.black,
+                            BlendMode.srcIn),
+                      ),
+                    ),
+                  ],
+                ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 20),
@@ -62,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          "Enter your account here".tr,
+                          "change your password".tr,
                           style: AppFonts.medium.copyWith(
                               fontWeight: FontWeight.w400,
                               color: AppColors.darkBlue500Base),
@@ -78,7 +115,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Email".tr,
+                      fromProfile? 'current password'.tr : "Password".tr,
                       style: AppFonts.style12Urb.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.darkBlue500Base),
@@ -86,17 +123,19 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    GetBuilder<AuthController>(
+                    GetBuilder<ChangePasswordController>(
                       builder: (_) {
-                        return EmailTextField(
-                            controller: loginController.emailController,
-                            onSubmit: (String value) {},
-                            onChange: (String value) {
-                              loginController.checkEmailValidation();
-                            },
-                            hint: 'Email'.tr,
+                        return PasswordTextField(
+                            controller: changePasswordController.passwordController,
+                            fieldValidation: changePasswordController.passwordValidate,
+                            validateText:
+                            'Password should be more than 5 digits',
+                            onSubmit: (val) {},
                             label: '',
-                            fieldValidation: loginController.emailValidation);
+                            hintText: fromProfile? 'current password'.tr : 'Password'.tr,
+                            onChange: (val) {
+                              changePasswordController.checkPasswordValidation();
+                            });
                       },
                     ),
                   ],
@@ -108,7 +147,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Password".tr,
+                      fromProfile? 'new password'.tr : "confirm password".tr,
                       style: AppFonts.style12Urb.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.darkBlue500Base),
@@ -116,37 +155,38 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    GetBuilder<AuthController>(
+                    GetBuilder<ChangePasswordController>(
                       builder: (_) {
                         return PasswordTextField(
-                            controller: loginController.passwordController,
-                            fieldValidation: loginController.passwordValidate,
+                            controller: changePasswordController.confirmPasswordController,
+                            fieldValidation: changePasswordController.confirmPasswordValidate,
                             validateText:
-                                'Password should be more than 5 digits',
+                            fromProfile? 'Password should be more than 5 digits' : 'Password doesn\'t match',
                             onSubmit: (val) {},
                             label: '',
-                            hintText: 'Password'.tr,
+                            hintText: fromProfile? 'new password'.tr : 'confirm password'.tr,
                             onChange: (val) {
-                              loginController.checkPasswordValidation();
+                              changePasswordController.checkConfirmPasswordValidation(fromProfile);
                             });
                       },
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 12,
-                ),
-                const ForgotPassword(),
-                const SizedBox(
                   height: 24,
                 ),
-                Obx(() {
+                GetBuilder<ChangePasswordController>(
+                    builder: (_)  {
                   return DefaultButton(
-                    loading: loginController.isLoginLoading.value,
+                    loading: changePasswordController.isChangePasswordLoading.value,
                     function: () {
-                      loginController.signInAPI(context);
+                      if(fromProfile){
+                        changePasswordController.changeProfilePasswordAPI(context);
+                      }else {
+                        changePasswordController.changeAuthPasswordAPI(context, isDriver!, activationCode!, id!);
+                      }
                     },
-                    text: "Login".tr,
+                    text: "Confirm".tr,
                     borderRadius: 8,
                     color: AppColors.logo,
                     height: 48,

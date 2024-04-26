@@ -4,6 +4,7 @@ import 'package:wosol/controllers/shared_controllers/profile_controller.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
+import 'package:wosol/view/shared_screens/auth/change_password.dart';
 
 class SettingsCard extends StatefulWidget {
   const SettingsCard({
@@ -21,7 +22,7 @@ class _SettingsCardState extends State<SettingsCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 155,
+        //height: 155,
         decoration: BoxDecoration(
             color: AppColors.white, borderRadius: BorderRadius.circular(8)),
         child: Column(
@@ -53,6 +54,17 @@ class _SettingsCardState extends State<SettingsCard> {
             CustomSettingRowWidget(
               isSwitcher: false,
               title: 'Terms & Conditions'.tr,
+            ),
+            const Divider(
+              height: 1,
+              color: AppColors.darkBlue100,
+            ),
+            CustomSettingRowWidget(
+              isSwitcher: false,
+              title: 'change your password'.tr,
+              function: (){
+                Get.to(()=>ChangePasswordScreen(fromProfile: true));
+              },
             ),
             const Divider(
               height: 1,
