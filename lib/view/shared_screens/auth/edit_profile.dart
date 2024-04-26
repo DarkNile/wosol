@@ -52,7 +52,9 @@ class EditProfile extends StatelessWidget {
                                 height: 8,
                               ),
                               CustomTextField(
-                                hint: "name".tr,
+                                hint: AppConstants.isCaptain
+                                    ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
+                                    : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
                                 validate: true,
                                 enabled: false,
                                 fillColor: AppColors.dividerColor,
@@ -115,7 +117,9 @@ class EditProfile extends StatelessWidget {
                                 label: '',
                                 height: 42,
                                 expands: false,
-                                hint: "enter email".tr,
+                                hint: AppConstants.isCaptain
+                                    ? AppConstants.userRepository.driverData.userEmail
+                                    : AppConstants.userRepository.userData.userEmail,
                                 hintStyle: AppFonts.small.copyWith(
                                   color: AppColors.darkBlue400,
                                 ),

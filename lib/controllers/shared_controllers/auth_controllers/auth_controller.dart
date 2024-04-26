@@ -91,8 +91,8 @@ class AuthController extends GetxController {
             AppConstants.isCaptain = true;
           }
           Get.to(() => AppConstants.isCaptain
-              ? DriverLayoutScreen()
-              : UserLayoutScreen());
+              ? const DriverLayoutScreen()
+              : const UserLayoutScreen());
         });
       }
     } catch (e) {
@@ -105,6 +105,5 @@ class AuthController extends GetxController {
       }
     }
     isLoginLoading.value = false;
-
   }
 }

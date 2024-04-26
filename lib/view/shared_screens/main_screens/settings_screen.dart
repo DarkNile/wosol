@@ -11,17 +11,29 @@ import 'package:wosol/shared/widgets/shared_widgets/settingsCard.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
+import '../../../shared/constants/constants.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String userImage = (AppConstants.isCaptain
+        ? AppConstants.userRepository.driverData.userImage
+        : AppConstants.userRepository.userData.userImage)
+        .isNotEmpty
+        ? (AppConstants.isCaptain
+        ? AppConstants.userRepository.driverData.userImage
+        : AppConstants.userRepository.userData.userImage)
+        : 'assets/images/user.png';
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomHeader(
-              header: "Mostafa",
+              header: AppConstants.isCaptain
+                  ? AppConstants.userRepository.driverData.firstName
+                  : AppConstants.userRepository.userData.userFname,
               svgIcon: 'assets/icons/logo.svg',
               iconWidth: 40,
               iconHeight: 40,
@@ -35,7 +47,7 @@ class SettingsScreen extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16.0),
               children: [
-                const ProfileCard(),
+                 ProfileCard(userImage: userImage,),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 12),
                   child: Row(
