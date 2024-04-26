@@ -41,12 +41,17 @@ class CustomProfileRowWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               isProfile
-                  ? const SizedBox(
+                  ? SizedBox(
                       height: 42,
                       width: 42,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/user.png'),
-                      ))
+                      child: image.endsWith("user.png")
+                          ? const CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/user.png'),
+                            )
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(image),
+                            ))
                   : Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.5),
                       child: image.endsWith("svg")

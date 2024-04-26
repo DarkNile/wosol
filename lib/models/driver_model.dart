@@ -14,6 +14,7 @@ class DriverModel {
 
 class DriverData {
   String driverId;
+  String userImage;
   String firstName;
   String lastName;
   String telephone;
@@ -35,6 +36,7 @@ class DriverData {
 
   DriverData({
     required this.driverId,
+    required this.userImage,
     required this.firstName,
     required this.lastName,
     required this.telephone,
@@ -58,6 +60,7 @@ class DriverData {
   factory DriverData.fromJson(Map<String, dynamic> json) {
     return DriverData(
       driverId: json['driver_id'] ?? "",
+      userImage: json.containsKey("user_image") ? json['user_image'] ?? "" : "",
       firstName: json['first_name'] ?? "",
       lastName: json['last_name'] ?? "",
       telephone: json['telephone'] ?? "",
@@ -82,6 +85,7 @@ class DriverData {
   Map<String, dynamic> toJson() {
     return {
       'driver_id': driverId,
+      "user_image":userImage,
       'first_name': firstName,
       'last_name': lastName,
       'telephone': telephone,

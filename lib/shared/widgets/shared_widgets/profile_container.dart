@@ -12,7 +12,8 @@ import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart'
 import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key});
+  const ProfileCard({super.key, required this.userImage});
+  final String userImage;
 
   @override
   Widget build(BuildContext context) {
@@ -78,14 +79,18 @@ class ProfileCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: CustomProfileRowWidget(
-              image: '',
+              image: userImage,
               onTapEdit: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const EditProfile();
                 }));
               },
-              title: 'Hossam Essam',
-              subTitle: '+966 123 456 7890',
+              title:  AppConstants.isCaptain
+                  ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
+                  : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
+              subTitle: AppConstants.isCaptain
+                  ? AppConstants.userRepository.driverData.userEmail
+                  : AppConstants.userRepository.userData.userEmail,
               isProfile: true,
             ),
           ),

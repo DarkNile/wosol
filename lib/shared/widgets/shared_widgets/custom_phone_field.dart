@@ -23,7 +23,9 @@ class CustomPhoneField extends StatelessWidget {
             padding:
                 const EdgeInsets.only(left: 14, right: 5, top: 10, bottom: 8)),
         child: Text(
-          "+965",
+          "+965 ${AppConstants.isCaptain
+              ? AppConstants.userRepository.driverData.telephone
+              : AppConstants.userRepository.userData.telephone}",
           style: AppFonts.small.copyWith(color: AppColors.logo, fontSize: 14),
         ),
       ),
