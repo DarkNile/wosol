@@ -32,6 +32,7 @@ class UserRepository extends GetxService {
     userAgent: '',
     loginType: '',
     token: '',
+    userImage: "",
   );
 
   DriverData driverData = DriverData(
@@ -54,6 +55,7 @@ class UserRepository extends GetxService {
     userAgent: "",
     loginType: "",
     token: "",
+    userImage: "",
   );
 
   Future<Response> signIn({

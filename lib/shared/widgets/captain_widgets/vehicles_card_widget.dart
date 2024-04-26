@@ -88,11 +88,11 @@ class VehiclesCardWidget extends StatelessWidget {
                     Text(carPlateNumber,
                     style: AppFonts.medium,
                     ),
-                    Image.asset(
-                      carNumberImage,
-                      width: 84,
-                      height: 46,
-                    ),
+                    // Image.asset(
+                    //   carNumberImage,
+                    //   width: 84,
+                    //   height: 46,
+                    // ),
                   ],
                 ),
               ]),

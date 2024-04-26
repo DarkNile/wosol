@@ -21,7 +21,7 @@ class _SettingsCardState extends State<SettingsCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 208,
+        height: 155,
         decoration: BoxDecoration(
             color: AppColors.white, borderRadius: BorderRadius.circular(8)),
         child: Column(
@@ -34,18 +34,18 @@ class _SettingsCardState extends State<SettingsCard> {
                 title: 'Notifications'.tr,
               );
             }),
-            const Divider(
-              height: 1,
-              color: AppColors.darkBlue100,
-            ),
-            Obx(() {
-              return CustomSettingRowWidget(
-                isSwitcher: true,
-                toggleIcon: () => profileController.changeFingerPrintValue(),
-                isSwitcherOn: profileController.isFingerPrint.value,
-                title: 'Login with finger print'.tr,
-              );
-            }),
+            // const Divider(
+            //   height: 1,
+            //   color: AppColors.darkBlue100,
+            // ),
+            // Obx(() {
+            //   return CustomSettingRowWidget(
+            //     isSwitcher: true,
+            //     toggleIcon: () => profileController.changeFingerPrintValue(),
+            //     isSwitcherOn: profileController.isFingerPrint.value,
+            //     title: 'Login with finger print'.tr,
+            //   );
+            // }),
             const Divider(
               height: 1,
               color: AppColors.darkBlue100,

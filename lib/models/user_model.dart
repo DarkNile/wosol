@@ -22,6 +22,7 @@ class UserModel {
 class UserData {
   String userId;
   String userType;
+  String userImage;
   String userFname;
   String userLname;
   String companyName;
@@ -50,6 +51,7 @@ class UserData {
   UserData({
     required this.userId,
     required this.userType,
+    required this.userImage,
     required this.userFname,
     required this.userLname,
     required this.companyName,
@@ -80,6 +82,7 @@ class UserData {
     return UserData(
       userId: json['user_id'] ?? "",
       userType: json['user_type'] ?? "",
+      userImage: json.containsKey("user_image") ? json['user_image'] ?? "" : "",
       userFname: json['user_fname'] ?? "",
       userLname: json['user_lname'] ?? "",
       companyName: json['company_name'] ?? "",
@@ -109,6 +112,7 @@ class UserData {
   Map<String, dynamic> toJson() {
     return {
       'user_id': userId,
+      "user_image":userImage,
       'user_type': userType,
       'user_fname': userFname,
       'user_lname': userLname,
