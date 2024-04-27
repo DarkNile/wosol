@@ -67,8 +67,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 : homeDriverController.driverNextRide.isNotEmpty
                     ? RideCard(
                         onTap: () async {
-                          print(
-                              'Trip Type: ${homeDriverController.driverNextRide[0].tripType}');
+
                           await onTapRideCard(
                             isEmployee: homeDriverController
                                         .driverNextRide[0].tripType ==
@@ -108,7 +107,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                           );
                         },
                         title: homeDriverController.driverNextRide[0].from,
-                        imgPath: "assets/images/home/upcoming_ride_icon.svg",
+                        imgPath: homeDriverController
+                            .driverNextRide[0].tripType ==
+                            '1'  ? "assets/images/home/upcoming_ride_icon.svg" : homeDriverController
+                            .driverNextRide[0].tripType ==
+                            '2' ?"assets/icons/employee_trip.svg" :"assets/icons/tourism_trip.svg",
                         time: homeDriverController.driverNextRide[0].tripTime,
                         isNextRide: true,
                       )
