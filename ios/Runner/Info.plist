@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>WOSOL needs access to your photo library to upload your profile picture.</string>
 <key>NSLocationWhenInUseUsageDescription</key>
 <string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
 <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
