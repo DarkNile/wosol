@@ -28,6 +28,7 @@ class MapController extends GetxController {
   List<LatLng> polylineCurrentTarget = [];
   late LatLng currentLatLng;
   late LatLng targetLatLng;
+  RxBool enableLocation = true.obs;
 
   @override
   void onInit() {
@@ -71,6 +72,7 @@ class MapController extends GetxController {
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(newCameraPosition),
     );
+    update();
   }
 
   Future<Position> getCurrentLocation() async {
@@ -124,8 +126,9 @@ class MapController extends GetxController {
           endLong: endLong,
           tripId: tripId,
         );
-        // cameraToPosition(currentLatLng);
-        update();
+        if(enableLocation.value) {
+          cameraToPosition(currentLatLng);
+        }
         if (previousPosition != null) {
           double distanceInMeters = Geolocator.distanceBetween(
             previousPosition!.latitude,
