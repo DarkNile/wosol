@@ -11,21 +11,30 @@ import 'package:wosol/shared/widgets/shared_widgets/settingsCard.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
+import '../../../controllers/shared_controllers/profile_controller.dart';
 import '../../../shared/constants/constants.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  ProfileController profileController =
+      Get.put<ProfileController>(ProfileController());
+  String userImage = (AppConstants.isCaptain
+              ? AppConstants.userRepository.driverData.userImage
+              : AppConstants.userRepository.userData.userImage)
+          .isNotEmpty
+      ? (AppConstants.isCaptain
+          ? AppConstants.userRepository.driverData.userImage
+          : AppConstants.userRepository.userData.userImage)
+      : 'assets/images/user.png';
+
+  @override
   Widget build(BuildContext context) {
-    String userImage = (AppConstants.isCaptain
-        ? AppConstants.userRepository.driverData.userImage
-        : AppConstants.userRepository.userData.userImage)
-        .isNotEmpty
-        ? (AppConstants.isCaptain
-        ? AppConstants.userRepository.driverData.userImage
-        : AppConstants.userRepository.userData.userImage)
-        : 'assets/images/user.png';
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,15 +48,39 @@ class SettingsScreen extends StatelessWidget {
               iconHeight: 40,
               isHome: true,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const EditProfile();
-                }));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return EditProfile(
+                        profileController: profileController,
+                      );
+                    },
+                  ),
+                );
               }),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16.0),
               children: [
-                 ProfileCard(userImage: userImage,),
+                GetBuilder<ProfileController>(
+                    id: "imageUpdated",
+                    builder: (logic) {
+                      print("iage updated");
+                      userImage = (AppConstants.isCaptain
+                                  ? AppConstants
+                                      .userRepository.driverData.userImage
+                                  : AppConstants
+                                      .userRepository.userData.userImage)
+                              .isNotEmpty
+                          ? (AppConstants.isCaptain
+                              ? AppConstants.userRepository.driverData.userImage
+                              : AppConstants.userRepository.userData.userImage)
+                          : 'assets/images/user.png';
+                      return ProfileCard(
+                        profileController: profileController,
+                        userImage: userImage,
+                      );
+                    }),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 12),
                   child: Row(

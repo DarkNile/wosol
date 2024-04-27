@@ -7,12 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide FormData, Response, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 
+import '../../../controllers/shared_controllers/profile_controller.dart';
 import '../../constants/constants.dart';
 import '../../services/local/cache_helper.dart';
 import '../../services/network/dio_helper.dart';
 
 class PersonalPicture extends StatefulWidget {
-  const PersonalPicture({super.key});
+  const PersonalPicture({super.key, required this.profileController});
+  final ProfileController profileController;
 
   @override
   State<PersonalPicture> createState() => _PersonalPictureState();
@@ -56,6 +58,7 @@ class _PersonalPictureState extends State<PersonalPicture> {
             key: 'UserData',
             value: jsonEncode(AppConstants.userRepository.userData.toJson()));
       }
+      widget.profileController.changeImage();
       setState(() {
         isUpdatingProfile.value = false;
       });

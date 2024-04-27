@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/controllers/shared_controllers/profile_controller.dart';
 import 'package:wosol/models/profile_custom_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
@@ -12,8 +13,11 @@ import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart'
 import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key, required this.userImage});
+  const ProfileCard(
+      {super.key, required this.userImage, required this.profileController});
+
   final String userImage;
+  final ProfileController profileController;
 
   @override
   Widget build(BuildContext context) {
@@ -78,21 +82,27 @@ class ProfileCard extends StatelessWidget {
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: CustomProfileRowWidget(
-              image: userImage,
-              onTapEdit: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const EditProfile();
-                }));
-              },
-              title:  AppConstants.isCaptain
-                  ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
-                  : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
-              subTitle: AppConstants.isCaptain
-                  ? AppConstants.userRepository.driverData.userEmail
-                  : AppConstants.userRepository.userData.userEmail,
-              isProfile: true,
-            ),
+            child: GetBuilder<ProfileController>(builder: (logic) {
+              return CustomProfileRowWidget(
+                image: userImage,
+                onTapEdit: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return EditProfile(profileController: profileController,);
+                  }));
+                },
+                title: AppConstants.isCaptain
+                    ? "${AppConstants.userRepository.driverData
+                    .firstName} ${AppConstants.userRepository.driverData
+                    .lastName}"
+                    : "${AppConstants.userRepository.userData
+                    .userFname} ${AppConstants.userRepository.userData
+                    .userLname}",
+                subTitle: AppConstants.isCaptain
+                    ? AppConstants.userRepository.driverData.userEmail
+                    : AppConstants.userRepository.userData.userEmail,
+                isProfile: true,
+              );
+            }),
           ),
           const SizedBox(
             height: 24,

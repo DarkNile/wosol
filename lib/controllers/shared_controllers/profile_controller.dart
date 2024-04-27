@@ -11,4 +11,8 @@ class ProfileController extends GetxController {
   void changeFingerPrintValue() {
     isFingerPrint.value = !isFingerPrint.value;
   }
+
+  void changeImage(){
+    update(["imageUpdated"]);
+  }
 }

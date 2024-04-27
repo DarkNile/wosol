@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/controllers/shared_controllers/profile_controller.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -10,7 +11,12 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/personal_pic.dart';
 
 class EditProfile extends StatelessWidget {
-  const EditProfile({super.key});
+  const EditProfile({
+    super.key,
+    required this.profileController,
+  });
+
+  final ProfileController profileController;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,12 @@ class EditProfile extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CustomHeaderWithBackButton(header: "Edit Personal Information".tr),
+            CustomHeaderWithBackButton(
+              header: "Edit Personal Information".tr,
+              onBackPressed: () {
+                Navigator.pop(context, true);
+              },
+            ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.only(bottom: 24),
@@ -35,7 +46,7 @@ class EditProfile extends StatelessWidget {
                       color: AppColors.white,
                       child: Column(
                         children: [
-                          const PersonalPicture(),
+                           PersonalPicture(profileController: profileController,),
                           const SizedBox(
                             height: 24,
                           ),
@@ -118,8 +129,10 @@ class EditProfile extends StatelessWidget {
                                 height: 42,
                                 expands: false,
                                 hint: AppConstants.isCaptain
-                                    ? AppConstants.userRepository.driverData.userEmail
-                                    : AppConstants.userRepository.userData.userEmail,
+                                    ? AppConstants
+                                        .userRepository.driverData.userEmail
+                                    : AppConstants
+                                        .userRepository.userData.userEmail,
                                 hintStyle: AppFonts.small.copyWith(
                                   color: AppColors.darkBlue400,
                                 ),
