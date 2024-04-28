@@ -252,14 +252,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             // mapController.targetLatLng = toLatLng;
             if (AppConstants.isCaptain) {
               mapController.markerIcon = await mapController.getBytesFromAsset(
-                  'assets/images/location_on.png', 70);
+                  'assets/images/location_on.png', 50);
               mapController.currentIcon = await mapController.getBytesFromAsset(
-                  'assets/images/navigation_arrow.png', 70);
+                  'assets/images/navigation_arrow.png', 50);
             } else {
               mapController.markerIcon = await mapController.getBytesFromAsset(
-                  'assets/images/where_to_vote.png', 70);
+                  'assets/images/where_to_vote.png', 50);
               mapController.currentIcon = await mapController.getBytesFromAsset(
-                  'assets/images/person_pin_circle.png', 70);
+                  'assets/images/person_pin_circle.png', 50);
             }
             await mapController.getCurrentFinalPolylinePoints();
             await mapController.getCurrentLocation().then((value) async {

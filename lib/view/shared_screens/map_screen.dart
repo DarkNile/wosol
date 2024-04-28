@@ -72,6 +72,7 @@ class MapScreen extends StatelessWidget {
                       Marker(
                         markerId: const MarkerId('current'),
                         position: mapController.currentLatLng,
+                  rotation: mapController.bearing,
                         icon:
                             BitmapDescriptor.fromBytes(mapController.currentIcon),
                       ),
