@@ -261,10 +261,24 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               mapController.currentIcon = await mapController.getBytesFromAsset(
                   'assets/images/person_pin_circle.png', 50);
             }
+
             await mapController.getCurrentFinalPolylinePoints();
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
+              mapController.bearing = mapController.bearingBetweenPoints(
+                mapController.currentLatLng.latitude,
+                mapController.currentLatLng.longitude,
+                mapController.targetLatLng.latitude,
+                mapController.targetLatLng.longitude,
+              );
+              mapController.currentMarker = Marker(
+                markerId: const MarkerId('current'),
+                position: mapController.currentLatLng,
+                rotation: mapController.bearing,
+                icon:
+                BitmapDescriptor.fromBytes(mapController.currentIcon),
+              );
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,

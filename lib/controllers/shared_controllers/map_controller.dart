@@ -128,6 +128,7 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
+  Marker? currentMarker;
   void liveLocation({
     String endLat = '',
     String endLong = '',
@@ -147,6 +148,20 @@ class MapController extends GetxController {
       print("location");
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         currentLatLng = LatLng(position.latitude, position.longitude);
+        bearing = bearingBetweenPoints(
+          position.latitude,
+          position.longitude,
+          targetLatLng.latitude,
+          targetLatLng.longitude,
+        );
+        currentMarker = Marker(
+          markerId: const MarkerId('current'),
+          position: currentLatLng,
+          rotation: bearing,
+          icon:
+          BitmapDescriptor.fromBytes(currentIcon),
+        );
+        update();
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
           originLatLng: currentLatLng,
@@ -221,14 +236,6 @@ class MapController extends GetxController {
     final response = await DioHelper.getData(
       url: url,
     );
-
-    bearing = bearingBetweenPoints(
-      originLatLng.latitude,
-      originLatLng.longitude,
-      destinationLatLng.latitude,
-      destinationLatLng.longitude,
-    );
-    update();
 
     if (response.statusCode == 200) {
       distantTrack =
