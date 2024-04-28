@@ -97,6 +97,7 @@ class MapController extends GetxController {
     final GoogleMapController controller = await googleMapController.future;
     CameraPosition newCameraPosition = CameraPosition(
       target: position,
+      bearing: bearing,
       zoom: 19,
     );
     await controller.animateCamera(
