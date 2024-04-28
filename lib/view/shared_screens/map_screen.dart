@@ -56,6 +56,13 @@ class MapScreen extends StatelessWidget {
                       )),
                     },
                     markers: {
+                      if(mapController.finalLatLng != null)
+                      Marker(
+                        markerId: const MarkerId('final'),
+                        position: mapController.finalLatLng!,
+                        icon:
+                        BitmapDescriptor.fromBytes(mapController.markerIcon),
+                      ),
                       Marker(
                         markerId: const MarkerId('target'),
                         position: mapController.targetLatLng,
@@ -75,6 +82,12 @@ class MapScreen extends StatelessWidget {
                         points: mapController.polylineCurrentTarget,
                         color: AppColors.blue,
                       ),
+                      if(mapController.polylineCurrentFinal.isNotEmpty)
+                        Polyline(
+                          polylineId: const PolylineId('CF'),
+                          points: mapController.polylineCurrentFinal,
+                          color: AppColors.blue,
+                        ),
                     },
                     onMapCreated: (GoogleMapController controller) {
                       mapController.googleMapController.complete(controller);

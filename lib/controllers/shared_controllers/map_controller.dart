@@ -26,8 +26,10 @@ class MapController extends GetxController {
 
   late CameraPosition cameraPosition;
   List<LatLng> polylineCurrentTarget = [];
+  List<LatLng> polylineCurrentFinal = [];
   late LatLng currentLatLng;
   late LatLng targetLatLng;
+  LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
 
   @override
@@ -49,6 +51,33 @@ class MapController extends GetxController {
       if (result.points.isNotEmpty) {
         for (var point in result.points) {
           polylineCurrentTarget.add(LatLng(point.latitude, point.longitude));
+        }
+      } else {
+        if (kDebugMode) {
+          print(result.errorMessage);
+        }
+      }
+      update();
+    } catch (e) {
+      if (kDebugMode) {
+        print("eeeeeeeeeeeeeee $e");
+      }
+    }
+  }
+
+  Future<void> getCurrentFinalPolylinePoints() async {
+    polylineCurrentFinal = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    try {
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        AppConstants.googleApiKey,
+        PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+        PointLatLng(finalLatLng!.latitude, finalLatLng!.longitude),
+      );
+
+      if (result.points.isNotEmpty) {
+        for (var point in result.points) {
+          polylineCurrentFinal.add(LatLng(point.latitude, point.longitude));
         }
       } else {
         if (kDebugMode) {

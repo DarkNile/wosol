@@ -162,7 +162,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                               title:
                                   homeDriverController.driverTrips[index].from,
                               imgPath:
-                                  "assets/images/home/education_trip_icon.svg",
+                              homeDriverController
+                                  .driverNextRide[0].tripType ==
+                                  '1'  ? "assets/images/home/upcoming_ride_icon.svg" : homeDriverController
+                                  .driverNextRide[0].tripType ==
+                                  '2' ?"assets/icons/employee_trip.svg" :"assets/icons/tourism_trip.svg",
                               time: homeDriverController
                                   .driverTrips[index].tripTime,
                             );
@@ -242,6 +246,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   students[mapController.currentStudentIndex.value].pickupLong,
                 ),
               );
+              mapController.finalLatLng = toLatLng;
             }
 
             // mapController.targetLatLng = toLatLng;
@@ -256,6 +261,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               mapController.currentIcon = await mapController.getBytesFromAsset(
                   'assets/images/person_pin_circle.png', 70);
             }
+            await mapController.getCurrentFinalPolylinePoints();
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
