@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
+import 'dart:math' show atan2, cos, pi, sin;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -206,6 +207,7 @@ class MapController extends GetxController {
   String distantTrack = '';
   bool _isEndTrip = false;
   bool _isConfirmUser = false;
+  double bearing = 0;
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
@@ -219,6 +221,14 @@ class MapController extends GetxController {
     final response = await DioHelper.getData(
       url: url,
     );
+
+    bearing = bearingBetweenPoints(
+      originLatLng.latitude,
+      originLatLng.longitude,
+      destinationLatLng.latitude,
+      destinationLatLng.longitude,
+    );
+    update();
 
     if (response.statusCode == 200) {
       distantTrack =
@@ -391,6 +401,13 @@ class MapController extends GetxController {
         .buffer
         .asUint8List();
   }
+
+  double bearingBetweenPoints(double lat1, double lon1, double lat2, double lon2) {
+    double y = sin(lon2 - lon1) * cos(lat2);
+    double x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lon2 - lon1);
+    double bearing = atan2(y, x);
+    return bearing * 180 / pi;
+  }
 }
 
 bool isWithinDistance(String distanceString) {
@@ -409,3 +426,4 @@ bool isWithinDistance(String distanceString) {
     return false;
   }
 }
+
