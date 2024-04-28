@@ -27,14 +27,14 @@ class _SettingsCardState extends State<SettingsCard> {
             color: AppColors.white, borderRadius: BorderRadius.circular(8)),
         child: Column(
           children: [
-            Obx(() {
-              return CustomSettingRowWidget(
-                isSwitcher: true,
-                toggleIcon: () => profileController.changeNotificationValue(),
-                isSwitcherOn: profileController.isNotification.value,
-                title: 'Notifications'.tr,
-              );
-            }),
+            // Obx(() {
+            //   return CustomSettingRowWidget(
+            //     isSwitcher: true,
+            //     toggleIcon: () => profileController.changeNotificationValue(),
+            //     isSwitcherOn: profileController.isNotification.value,
+            //     title: 'Notifications'.tr,
+            //   );
+            // }),
             // const Divider(
             //   height: 1,
             //   color: AppColors.darkBlue100,
