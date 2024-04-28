@@ -78,27 +78,7 @@ class ChangePasswordScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 28),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${"Welcome".tr} ",
-                              style: AppFonts.header.copyWith(fontSize: 20),
-                            ),
-                            const SizedBox(
-                              width: 2,
-                            ),
-                            Image.asset(
-                              "assets/images/welcome.png",
-                              width: 22,
-                              height: 22,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
+                                                Text(
                           "change your password".tr,
                           style: AppFonts.medium.copyWith(
                               fontWeight: FontWeight.w400,

@@ -69,13 +69,8 @@ class MapScreen extends StatelessWidget {
                         icon:
                             BitmapDescriptor.fromBytes(mapController.markerIcon),
                       ),
-                      Marker(
-                        markerId: const MarkerId('current'),
-                        position: mapController.currentLatLng,
-                  rotation: mapController.bearing,
-                        icon:
-                            BitmapDescriptor.fromBytes(mapController.currentIcon),
-                      ),
+                  if(mapController.currentMarker != null)
+                      mapController.currentMarker!,
                     },
                     polylines: {
                       Polyline(
