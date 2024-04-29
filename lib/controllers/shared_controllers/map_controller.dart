@@ -95,13 +95,20 @@ class MapController extends GetxController {
 
   Future<void> cameraToPosition(LatLng position) async {
     final GoogleMapController controller = await googleMapController.future;
-    CameraPosition newCameraPosition = CameraPosition(
+    cameraBearing = bearingBetweenPoints(
+      cameraPosition.target.latitude,
+      cameraPosition.target.longitude,
+      currentLatLng.latitude,
+      currentLatLng.longitude,
+    );
+    cameraPosition = CameraPosition(
       target: position,
-      bearing: bearing,
-      zoom: 19,
+      bearing: cameraBearing,
+      zoom: cameraPosition.zoom,
+      tilt: cameraPosition.tilt
     );
     await controller.animateCamera(
-      CameraUpdate.newCameraPosition(newCameraPosition),
+      CameraUpdate.newCameraPosition(cameraPosition),
     );
     update();
   }
@@ -224,6 +231,7 @@ class MapController extends GetxController {
   bool _isEndTrip = false;
   bool _isConfirmUser = false;
   double bearing = 0;
+  double cameraBearing = 0;
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
