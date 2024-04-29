@@ -272,6 +272,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 mapController.targetLatLng.latitude,
                 mapController.targetLatLng.longitude,
               );
+              // mapController.cameraBearing = mapController.bearingBetweenPoints(
+              //   mapController.currentLatLng.latitude,
+              //   mapController.currentLatLng.longitude,
+              //   mapController.currentLatLng.latitude,
+              //   mapController.currentLatLng.longitude,
+              // );
               mapController.currentMarker = Marker(
                 markerId: const MarkerId('current'),
                 position: mapController.currentLatLng,
