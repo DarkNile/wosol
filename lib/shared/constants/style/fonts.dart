@@ -1,51 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:wosol/shared/constants/constants.dart';
 
 import 'colors.dart';
 
 class AppFonts {
-  static TextStyle header = const TextStyle(
+  static TextStyle header = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: AppColors.black,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
   );
 
-  static TextStyle button = const TextStyle(
+  static TextStyle button = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
   );
 
-  static TextStyle medium = const TextStyle(
+  static TextStyle medium = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w600,
     color: AppColors.black,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
   );
-  static TextStyle small = const TextStyle(
+  static TextStyle small = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.w400,
     color: AppColors.darkBlueGrey,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
   );
-  static TextStyle style12Urb = const TextStyle(
+  static TextStyle style12Urb = TextStyle(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: AppColors.darkBlue400,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
   );
 
-  static TextStyle unSelectedStyle = const TextStyle(
-    color: Color(0xFFA1AECB),
+  static TextStyle unSelectedStyle = TextStyle(
+    color: const Color(0xFFA1AECB),
     fontSize: 10,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
     fontWeight: FontWeight.w500,
   );
-  static TextStyle SelectedStyle = const TextStyle(
-    color: Color(0xFFA1AECB),
+  static TextStyle selectedStyle = TextStyle(
+    color: const Color(0xFFA1AECB),
     fontSize: 10,
-    fontFamily: 'Urbanist',
+    fontFamily: AppConstants.isEnLocale? 'Urbanist' : 'Noto',
     fontWeight: FontWeight.w600,
   );
 }

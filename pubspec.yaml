@@ -49,6 +49,7 @@ flutter:
 
   assets:
     - assets/fonts/Urbanist/
+    - assets/fonts/Noto/
     - assets/icons/
     - assets/images/
     - assets/images/home/
@@ -60,4 +61,9 @@ flutter:
         - asset: assets/fonts/Urbanist/Urbanist-Regular.ttf
         - asset: assets/fonts/Urbanist/Urbanist-Medium.ttf
         - asset: assets/fonts/Urbanist/Urbanist-Bold.ttf
+          weight: 700
+
+    - family: Noto
+      fonts:
+        - asset: assets/fonts/Noto/NotoSansArabic.ttf
           weight: 700

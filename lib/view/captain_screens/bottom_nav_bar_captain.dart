@@ -28,7 +28,7 @@ class BottomNavigationBarCaptain extends StatelessWidget {
         showSelectedLabels: true,
         selectedFontSize: 10,
         unselectedFontSize: 10,
-        selectedLabelStyle: AppFonts.SelectedStyle,
+        selectedLabelStyle: AppFonts.selectedStyle,
         unselectedLabelStyle: AppFonts.unSelectedStyle,
         selectedItemColor: AppColors.logo,
         unselectedItemColor: AppColors.darkBlue300,
