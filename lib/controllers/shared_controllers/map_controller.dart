@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:ui' as ui;
-import 'dart:math' show atan2, cos, pi, sin;
+import 'dart:math' as Math;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +28,7 @@ class MapController extends GetxController {
   late CameraPosition cameraPosition;
   List<LatLng> polylineCurrentTarget = [];
   List<LatLng> polylineCurrentFinal = [];
+  LatLng? previousLatLng;
   late LatLng currentLatLng;
   late LatLng targetLatLng;
   LatLng? finalLatLng;
@@ -95,20 +96,14 @@ class MapController extends GetxController {
 
   Future<void> cameraToPosition(LatLng position) async {
     final GoogleMapController controller = await googleMapController.future;
-    cameraBearing = bearingBetweenPoints(
-      cameraPosition.target.latitude,
-      cameraPosition.target.longitude,
-      currentLatLng.latitude,
-      currentLatLng.longitude,
-    );
-    cameraPosition = CameraPosition(
+
+    CameraPosition newCameraPosition = CameraPosition(
       target: position,
-      bearing: cameraBearing,
       zoom: cameraPosition.zoom,
-      tilt: cameraPosition.tilt
     );
+    cameraPosition = newCameraPosition;
     await controller.animateCamera(
-      CameraUpdate.newCameraPosition(cameraPosition),
+      CameraUpdate.newCameraPosition(newCameraPosition),
     );
     update();
   }
@@ -136,7 +131,6 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
-  Marker? currentMarker;
   void liveLocation({
     String endLat = '',
     String endLong = '',
@@ -155,20 +149,9 @@ class MapController extends GetxController {
     ).listen((Position position) {
       print("location");
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
+        previousLatLng = currentLatLng;
         currentLatLng = LatLng(position.latitude, position.longitude);
-        bearing = bearingBetweenPoints(
-          position.latitude,
-          position.longitude,
-          targetLatLng.latitude,
-          targetLatLng.longitude,
-        );
-        currentMarker = Marker(
-          markerId: const MarkerId('current'),
-          position: currentLatLng,
-          rotation: bearing,
-          icon:
-          BitmapDescriptor.fromBytes(currentIcon),
-        );
+
         update();
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
@@ -231,7 +214,6 @@ class MapController extends GetxController {
   bool _isEndTrip = false;
   bool _isConfirmUser = false;
   double bearing = 0;
-  double cameraBearing = 0;
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
@@ -418,11 +400,29 @@ class MapController extends GetxController {
         .asUint8List();
   }
 
-  double bearingBetweenPoints(double lat1, double lon1, double lat2, double lon2) {
-    double y = sin(lon2 - lon1) * cos(lat2);
-    double x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lon2 - lon1);
-    double bearing = atan2(y, x);
-    return bearing * 180 / pi;
+  double calculateBearing(LatLng startPoint, LatLng endPoint) {
+    final double startLat = toRadians(startPoint.latitude);
+    final double startLng = toRadians(startPoint.longitude);
+    final double endLat = toRadians(endPoint.latitude);
+    final double endLng = toRadians(endPoint.longitude);
+
+    final double deltaLng = endLng - startLng;
+
+    final double y = Math.sin(deltaLng) * Math.cos(endLat);
+    final double x = Math.cos(startLat) * Math.sin(endLat) -
+        Math.sin(startLat) * Math.cos(endLat) * Math.cos(deltaLng);
+
+    final double bearing = Math.atan2(y, x);
+
+    return (toDegrees(bearing) + 360) % 360;
+  }
+
+  double toRadians(double degrees) {
+    return degrees * (Math.pi / 180.0);
+  }
+
+  double toDegrees(double radians) {
+    return radians * (180.0 / Math.pi);
   }
 }
 
