@@ -55,6 +55,9 @@ class MapScreen extends StatelessWidget {
                           }
                       )),
                     },
+                    onTap: (p){
+                      print('*******************$p****************');
+                    },
                     markers: {
                       if(mapController.finalLatLng != null)
                       Marker(
@@ -69,8 +72,14 @@ class MapScreen extends StatelessWidget {
                         icon:
                             BitmapDescriptor.fromBytes(mapController.markerIcon),
                       ),
-                  if(mapController.currentMarker != null)
-                      mapController.currentMarker!,
+                      Marker(
+                        markerId: const MarkerId('current'),
+                        position: mapController.currentLatLng,
+                        rotation: mapController.previousLatLng != null? mapController.calculateBearing(mapController.previousLatLng!, mapController.currentLatLng) - 90 : 90,
+                        icon:
+                        BitmapDescriptor.fromBytes(mapController.currentIcon),
+                        anchor: const Offset(0.5, 0.5),
+                      )
                     },
                     polylines: {
                       Polyline(

@@ -266,25 +266,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
-              mapController.bearing = mapController.bearingBetweenPoints(
-                mapController.currentLatLng.latitude,
-                mapController.currentLatLng.longitude,
-                mapController.targetLatLng.latitude,
-                mapController.targetLatLng.longitude,
-              );
-              // mapController.cameraBearing = mapController.bearingBetweenPoints(
-              //   mapController.currentLatLng.latitude,
-              //   mapController.currentLatLng.longitude,
-              //   mapController.currentLatLng.latitude,
-              //   mapController.currentLatLng.longitude,
-              // );
-              mapController.currentMarker = Marker(
-                markerId: const MarkerId('current'),
-                position: mapController.currentLatLng,
-                rotation: mapController.bearing,
-                icon:
-                BitmapDescriptor.fromBytes(mapController.currentIcon),
-              );
+
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
