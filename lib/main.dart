@@ -51,7 +51,11 @@ void main() async {
   //   builder: (context) => const MyApp(),
   // ));
   runApp(
-    const MyApp(),
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      color: Colors.transparent,
+      home: MyApp(),
+    ),
   );
 }
 
