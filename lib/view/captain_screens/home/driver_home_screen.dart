@@ -262,11 +262,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   'assets/images/person_pin_circle.png', 50);
             }
 
-            await mapController.getCurrentFinalPolylinePoints();
+
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
-
+              if(mapController.finalLatLng != null) {
+                await mapController.getCurrentFinalPolylinePoints();
+              }
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,

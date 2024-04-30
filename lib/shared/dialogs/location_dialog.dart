@@ -115,7 +115,7 @@ getLocationPermission(BuildContext context) {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: SizedBox(
-              height: Get.height * 0.5,
+              height: 200,
               child: Padding(
                 padding: const EdgeInsets.all(6),
                 child: Material(
@@ -144,7 +144,10 @@ getLocationPermission(BuildContext context) {
                                               key: 'isFirst') ??
                                           true;
                                   log("isFirst ${AppConstants.isFirst}");
-                                  Get.back();
+                                  if(context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+
                                 },
                                 child: Text(
                                   'Deny'.tr,
@@ -170,17 +173,23 @@ getLocationPermission(BuildContext context) {
                                     log('status.isGranted');
                                     // Location permission is granted.
                                     // Proceed with location-based operations.
-                                    Get.back();
+                                    if(context.mounted) {
+                                      Navigator.pop(context);
+                                    }
                                   } else if (status.isDenied) {
                                     log('status.isDenied');
                                     // Location permission is denied.
                                     // Handle the scenario where the user denies permission.
-                                    Get.back();
+                                    if(context.mounted) {
+                                      Navigator.pop(context);
+                                    }
                                   } else if (status.isPermanentlyDenied) {
                                     log('status.isPermanentlyDenied');
                                     // Location permission is permanently denied.
                                     // Prompt the user to open app settings and enable permission.
-                                    Get.back();
+                                    if(context.mounted) {
+                                      Navigator.pop(context);
+                                    }
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(

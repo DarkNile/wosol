@@ -34,7 +34,7 @@ class MapScreen extends StatelessWidget {
                 children: [
                   GoogleMap(
                     padding: const EdgeInsets.only(bottom: 100),
-                    myLocationButtonEnabled: true,
+                    myLocationButtonEnabled: false,
                     myLocationEnabled: false,
                     mapType: MapType.normal,
                     trafficEnabled: true,
@@ -55,9 +55,6 @@ class MapScreen extends StatelessWidget {
                           }
                       )),
                     },
-                    onTap: (p){
-                      print('*******************$p****************');
-                    },
                     markers: {
                       if(mapController.finalLatLng != null)
                       Marker(
@@ -75,7 +72,7 @@ class MapScreen extends StatelessWidget {
                       Marker(
                         markerId: const MarkerId('current'),
                         position: mapController.currentLatLng,
-                        rotation: mapController.previousLatLng != null? mapController.calculateBearing(mapController.previousLatLng!, mapController.currentLatLng) - 90 : 90,
+                        rotation: mapController.previousLatLng != null? mapController.calculateBearing(mapController.previousLatLng!, mapController.currentLatLng) : 90,
                         icon:
                         BitmapDescriptor.fromBytes(mapController.currentIcon),
                         anchor: const Offset(0.5, 0.5),
