@@ -147,7 +147,7 @@ class MapController extends GetxController {
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-      print("location");
+
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         previousLatLng = currentLatLng;
         currentLatLng = LatLng(position.latitude, position.longitude);
@@ -233,6 +233,7 @@ class MapController extends GetxController {
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
+      print("current indexxx ${currentStudentIndex.value}");
       ///End trip bs
       if (isWithinDistance(distantTrack)) {
         if ((students.isEmpty ||

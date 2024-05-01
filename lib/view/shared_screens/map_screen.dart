@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -13,12 +11,30 @@ import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/constants/style/colors.dart';
 
-class MapScreen extends StatelessWidget {
+class MapScreen extends StatefulWidget {
   const MapScreen({
     super.key,
     required this.students,
   });
   final List<Student> students;
+
+  @override
+  State<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends State<MapScreen> {
+  final MapController mapController = Get.put<MapController>(MapController());
+  @override
+  void initState() {
+    super.initState();
+    KeepScreenOn.turnOn();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    KeepScreenOn.turnOff();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +43,6 @@ class MapScreen extends StatelessWidget {
         width: AppConstants.screenSize(context).width,
         height: AppConstants.screenSize(context).height,
         child: GetBuilder<MapController>(
-            init: MapController(),
             builder: (mapController) {
               return Stack(
                 alignment: AlignmentDirectional.bottomCenter,
@@ -143,9 +158,9 @@ class MapScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 8),
-                                  child: students.isNotEmpty && (students.length - 1 > mapController.currentStudentIndex.value)
+                                  child: widget.students.isNotEmpty && (widget.students.length - 1 > mapController.currentStudentIndex.value)
                                       ? Text(
-                                          "${"studentName".tr}: ${students[mapController.currentStudentIndex.value].userFname} ${students[mapController.currentStudentIndex.value].userLname}",
+                                          "${"studentName".tr}: ${widget.students[mapController.currentStudentIndex.value].userFname} ${widget.students[mapController.currentStudentIndex.value].userLname}",
                                           style: AppFonts.medium,
                                         )
                                       : Container(),
