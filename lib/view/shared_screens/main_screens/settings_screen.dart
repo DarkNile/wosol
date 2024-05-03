@@ -65,7 +65,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 GetBuilder<ProfileController>(
                     id: "imageUpdated",
                     builder: (logic) {
-                      print("iage updated");
                       userImage = (AppConstants.isCaptain
                                   ? AppConstants
                                       .userRepository.driverData.userImage
