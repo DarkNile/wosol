@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/user_controllers/user_layout_controller.dart';
@@ -6,6 +8,7 @@ import 'package:wosol/view/shared_screens/notification_screen.dart';
 import 'package:wosol/view/user_screens/home/user_home_screen.dart';
 import 'package:wosol/view/user_screens/manage_my_trips/manage_my_trips_screen.dart';
 
+import '../../controllers/shared_controllers/map_controller.dart';
 import '../shared_screens/trip_history/trip_history_screen.dart';
 import 'bottom_nav_bar_user.dart';
 
@@ -19,6 +22,22 @@ class UserLayoutScreen extends StatefulWidget {
 class _UserLayoutScreenState extends State<UserLayoutScreen> {
   final UserLayoutController userLayoutController =
       Get.put<UserLayoutController>(UserLayoutController());
+
+  MapController mapController = Get.put(MapController());
+
+  @override
+  void initState() {
+    userLayoutController .notificationTimer =
+        Timer.periodic(const Duration(minutes: 2), (timer) {
+          userLayoutController
+              .getNotificationRequests(context: context)
+              .then((value) {
+            ///Todo: handle student notification
+          });
+        });
+    super.initState();
+  }
+
 
   final List<Widget> screens = [
     const UserHomeScreen(),

@@ -113,6 +113,8 @@ class HomeDriverRepository extends GetxService {
     }
   }
 
+
+
   Future<Response> sendTripAttendance({
     required String tripId,
     required String userId,
@@ -156,4 +158,6 @@ class HomeDriverRepository extends GetxService {
       throw e.response!.data['data']['error'];
     }
   }
+
+
 }

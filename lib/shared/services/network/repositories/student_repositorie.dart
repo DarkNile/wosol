@@ -112,4 +112,23 @@ class StudentRepository extends GetxService {
       throw e.response!.data['data']['error'];
     }
   }
+
+
+  Future<Map<String , dynamic>> getStudentNotification({
+    required String userId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'student/notifications/view',
+        data: {"user_id": userId},
+      );
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
 }
