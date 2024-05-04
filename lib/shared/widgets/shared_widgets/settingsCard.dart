@@ -5,6 +5,7 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 import 'package:wosol/view/shared_screens/auth/change_password.dart';
+import 'package:wosol/view/shared_screens/terms_and_conditions.dart';
 
 class SettingsCard extends StatefulWidget {
   const SettingsCard({
@@ -54,6 +55,11 @@ class _SettingsCardState extends State<SettingsCard> {
             CustomSettingRowWidget(
               isSwitcher: false,
               title: 'Terms & Conditions'.tr,
+              function: () async{
+                await profileController.userTermsApi();
+                await profileController.driverTermsApi();
+                Get.to(()=>TermsAndConditions(profileController: profileController));
+              },
             ),
             const Divider(
               height: 1,

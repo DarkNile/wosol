@@ -23,7 +23,7 @@ class UserLayoutController extends GetxController {
   }
 
   // ? ===== Notifications Requests =====
-  List<StudentNotification> studentNotifications = [];
+  StudentNotification? studentNotifications;
   Future<void> getNotificationRequests({
     required BuildContext context,
   }) async {
@@ -33,7 +33,7 @@ class UserLayoutController extends GetxController {
         userId: AppConstants.userRepository.userData.userId,
       )
           .then((data) {
-        studentNotifications = data["data"].map((data) => StudentNotification.fromJson(data)).toList();
+        studentNotifications = StudentNotification.fromJson(data['data'][0]);
         update();
       });
     } catch (e) {

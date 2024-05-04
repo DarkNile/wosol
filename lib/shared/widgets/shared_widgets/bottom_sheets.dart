@@ -835,3 +835,38 @@ class _HeadingWidget extends StatelessWidget {
     );
   }
 }
+
+class RandomSheet extends StatelessWidget {
+  final String headTitle;
+  final String subTitle;
+  final Function() function;
+
+  const RandomSheet({
+    super.key,
+    required this.headTitle,
+    required this.subTitle,
+    required this.function,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomSheetBase(
+      headTitle: headTitle,
+      buttonsContainIcon: false,
+      firstButtonText: 'Confirm'.tr,
+      firstButtonFunction: function,
+      withCloseIcon: false,
+      height: 250, //243,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 24, bottom: 12),
+              child: Text(subTitle,
+                  style: AppFonts.header),
+            ),
+        ],
+      ),
+    );
+  }
+}
