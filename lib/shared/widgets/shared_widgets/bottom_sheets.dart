@@ -161,6 +161,7 @@ class RideStartBottomSheet extends StatelessWidget {
   final String? toTime;
   final String? formPlace;
   final String? toPlace;
+  final String? secondButtonText;
   final Function() firstButtonFunction;
   final Function()? secondButtonFunction;
   final bool fromUser;
@@ -180,6 +181,7 @@ class RideStartBottomSheet extends StatelessWidget {
     this.toTitle,
     this.fromTitle,
     this.date,
+    this.secondButtonText,
   });
 
   @override
@@ -190,7 +192,7 @@ class RideStartBottomSheet extends StatelessWidget {
       showButtons: true,
       containTwoButtons: fromUser,
       firstButtonText: fromUser ? "I’m Ready".tr : "Start Ride".tr,
-      secondButtonText: 'Cancel Ride'.tr,
+      secondButtonText: secondButtonText?? 'Cancel Ride'.tr,
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},
       withCloseIcon: true,

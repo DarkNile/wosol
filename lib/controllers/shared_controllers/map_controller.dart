@@ -131,6 +131,41 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
+  void userLiveLocation() {
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 5,
+    );
+    Geolocator.getPositionStream(
+      locationSettings: locationSettings,
+    ).listen((Position position) {
+
+      if(LatLng(position.latitude, position.longitude) != currentLatLng){
+        currentLatLng = LatLng(position.latitude, position.longitude);
+        getCurrentTargetPolylinePoints();
+        userGetEstimatedTime(originLatLng: currentLatLng, destinationLatLng: targetLatLng);
+        cameraToPosition(currentLatLng);
+        update();
+      }
+    });
+  }
+
+  Future<void> userGetEstimatedTime({required LatLng originLatLng,required LatLng destinationLatLng,}) async {
+    print("caaaaallll");
+    final url =
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
+    final response = await DioHelper.getData(url: url,);
+
+    if (response.statusCode == 200) {
+      distantTrack = response.data['rows'][0]['elements'][0]['distance']['text'];
+      timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
+      print("ressponseeee ${response.data}");
+    } else {
+      throw Exception('Failed to load place details');
+    }
+    update();
+  }
+
   void liveLocation({
     String endLat = '',
     String endLong = '',
@@ -171,7 +206,7 @@ class MapController extends GetxController {
             position.latitude,
             position.longitude,
           );
-          if (distanceInMeters >= 100) {
+          if (distanceInMeters >= 25) {
             mapRepository.sendLiveTracking(
               tripId: tripId,
               vehicleId: vehicleId,
