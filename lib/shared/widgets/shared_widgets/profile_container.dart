@@ -35,8 +35,9 @@ class ProfileCard extends StatelessWidget {
         imagePath: "assets/icons/receipt.svg",
         title: "subscriptions".tr,
         subTitle: "monthly".tr,
-        onTap: () {
-          Get.to(() => const SubscriptionsScreen());
+        onTap: () async{
+          await profileController.subscriptionApi();
+          Get.to(() => SubscriptionsScreen(profileController: profileController,));
         },
       ),
       ProfileCustomModel(

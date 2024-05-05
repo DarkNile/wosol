@@ -71,13 +71,6 @@ class NotificationRideRequest extends StatelessWidget {
                       mapController.currentIcon =
                           await mapController.getBytesFromAsset(
                               'assets/images/navigation_arrow.png', 70);
-                    } else {
-                      mapController.markerIcon =
-                          await mapController.getBytesFromAsset(
-                              'assets/images/where_to_vote.png', 70);
-                      mapController.currentIcon =
-                          await mapController.getBytesFromAsset(
-                              'assets/images/person_pin_circle.png', 70);
                     }
                     await mapController
                         .getCurrentLocation()

@@ -157,4 +157,22 @@ class UserRepository extends GetxService {
     }
   }
 
+  Future<Response> subscription() async {
+    try {
+      Response response = await DioHelper.postData(
+        url: "student/subscription",
+        data: {
+          "user_id" : userData.userId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
 }

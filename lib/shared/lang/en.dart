@@ -186,4 +186,5 @@ const Map<String, String> en = {
   "confirm password":"Confirm password",
   "current password":"Current password",
   "new password":"New password",
+  "close":"Close",
 };

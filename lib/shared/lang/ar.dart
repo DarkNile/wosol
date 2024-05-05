@@ -183,4 +183,5 @@ const Map<String, String> ar = {
   "confirm password":"تأكيد كلمة المرور",
   "current password":"كلمة المرور الحالية",
   "new password":"كلمة المرور الجديدة",
+  'close' : 'إغلاق'
 };

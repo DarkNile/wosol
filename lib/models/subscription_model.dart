@@ -19,11 +19,11 @@ class SubscriptionModel {
         });
 
   SubscriptionModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    tripType = json['trip_type'];
+    id = json['order_id'];
+    price = json['price_total'];
+    startDate = json['date_start'];
+    endDate = json['date_end'];
+    tripType = json['trip_round'];
     from = json['from'];
     to = json['to'];
   }

@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:wosol/controllers/user_controllers/user_layout_controller.dart';
 import 'package:wosol/models/trip_model.dart';
 import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
@@ -12,7 +14,9 @@ import 'package:wosol/view/user_screens/manage_my_trips/manage_my_trips_screen.d
 
 import '../../controllers/shared_controllers/map_controller.dart';
 import '../../controllers/user_controllers/user_home_controller.dart';
+import '../../shared/constants/constants.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
+import '../shared_screens/map_screen.dart';
 import '../shared_screens/trip_history/trip_history_screen.dart';
 import 'bottom_nav_bar_user.dart';
 
@@ -56,31 +60,66 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                       context: context,
                       builder: (context) {
                         return RideStartBottomSheet(
-                          firstButtonFunction: () {  },
-                          // secondButtonFunction: () async {
-                          //   onTapCancel(
-                          //       context: context,
-                          //       isTrip: true,
-                          //       isCancel: userHomeController
-                          //           .tripsList[index]
-                          //           .subData![
-                          //       indexSubData]
-                          //           .cancelRequest! ==
-                          //           "0",
-                          //       tripDate: userHomeController
-                          //           .tripsList[index]
-                          //           .subData![indexSubData]
-                          //           .tripDate!,
-                          //       userId: AppConstants.userRepository.userData.userId;
-                          // },
-                          headTitle: userLayoutController.studentNotifications!.text,
+                          firstButtonFunction: () async{
+                            mapController.markerIcon =
+                                await mapController.getBytesFromAsset(
+                                'assets/images/where_to_vote.png', 70);
+                            mapController.currentIcon =
+                                await mapController.getBytesFromAsset(
+                                'assets/images/person_pin_circle.png', 70);
+                            mapController.targetLatLng = LatLng(double.parse(userLayoutController.studentNotifications!.trip.toLat), double.parse(userLayoutController.studentNotifications!.trip.toLong));
+                            await mapController
+                                .getCurrentLocation()
+                                .then((value) async {
+                              mapController.currentLatLng =
+                                  LatLng(value.latitude, value.longitude);
+                              await mapController.getCurrentTargetPolylinePoints();
+                              mapController.cameraPosition = CameraPosition(
+                                target: mapController.currentLatLng,
+                                zoom: 14,
+                              );
+                              mapController.userGetEstimatedTime(
+                                originLatLng: mapController.currentLatLng,
+                                destinationLatLng: mapController.targetLatLng,
+                              );
+                              mapController.userLiveLocation();
+                            });
+                            Get.back();
+                            Get.to(() => const MapScreen(
+                              students: [],
+                            ));
+                          },
+                          secondButtonFunction: () {
+                            Get.back();
+                          },
+                          secondButtonText: 'close'.tr,
+                          headTitle: userLayoutController.studentNotifications!.title,
                           fromUser: true,
-                          formTime: 'formTime',
-                          toTime: 'toTime',
-                          formPlace: 'formPlace',
-                          toPlace: 'toPlace',
-                          fromTitle: 'fromTitle',
-                          toTitle: 'toTitle',
+                          formTime: DateFormat(
+                              'HH:mm',
+                              AppConstants
+                                  .isEnLocale
+                                  ? 'en_US'
+                                  : "ar")
+                              .format(DateTime.parse(userLayoutController.studentNotifications!.trip.tripStart)),
+                          toTime: DateFormat(
+                              'HH:mm',
+                              AppConstants
+                                  .isEnLocale
+                                  ? 'en_US'
+                                  : "ar")
+                              .format(DateTime.parse(userLayoutController.studentNotifications!.trip.tripEnd)),
+                          formPlace: userLayoutController.studentNotifications!.trip.fromPlace,
+                          toPlace: userLayoutController.studentNotifications!.trip.toPlace,
+                          fromTitle: userLayoutController.studentNotifications!.trip.fromTitle,
+                          toTitle: userLayoutController.studentNotifications!.trip.toTitle,
+                          date: DateFormat(
+                              'dd, MMM, yyyy',
+                              AppConstants
+                                  .isEnLocale
+                                  ? 'en_US'
+                                  : "ar")
+                              .format(DateTime.parse(userLayoutController.studentNotifications!.trip.tripDate)),
                         );
                       },
                     );
