@@ -8,6 +8,7 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
 import 'package:wosol/view/captain_screens/routes/routes_screen.dart';
 import 'package:wosol/view/captain_screens/vehicles/vehicles_screen.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
+import 'package:wosol/view/shared_screens/main_screens/driver_license_screen.dart';
 import 'package:wosol/view/user_screens/locations/user_locations_screen.dart';
 import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart';
 import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
@@ -68,7 +69,10 @@ class ProfileCard extends StatelessWidget {
         imagePath: "assets/icons/personalcard.svg",
         title: "license".tr,
         subTitle: "drivingAndCarLicense".tr,
-        onTap: () {},
+        onTap: () {
+          Get.to(() => const DriverLicenseScreen());
+
+        },
       ),
     ];
     return Padding(
