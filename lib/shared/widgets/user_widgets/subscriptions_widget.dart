@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:wosol/models/subscription_model.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 // ignore: must_be_immutable
 class SubscriptionsWidget extends StatelessWidget {
   // Put Model Here
-  SubscriptionsWidget({super.key});
+  SubscriptionsWidget({super.key, required this.subscriptionModel});
+  final SubscriptionModel subscriptionModel;
 
   double height = 62;
   bool isExpanded = true;

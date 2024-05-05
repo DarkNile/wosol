@@ -4,8 +4,12 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/user_widgets/subscriptions_widget.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/shared_controllers/profile_controller.dart';
+
 class SubscriptionsScreen extends StatelessWidget {
-  const SubscriptionsScreen({super.key});
+  const SubscriptionsScreen({super.key, required this.profileController});
+
+  final ProfileController profileController;
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +39,22 @@ class SubscriptionsScreen extends StatelessWidget {
                         style: AppFonts.header,
                       ),
                       customDivider(),
-                      SubscriptionsWidget(),
+                      SubscriptionsWidget(subscriptionModel: profileController.currentSubscription!,),
+                      if(profileController.previousSubscriptions.isNotEmpty)
                       const SizedBox(
                         height: 24,
                       ),
+                      if(profileController.previousSubscriptions.isNotEmpty)
                       Text(
                         "previous".tr,
                         style: AppFonts.header,
                       ),
                       ...List.generate(
-                          4,
+                          profileController.previousSubscriptions.length,
                           (index) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
-                                child: SubscriptionsWidget(),
+                                child: SubscriptionsWidget(subscriptionModel: profileController.previousSubscriptions[index],),
                               ))
                     ],
                   ),
