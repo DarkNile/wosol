@@ -36,7 +36,10 @@ class _CaptainRoutesScreenState extends State<CaptainRoutesScreen> {
             Obx(() {
               return controller.isGettingDriverRoutes.value
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 18.0),
+                        child: CircularProgressIndicator(),
+                      ),
                     )
                   : Expanded(
                       child: ListView.separated(

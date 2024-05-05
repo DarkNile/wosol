@@ -58,6 +58,7 @@ class UserRepository extends GetxService {
     loginType: "",
     token: "",
     userImage: "",
+    drivingLicence: '',
   );
 
   Future<Response> signIn({
