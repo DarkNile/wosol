@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/driver_routes.dart';
 
 import '../../models/notification_request_model.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class DriverLayoutController extends GetxController {
@@ -63,9 +66,34 @@ class DriverLayoutController extends GetxController {
         }
       });
     } catch (e) {
-     if (kDebugMode) {
-       print("ee");
-     }
+      if (kDebugMode) {
+        print("ee");
+      }
+    }
+  }
+
+  RxList<DriverRoute> driverRoutes = <DriverRoute>[].obs;
+  RxBool isGettingDriverRoutes = false.obs;
+
+  Future<void> getDriverRoutes() async {
+    isGettingDriverRoutes.value = true;
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/routes',
+        data: {
+          "driver_id": AppConstants.userRepository.driverData.driverId,
+        },
+      );
+      if (response.statusCode == 200) {
+        driverRoutes.value = List<DriverRoute>.from(response.data['data']
+            .map((data) => DriverRoute.fromJson(data))
+            .toList());
+        isGettingDriverRoutes.value = false;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
     }
   }
 }

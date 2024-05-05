@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_dot_widget.dart';
+import 'package:wosol/view/captain_screens/routes/map_screen.dart';
+
+import '../../../models/driver_routes.dart';
 
 class CustomRouteCardWidget extends StatelessWidget {
-  const CustomRouteCardWidget({super.key});
+  const CustomRouteCardWidget({
+    super.key,
+    required this.driverRoute,
+  });
+
+  final DriverRoute driverRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +32,8 @@ class CustomRouteCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 13,
               ),
-              const CustomRowWithArrowWidget(
-                  from: 'Mecca Center', to: ' King Abdelaziz University'),
+              CustomRowWithArrowWidget(
+                  from: driverRoute.from, to: ' ${driverRoute.to}'),
               const SizedBox(
                 height: 11,
               ),
@@ -43,7 +53,20 @@ class CustomRouteCardWidget extends StatelessWidget {
               CustomRowWithArrowWidget(
                 from: 'viewOnMap'.tr,
                 isButton: true,
-                onTapButton: () {},
+                onTapButton: () {
+                  Get.to(
+                    () => MapRoutesScreen(
+                      fromLatLng: LatLng(
+                        double.parse(driverRoute.fromLat),
+                        double.parse(driverRoute.fromLong),
+                      ),
+                      toLatLng: LatLng(
+                        double.parse(driverRoute.toLat),
+                        double.parse(driverRoute.toLong),
+                      ),
+                    ),
+                  );
+                },
                 to: '',
               )
             ],
