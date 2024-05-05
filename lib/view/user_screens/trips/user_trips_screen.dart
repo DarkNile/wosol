@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 
-import '../../../shared/constants/style/fonts.dart';
+import '../../../controllers/user_controllers/user_layout_controller.dart';
 import '../../../shared/widgets/shared_widgets/trips_card_widget.dart';
 
-class UserTripsScreen extends StatelessWidget {
+class UserTripsScreen extends StatefulWidget {
   const UserTripsScreen({super.key});
+
+  @override
+  State<UserTripsScreen> createState() => _UserTripsScreenState();
+}
+
+class _UserTripsScreenState extends State<UserTripsScreen> {
+  UserLayoutController userLayoutController = Get.find<UserLayoutController>();
+
+  @override
+  void initState() {
+    userLayoutController.getStudentRoutes();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,52 +33,64 @@ class UserTripsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomHeaderWithBackButton(header: "trips".tr),
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const PageScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "start".tr,
-                      style: AppFonts.header,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        top: 10,
-                        bottom: 24,
+            Obx(() {
+              return userLayoutController.isGettingStudentRoutes.value
+                  ? const Center(
+                      child: Padding(
+                          padding: EdgeInsets.only(top: 18.0),
+                          child: CircularProgressIndicator()),
+                    )
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        physics: const PageScrollPhysics(),
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...List.generate(
+                                userLayoutController.studentRoutes.length,
+                                (index) => TripCardWidget(
+                                      fromLocation: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .from,
+                                      fromTitle: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .address,
+                                      toLocation: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .to,
+                                      toTitle: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .address,
+                                      date: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .tripDate,
+                                      fromTime: AppConstants.getTimeFromDateString(userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .tripStart),
+                                      toTime:AppConstants.getTimeFromDateString(userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .tripStart),
+                                    )),
+                          ],
+                        ),
                       ),
-                      child: TripCardWidget(
-                        fromLocation: '',
-                        fromTitle: '',
-                        toLocation: '',
-                        toTitle: '',
-                        date: '',
-                        fromTime: '',
-                        toTime: '',
-                      ),
-                    ),
-                    Text(
-                      "return".tr,
-                      style: AppFonts.header,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const TripCardWidget(
-                      fromLocation: '',
-                      fromTitle: '',
-                      toLocation: '',
-                      toTitle: '',
-                      date: '',
-                      fromTime: '',
-                      toTime: '',
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                    );
+            }),
           ],
         ),
       ),
