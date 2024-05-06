@@ -53,6 +53,7 @@ class BottomSheetBase extends StatelessWidget {
     this.secondButtonLoading = false,
     this.thirdButtonLoading = false,
   });
+
   final String headTitle;
   final Color? firstTextColor;
   final String? svgFirstIconPath;
@@ -162,6 +163,9 @@ class RideStartBottomSheet extends StatelessWidget {
   final String? formPlace;
   final String? toPlace;
   final String? secondButtonText;
+  final String? companyName;
+  final String? companyTelephone;
+  final String? companyEmail;
   final Function() firstButtonFunction;
   final Function()? secondButtonFunction;
   final bool fromUser;
@@ -182,6 +186,9 @@ class RideStartBottomSheet extends StatelessWidget {
     this.fromTitle,
     this.date,
     this.secondButtonText,
+    this.companyName,
+    this.companyTelephone,
+    this.companyEmail,
   });
 
   @override
@@ -192,12 +199,12 @@ class RideStartBottomSheet extends StatelessWidget {
       showButtons: true,
       containTwoButtons: fromUser,
       firstButtonText: fromUser ? "I’m Ready".tr : "Start Ride".tr,
-      secondButtonText: secondButtonText?? 'Cancel Ride'.tr,
+      secondButtonText: secondButtonText ?? 'Cancel Ride'.tr,
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},
       withCloseIcon: true,
-      height: fromUser ? 301 : null,
-       firstButtonLoading: isLoading,
+      height: fromUser ? 301 : companyName != null? 361 : null,
+      firstButtonLoading: isLoading,
       child: fromUser
           ? UserTripDetailWidget(
               fromTime: formTime!,
@@ -213,6 +220,9 @@ class RideStartBottomSheet extends StatelessWidget {
               toTime: toTime!,
               formPlace: formPlace!,
               toPlace: toPlace!,
+              companyName: companyName,
+              companyTelephone: companyTelephone,
+              companyEmail: companyEmail,
             ),
     );
   }
@@ -416,7 +426,6 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomSheetBase(
-
       headTitle: headTitle,
       draggable: isTrip,
       showButtons: true,
@@ -425,11 +434,8 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
       buttonsContainIcon: isTrip,
       svgFirstIconPath: 'assets/images/tick-circle.svg',
       firstButtonColor: AppColors.black,
-      firstButtonFunction: function ?? () {
-
-      },
-      secondButtonFunction: (){
-      },
+      firstButtonFunction: function ?? () {},
+      secondButtonFunction: () {},
       firstButtonsFlex: 1,
       height: isTrip ? 311 : 256,
       child: Center(
@@ -598,7 +604,8 @@ class RateBottomSheet extends StatelessWidget {
       withCloseIcon: true,
       height: selectIssue
           ? 485 //485
-          : 250, //243,
+          : 250,
+      //243,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -643,6 +650,7 @@ class RateBottomSheet extends StatelessWidget {
 
 class DriverComingSheetWidget extends StatelessWidget {
   final bool isOnMyHisWidget;
+
   const DriverComingSheetWidget({super.key, this.isOnMyHisWidget = true});
 
   @override
@@ -858,15 +866,15 @@ class RandomSheet extends StatelessWidget {
       firstButtonText: 'Confirm'.tr,
       firstButtonFunction: function,
       withCloseIcon: false,
-      height: 250, //243,
+      height: 250,
+      //243,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 24, bottom: 12),
-              child: Text(subTitle,
-                  style: AppFonts.header),
-            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            child: Text(subTitle, style: AppFonts.header),
+          ),
         ],
       ),
     );

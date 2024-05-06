@@ -25,6 +25,9 @@ class Trip {
     required this.fromLong,
     required this.toLat,
     required this.toLong,
+    required this.companyName,
+    required this.companyTelephone,
+    required this.companyEmail,
     required this.students,
   });
 
@@ -46,6 +49,9 @@ class Trip {
   String fromLong;
   String toLat;
   String toLong;
+  String companyName;
+  String companyTelephone;
+  String companyEmail;
   List<Student> students;
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
@@ -67,6 +73,9 @@ class Trip {
         fromLong: json["from_long"] ?? "",
         toLat: json["to_lat"] ?? "",
         toLong: json["to_long"] ?? "",
+        companyName: json["company_name"] ?? "",
+        companyTelephone: json["company_telephone"] ?? "",
+        companyEmail: json["company_email"] ?? "",
         students: List<Student>.from(
             json["students"].map((x) => Student.fromJson(x))),
       );
@@ -90,6 +99,9 @@ class Trip {
         "from_long": fromLong,
         "to_lat": toLat,
         "to_long": toLong,
+        "company_name": companyName,
+        "company_telephone": companyTelephone,
+        "company_email": companyEmail,
         "students": List<dynamic>.from(students.map((x) => x.toJson())),
       };
 }
