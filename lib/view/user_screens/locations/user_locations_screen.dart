@@ -56,27 +56,33 @@ class _UserLocationsScreenState extends State<UserLocationsScreen> {
                               title: "Home",
                               address: userLayoutController
                                   .studentLocation.homeAddress!,
-                              latLng: LatLng( userLayoutController
-                                  .studentLocation.homeLatitude!,
+                              latLng: LatLng(
+                                userLayoutController
+                                    .studentLocation.homeLatitude!,
                                 userLayoutController
                                     .studentLocation.homeLongitude!,
                               ),
                             ),
                           ),
-
-                        if (userLayoutController.studentLocation.universityName !=
+                        if (userLayoutController
+                                .studentLocation.universityName !=
                             null)
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 18.0,
+                            padding: EdgeInsets.symmetric(
+                              vertical: userLayoutController
+                                          .studentLocation.homeAddress !=
+                                      null
+                                  ? 9.0
+                                  : 18.0,
                               horizontal: 16.0,
                             ),
                             child: LocationCardWidget(
                               title: "University",
                               address: userLayoutController
                                   .studentLocation.homeAddress!,
-                              latLng: LatLng( userLayoutController
-                                  .studentLocation.homeLatitude!,
+                              latLng: LatLng(
+                                userLayoutController
+                                    .studentLocation.homeLatitude!,
                                 userLayoutController
                                     .studentLocation.homeLongitude!,
                               ),

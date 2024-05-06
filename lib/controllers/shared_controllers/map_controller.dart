@@ -305,14 +305,9 @@ class MapController extends GetxController {
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
-      print("current indexxx ${currentStudentIndex.value} -- des ${destinationLatLng}");
-      print("is Employeeee --${isToEnd} ${isEmployee && !isToEnd}");
       ///End trip bs
       if (isWithinDistance(distantTrack)) {
-        print("-----------");
-        print("is Employeeee AFER Disntanceee --${isToEnd} ${isEmployee && !isToEnd}");
         if (isEmployee && !isToEnd) {
-          print("Yesss $endLat $endLong");
           isToEnd = true;
           targetLatLng = LatLng(
             double.parse(endLat),

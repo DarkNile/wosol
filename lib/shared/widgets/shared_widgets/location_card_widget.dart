@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
@@ -7,6 +9,7 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
+import 'package:wosol/view/captain_screens/routes/map_screen.dart';
 
 class LocationCardWidget extends StatelessWidget {
   const LocationCardWidget({
@@ -68,7 +71,11 @@ class LocationCardWidget extends StatelessWidget {
                   from: 'viewOnMap'.tr,
                   to: '',
                   isButton: true,
-                  onTapButton: () {})
+                  onTapButton: () {
+                    Get.to(()=> MapRoutesScreen(
+                      fromLatLng:latLng ,
+                    ));
+                  })
             ],
           ),
         ));
