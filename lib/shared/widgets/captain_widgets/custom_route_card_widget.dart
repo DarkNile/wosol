@@ -37,16 +37,14 @@ class CustomRouteCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 11,
               ),
-              const CustomRowWithDotWidget(
-                  text:
-                      'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia'),
+              CustomRowWithDotWidget(text: driverRoute.from),
               const SizedBox(
                 height: 18,
               ),
-              const CustomRowWithDotWidget(
-                  isGreen: false,
-                  text:
-                      ' King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia'),
+              CustomRowWithDotWidget(
+                isGreen: false,
+                text: driverRoute.to,
+              ),
               const SizedBox(
                 height: 11,
               ),

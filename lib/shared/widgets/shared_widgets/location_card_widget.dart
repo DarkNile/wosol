@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
@@ -8,7 +9,15 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
 
 class LocationCardWidget extends StatelessWidget {
-  const LocationCardWidget({super.key});
+  const LocationCardWidget({
+    super.key,
+    required this.title,
+    required this.address, required this.latLng,
+  });
+
+  final String title;
+  final String address;
+  final LatLng latLng;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class LocationCardWidget extends StatelessWidget {
               const SizedBox(
                 height: 13,
               ),
-              Text('King Abdelaziz University',
+              Text(title,
                   style: AppFonts.medium.copyWith(
                     color: AppColors.black800,
                   )),
@@ -45,7 +54,7 @@ class LocationCardWidget extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                        'mecca center, FR8C+HXF, At taniem, makkah 24224, Saudi Arabia',
+                        address,
                         style: AppFonts.small.copyWith(
                             fontWeight: FontWeight.w400,
                             color: AppColors.darkBlue300)),
