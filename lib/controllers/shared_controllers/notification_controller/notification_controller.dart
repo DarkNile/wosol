@@ -19,7 +19,7 @@ class NotificationController extends GetxController {
               "driver_id": driverId,
             })
           : await DioHelper.postData(
-              url: 'student/notifications/view', data: {"user_id": userId});
+              url: 'student/notifications/view/other', data: {"user_id": userId});
       log("response ${response.data}");
       if (response.statusCode == 200) {
         log("200");

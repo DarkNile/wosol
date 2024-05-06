@@ -34,7 +34,7 @@ class UserLayoutController extends GetxController {
     try {
       await AppConstants.studentRepository
           .getStudentNotification(
-        userId: '278',
+        userId: AppConstants.userRepository.userData.userId,
       )
           .then((data) {
         if (data['data'].isNotEmpty) {
