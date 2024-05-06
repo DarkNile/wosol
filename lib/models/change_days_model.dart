@@ -4,6 +4,7 @@ class ChangeDaysModel {
   final String dayName;
   final String time1;
   final String time2;
+  String? requestChange;
   String? isOn;
 
   ChangeDaysModel(
@@ -12,6 +13,7 @@ class ChangeDaysModel {
       required this.dayName,
       required this.time1,
       required this.time2,
+      this.requestChange,
       this.isOn});
 
   factory ChangeDaysModel.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class ChangeDaysModel {
       dayName: json['day_name'],
       time1: json['time_1'],
       time2: json['time_2'],
+      requestChange: json['request_change'],
     );
   }
 

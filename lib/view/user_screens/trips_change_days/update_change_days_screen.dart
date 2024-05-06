@@ -111,7 +111,6 @@ class UpdateChangeDaysScreen extends StatelessWidget {
                               if (controller.changeDaysUpdateDone.value &&
                                   context.mounted) {
                                 controller.getChangeDays(context: context);
-                                Get.back();
                               }
                             },
                             child: Text("update".tr))),

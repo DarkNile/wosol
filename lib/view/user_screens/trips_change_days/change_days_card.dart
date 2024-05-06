@@ -65,47 +65,17 @@ class ChangeDaysCardWidget extends StatelessWidget {
               height: 4,
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.success600,
-                      foregroundColor: AppColors.white,
-                      side: const BorderSide(color: AppColors.white),
-                      shape: const StadiumBorder(),
-                      elevation: 0,
-                      minimumSize: const Size(100, 40),
-                      maximumSize: const Size(100, 40),
-                      padding: const EdgeInsets.all(0),
-                      textStyle:
-                          AppFonts.style12Urb.copyWith(color: AppColors.black),
-                    ),
-                    onPressed: () async {
-                      controller.selectedDayUpdateIndex.value = index;
-                      Get.to(() => UpdateChangeDaysScreen(
-                            changeDaysModel: changeDaysModel,
-                            controller: controller,
-                            index: index,
-                          ));
-                    },
-                    child: Text("update".tr)),
-                const SizedBox(
-                  width: 8,
-                ),
-                Obx(
-                  () => controller.changeDaysUpdateLoading.value &&
-                          controller.selectedDayCancelIndex.value == index
-                      ? const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Center(
-                              child: CircularProgressIndicator(
-                            color: AppColors.error600,
-                          )),
-                        )
-                      : ElevatedButton(
+            (changeDaysModel.requestChange == "1")
+                ? Text(
+                    "requestUnderReview".tr,
+                    style: AppFonts.medium.copyWith(color: AppColors.logo),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.error600,
+                            backgroundColor: AppColors.success600,
                             foregroundColor: AppColors.white,
                             side: const BorderSide(color: AppColors.white),
                             shape: const StadiumBorder(),
@@ -117,25 +87,63 @@ class ChangeDaysCardWidget extends StatelessWidget {
                                 .copyWith(color: AppColors.black),
                           ),
                           onPressed: () async {
-                            controller.selectedDayCancelIndex.value = index;
-                            await controller.changeDaysUpdate(
-                                context: context,
-                                changeDaysModel: ChangeDaysModel(
-                                    isOn: "no",
-                                    dayId: changeDaysModel.dayId,
-                                    orderId: changeDaysModel.orderId,
-                                    dayName: changeDaysModel.dayName,
-                                    time1: changeDaysModel.time1,
-                                    time2: changeDaysModel.time2));
-
-                            if (context.mounted) {
-                              await controller.getChangeDays(context: context);
-                            }
+                            controller.selectedDayUpdateIndex.value = index;
+                            Get.to(() => UpdateChangeDaysScreen(
+                                  changeDaysModel: changeDaysModel,
+                                  controller: controller,
+                                  index: index,
+                                ));
                           },
-                          child: Text("cancel".tr)),
-                ),
-              ],
-            )
+                          child: Text("update".tr)),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Obx(
+                        () => controller.changeDaysUpdateLoading.value &&
+                                controller.selectedDayCancelIndex.value == index
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  color: AppColors.error600,
+                                )),
+                              )
+                            : ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.error600,
+                                  foregroundColor: AppColors.white,
+                                  side:
+                                      const BorderSide(color: AppColors.white),
+                                  shape: const StadiumBorder(),
+                                  elevation: 0,
+                                  minimumSize: const Size(100, 40),
+                                  maximumSize: const Size(100, 40),
+                                  padding: const EdgeInsets.all(0),
+                                  textStyle: AppFonts.style12Urb
+                                      .copyWith(color: AppColors.black),
+                                ),
+                                onPressed: () async {
+                                  controller.selectedDayCancelIndex.value =
+                                      index;
+                                  await controller.changeDaysUpdate(
+                                      context: context,
+                                      changeDaysModel: ChangeDaysModel(
+                                          isOn: "no",
+                                          dayId: changeDaysModel.dayId,
+                                          orderId: changeDaysModel.orderId,
+                                          dayName: changeDaysModel.dayName,
+                                          time1: changeDaysModel.time1,
+                                          time2: changeDaysModel.time2));
+
+                                  if (context.mounted) {
+                                    await controller.getChangeDays(
+                                        context: context);
+                                  }
+                                },
+                                child: Text("cancel".tr)),
+                      ),
+                    ],
+                  )
           ],
         ),
       ),

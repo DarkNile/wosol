@@ -191,5 +191,6 @@ const Map<String, String> ar = {
   "update": "تحديث",
   "Update Time": "تحديث الوقت",
   "Start Time": "وقت البدء",
-  "End Time": "وقت النهاية"
+  "End Time": "وقت النهاية",
+  "requestUnderReview": "الطلب قيد المراجعة"
 };
