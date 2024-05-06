@@ -201,11 +201,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                 title: homeDriverController
                                     .driverTrips[index].from,
                                 imgPath: homeDriverController
-                                            .driverNextRide[0].tripType ==
+                                            .driverTrips[index].tripType ==
                                         '1'
                                     ? "assets/images/home/upcoming_ride_icon.svg"
                                     : homeDriverController
-                                                .driverNextRide[0].tripType ==
+                                                .driverTrips[index].tripType ==
                                             '2'
                                         ? "assets/icons/employee_trip.svg"
                                         : "assets/icons/tourism_trip.svg",
