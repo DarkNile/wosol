@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/location_card_widget.dart';
 
-class UserLocationsScreen extends StatelessWidget {
+import '../../../controllers/user_controllers/user_layout_controller.dart';
+
+class UserLocationsScreen extends StatefulWidget {
   const UserLocationsScreen({super.key});
+
+  @override
+  State<UserLocationsScreen> createState() => _UserLocationsScreenState();
+}
+
+class _UserLocationsScreenState extends State<UserLocationsScreen> {
+  UserLayoutController userLayoutController = Get.find<UserLayoutController>();
+
+  @override
+  void initState() {
+    userLayoutController.getStudentLocations();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +35,37 @@ class UserLocationsScreen extends StatelessWidget {
             CustomHeaderWithBackButton(
               header: "locations".tr,
             ),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.only(
-                  top: 18,
-                  left: 16,
-                  right: 16,
-                ),
-                physics: const PageScrollPhysics(),
-                itemBuilder: (context, index) => const LocationCardWidget(),
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 10,
-                ),
-                itemCount: 3,
-              ),
-            )
+            Obx(() {
+              return userLayoutController.isGettingStudentLocation.value
+                  ? const Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 18.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        if (userLayoutController.studentLocation.homeAddress !=
+                            null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 18.0,
+                              horizontal: 16.0,
+                            ),
+                            child: LocationCardWidget(
+                              title: "Home",
+                              address: userLayoutController
+                                  .studentLocation.homeAddress!,
+                              latLng: LatLng( userLayoutController
+                                  .studentLocation.homeLatitude!,
+                                userLayoutController
+                                    .studentLocation.homeLongitude!,
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+            })
           ],
         ),
       ),

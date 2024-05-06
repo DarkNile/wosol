@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:wosol/models/student_routes.dart';
 
+import '../../models/student_locations.dart';
 import '../../models/student_notification_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
@@ -36,9 +37,9 @@ class UserLayoutController extends GetxController {
         userId: '278',
       )
           .then((data) {
-        if(data['data'].isNotEmpty) {
+        if (data['data'].isNotEmpty) {
           studentNotifications = StudentNotification.fromJson(data['data'][0]);
-        }else {
+        } else {
           studentNotifications = null;
         }
         update();
@@ -54,7 +55,6 @@ class UserLayoutController extends GetxController {
     update();
   }
 
-
   RxList<TripData> studentRoutes = <TripData>[].obs;
   RxBool isGettingStudentRoutes = false.obs;
 
@@ -69,8 +69,32 @@ class UserLayoutController extends GetxController {
       );
       if (response.statusCode == 200) {
         studentRoutes.value = List<TripData>.from(response.data['data']
-            .map((data) => TripData.fromJson(data)).toList());
+            .map((data) => TripData.fromJson(data))
+            .toList());
         isGettingStudentRoutes.value = false;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  StudentLocation studentLocation = StudentLocation();
+  RxBool isGettingStudentLocation = false.obs;
+
+  Future<void> getStudentLocations() async {
+    isGettingStudentLocation.value = true;
+    try {
+      Response response = await DioHelper.postData(
+        url: 'student/locations',
+        data: {
+          "user_id": AppConstants.userRepository.userData.userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        studentLocation = StudentLocation.fromJson(response.data);
+        isGettingStudentLocation.value = false;
       } else {
         throw (response.data['data']['error']);
       }
