@@ -434,7 +434,7 @@ class RideAndTripEndBottomSheet extends StatelessWidget {
       draggable: isTrip,
       showButtons: true,
       withCloseIcon: !isTrip,
-      firstButtonText: 'Trip Ended',
+      firstButtonText: 'Done',
       buttonsContainIcon: isTrip,
       svgFirstIconPath: 'assets/images/tick-circle.svg',
       firstButtonColor: AppColors.black,
