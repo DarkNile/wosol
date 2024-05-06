@@ -101,6 +101,24 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             toTime: AppConstants.getTimeFromDateString(
                               homeDriverController.driverNextRide[0].tripEnd,
                             ),
+                            companyName: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyName : null,
+                            companyTelephone: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyTelephone : null,
+                            companyEmail: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyEmail : null,
                             students:
                                 homeDriverController.driverNextRide[0].students,
                           );
@@ -199,6 +217,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required LatLng fromLatLng,
     required LatLng toLatLng,
     required String vehicleId,
+    required String? companyName,
+    required String? companyTelephone,
+    required String? companyEmail,
     required List<Student> students,
     bool isEmployee = false,
   }) async {
@@ -386,6 +407,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
         formPlace: fromPlace,
         isLoading: isStartingTrip,
         toPlace: toPlace,
+        companyName: companyName,
+        companyTelephone: companyTelephone,
+        companyEmail: companyEmail,
       ),
     );
   }
