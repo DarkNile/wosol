@@ -43,21 +43,34 @@ class _PersonalPictureState extends State<PersonalPicture> {
           filename: fileName),
       if (!AppConstants.isCaptain)
         "user_id": AppConstants.userRepository.userData.userId,
-      if (false) "driver_id": AppConstants.userRepository.driverData.driverId,
+      if (AppConstants.isCaptain)
+        "driver_id": AppConstants.userRepository.driverData.driverId,
     });
     try {
       Response response = await DioHelper.postData(
-        url: "student/update_image",
+        url: AppConstants.isCaptain
+            ? "driver/update_image"
+            : "student/update_image",
         data: {},
         dataObject: formData,
       );
       if (response.statusCode == 200) {
-        AppConstants.userRepository.userData.userImage =
-            response.data["data"]["file_name"];
-        CacheHelper.setData(
-            key: 'UserData',
-            value: jsonEncode(AppConstants.userRepository.userData.toJson()));
+        if (AppConstants.isCaptain) {
+          AppConstants.userRepository.driverData.userImage =
+              response.data["data"]["file_name"];
+          CacheHelper.setData(
+              key: 'DriverData',
+              value:
+                  jsonEncode(AppConstants.userRepository.driverData.toJson()));
+        } else {
+          AppConstants.userRepository.userData.userImage =
+              response.data["data"]["file_name"];
+          CacheHelper.setData(
+              key: 'UserData',
+              value: jsonEncode(AppConstants.userRepository.userData.toJson()));
+        }
       }
+
       widget.profileController.changeImage();
       setState(() {
         isUpdatingProfile.value = false;
@@ -73,9 +86,7 @@ class _PersonalPictureState extends State<PersonalPicture> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (!AppConstants.isCaptain) {
-          pickImageFromGallery(context);
-        }
+        pickImageFromGallery(context);
       },
       child: isUpdatingProfile.value
           ? const Center(
@@ -88,13 +99,13 @@ class _PersonalPictureState extends State<PersonalPicture> {
                     height: 96,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        (false
+                        (AppConstants.isCaptain
                                     ? AppConstants
                                         .userRepository.driverData.userImage
                                     : AppConstants
                                         .userRepository.userData.userImage)
                                 .isNotEmpty
-                            ? (false
+                            ? (AppConstants.isCaptain
                                 ? AppConstants
                                     .userRepository.driverData.userImage
                                 : AppConstants

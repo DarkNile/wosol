@@ -67,7 +67,6 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 : homeDriverController.driverNextRide.isNotEmpty
                     ? RideCard(
                         onTap: () async {
-
                           await onTapRideCard(
                             isEmployee: homeDriverController
                                         .driverNextRide[0].tripType ==
@@ -102,16 +101,37 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             toTime: AppConstants.getTimeFromDateString(
                               homeDriverController.driverNextRide[0].tripEnd,
                             ),
+                            companyName: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyName : null,
+                            companyTelephone: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyTelephone : null,
+                            companyEmail: homeDriverController
+                                .driverNextRide[0].tripType ==
+                                '2' ||
+                                homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '3'? homeDriverController.driverNextRide[0].companyEmail : null,
                             students:
                                 homeDriverController.driverNextRide[0].students,
                           );
                         },
                         title: homeDriverController.driverNextRide[0].from,
                         imgPath: homeDriverController
-                            .driverNextRide[0].tripType ==
-                            '1'  ? "assets/images/home/upcoming_ride_icon.svg" : homeDriverController
-                            .driverNextRide[0].tripType ==
-                            '2' ?"assets/icons/employee_trip.svg" :"assets/icons/tourism_trip.svg",
+                                    .driverNextRide[0].tripType ==
+                                '1'
+                            ? "assets/images/home/upcoming_ride_icon.svg"
+                            : homeDriverController.driverNextRide[0].tripType ==
+                                    '2'
+                                ? "assets/icons/employee_trip.svg"
+                                : "assets/icons/tourism_trip.svg",
                         time: homeDriverController.driverNextRide[0].tripTime,
                         isNextRide: true,
                       )
@@ -161,12 +181,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                               },
                               title:
                                   homeDriverController.driverTrips[index].from,
-                              imgPath:
-                              homeDriverController
-                                  .driverNextRide[0].tripType ==
-                                  '1'  ? "assets/images/home/upcoming_ride_icon.svg" : homeDriverController
-                                  .driverNextRide[0].tripType ==
-                                  '2' ?"assets/icons/employee_trip.svg" :"assets/icons/tourism_trip.svg",
+                              imgPath: homeDriverController
+                                          .driverNextRide[0].tripType ==
+                                      '1'
+                                  ? "assets/images/home/upcoming_ride_icon.svg"
+                                  : homeDriverController
+                                              .driverNextRide[0].tripType ==
+                                          '2'
+                                      ? "assets/icons/employee_trip.svg"
+                                      : "assets/icons/tourism_trip.svg",
                               time: homeDriverController
                                   .driverTrips[index].tripTime,
                             );
@@ -194,6 +217,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required LatLng fromLatLng,
     required LatLng toLatLng,
     required String vehicleId,
+    required String? companyName,
+    required String? companyTelephone,
+    required String? companyEmail,
     required List<Student> students,
     bool isEmployee = false,
   }) async {
@@ -262,11 +288,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   'assets/images/person_pin_circle.png', 50);
             }
 
-
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
-              if(mapController.finalLatLng != null) {
+              if (mapController.finalLatLng != null) {
                 await mapController.getCurrentFinalPolylinePoints();
               }
               await mapController.getCurrentTargetPolylinePoints();
@@ -296,6 +321,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             });
 
             Get.back();
+            mapController.nearbyStudent(
+              driverId: AppConstants.userRepository.driverData.driverId,
+              tripId: tripId,
+              userId:  students[mapController.currentStudentIndex.value].userId,
+              tripUserId:  students[mapController.currentStudentIndex.value].tripUserId,
+            );
             Get.to(() => MapScreen(
                   students: students,
                 ));
@@ -376,6 +407,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
         formPlace: fromPlace,
         isLoading: isStartingTrip,
         toPlace: toPlace,
+        companyName: companyName,
+        companyTelephone: companyTelephone,
+        companyEmail: companyEmail,
       ),
     );
   }

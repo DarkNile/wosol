@@ -8,9 +8,11 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_profile_row.dart';
 import 'package:wosol/view/captain_screens/routes/routes_screen.dart';
 import 'package:wosol/view/captain_screens/vehicles/vehicles_screen.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
+import 'package:wosol/view/shared_screens/main_screens/driver_license_screen.dart';
 import 'package:wosol/view/user_screens/locations/user_locations_screen.dart';
 import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart';
 import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
+import 'package:wosol/view/user_screens/trips_change_days/user_trips_change_days_screen.dart';
 
 class ProfileCard extends StatelessWidget {
   const ProfileCard(
@@ -34,8 +36,11 @@ class ProfileCard extends StatelessWidget {
         imagePath: "assets/icons/receipt.svg",
         title: "subscriptions".tr,
         subTitle: "monthly".tr,
-        onTap: () {
-          Get.to(() => const SubscriptionsScreen());
+        onTap: () async {
+          await profileController.subscriptionApi();
+          Get.to(() => SubscriptionsScreen(
+                profileController: profileController,
+              ));
         },
       ),
       ProfileCustomModel(
@@ -44,6 +49,14 @@ class ProfileCard extends StatelessWidget {
         subTitle: "startReturn".tr,
         onTap: () {
           Get.to(() => const UserTripsScreen());
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/NA-note.svg",
+        title: "myCalendar".tr,
+        subTitle: "requestChangeDays".tr,
+        onTap: () {
+          Get.to(() => const UserTripsChangeDaysScreen());
         },
       ),
     ];
@@ -68,7 +81,9 @@ class ProfileCard extends StatelessWidget {
         imagePath: "assets/icons/personalcard.svg",
         title: "license".tr,
         subTitle: "drivingAndCarLicense".tr,
-        onTap: () {},
+        onTap: () {
+          Get.to(() => const DriverLicenseScreen());
+        },
       ),
     ];
     return Padding(
@@ -87,16 +102,14 @@ class ProfileCard extends StatelessWidget {
                 image: userImage,
                 onTapEdit: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return EditProfile(profileController: profileController,);
+                    return EditProfile(
+                      profileController: profileController,
+                    );
                   }));
                 },
                 title: AppConstants.isCaptain
-                    ? "${AppConstants.userRepository.driverData
-                    .firstName} ${AppConstants.userRepository.driverData
-                    .lastName}"
-                    : "${AppConstants.userRepository.userData
-                    .userFname} ${AppConstants.userRepository.userData
-                    .userLname}",
+                    ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
+                    : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
                 subTitle: AppConstants.isCaptain
                     ? AppConstants.userRepository.driverData.userEmail
                     : AppConstants.userRepository.userData.userEmail,
@@ -108,7 +121,7 @@ class ProfileCard extends StatelessWidget {
             height: 24,
           ),
           Container(
-            height: 195,
+            height: AppConstants.isCaptain ? 195 : 260,
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),

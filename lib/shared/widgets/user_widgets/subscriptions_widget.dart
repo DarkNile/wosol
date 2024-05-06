@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:intl/intl.dart';
+import 'package:wosol/models/subscription_model.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+
+import '../../constants/constants.dart';
 
 // ignore: must_be_immutable
 class SubscriptionsWidget extends StatelessWidget {
   // Put Model Here
-  SubscriptionsWidget({super.key});
+  SubscriptionsWidget({super.key, required this.subscriptionModel});
+  final SubscriptionModel subscriptionModel;
 
   double height = 62;
   bool isExpanded = true;
@@ -40,7 +45,7 @@ class SubscriptionsWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ID #58869',
+                      Text('ID #${subscriptionModel.id}',
                           style: AppFonts.button.copyWith(
                             color: AppColors.logo,
                           )),
@@ -67,32 +72,44 @@ class SubscriptionsWidget extends StatelessWidget {
                     ),
                     _CustomRowWidget(
                       name: 'price'.tr,
-                      value: '134.50 ${"SAR".tr}',
+                      value: '${subscriptionModel.price} ${"SAR".tr}',
                     ),
                     _CustomRowWidget(
                       isBackGroundWhite: false,
                       name: 'startDate'.tr,
-                      value: '13 Sep, 2023',
+                      value: DateFormat(
+                          'dd, MMM, yyyy',
+                          AppConstants
+                              .isEnLocale
+                              ? 'en_US'
+                              : "ar")
+                          .format(DateTime.parse(subscriptionModel.startDate!)),
                     ),
                     _CustomRowWidget(
                       name: 'endDate'.tr,
-                      value: '25 Jun, 2024',
+                      value: DateFormat(
+                          'dd, MMM, yyyy',
+                          AppConstants
+                              .isEnLocale
+                              ? 'en_US'
+                              : "ar")
+                          .format(DateTime.parse(subscriptionModel.endDate!)),
                     ),
                     _CustomRowWidget(
                       isBackGroundWhite: false,
                       name: 'tripType'.tr,
-                      value: 'roundTrip'.tr,
+                      value: subscriptionModel.tripType!,
                     ),
                     _CustomRowWidget(
                       isLocation: true,
                       name: 'from'.tr,
-                      value: 'Mecca Center',
+                      value: subscriptionModel.from!,
                     ),
                     _CustomRowWidget(
                       isLocation: true,
                       isBackGroundWhite: false,
                       name: 'to'.tr,
-                      value: 'King Abdelaziz Univesity',
+                      value: subscriptionModel.to!,
                     ),
                   ],
                 )

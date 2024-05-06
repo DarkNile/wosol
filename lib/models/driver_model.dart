@@ -33,6 +33,7 @@ class DriverData {
   String userAgent;
   String loginType;
   String token;
+  String drivingLicence;
 
   DriverData({
     required this.driverId,
@@ -55,6 +56,7 @@ class DriverData {
     required this.userAgent,
     required this.loginType,
     required this.token,
+    required this.drivingLicence,
   });
 
   factory DriverData.fromJson(Map<String, dynamic> json) {
@@ -79,13 +81,14 @@ class DriverData {
       userAgent: json['user_agent'] ?? "",
       loginType: json['login_type'] ?? "",
       token: json['token'] ?? "",
+      drivingLicence: json['driving_licence'] ?? "",
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'driver_id': driverId,
-      "user_image":userImage,
+      "user_image": userImage,
       'first_name': firstName,
       'last_name': lastName,
       'telephone': telephone,
@@ -104,6 +107,7 @@ class DriverData {
       'user_agent': userAgent,
       'login_type': loginType,
       'token': token,
+      'driving_licence': drivingLicence,
     };
   }
 }
