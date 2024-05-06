@@ -63,6 +63,25 @@ class _UserLocationsScreenState extends State<UserLocationsScreen> {
                               ),
                             ),
                           ),
+
+                        if (userLayoutController.studentLocation.universityName !=
+                            null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 18.0,
+                              horizontal: 16.0,
+                            ),
+                            child: LocationCardWidget(
+                              title: "University",
+                              address: userLayoutController
+                                  .studentLocation.homeAddress!,
+                              latLng: LatLng( userLayoutController
+                                  .studentLocation.homeLatitude!,
+                                userLayoutController
+                                    .studentLocation.homeLongitude!,
+                              ),
+                            ),
+                          ),
                       ],
                     );
             })
