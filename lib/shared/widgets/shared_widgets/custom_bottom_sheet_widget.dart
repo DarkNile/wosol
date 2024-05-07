@@ -24,7 +24,7 @@ class CustomBottomSheetWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       // + 16 for padding
-      height: (height != null) ? (height! + 16) : 294 + 16,
+      height: (height != null) ? (height! + 26) : 294 + 26,
       padding: EdgeInsets.only(
         top: draggable ? 14 : 20,
         left: 16,
