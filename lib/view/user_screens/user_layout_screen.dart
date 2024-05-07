@@ -134,7 +134,9 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                           subHeaderMsg: 'rideCompletedSuccessfully'.tr,
                           isTrip: true,
                           function: () {
-                            Get.offAll(const UserLayoutScreen());
+                            userHomeController.getTrips();
+                            userHomeController.getCalendarData();
+                            Get.back();
                           },
                         );
                       },

@@ -16,7 +16,7 @@ import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
-import '../../view/captain_screens/driver_layout_screen.dart';
+import '../captain_controllers/home_driver_controller.dart';
 
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
@@ -27,11 +27,11 @@ class MapController extends GetxController {
 
   late CameraPosition cameraPosition;
   List<LatLng> polylineCurrentTarget = [];
-  List<LatLng> polylineCurrentFinal = [];
+  // List<LatLng> polylineCurrentFinal = [];
   LatLng? previousLatLng;
   late LatLng currentLatLng;
   late LatLng targetLatLng;
-  LatLng? finalLatLng;
+  // LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
 
   @override
@@ -67,32 +67,32 @@ class MapController extends GetxController {
     }
   }
 
-  Future<void> getCurrentFinalPolylinePoints() async {
-    polylineCurrentFinal = [];
-    PolylinePoints polylinePoints = PolylinePoints();
-    try {
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        AppConstants.googleApiKey,
-        PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
-        PointLatLng(finalLatLng!.latitude, finalLatLng!.longitude),
-      );
-
-      if (result.points.isNotEmpty) {
-        for (var point in result.points) {
-          polylineCurrentFinal.add(LatLng(point.latitude, point.longitude));
-        }
-      } else {
-        if (kDebugMode) {
-          print(result.errorMessage);
-        }
-      }
-      update();
-    } catch (e) {
-      if (kDebugMode) {
-        print("eeeeeeeeeeeeeee $e");
-      }
-    }
-  }
+  // Future<void> getCurrentFinalPolylinePoints() async {
+  //   polylineCurrentFinal = [];
+  //   PolylinePoints polylinePoints = PolylinePoints();
+  //   try {
+  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //       AppConstants.googleApiKey,
+  //       PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+  //       PointLatLng(finalLatLng!.latitude, finalLatLng!.longitude),
+  //     );
+  //
+  //     if (result.points.isNotEmpty) {
+  //       for (var point in result.points) {
+  //         polylineCurrentFinal.add(LatLng(point.latitude, point.longitude));
+  //       }
+  //     } else {
+  //       if (kDebugMode) {
+  //         print(result.errorMessage);
+  //       }
+  //     }
+  //     update();
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print("eeeeeeeeeeeeeee $e");
+  //     }
+  //   }
+  // }
 
   Future<void> cameraToPosition(LatLng position) async {
     final GoogleMapController controller = await googleMapController.future;
@@ -172,6 +172,7 @@ class MapController extends GetxController {
     String tripId = '',
     String vehicleId = '',
     List<Student> students = const [],
+    required HomeDriverController homeDriverController,
   }) {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
@@ -195,6 +196,7 @@ class MapController extends GetxController {
           endLat: endLat,
           endLong: endLong,
           tripId: tripId,
+          homeDriverController: homeDriverController
         );
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
@@ -281,6 +283,7 @@ class MapController extends GetxController {
     String endLong = '',
     String tripId = '',
     required List<Student> students,
+    required HomeDriverController homeDriverController,
   }) async {
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
@@ -315,7 +318,8 @@ class MapController extends GetxController {
                   tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
                   // _isEndTrip = false;
-                  Get.offAll(const DriverLayoutScreen());
+                  homeDriverController.getTrips(context);
+                  Get.back();
                 },
               );
             },
@@ -386,8 +390,9 @@ class MapController extends GetxController {
                       students: students,
                       endLong: endLong,
                       endLat: endLat,
+                      homeDriverController: homeDriverController
                     );
-                    liveLocation();
+                    liveLocation(homeDriverController: homeDriverController);
                   });
                 });
               },
@@ -439,8 +444,9 @@ class MapController extends GetxController {
                       students: students,
                       endLong: endLong,
                       endLat: endLat,
+                      homeDriverController: homeDriverController
                     );
-                    liveLocation();
+                    liveLocation(homeDriverController: homeDriverController);
                   });
                 });
               },
