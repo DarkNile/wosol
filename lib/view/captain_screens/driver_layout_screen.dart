@@ -29,8 +29,9 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
   @override
   void initState() {
-    homeDriverController.getTrips(context);
-    driverLayoutController.notificationTimer =
+    // homeDriverController.getTrips(context);
+    if(context.mounted) {
+      driverLayoutController.notificationTimer =
         Timer.periodic(const Duration(minutes: 2), (timer) {
       driverLayoutController
           .getNotificationRequests(context: context)
@@ -49,6 +50,7 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
                     color: Colors.transparent,
                     child: NotificationRideRequest(
                       driverLayoutController: driverLayoutController,
+                      homeDriverController: homeDriverController,
                       mapController: mapController,
                       trip: i,
                     ),
@@ -60,6 +62,7 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
         }
       });
     });
+    }
     super.initState();
   }
 

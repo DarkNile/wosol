@@ -29,228 +29,234 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomHeader(
-            header: AppConstants.userRepository.userData.userFname,
-            svgIcon: "",
-            iconWidth: 0,
-            iconHeight: 0,
-            isHome: true,
-          ),
-          Obx(() {
-            return Expanded(
-              child: SingleChildScrollView(
-                physics: const PageScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "nextRide".tr,
-                      style: AppFonts.header,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    userHomeController.isGettingTrips.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : userHomeController.tripsList.isEmpty
-                            ? Center(
-                                child: Text(
-                                  "No Trips".tr,
-                                  style: AppFonts.medium,
-                                ),
-                              )
-                            : Column(
-                                children: [
-                                  ...List.generate(
-                                    userHomeController.tripsList.length <= 2
-                                        ? userHomeController.tripsList.length
-                                        : 2,
-                                    (index) => Column(
-                                      children: [
-                                        ...List.generate(
-                                          userHomeController.tripsList[index]
-                                                      .subData!.length <=
-                                                  2
-                                              ? userHomeController
-                                                  .tripsList[index]
-                                                  .subData!
-                                                  .length
-                                              : 2,
-                                          (indexSubData) => TripCardWidget(
-                                            isCancel: userHomeController
-                                                    .tripsList[index]
-                                                    .subData![indexSubData]
-                                                    .cancelRequest! ==
-                                                "0",
-                                            withCancel: true,
-                                            withBorder: false,
-                                            onCancel: () async {
-                                              onTapCancel(
-                                                  context: context,
-                                                  isTrip: true,
-                                                  isCancel: userHomeController
-                                                          .tripsList[index]
-                                                          .subData![
-                                                              indexSubData]
-                                                          .cancelRequest! ==
-                                                      "0",
-                                                  tripDate: userHomeController
-                                                      .tripsList[index]
-                                                      .subData![indexSubData]
-                                                      .tripDate!,
-                                                  userId: userHomeController
-                                                      .tripsList[index]
-                                                      .subData![indexSubData]
-                                                      .userId!);
-                                            },
-                                            fromLocation: userHomeController
-                                                .tripsList[index]
-                                                .subData![indexSubData]
-                                                .from!,
-                                            fromTitle: userHomeController
-                                                .tripsList[index]
-                                                .subData![indexSubData]
-                                                .from!,
-                                            toLocation: userHomeController
-                                                .tripsList[index]
-                                                .subData![indexSubData]
-                                                .universityName!,
-                                            toTitle: userHomeController
-                                                .tripsList[index]
-                                                .subData![indexSubData]
-                                                .universityName!,
-                                            date: userHomeController
-                                                .tripsList[index].date!,
-                                            fromTime: userHomeController
-                                                .tripsList[index].startTime!,
-                                            toTime: userHomeController
-                                                .tripsList[index].endTime!,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                    Padding(
-                      padding: AppConstants.edge(
-                        padding: const EdgeInsets.only(
-                          top: 24,
-                          bottom: 10,
-                        ),
-                      ),
-                      child: Text(
-                        "thisWeekTrips".tr,
+    return RefreshIndicator(
+      onRefresh: () async{
+        userHomeController.getTrips();
+        userHomeController.getCalendarData();
+      },
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomHeader(
+              header: AppConstants.userRepository.userData.userFname,
+              svgIcon: "",
+              iconWidth: 0,
+              iconHeight: 0,
+              isHome: true,
+            ),
+            Obx(() {
+              return Expanded(
+                child: SingleChildScrollView(
+                  physics: const PageScrollPhysics(),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "nextRide".tr,
                         style: AppFonts.header,
                       ),
-                    ),
-                    userHomeController.isGettingCalendar.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : (userHomeController.calendarData.isEmpty ||
-                                userHomeController
-                                    .calendarData[0].subData!.isEmpty)
-                            ? Center(
-                                child:
-                                    Text("No Trips".tr, style: AppFonts.medium),
-                              )
-                            : Column(
-                                children: [
-                                  ...List.generate(
-                                      userHomeController.calendarData.length <=
-                                              5
-                                          ? userHomeController
-                                              .calendarData.length
-                                          : 5,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      userHomeController.isGettingTrips.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : userHomeController.tripsList.isEmpty
+                              ? Center(
+                                  child: Text(
+                                    "No Trips".tr,
+                                    style: AppFonts.medium,
+                                  ),
+                                )
+                              : Column(
+                                  children: [
+                                    ...List.generate(
+                                      userHomeController.tripsList.length <= 2
+                                          ? userHomeController.tripsList.length
+                                          : 2,
                                       (index) => Column(
-                                            children: [
-                                              ...List.generate(
-                                                userHomeController
-                                                    .calendarData[index]
+                                        children: [
+                                          ...List.generate(
+                                            userHomeController.tripsList[index]
+                                                        .subData!.length <=
+                                                    2
+                                                ? userHomeController
+                                                    .tripsList[index]
                                                     .subData!
-                                                    .length,
-                                                (indexSubData) =>
-                                                    TripCardWidget(
-                                                  isCancel: userHomeController
-                                                          .calendarData[index]
-                                                          .subData![
-                                                              indexSubData]
-                                                          .cancelRequest! ==
-                                                      "0",
-                                                  fromLocation:
-                                                      userHomeController
-                                                          .calendarData[index]
-                                                          .subData![
-                                                              indexSubData]
-                                                          .from!,
-                                                  fromTitle: userHomeController
-                                                      .calendarData[index]
+                                                    .length
+                                                : 2,
+                                            (indexSubData) => TripCardWidget(
+                                              isCancel: userHomeController
+                                                      .tripsList[index]
                                                       .subData![indexSubData]
-                                                      .from!,
-                                                  toLocation: userHomeController
+                                                      .cancelRequest! ==
+                                                  "0",
+                                              withCancel: true,
+                                              withBorder: false,
+                                              onCancel: () async {
+                                                onTapCancel(
+                                                    context: context,
+                                                    isTrip: true,
+                                                    isCancel: userHomeController
+                                                            .tripsList[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .cancelRequest! ==
+                                                        "0",
+                                                    tripDate: userHomeController
+                                                        .tripsList[index]
+                                                        .subData![indexSubData]
+                                                        .tripDate!,
+                                                    userId: userHomeController
+                                                        .tripsList[index]
+                                                        .subData![indexSubData]
+                                                        .userId!);
+                                              },
+                                              fromLocation: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .from!,
+                                              fromTitle: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .from!,
+                                              toLocation: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .universityName!,
+                                              toTitle: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .universityName!,
+                                              date: userHomeController
+                                                  .tripsList[index].date!,
+                                              fromTime: userHomeController
+                                                  .tripsList[index].startTime!,
+                                              toTime: userHomeController
+                                                  .tripsList[index].endTime!,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                      Padding(
+                        padding: AppConstants.edge(
+                          padding: const EdgeInsets.only(
+                            top: 24,
+                            bottom: 10,
+                          ),
+                        ),
+                        child: Text(
+                          "thisWeekTrips".tr,
+                          style: AppFonts.header,
+                        ),
+                      ),
+                      userHomeController.isGettingCalendar.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : (userHomeController.calendarData.isEmpty ||
+                                  userHomeController
+                                      .calendarData[0].subData!.isEmpty)
+                              ? Center(
+                                  child:
+                                      Text("No Trips".tr, style: AppFonts.medium),
+                                )
+                              : Column(
+                                  children: [
+                                    ...List.generate(
+                                        userHomeController.calendarData.length <=
+                                                5
+                                            ? userHomeController
+                                                .calendarData.length
+                                            : 5,
+                                        (index) => Column(
+                                              children: [
+                                                ...List.generate(
+                                                  userHomeController
                                                       .calendarData[index]
-                                                      .subData![indexSubData]
-                                                      .universityName!,
-                                                  toTitle: userHomeController
-                                                      .calendarData[index]
-                                                      .subData![indexSubData]
-                                                      .universityName!,
-                                                  date: userHomeController
-                                                      .calendarData[index]
-                                                      .subData![indexSubData]
-                                                      .date!,
-                                                  fromTime: userHomeController
-                                                      .calendarData[index]
-                                                      .startTime!,
-                                                  toTime: userHomeController
-                                                      .calendarData[index]
-                                                      .endTime!,
-                                                  withCancel: true,
-                                                  onCancel: () async {
-                                                    onTapCancel(
-                                                      context: context,
-                                                      calendarDate:
-                                                          userHomeController
-                                                              .calendarData[
-                                                                  index]
-                                                              .subData![
-                                                                  indexSubData]
-                                                              .date!,
-                                                      userId: userHomeController
-                                                          .calendarData[index]
-                                                          .subData![
-                                                              indexSubData]
-                                                          .userId!,
-                                                      isTrip: false,
-                                                      isCancel: userHomeController
-                                                              .calendarData[
-                                                                  index]
-                                                              .subData![
-                                                                  indexSubData]
-                                                              .cancelRequest! ==
-                                                          "0",
-                                                    );
-                                                  },
+                                                      .subData!
+                                                      .length,
+                                                  (indexSubData) =>
+                                                      TripCardWidget(
+                                                    isCancel: userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .cancelRequest! ==
+                                                        "0",
+                                                    fromLocation:
+                                                        userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .from!,
+                                                    fromTitle: userHomeController
+                                                        .calendarData[index]
+                                                        .subData![indexSubData]
+                                                        .from!,
+                                                    toLocation: userHomeController
+                                                        .calendarData[index]
+                                                        .subData![indexSubData]
+                                                        .universityName!,
+                                                    toTitle: userHomeController
+                                                        .calendarData[index]
+                                                        .subData![indexSubData]
+                                                        .universityName!,
+                                                    date: userHomeController
+                                                        .calendarData[index]
+                                                        .subData![indexSubData]
+                                                        .date!,
+                                                    fromTime: userHomeController
+                                                        .calendarData[index]
+                                                        .startTime!,
+                                                    toTime: userHomeController
+                                                        .calendarData[index]
+                                                        .endTime!,
+                                                    withCancel: true,
+                                                    onCancel: () async {
+                                                      onTapCancel(
+                                                        context: context,
+                                                        calendarDate:
+                                                            userHomeController
+                                                                .calendarData[
+                                                                    index]
+                                                                .subData![
+                                                                    indexSubData]
+                                                                .date!,
+                                                        userId: userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .userId!,
+                                                        isTrip: false,
+                                                        isCancel: userHomeController
+                                                                .calendarData[
+                                                                    index]
+                                                                .subData![
+                                                                    indexSubData]
+                                                                .cancelRequest! ==
+                                                            "0",
+                                                      );
+                                                    },
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          )),
-                                ],
-                              ),
-                  ],
+                                              ],
+                                            )),
+                                  ],
+                                ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
-        ],
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

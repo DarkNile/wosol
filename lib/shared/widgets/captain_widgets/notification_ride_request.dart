@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../controllers/captain_controllers/driver_layout_controller.dart';
+import '../../../controllers/captain_controllers/home_driver_controller.dart';
 import '../../../controllers/shared_controllers/map_controller.dart';
 import '../../../models/trip_list_model.dart';
 import '../../../view/shared_screens/map_screen.dart';
@@ -14,11 +15,13 @@ class NotificationRideRequest extends StatelessWidget {
   const NotificationRideRequest({
     super.key,
     required this.driverLayoutController,
+    required this.homeDriverController,
     required this.mapController,
     required this.trip,
   });
 
   final DriverLayoutController driverLayoutController;
+  final HomeDriverController homeDriverController;
   final MapController mapController;
   final Trip trip;
 
@@ -89,6 +92,7 @@ class NotificationRideRequest extends StatelessWidget {
                         tripId: trip.tripId,
                         endLat: trip.toLat,
                         endLong: trip.toLong,
+                        homeDriverController: homeDriverController
                       );
                       mapController.liveLocation(
                         students: trip.students,
@@ -96,6 +100,7 @@ class NotificationRideRequest extends StatelessWidget {
                         endLat: trip.toLat,
                         endLong: trip.toLong,
                         vehicleId: trip.vehicleId,
+                        homeDriverController: homeDriverController
                       );
                     });
 

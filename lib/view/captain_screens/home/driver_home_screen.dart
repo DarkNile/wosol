@@ -31,178 +31,186 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   @override
   void initState() {
     super.initState();
+    if (context.mounted) {
+      homeDriverController.getTrips(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomHeader(
-            header: AppConstants.userRepository.driverData.firstName,
-            svgIcon: "",
-            iconWidth: 0,
-            iconHeight: 0,
-            isHome: true,
-          ),
-          Padding(
-            padding: AppConstants.edge(
-              padding: const EdgeInsets.only(
-                top: 14,
-                bottom: 10,
-                left: 16,
+      child: RefreshIndicator(
+        onRefresh: () async{
+            await homeDriverController.getTrips(context);
+        },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomHeader(
+                header: AppConstants.userRepository.driverData.firstName,
+                svgIcon: "",
+                iconWidth: 0,
+                iconHeight: 0,
+                isHome: true,
               ),
-            ),
-            child: Text(
-              "nextRide".tr,
-              style: AppFonts.header,
-            ),
-          ),
-          Obx(() {
-            return homeDriverController.isGettingTrips.value
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : homeDriverController.driverNextRide.isNotEmpty
-                    ? RideCard(
-                        onTap: () async {
-                          await onTapRideCard(
-                            isEmployee: homeDriverController
-                                        .driverNextRide[0].tripType ==
-                                    '2' ||
-                                homeDriverController
-                                        .driverNextRide[0].tripType ==
-                                    '3',
-                            context: context,
-                            vehicleId: homeDriverController
-                                .driverNextRide[0].vehicleId,
-                            tripId:
-                                homeDriverController.driverNextRide[0].tripId,
-                            fromLatLng: LatLng(
-                              double.parse(homeDriverController
-                                  .driverNextRide[0].fromLat),
-                              double.parse(homeDriverController
-                                  .driverNextRide[0].fromLong),
-                            ),
-                            toLatLng: LatLng(
-                              double.parse(
-                                  homeDriverController.driverNextRide[0].toLat),
-                              double.parse(homeDriverController
-                                  .driverNextRide[0].toLong),
-                            ),
-                            startDate: homeDriverController
-                                .driverNextRide[0].tripStart,
-                            fromPlace:
-                                homeDriverController.driverNextRide[0].from,
-                            toPlace: homeDriverController.driverNextRide[0].to,
-                            fromTime:
-                                homeDriverController.driverNextRide[0].tripTime,
-                            toTime: AppConstants.getTimeFromDateString(
-                              homeDriverController.driverNextRide[0].tripEnd,
-                            ),
-                            companyName: homeDriverController
-                                .driverNextRide[0].tripType ==
-                                '2' ||
-                                homeDriverController
-                                    .driverNextRide[0].tripType ==
-                                    '3'? homeDriverController.driverNextRide[0].companyName : null,
-                            companyTelephone: homeDriverController
-                                .driverNextRide[0].tripType ==
-                                '2' ||
-                                homeDriverController
-                                    .driverNextRide[0].tripType ==
-                                    '3'? homeDriverController.driverNextRide[0].companyTelephone : null,
-                            companyEmail: homeDriverController
-                                .driverNextRide[0].tripType ==
-                                '2' ||
-                                homeDriverController
-                                    .driverNextRide[0].tripType ==
-                                    '3'? homeDriverController.driverNextRide[0].companyEmail : null,
-                            students:
-                                homeDriverController.driverNextRide[0].students,
-                          );
-                        },
-                        title: homeDriverController.driverNextRide[0].from,
-                        imgPath: homeDriverController
-                                    .driverNextRide[0].tripType ==
-                                '1'
-                            ? "assets/images/home/upcoming_ride_icon.svg"
-                            : homeDriverController.driverNextRide[0].tripType ==
-                                    '2'
-                                ? "assets/icons/employee_trip.svg"
-                                : "assets/icons/tourism_trip.svg",
-                        time: homeDriverController.driverNextRide[0].tripTime,
-                        isNextRide: true,
+              Padding(
+                padding: AppConstants.edge(
+                  padding: const EdgeInsets.only(
+                    top: 14,
+                    bottom: 10,
+                    left: 16,
+                  ),
+                ),
+                child: Text(
+                  "nextRide".tr,
+                  style: AppFonts.header,
+                ),
+              ),
+              Obx(() {
+                return homeDriverController.isGettingTrips.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
                       )
-                    : const SizedBox();
-          }),
-          Padding(
-            padding: AppConstants.edge(
-              padding: const EdgeInsets.only(
-                top: 24,
-                bottom: 10,
-                left: 16,
+                    : homeDriverController.driverNextRide.isNotEmpty
+                        ? RideCard(
+                            onTap: () async {
+                              await onTapRideCard(
+                                isEmployee: homeDriverController
+                                            .driverNextRide[0].tripType ==
+                                        '2' ||
+                                    homeDriverController
+                                            .driverNextRide[0].tripType ==
+                                        '3',
+                                context: context,
+                                vehicleId: homeDriverController
+                                    .driverNextRide[0].vehicleId,
+                                tripId:
+                                    homeDriverController.driverNextRide[0].tripId,
+                                fromLatLng: LatLng(
+                                  double.parse(homeDriverController
+                                      .driverNextRide[0].fromLat),
+                                  double.parse(homeDriverController
+                                      .driverNextRide[0].fromLong),
+                                ),
+                                toLatLng: LatLng(
+                                  double.parse(
+                                      homeDriverController.driverNextRide[0].toLat),
+                                  double.parse(homeDriverController
+                                      .driverNextRide[0].toLong),
+                                ),
+                                startDate: homeDriverController
+                                    .driverNextRide[0].tripStart,
+                                fromPlace:
+                                    homeDriverController.driverNextRide[0].from,
+                                toPlace: homeDriverController.driverNextRide[0].to,
+                                fromTime:
+                                    homeDriverController.driverNextRide[0].tripTime,
+                                toTime: AppConstants.getTimeFromDateString(
+                                  homeDriverController.driverNextRide[0].tripEnd,
+                                ),
+                                companyName: homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '2' ||
+                                    homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                        '3'? homeDriverController.driverNextRide[0].companyName : null,
+                                companyTelephone: homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '2' ||
+                                    homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                        '3'? homeDriverController.driverNextRide[0].companyTelephone : null,
+                                companyEmail: homeDriverController
+                                    .driverNextRide[0].tripType ==
+                                    '2' ||
+                                    homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                        '3'? homeDriverController.driverNextRide[0].companyEmail : null,
+                                students:
+                                    homeDriverController.driverNextRide[0].students,
+                              );
+                            },
+                            title: homeDriverController.driverNextRide[0].from,
+                            imgPath: homeDriverController
+                                        .driverNextRide[0].tripType ==
+                                    '1'
+                                ? "assets/images/home/upcoming_ride_icon.svg"
+                                : homeDriverController.driverNextRide[0].tripType ==
+                                        '2'
+                                    ? "assets/icons/employee_trip.svg"
+                                    : "assets/icons/tourism_trip.svg",
+                            time: homeDriverController.driverNextRide[0].tripTime,
+                            isNextRide: true,
+                          )
+                        : const SizedBox();
+              }),
+              Padding(
+                padding: AppConstants.edge(
+                  padding: const EdgeInsets.only(
+                    top: 24,
+                    bottom: 10,
+                    left: 16,
+                  ),
+                ),
+                child: Text(
+                  "upcomingRides".tr,
+                  style: AppFonts.header,
+                ),
               ),
-            ),
-            child: Text(
-              "upcomingRides".tr,
-              style: AppFonts.header,
-            ),
-          ),
-          Expanded(
-            child: Obx(() {
-              return homeDriverController.isGettingTrips.value
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : homeDriverController.driverTrips.isNotEmpty
-                      ? ListView.separated(
-                          physics: const PageScrollPhysics(),
-                          padding: const EdgeInsets.only(bottom: 16),
-                          itemCount: homeDriverController.driverTrips.length,
-                          itemBuilder: (context, index) {
-                            return RideCard(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => UpcomingRideBottomSheet(
-                                    headTitle: 'upcomingRide'.tr,
-                                    formTime: homeDriverController
-                                        .driverTrips[index].tripTime,
-                                    toTime: homeDriverController
-                                        .driverTrips[index].tripTime,
-                                    formPlace: homeDriverController
-                                        .driverTrips[index].from,
-                                    toPlace: homeDriverController
-                                        .driverTrips[index].to,
-                                  ),
+              Expanded(
+                child: Obx(() {
+                  return homeDriverController.isGettingTrips.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : homeDriverController.driverTrips.isNotEmpty
+                          ? ListView.separated(
+                              physics: const PageScrollPhysics(),
+                              padding: const EdgeInsets.only(bottom: 16),
+                              itemCount: homeDriverController.driverTrips.length,
+                              itemBuilder: (context, index) {
+                                return RideCard(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) => UpcomingRideBottomSheet(
+                                        headTitle: 'upcomingRide'.tr,
+                                        formTime: homeDriverController
+                                            .driverTrips[index].tripTime,
+                                        toTime: homeDriverController
+                                            .driverTrips[index].tripTime,
+                                        formPlace: homeDriverController
+                                            .driverTrips[index].from,
+                                        toPlace: homeDriverController
+                                            .driverTrips[index].to,
+                                      ),
+                                    );
+                                  },
+                                  title:
+                                      homeDriverController.driverTrips[index].from,
+                                  imgPath: homeDriverController
+                                              .driverNextRide[0].tripType ==
+                                          '1'
+                                      ? "assets/images/home/upcoming_ride_icon.svg"
+                                      : homeDriverController
+                                                  .driverNextRide[0].tripType ==
+                                              '2'
+                                          ? "assets/icons/employee_trip.svg"
+                                          : "assets/icons/tourism_trip.svg",
+                                  time: homeDriverController
+                                      .driverTrips[index].tripTime,
                                 );
                               },
-                              title:
-                                  homeDriverController.driverTrips[index].from,
-                              imgPath: homeDriverController
-                                          .driverNextRide[0].tripType ==
-                                      '1'
-                                  ? "assets/images/home/upcoming_ride_icon.svg"
-                                  : homeDriverController
-                                              .driverNextRide[0].tripType ==
-                                          '2'
-                                      ? "assets/icons/employee_trip.svg"
-                                      : "assets/icons/tourism_trip.svg",
-                              time: homeDriverController
-                                  .driverTrips[index].tripTime,
-                            );
-                          },
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 12,
-                          ),
-                        )
-                      : const SizedBox();
-            }),
+                              separatorBuilder: (context, index) => const SizedBox(
+                                height: 12,
+                              ),
+                            )
+                          : const SizedBox();
+                }),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
     );
   }
 
@@ -272,7 +280,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   students[mapController.currentStudentIndex.value].pickupLong,
                 ),
               );
-              mapController.finalLatLng = toLatLng;
+              // mapController.finalLatLng = toLatLng;
             }
 
             // mapController.targetLatLng = toLatLng;
@@ -291,9 +299,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
                   LatLng(value.latitude, value.longitude);
-              if (mapController.finalLatLng != null) {
-                await mapController.getCurrentFinalPolylinePoints();
-              }
+              // if (mapController.finalLatLng != null) {
+              //   await mapController.getCurrentFinalPolylinePoints();
+              // }
               await mapController.getCurrentTargetPolylinePoints();
               mapController.cameraPosition = CameraPosition(
                 target: mapController.currentLatLng,
@@ -307,6 +315,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 tripId: tripId,
                 endLat: toLatLng.latitude.toString(),
                 endLong: toLatLng.longitude.toString(),
+                homeDriverController: homeDriverController
               );
               mapController.liveLocation(
                 students: students,
@@ -314,6 +323,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 endLat: toLatLng.latitude.toString(),
                 endLong: toLatLng.longitude.toString(),
                 vehicleId: vehicleId,
+                homeDriverController: homeDriverController
               );
             });
             setState(() {
@@ -321,12 +331,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             });
 
             Get.back();
-            mapController.nearbyStudent(
+            if(students.isNotEmpty) {
+              mapController.nearbyStudent(
               driverId: AppConstants.userRepository.driverData.driverId,
               tripId: tripId,
               userId:  students[mapController.currentStudentIndex.value].userId,
               tripUserId:  students[mapController.currentStudentIndex.value].tripUserId,
             );
+            }
             Get.to(() => MapScreen(
                   students: students,
                 ));
