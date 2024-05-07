@@ -9,7 +9,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://paltaksa.com/wosol/api/',
+        baseUrl: 'https://wosol.net/api/',
         receiveDataWhenStatusError: true,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
