@@ -37,7 +37,7 @@ class TripCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainerCardWithBorderWidget(
-      height: withCancel ? (295 + 10 + 7) : (236 + 24),
+      height: withCancel ? (295 + 10 + 7) : (236 + 24 + 10),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         child: Column(

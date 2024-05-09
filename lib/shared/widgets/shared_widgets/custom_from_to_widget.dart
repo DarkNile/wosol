@@ -14,16 +14,16 @@ class CustomFromToWidget extends StatelessWidget {
   final String? companyTelephone;
   final String? companyEmail;
 
-  const CustomFromToWidget(
-      {super.key,
-      required this.formTime,
-      required this.toTime,
-      required this.formPlace,
-      required this.toPlace,
-      this.companyName,
-      this.companyTelephone,
-      this.companyEmail,
-      });
+  const CustomFromToWidget({
+    super.key,
+    required this.formTime,
+    required this.toTime,
+    required this.formPlace,
+    required this.toPlace,
+    this.companyName,
+    this.companyTelephone,
+    this.companyEmail,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,43 +56,49 @@ class CustomFromToWidget extends StatelessWidget {
       ),
       _TimeWidget(time: toTime),
       const SizedBox(height: 10),
-      if(companyName != null)
-      const Divider(height: 1, color: AppColors.darkBlue100),
-      const SizedBox(height: 16),
+      if (companyName != null) ...[
+        const Divider(height: 1, color: AppColors.darkBlue100),
+        const SizedBox(height: 16),
+      ],
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if(companyName != null)
-          Row(
-            children: [
-              const Icon(Icons.home_work_outlined),
-              const SizedBox(width: 12,),
-              Text(companyName!,
-                  style: AppFonts.button.copyWith(color: AppColors.black800)),
-            ],
-          ),
-          if(companyTelephone != null)
+          if (companyName != null)
+            Row(
+              children: [
+                const Icon(Icons.home_work_outlined),
+                const SizedBox(
+                  width: 12,
+                ),
+                Text(companyName!,
+                    style: AppFonts.button.copyWith(color: AppColors.black800)),
+              ],
+            ),
+          if (companyTelephone != null)
             Row(
               children: [
                 const Icon(Icons.phone_outlined),
-                const SizedBox(width: 12,),
+                const SizedBox(
+                  width: 12,
+                ),
                 Text(companyTelephone!,
                     style: AppFonts.button.copyWith(color: AppColors.black800)),
               ],
             ),
         ],
       ),
-      if(companyEmail != null)
-      const SizedBox(height: 16),
-      if(companyEmail != null)
-      Row(
-        children: [
-          const Icon(Icons.email_outlined),
-          const SizedBox(width: 12,),
-          Text(companyEmail!,
-              style: AppFonts.button.copyWith(color: AppColors.black800)),
-        ],
-      ),
+      if (companyEmail != null) const SizedBox(height: 16),
+      if (companyEmail != null)
+        Row(
+          children: [
+            const Icon(Icons.email_outlined),
+            const SizedBox(
+              width: 12,
+            ),
+            Text(companyEmail!,
+                style: AppFonts.button.copyWith(color: AppColors.black800)),
+          ],
+        ),
     ]);
   }
 }

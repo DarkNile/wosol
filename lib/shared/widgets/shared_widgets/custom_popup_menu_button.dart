@@ -43,10 +43,10 @@ class _CustomPopupMenuButtonState extends State<CustomPopupMenuButton> {
                   )),
               PopupMenuItem(
                   height: 42,
-                  value: "canceled",
+                  value: "cancel",
                   child: MenuItemWidget(
                     svg: 'assets/icons/canceled.svg',
-                    text: "canceled".tr,
+                    text: "cancel".tr,
                   )),
             ]);
   }

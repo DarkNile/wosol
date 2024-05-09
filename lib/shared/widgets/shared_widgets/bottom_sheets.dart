@@ -19,7 +19,7 @@ import 'optional_message_field.dart';
 import 'or_widget.dart';
 
 String _firstButtonText = "Start Ride".tr;
-String _secondButtonText = "canceled".tr;
+String _secondButtonText = "cancel".tr;
 
 class BottomSheetBase extends StatelessWidget {
   const BottomSheetBase({
@@ -27,7 +27,7 @@ class BottomSheetBase extends StatelessWidget {
     required this.headTitle,
     required this.child,
     this.firstButtonText = 'Start Ride',
-    this.secondButtonText = 'Canceled',
+    this.secondButtonText = 'cancel',
     this.thirdButtonText = 'Turn Off this week only',
     this.firstButtonFunction,
     this.secondButtonFunction,
@@ -94,7 +94,7 @@ class BottomSheetBase extends StatelessWidget {
         padding: padding,
         child: Column(
           children: [
-            child,
+            Expanded(child: child),
             if (showButtons)
               SizedBox(
                 height: spaceBeforeButtons,
@@ -203,7 +203,11 @@ class RideStartBottomSheet extends StatelessWidget {
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},
       withCloseIcon: true,
-      height: fromUser ? 301 : companyName != null? 361 : null,
+      height: fromUser
+          ? 301
+          : companyName != null
+              ? 370
+              : null,
       firstButtonLoading: isLoading,
       child: fromUser
           ? UserTripDetailWidget(
@@ -250,7 +254,7 @@ class UpcomingRideBottomSheet extends StatelessWidget {
       buttonsContainIcon: false,
       showButtons: false,
       withCloseIcon: true,
-      height: 204,
+      height: 220,
       child: CustomFromToWidget(
         formTime: formTime,
         toTime: toTime,
@@ -872,7 +876,7 @@ class RandomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 24, bottom: 12),
+            padding: const EdgeInsets.only(top: 10, bottom: 12),
             child: Text(subTitle, style: AppFonts.header),
           ),
         ],
