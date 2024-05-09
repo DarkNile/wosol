@@ -33,6 +33,7 @@ class MapController extends GetxController {
   late LatLng targetLatLng;
   // LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
+  bool isToEnd = false;
 
   @override
   void onInit() {
@@ -178,6 +179,7 @@ class MapController extends GetxController {
     String tripId = '',
     String vehicleId = '',
     List<Student> students = const [],
+    required bool isEmployee,
     required HomeDriverController homeDriverController,
   }) {
     Position? previousPosition;
@@ -196,6 +198,7 @@ class MapController extends GetxController {
         update();
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
+            isEmployee: isEmployee,
             originLatLng: currentLatLng,
             destinationLatLng: targetLatLng,
             students: students,
@@ -287,6 +290,7 @@ class MapController extends GetxController {
     String endLat = '',
     String endLong = '',
     String tripId = '',
+    required bool isEmployee,
     required List<Student> students,
     required HomeDriverController homeDriverController,
   }) async {
@@ -301,11 +305,21 @@ class MapController extends GetxController {
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
-      print("current indexxx ${currentStudentIndex.value}");
-
+      print("current indexxx ${currentStudentIndex.value} -- des ${destinationLatLng}");
+      print("is Employeeee --${isToEnd} ${isEmployee && !isToEnd}");
       ///End trip bs
       if (isWithinDistance(distantTrack)) {
-        if ((students.isEmpty ||
+        print("-----------");
+        print("is Employeeee AFER Disntanceee --${isToEnd} ${isEmployee && !isToEnd}");
+        if (isEmployee && !isToEnd) {
+          print("Yesss $endLat $endLong");
+          isToEnd = true;
+          targetLatLng = LatLng(
+            double.parse(endLat),
+            double.parse(endLong),
+          );
+          update();
+        } else if (((students.isEmpty && isToEnd) ||
                 (students.isNotEmpty &&
                     currentStudentIndex.value == students.length)) &&
             _isEndTrip == false) {
@@ -388,6 +402,7 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
+                        isEmployee: isEmployee,
                         originLatLng: currentLatLng,
                         destinationLatLng: targetLatLng,
                         tripId: tripId,
@@ -395,7 +410,10 @@ class MapController extends GetxController {
                         endLong: endLong,
                         endLat: endLat,
                         homeDriverController: homeDriverController);
-                    liveLocation(homeDriverController: homeDriverController);
+                    liveLocation(
+                      homeDriverController: homeDriverController,
+                      isEmployee: isEmployee,
+                    );
                   });
                 });
               },
@@ -441,6 +459,7 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
+                        isEmployee: isEmployee,
                         originLatLng: currentLatLng,
                         destinationLatLng: targetLatLng,
                         tripId: tripId,
@@ -448,7 +467,10 @@ class MapController extends GetxController {
                         endLong: endLong,
                         endLat: endLat,
                         homeDriverController: homeDriverController);
-                    liveLocation(homeDriverController: homeDriverController);
+                    liveLocation(
+                      homeDriverController: homeDriverController,
+                      isEmployee: isEmployee,
+                    );
                   });
                 });
               },

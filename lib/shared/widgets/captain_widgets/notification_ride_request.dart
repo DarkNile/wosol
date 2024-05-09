@@ -92,7 +92,8 @@ class NotificationRideRequest extends StatelessWidget {
                         tripId: trip.tripId,
                         endLat: trip.toLat,
                         endLong: trip.toLong,
-                        homeDriverController: homeDriverController
+                        homeDriverController: homeDriverController,
+                        isEmployee: trip.students.isEmpty,
                       );
                       mapController.liveLocation(
                         students: trip.students,
@@ -100,7 +101,8 @@ class NotificationRideRequest extends StatelessWidget {
                         endLat: trip.toLat,
                         endLong: trip.toLong,
                         vehicleId: trip.vehicleId,
-                        homeDriverController: homeDriverController
+                        homeDriverController: homeDriverController,
+                        isEmployee: trip.students.isEmpty,
                       );
                     });
 
