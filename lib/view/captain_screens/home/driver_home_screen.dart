@@ -176,7 +176,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       )
                     : homeDriverController.driverTrips.isNotEmpty
                         ? ListView.separated(
-                            physics: const PageScrollPhysics(),
+                            physics: const AlwaysScrollableScrollPhysics(),
                             padding: const EdgeInsets.only(bottom: 16),
                             itemCount: homeDriverController.driverTrips.length,
                             itemBuilder: (context, index) {
