@@ -8,11 +8,11 @@ class MapRoutesScreen extends StatefulWidget {
   const MapRoutesScreen({
     super.key,
     required this.fromLatLng,
-    required this.toLatLng,
+    this.toLatLng,
   });
 
   final LatLng fromLatLng;
-  final LatLng toLatLng;
+  final LatLng? toLatLng;
 
   @override
   State<MapRoutesScreen> createState() => MapRoutesScreenState();
@@ -38,18 +38,20 @@ class MapRoutesScreenState extends State<MapRoutesScreen> {
                     markerId: const MarkerId("fromLat"),
                     position: widget.fromLatLng,
                   ),
+                  if(widget.toLatLng != null)
                   Marker(
                     markerId: const MarkerId("toLat"),
-                    position: widget.toLatLng,
+                    position: widget.toLatLng!,
                   ),
                 },
                 polygons: {
+                  if(widget.toLatLng != null)
                   Polygon(
                     strokeWidth: 4,
                     polygonId: const PolygonId("routes"),
                     points: [
                       widget.fromLatLng,
-                      widget.toLatLng,
+                      widget.toLatLng!,
                     ],
                   ),
                 },
@@ -61,7 +63,7 @@ class MapRoutesScreenState extends State<MapRoutesScreen> {
                   _controller.complete(controller);
                 },
               ),
-              BackButton(),
+              const BackButton(),
             ],
           ),
         ),
