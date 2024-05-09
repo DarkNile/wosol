@@ -192,5 +192,6 @@ const Map<String, String> ar = {
   "Update Time": "تحديث الوقت",
   "Start Time": "وقت البدء",
   "End Time": "وقت النهاية",
-  "requestUnderReview": "الطلب قيد المراجعة"
+  "requestUnderReview": "الطلب قيد المراجعة",
+  "goToMap": "اذهب إلى الخريطة",
 };

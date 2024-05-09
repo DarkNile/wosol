@@ -26,7 +26,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final MapController mapController = Get.put<MapController>(MapController());
-  HomeDriverController homeDriverController = Get.find<HomeDriverController>();
+  final HomeDriverController homeDriverController = Get.put(HomeDriverController());
   @override
   void initState() {
     super.initState();
