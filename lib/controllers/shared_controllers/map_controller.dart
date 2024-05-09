@@ -139,25 +139,31 @@ class MapController extends GetxController {
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-
-      if(LatLng(position.latitude, position.longitude) != currentLatLng){
+      if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         currentLatLng = LatLng(position.latitude, position.longitude);
         getCurrentTargetPolylinePoints();
-        userGetEstimatedTime(originLatLng: currentLatLng, destinationLatLng: targetLatLng);
+        userGetEstimatedTime(
+            originLatLng: currentLatLng, destinationLatLng: targetLatLng);
         cameraToPosition(currentLatLng);
         update();
       }
     });
   }
 
-  Future<void> userGetEstimatedTime({required LatLng originLatLng,required LatLng destinationLatLng,}) async {
+  Future<void> userGetEstimatedTime({
+    required LatLng originLatLng,
+    required LatLng destinationLatLng,
+  }) async {
     print("caaaaallll");
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
-    final response = await DioHelper.getData(url: url,);
+    final response = await DioHelper.getData(
+      url: url,
+    );
 
     if (response.statusCode == 200) {
-      distantTrack = response.data['rows'][0]['elements'][0]['distance']['text'];
+      distantTrack =
+          response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
       print("ressponseeee ${response.data}");
     } else {
@@ -190,14 +196,13 @@ class MapController extends GetxController {
         update();
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
-          originLatLng: currentLatLng,
-          destinationLatLng: targetLatLng,
-          students: students,
-          endLat: endLat,
-          endLong: endLong,
-          tripId: tripId,
-          homeDriverController: homeDriverController
-        );
+            originLatLng: currentLatLng,
+            destinationLatLng: targetLatLng,
+            students: students,
+            endLat: endLat,
+            endLong: endLong,
+            tripId: tripId,
+            homeDriverController: homeDriverController);
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
         }
@@ -335,9 +340,8 @@ class MapController extends GetxController {
               firstButtonFunction: () {
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
-                  // tripId: tripId,
-                  tripId: students[currentStudentIndex.value].tripUserId,
-                  userId: students[currentStudentIndex.value].userId,
+                  tripId: tripId,
+                  userId: students[currentStudentIndex.value].tripUserId,
                   isAttended: true,
                 )
                     .then((value) async {
@@ -384,14 +388,13 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
-                      originLatLng: currentLatLng,
-                      destinationLatLng: targetLatLng,
-                      tripId: tripId,
-                      students: students,
-                      endLong: endLong,
-                      endLat: endLat,
-                      homeDriverController: homeDriverController
-                    );
+                        originLatLng: currentLatLng,
+                        destinationLatLng: targetLatLng,
+                        tripId: tripId,
+                        students: students,
+                        endLong: endLong,
+                        endLat: endLat,
+                        homeDriverController: homeDriverController);
                     liveLocation(homeDriverController: homeDriverController);
                   });
                 });
@@ -400,7 +403,7 @@ class MapController extends GetxController {
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
                   tripId: tripId,
-                  userId: students[currentStudentIndex.value].userId,
+                  userId: students[currentStudentIndex.value].tripUserId,
                   isAttended: false,
                 )
                     .then((value) async {
@@ -438,14 +441,13 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
-                      originLatLng: currentLatLng,
-                      destinationLatLng: targetLatLng,
-                      tripId: tripId,
-                      students: students,
-                      endLong: endLong,
-                      endLat: endLat,
-                      homeDriverController: homeDriverController
-                    );
+                        originLatLng: currentLatLng,
+                        destinationLatLng: targetLatLng,
+                        tripId: tripId,
+                        students: students,
+                        endLong: endLong,
+                        endLat: endLat,
+                        homeDriverController: homeDriverController);
                     liveLocation(homeDriverController: homeDriverController);
                   });
                 });
