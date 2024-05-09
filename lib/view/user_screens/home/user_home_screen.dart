@@ -48,7 +48,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
             Obx(() {
               return Expanded(
                 child: SingleChildScrollView(
-                  physics: const PageScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
