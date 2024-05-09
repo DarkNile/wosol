@@ -58,6 +58,7 @@ class SubData {
   String? tripEnd;
   String? carModel;
   String? carSeats;
+  bool? tripIsRunning;
 
   SubData(
       {this.tripId,
@@ -86,7 +87,9 @@ class SubData {
       this.tripStart,
       this.tripEnd,
       this.carModel,
-      this.carSeats});
+      this.carSeats,
+        this.tripIsRunning,
+      });
 
   SubData.fromJson(Map<String, dynamic> json) {
     tripId = json['trip_id'];
@@ -116,6 +119,7 @@ class SubData {
     tripEnd = json['trip_end'];
     carModel = json['car_model'];
     carSeats = json['car_seats'];
+    tripIsRunning = json['is_trip_run']?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -147,6 +151,7 @@ class SubData {
     data['trip_end'] = tripEnd;
     data['car_model'] = carModel;
     data['car_seats'] = carSeats;
+    data['is_trip_run'] = tripIsRunning?? false;
     return data;
   }
 }

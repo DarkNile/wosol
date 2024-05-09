@@ -20,6 +20,7 @@ class TripCardWidget extends StatelessWidget {
   final bool withBorder;
   final void Function()? onCancel;
   final bool isCancel;
+  final bool tripIsRunning;
   const TripCardWidget(
       {super.key,
       this.withCancel = false,
@@ -32,7 +33,9 @@ class TripCardWidget extends StatelessWidget {
       required this.date,
       required this.fromTime,
       required this.toTime,
-      this.isCancel = true});
+      this.isCancel = true,
+      this.tripIsRunning = false,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -57,28 +60,18 @@ class TripCardWidget extends StatelessWidget {
               date: date,
             )),
             if (withCancel)
-              withBorder
-                  ? DefaultRowButton(
-                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
+              DefaultRowButton(
+                      text: tripIsRunning? "goToMap".tr : (isCancel ? "cancelTrip".tr : "unCancelTrip".tr),
                       height: 42,
-                      border: Border.all(
+                      border: withBorder? Border.all(
                         color: AppColors.error600,
-                      ),
-                      color: AppColors.white,
+                      ) : null,
+                      color: tripIsRunning? AppColors.logo : (withBorder?  AppColors.white : AppColors.error600),
                       function: onCancel,
-                      textColor: AppColors.error600,
+                      textColor: withBorder? AppColors.error600 : AppColors.white,
                       borderRadius: 8,
-                      containIcon: true,
-                      svgPic: 'assets/icons/close_red.svg',
-                    )
-                  : DefaultRowButton(
-                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
-                      height: 42,
-                      color: AppColors.error600,
-                      function: onCancel,
-                      borderRadius: 8,
-                      containIcon: true,
-                      svgPic: 'assets/icons/close_white.svg',
+                      containIcon: tripIsRunning? false : true,
+                      svgPic: withBorder? 'assets/icons/close_red.svg' : 'assets/icons/close_white.svg',
                     )
           ],
         ),

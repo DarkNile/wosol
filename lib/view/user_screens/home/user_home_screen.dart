@@ -2,12 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/trips_card_widget.dart';
+import '../../../controllers/shared_controllers/map_controller.dart';
 import '../../../controllers/user_controllers/user_home_controller.dart';
 import '../../../shared/constants/constants.dart';
+import '../../shared_screens/map_screen.dart';
 
 class UserHomeScreen extends StatefulWidget {
   const UserHomeScreen({super.key});
@@ -17,8 +20,8 @@ class UserHomeScreen extends StatefulWidget {
 }
 
 class _UserHomeScreenState extends State<UserHomeScreen> {
-  final UserHomeController userHomeController =
-      Get.put<UserHomeController>(UserHomeController());
+  final UserHomeController userHomeController = Get.find();
+  final MapController mapController = Get.find();
 
   @override
   void initState() {
@@ -94,10 +97,43 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                       .subData![indexSubData]
                                                       .cancelRequest! ==
                                                   "0",
+                                              tripIsRunning: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData].tripIsRunning!,
                                               withCancel: true,
                                               withBorder: false,
                                               onCancel: () async {
-                                                onTapCancel(
+                                                if(userHomeController
+                                                    .tripsList[index]
+                                                    .subData![indexSubData].tripIsRunning!){
+                                                  mapController.markerIcon =
+                                                  await mapController.getBytesFromAsset(
+                                                      'assets/images/where_to_vote.png', 70);
+                                                  mapController.currentIcon =
+                                                  await mapController.getBytesFromAsset(
+                                                      'assets/images/person_pin_circle.png', 70);
+                                                  mapController.targetLatLng = LatLng(double.parse(userHomeController.tripsList[index].subData![indexSubData].dropLat!), double.parse(userHomeController.tripsList[index].subData![indexSubData].dropLong!));
+                                                  await mapController
+                                                      .getCurrentLocation()
+                                                      .then((value) async {
+                                                    mapController.currentLatLng =
+                                                        LatLng(value.latitude, value.longitude);
+                                                    await mapController.getCurrentTargetPolylinePoints();
+                                                    mapController.cameraPosition = CameraPosition(
+                                                      target: mapController.currentLatLng,
+                                                      zoom: 14,
+                                                    );
+                                                    mapController.userGetEstimatedTime(
+                                                      originLatLng: mapController.currentLatLng,
+                                                      destinationLatLng: mapController.targetLatLng,
+                                                    );
+                                                    mapController.userLiveLocation();
+                                                  });
+                                                  Get.to(() => const MapScreen(
+                                                    students: [],
+                                                  ));
+                                                }else {
+                                                  onTapCancel(
                                                     context: context,
                                                     isTrip: true,
                                                     isCancel: userHomeController
@@ -114,6 +150,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                         .tripsList[index]
                                                         .subData![indexSubData]
                                                         .userId!);
+                                                }
                                               },
                                               fromLocation: userHomeController
                                                   .tripsList[index]

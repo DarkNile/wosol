@@ -195,5 +195,6 @@ const Map<String, String> en = {
   "Update Time": "Update Time",
   "Start Time": "Start Time",
   "End Time": "End Time",
-  "requestUnderReview": "Request Under Review"
+  "requestUnderReview": "Request Under Review",
+  "goToMap": "Go to map",
 };
