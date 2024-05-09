@@ -11,6 +11,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/shared/services/network/repositories/map_repository.dart';
+import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 
 import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
@@ -180,7 +181,6 @@ class MapController extends GetxController {
     String vehicleId = '',
     List<Student> students = const [],
     required bool isEmployee,
-    required HomeDriverController homeDriverController,
   }) {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
@@ -205,7 +205,7 @@ class MapController extends GetxController {
             endLat: endLat,
             endLong: endLong,
             tripId: tripId,
-            homeDriverController: homeDriverController);
+            );
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
         }
@@ -292,7 +292,6 @@ class MapController extends GetxController {
     String tripId = '',
     required bool isEmployee,
     required List<Student> students,
-    required HomeDriverController homeDriverController,
   }) async {
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
@@ -332,8 +331,8 @@ class MapController extends GetxController {
                   tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
                   // _isEndTrip = false;
-                  homeDriverController.getTrips(context);
-                  Get.back();
+                  // homeDriverController.getTrips(context);
+                  Get.offAll(()=> const DriverLayoutScreen());
                 },
               );
             },
@@ -404,9 +403,8 @@ class MapController extends GetxController {
                         students: students,
                         endLong: endLong,
                         endLat: endLat,
-                        homeDriverController: homeDriverController);
+                        );
                     liveLocation(
-                      homeDriverController: homeDriverController,
                       isEmployee: isEmployee,
                     );
                   });
@@ -461,9 +459,8 @@ class MapController extends GetxController {
                         students: students,
                         endLong: endLong,
                         endLat: endLat,
-                        homeDriverController: homeDriverController);
+                    );
                     liveLocation(
-                      homeDriverController: homeDriverController,
                       isEmployee: isEmployee,
                     );
                   });
