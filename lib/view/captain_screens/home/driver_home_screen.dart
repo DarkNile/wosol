@@ -329,7 +329,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   isEmployee: isEmployee,
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
-                  homeDriverController: homeDriverController);
+                  );
               mapController.liveLocation(
                   students: students,
                   tripId: tripId,
@@ -337,7 +337,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
                   vehicleId: vehicleId,
-                  homeDriverController: homeDriverController);
+                  );
             });
             setState(() {
               isStartingTrip = false;

@@ -15,13 +15,11 @@ class NotificationRideRequest extends StatelessWidget {
   const NotificationRideRequest({
     super.key,
     required this.driverLayoutController,
-    required this.homeDriverController,
     required this.mapController,
     required this.trip,
   });
 
   final DriverLayoutController driverLayoutController;
-  final HomeDriverController homeDriverController;
   final MapController mapController;
   final Trip trip;
 
@@ -92,7 +90,6 @@ class NotificationRideRequest extends StatelessWidget {
                         tripId: trip.tripId,
                         endLat: trip.toLat,
                         endLong: trip.toLong,
-                        homeDriverController: homeDriverController,
                         isEmployee: trip.students.isEmpty,
                       );
                       mapController.liveLocation(
@@ -101,7 +98,6 @@ class NotificationRideRequest extends StatelessWidget {
                         endLat: trip.toLat,
                         endLong: trip.toLong,
                         vehicleId: trip.vehicleId,
-                        homeDriverController: homeDriverController,
                         isEmployee: trip.students.isEmpty,
                       );
                     });

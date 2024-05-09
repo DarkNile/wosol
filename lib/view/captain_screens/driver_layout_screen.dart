@@ -50,7 +50,6 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
                     color: Colors.transparent,
                     child: NotificationRideRequest(
                       driverLayoutController: driverLayoutController,
-                      homeDriverController: homeDriverController,
                       mapController: mapController,
                       trip: i,
                     ),
