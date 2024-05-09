@@ -144,7 +144,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                           imgPath:
                               homeDriverController.driverNextRide[0].tripType ==
                                       '1'
-                                  ? "assets/images/home/upcoming_ride_icon.svg"
+                                  ? "assets/images/home/education_trip_icon.svg"
                                   : homeDriverController
                                               .driverNextRide[0].tripType ==
                                           '2'
@@ -203,7 +203,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                 imgPath: homeDriverController
                                             .driverTrips[index].tripType ==
                                         '1'
-                                    ? "assets/images/home/upcoming_ride_icon.svg"
+                                    ? "assets/images/home/education_trip_icon.svg"
                                     : homeDriverController
                                                 .driverTrips[index].tripType ==
                                             '2'
