@@ -170,7 +170,7 @@ class UserHomeController extends GetxController {
                     isCancel: !(cancel == "0"),
                     headTitle: !(cancel == "0")
                         ? 'Ride Canceled'.tr
-                        : 'Ride UnCanceled',
+                        : 'Ride UnCanceled'.tr,
                     isReportFirstStep: true,
                     imagePath: 'assets/images/smile.png',
                     headerMsg: !(cancel == "0")

@@ -82,7 +82,7 @@ class CustomBottomSheetWidget extends StatelessWidget {
 
             if (!draggable)
               const Divider(height: 1, color: AppColors.darkBlue100),
-            child
+            Expanded(child: child)
           ]),
     );
   }

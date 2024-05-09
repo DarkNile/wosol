@@ -20,7 +20,7 @@ class MenuItemWidget extends StatelessWidget {
       height: 42,
       padding: const EdgeInsets.symmetric(vertical: 0),
       decoration: BoxDecoration(
-          border: text == "canceled".tr || !withBorder
+          border: text == "cancel".tr || !withBorder
               ? null
               : const Border(
                   bottom: BorderSide(color: AppColors.popUpBottomSideColor))),
