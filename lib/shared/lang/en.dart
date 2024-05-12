@@ -196,5 +196,8 @@ const Map<String, String> en = {
   "Start Time": "Start Time",
   "End Time": "End Time",
   "requestUnderReview": "Request Under Review",
-  "goToMap": "Go to map",
+  "goToMap": "View map",
+  "startPoint" : "Start Point",
+  "startPointMsg" : "You have arrived at the starting point be ready to receive passengers",
+  "startPointSBMsg" : "Be ready to receive passengers",
 };

@@ -162,6 +162,7 @@ class RideStartBottomSheet extends StatelessWidget {
   final String? toTime;
   final String? formPlace;
   final String? toPlace;
+  final String? firstButtonText;
   final String? secondButtonText;
   final String? companyName;
   final String? companyTelephone;
@@ -174,6 +175,7 @@ class RideStartBottomSheet extends StatelessWidget {
   const RideStartBottomSheet({
     super.key,
     required this.firstButtonFunction,
+    this.firstButtonText,
     this.secondButtonFunction,
     required this.headTitle,
     this.formTime,
@@ -198,7 +200,7 @@ class RideStartBottomSheet extends StatelessWidget {
       buttonsContainIcon: fromUser,
       showButtons: true,
       containTwoButtons: fromUser,
-      firstButtonText: fromUser ? "I’m Ready".tr : "Start Ride".tr,
+      firstButtonText: firstButtonText?? (fromUser ? "I’m Ready".tr : "Start Ride".tr),
       secondButtonText: secondButtonText ?? 'Cancel Ride'.tr,
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},

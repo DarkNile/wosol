@@ -75,6 +75,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       ? RideCard(
                           onTap: () async {
                             await onTapRideCard(
+                              tripIsRunning: homeDriverController
+                                  .driverNextRide[0].tripIsRunning,
+                              isReachStart: (homeDriverController
+                                  .driverNextRide[0].tripType ==
+                                  '2' ||
+                                  homeDriverController
+                                      .driverNextRide[0].tripType ==
+                                      '3')? homeDriverController
+                                  .driverNextRide[0].isReachStart : false,
                               isEmployee: homeDriverController
                                           .driverNextRide[0].tripType ==
                                       '2' ||
@@ -238,6 +247,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required LatLng fromLatLng,
     required LatLng toLatLng,
     required String vehicleId,
+    required bool tripIsRunning,
+    required bool isReachStart,
     required String? companyName,
     required String? companyTelephone,
     required String? companyEmail,
@@ -271,7 +282,90 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           //   state: 3,
           // );
 
-          homeDriverController
+          if(isReachStart){
+            setState(() {
+              mapController.isToEnd = true;
+            });
+          }
+
+          if(tripIsRunning){
+            {
+              setState(() {
+                isStartingTrip = true;
+              });
+
+              if (isEmployee) {
+                mapController.targetLatLng = fromLatLng;
+              } else {
+                mapController.targetLatLng = LatLng(
+                  double.parse(
+                    students[mapController.currentStudentIndex.value].pickupLat,
+                  ),
+                  double.parse(
+                    students[mapController.currentStudentIndex.value].pickupLong,
+                  ),
+                );
+                // mapController.finalLatLng = toLatLng;
+              }
+
+              // mapController.targetLatLng = toLatLng;
+
+              mapController.markerIcon = await mapController.getBytesFromAsset(
+                  'assets/images/location_on.png', 50);
+              mapController.currentIcon = await mapController.getBytesFromAsset(
+                  'assets/images/navigation_arrow.png', 50);
+
+              await mapController.getCurrentLocation().then((value) async {
+                mapController.currentLatLng =
+                    LatLng(value.latitude, value.longitude);
+                // if (mapController.finalLatLng != null) {
+                //   await mapController.getCurrentFinalPolylinePoints();
+                // }
+                await mapController.getCurrentTargetPolylinePoints();
+                mapController.cameraPosition = CameraPosition(
+                  target: mapController.currentLatLng,
+                  bearing: mapController.bearing,
+                  zoom: 19,
+                );
+                mapController.getEstimatedTime(
+                  originLatLng: mapController.currentLatLng,
+                  destinationLatLng: mapController.targetLatLng,
+                  students: students,
+                  tripId: tripId,
+                  isEmployee: isEmployee,
+                  endLat: toLatLng.latitude.toString(),
+                  endLong: toLatLng.longitude.toString(),
+                );
+                mapController.liveLocation(
+                  students: students,
+                  tripId: tripId,
+                  isEmployee: isEmployee,
+                  endLat: toLatLng.latitude.toString(),
+                  endLong: toLatLng.longitude.toString(),
+                  vehicleId: vehicleId,
+                );
+              });
+              setState(() {
+                isStartingTrip = false;
+              });
+
+              Get.back();
+              if (students.isNotEmpty) {
+                mapController.nearbyStudent(
+                  driverId: AppConstants.userRepository.driverData.driverId,
+                  tripId: tripId,
+                  userId:
+                  students[mapController.currentStudentIndex.value].userId,
+                  tripUserId: students[mapController.currentStudentIndex.value]
+                      .tripUserId,
+                );
+              }
+              Get.to(() => MapScreen(
+                students: students,
+              ));
+            }
+          }else {
+            homeDriverController
               .tripStatesAPI(
             context: context,
             tripId: tripId,
@@ -297,17 +391,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             }
 
             // mapController.targetLatLng = toLatLng;
-            if (AppConstants.isCaptain) {
+
               mapController.markerIcon = await mapController.getBytesFromAsset(
                   'assets/images/location_on.png', 50);
               mapController.currentIcon = await mapController.getBytesFromAsset(
                   'assets/images/navigation_arrow.png', 50);
-            } else {
-              mapController.markerIcon = await mapController.getBytesFromAsset(
-                  'assets/images/where_to_vote.png', 50);
-              mapController.currentIcon = await mapController.getBytesFromAsset(
-                  'assets/images/person_pin_circle.png', 50);
-            }
 
             await mapController.getCurrentLocation().then((value) async {
               mapController.currentLatLng =
@@ -426,7 +514,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             //           },
             //         ));
           });
+          }
         },
+        firstButtonText: tripIsRunning? "goToMap".tr : null,
         headTitle:
             '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
         formTime: fromTime,
@@ -441,12 +531,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     );
   }
 
-  Widget _rideAndTripEndBottomSheet() {
-    return RideAndTripEndBottomSheet(
-      headTitle: 'rideEnd'.tr,
-      imagePath: 'assets/images/celebrate.png',
-      headerMsg: '${"congrats".tr} ',
-      subHeaderMsg: 'rideCompletedSuccessfully'.tr,
-    );
-  }
+  // Widget _rideAndTripEndBottomSheet() {
+  //   return RideAndTripEndBottomSheet(
+  //     headTitle: 'rideEnd'.tr,
+  //     imagePath: 'assets/images/celebrate.png',
+  //     headerMsg: '${"congrats".tr} ',
+  //     subHeaderMsg: 'rideCompletedSuccessfully'.tr,
+  //   );
+  // }
 }

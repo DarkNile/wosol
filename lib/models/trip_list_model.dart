@@ -28,6 +28,8 @@ class Trip {
     required this.companyName,
     required this.companyTelephone,
     required this.companyEmail,
+    required this.tripIsRunning,
+    required this.isReachStart,
     required this.students,
   });
 
@@ -52,6 +54,8 @@ class Trip {
   String companyName;
   String companyTelephone;
   String companyEmail;
+  bool tripIsRunning;
+  bool isReachStart;
   List<Student> students;
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
@@ -76,6 +80,8 @@ class Trip {
         companyName: json["company_name"] ?? "",
         companyTelephone: json["company_telephone"] ?? "",
         companyEmail: json["company_email"] ?? "",
+        tripIsRunning: json['is_trip_run']?? false,
+        isReachStart: json['is_reach_start']?? false,
         students: List<Student>.from(
             json["students"].map((x) => Student.fromJson(x))),
       );
@@ -102,6 +108,8 @@ class Trip {
         "company_name": companyName,
         "company_telephone": companyTelephone,
         "company_email": companyEmail,
+        "is_trip_run": tripIsRunning,
+        "is_reach_start": isReachStart,
         "students": List<dynamic>.from(students.map((x) => x.toJson())),
       };
 }
