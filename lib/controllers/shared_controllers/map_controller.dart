@@ -17,7 +17,7 @@ import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
-import '../captain_controllers/home_driver_controller.dart';
+import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
@@ -279,6 +279,35 @@ class MapController extends GetxController {
     }
   }
 
+  Future<void> reachStartPointApi({
+    required String tripId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/trips/trip_reach_start',
+        data: {
+          "trip_id" : tripId,
+        },
+      );
+      if (response.statusCode == 200) {
+        defaultSuccessSnackBar(
+          context: Get.context!,
+          message: "startPointSBMsg".tr,
+        );
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
+    }
+  }
+
   String timeTrack = '';
   String distantTrack = '';
   bool _isEndTrip = false;
@@ -308,6 +337,18 @@ class MapController extends GetxController {
       if (isWithinDistance(distantTrack)) {
         if (isEmployee && !isToEnd) {
           isToEnd = true;
+          showModalBottomSheet(
+              context: Get.context!,
+              builder: (context){
+                return RandomSheet(
+                  headTitle: "startPoint".tr,
+                  subTitle: "startPointMsg".tr,
+                  function: (){
+                    reachStartPointApi(tripId: tripId,);
+                    Get.back();
+                  },
+                );
+              });
           targetLatLng = LatLng(
             double.parse(endLat),
             double.parse(endLong),
@@ -330,6 +371,7 @@ class MapController extends GetxController {
                 function: () {
                   tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
+                  isToEnd = false;
                   // _isEndTrip = false;
                   // homeDriverController.getTrips(context);
                   Get.offAll(()=> const DriverLayoutScreen());

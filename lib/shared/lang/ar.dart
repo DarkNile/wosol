@@ -193,5 +193,8 @@ const Map<String, String> ar = {
   "Start Time": "وقت البدء",
   "End Time": "وقت النهاية",
   "requestUnderReview": "الطلب قيد المراجعة",
-  "goToMap": "اذهب إلى الخريطة",
+  "goToMap": "اعرض الخريطة",
+  "startPoint" : "نقطة البداية",
+  "startPointMsg" : "لقد وصلت إلى نقطة البداية كن جاهزًا لاستقبال الركاب",
+  "startPointSBMsg" : "كن جاهزًا لاستقبال الركاب",
 };
