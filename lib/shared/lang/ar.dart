@@ -194,7 +194,9 @@ const Map<String, String> ar = {
   "End Time": "وقت النهاية",
   "requestUnderReview": "الطلب قيد المراجعة",
   "goToMap": "اعرض الخريطة",
-  "startPoint" : "نقطة البداية",
-  "startPointMsg" : "لقد وصلت إلى نقطة البداية كن جاهزًا لاستقبال الركاب",
-  "startPointSBMsg" : "كن جاهزًا لاستقبال الركاب",
+  "startPoint": "نقطة البداية",
+  "startPointMsg": "لقد وصلت إلى نقطة البداية كن جاهزًا لاستقبال الركاب",
+  "startPointSBMsg": "كن جاهزًا لاستقبال الركاب",
+  "myCalendar": "تقويمي",
+  "requestChangeDays": "طلب تغيير الايام",
 };

@@ -38,22 +38,22 @@ class MapRoutesScreenState extends State<MapRoutesScreen> {
                     markerId: const MarkerId("fromLat"),
                     position: widget.fromLatLng,
                   ),
-                  if(widget.toLatLng != null)
-                  Marker(
-                    markerId: const MarkerId("toLat"),
-                    position: widget.toLatLng!,
-                  ),
+                  if (widget.toLatLng != null)
+                    Marker(
+                      markerId: const MarkerId("toLat"),
+                      position: widget.toLatLng!,
+                    ),
                 },
                 polygons: {
-                  if(widget.toLatLng != null)
-                  Polygon(
-                    strokeWidth: 4,
-                    polygonId: const PolygonId("routes"),
-                    points: [
-                      widget.fromLatLng,
-                      widget.toLatLng!,
-                    ],
-                  ),
+                  if (widget.toLatLng != null)
+                    Polygon(
+                      strokeWidth: 4,
+                      polygonId: const PolygonId("routes"),
+                      points: [
+                        widget.fromLatLng,
+                        widget.toLatLng!,
+                      ],
+                    ),
                 },
                 initialCameraPosition: CameraPosition(
                   target: widget.fromLatLng,
