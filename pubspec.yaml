@@ -2,8 +2,8 @@ name: wosol
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.13.0+17
-# version: 1.11.0+1
+version: 1.16.0+20
+# version: 1.14.0+1
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
