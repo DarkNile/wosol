@@ -166,6 +166,8 @@ class UserHomeController extends GetxController {
           Get.back();
           showModalBottomSheet(
               context: context,
+              isDismissible: false,
+              enableDrag: false,
               builder: (context) => RideCanceledAndReportedBottomSheet(
                     isCancel: !(cancel == "0"),
                     headTitle: !(cancel == "0")
@@ -269,6 +271,8 @@ class UserHomeController extends GetxController {
           getCalendarData();
           showModalBottomSheet(
               context: context,
+              isDismissible: false,
+              enableDrag: false,
               builder: (context) => RideCanceledAndReportedBottomSheet(
                     headTitle: 'Ride Canceled'.tr,
                     isReportFirstStep: true,

@@ -71,11 +71,15 @@ class UserTripDetailsScreen extends StatelessWidget {
   onRateTap(BuildContext context) async {
     await showModalBottomSheet(
         context: context,
+        isDismissible: false,
+        enableDrag: false,
         builder: (context) => RateBottomSheet(
             function: () {
               Get.back();
               showModalBottomSheet(
                   context: context,
+                  isDismissible: false,
+                  enableDrag: false,
                   builder: (context) => RideCanceledAndReportedBottomSheet(
                       headTitle: 'Ride Reported'.tr,
                       imagePath: 'assets/images/star.png',
@@ -93,12 +97,16 @@ class UserTripDetailsScreen extends StatelessWidget {
   onReport(BuildContext context) async {
     await showModalBottomSheet(
         context: context,
+        isDismissible: false,
+        enableDrag: false,
         isScrollControlled: true,
         builder: (context) => CancellationReasonAndReportRideBottomSheet(
               function: () {
                 Get.back();
                 showModalBottomSheet(
                     context: context,
+                    isDismissible: false,
+                    enableDrag: false,
                     builder: (context) => RideCanceledAndReportedBottomSheet(
                         headTitle: 'Ride Reported'.tr,
                         imagePath: 'assets/images/sad.png',

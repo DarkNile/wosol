@@ -193,6 +193,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                 onTap: () {
                                   showModalBottomSheet(
                                     context: context,
+                                    isDismissible: false,
+                                    enableDrag: false,
                                     builder: (context) =>
                                         UpcomingRideBottomSheet(
                                       headTitle: 'upcomingRide'.tr,
@@ -257,6 +259,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   }) async {
     showModalBottomSheet(
       context: context,
+      isDismissible: false,
+      enableDrag: false,
       builder: (context) => RideStartBottomSheet(
         firstButtonFunction: () async {
           /// todo Move this to Trip Confirm
@@ -447,6 +451,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 ));
             // showModalBottomSheet(
             //     context: context,
+            // isDismissible: false,
+              // enableDrag: false,
             //     builder: (context) => ConfirmPickupBottomSheet(
             //           title: 'confirmPickup'.tr,
             //           subTitle: 'canceled'.tr,
@@ -454,11 +460,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             //             Get.back();
             //             showModalBottomSheet(
             //                 context: context,
+            // isDismissible: false,
+            //   enableDrag: false,
             //                 builder: (context) => SelectUsersToPickupBottomSheet(
             //                       function: () {
             //                         Get.back();
             //                         showModalBottomSheet(
             //                             context: context,
+            // isDismissible: false,
+            //   enableDrag: false,
             //                             builder: (context) =>
             //                                 _rideAndTripEndBottomSheet());
             //                       },
@@ -474,6 +484,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             //             Get.back();
             //             showModalBottomSheet(
             //                 context: context,
+            // isDismissible: false,
+            //   enableDrag: false,
             //                 isScrollControlled: true,
             //                 builder: (context) =>
             //                     CancellationReasonAndReportRideBottomSheet(
@@ -481,12 +493,16 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             //                         Get.back();
             //                         showModalBottomSheet(
             //                             context: context,
+            // isDismissible: false,
+            //   enableDrag: false,
             //                             builder: (context) =>
             //                                 (SelectUsersToPickupBottomSheet(
             //                                   function: () {
             //                                     Get.back();
             //                                     showModalBottomSheet(
             //                                         context: context,
+            // isDismissible: false,
+              // enableDrag: false,
             //                                         builder: (context) =>
             //                                             _rideAndTripEndBottomSheet());
             //                                   },

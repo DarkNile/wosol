@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:wosol/controllers/user_controllers/user_layout_controller.dart';
-import 'package:wosol/models/trip_model.dart';
 import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
 import 'package:wosol/view/shared_screens/notification_screen.dart';
 import 'package:wosol/view/user_screens/home/user_home_screen.dart';
@@ -46,6 +45,8 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                   if(userLayoutController.studentNotifications!.type == 'trip_start' || userLayoutController.studentNotifications!.type == 'trip_attendace'){
                     showModalBottomSheet(
                         context: context,
+                        isDismissible: false,
+                        enableDrag: false,
                         builder: (context){
                       return RandomSheet(
                         headTitle: userLayoutController.studentNotifications!.title,
@@ -58,6 +59,8 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                   }else if(userLayoutController.studentNotifications!.type == 'trip_near'){
                     showModalBottomSheet(
                       context: context,
+                      isDismissible: false,
+                      enableDrag: false,
                       builder: (context) {
                         return RideStartBottomSheet(
                           firstButtonFunction: () async{
@@ -126,6 +129,8 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                   }else if(userLayoutController.studentNotifications!.type == 'trip_end'){
                     showModalBottomSheet(
                       context: context,
+                      isDismissible: false,
+                      enableDrag: false,
                       builder: (context) {
                         return RideAndTripEndBottomSheet(
                           headTitle: 'rideEnd'.tr,
@@ -157,6 +162,8 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
   }) async {
     showModalBottomSheet(
         context: context,
+        isDismissible: false,
+        enableDrag: false,
         builder: (context) => Obx(
               () => RideCanceledAndReportedBottomSheet(
             isCancel: isCancel,
