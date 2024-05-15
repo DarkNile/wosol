@@ -136,7 +136,7 @@ class MapController extends GetxController {
   void userLiveLocation() {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 5,
+      distanceFilter: 20,
     );
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
@@ -185,7 +185,7 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 5,
+      distanceFilter: 20,
     );
 
     Geolocator.getPositionStream(
@@ -375,7 +375,7 @@ class MapController extends GetxController {
                 function: () {
                   tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
-                  isToEnd = false;
+                  // isToEnd = false;
                   // _isEndTrip = false;
                   // homeDriverController.getTrips(context);
                   Get.offAll(()=> const DriverLayoutScreen());
