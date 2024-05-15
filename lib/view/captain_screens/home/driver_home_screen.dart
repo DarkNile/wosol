@@ -290,6 +290,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             setState(() {
               mapController.isToEnd = true;
             });
+          }else{
+            setState(() {
+              mapController.isToEnd = false;
+            });
           }
 
           if(tripIsRunning){
