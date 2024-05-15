@@ -339,6 +339,8 @@ class MapController extends GetxController {
           isToEnd = true;
           showModalBottomSheet(
               context: Get.context!,
+              isDismissible: false,
+              enableDrag: false,
               builder: (context){
                 return RandomSheet(
                   headTitle: "startPoint".tr,
@@ -361,6 +363,8 @@ class MapController extends GetxController {
           _isEndTrip = true;
           showModalBottomSheet(
             context: Get.context!,
+            isDismissible: false,
+            enableDrag: false,
             builder: (context) {
               return RideAndTripEndBottomSheet(
                 headTitle: 'rideEnd'.tr,
@@ -383,6 +387,8 @@ class MapController extends GetxController {
           _isConfirmUser = true;
           showModalBottomSheet(
             context: Get.context!,
+            isDismissible: false,
+            enableDrag: false,
             backgroundColor: Colors.black.withOpacity(0.3),
             builder: (context) => ConfirmPickupBottomSheet(
               title: students[currentStudentIndex.value].userFname,

@@ -145,6 +145,8 @@ class CustomUserManageCardWidget extends StatelessWidget {
   }) async {
     showModalBottomSheet(
         context: context,
+        isDismissible: false,
+        enableDrag: false,
         isScrollControlled: true,
         builder: (context) => Obx(
               () => RideCanceledAndReportedBottomSheet(

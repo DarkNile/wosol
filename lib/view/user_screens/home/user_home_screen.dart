@@ -308,6 +308,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   }) async {
     showModalBottomSheet(
         context: context,
+        isDismissible: false,
+        enableDrag: false,
         builder: (context) => Obx(
               () => RideCanceledAndReportedBottomSheet(
                 isCancel: isCancel,
