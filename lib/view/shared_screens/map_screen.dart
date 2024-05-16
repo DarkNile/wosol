@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -5,20 +6,24 @@ import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
+import 'package:wosol/controllers/user_controllers/user_home_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
-import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 
 import '../../controllers/captain_controllers/home_driver_controller.dart';
 import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/constants/style/colors.dart';
+import '../../shared/widgets/shared_widgets/buttons.dart';
+import '../../shared/widgets/shared_widgets/custom_bottom_sheet_widget.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
     super.key,
     required this.students,
+    this.tripDate,
   });
   final List<Student> students;
+  final String? tripDate;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -28,6 +33,8 @@ class _MapScreenState extends State<MapScreen> {
   final MapController mapController = Get.put<MapController>(MapController());
   final HomeDriverController homeDriverController =
       Get.put(HomeDriverController());
+  final UserHomeController userHomeController =
+  Get.put(UserHomeController());
   @override
   void initState() {
     super.initState();
@@ -245,6 +252,75 @@ class _MapScreenState extends State<MapScreen> {
                       ],
                     ),
                   ),
+                ),
+                if(AppConstants.isCaptain)
+                  Align(
+                  alignment: AppConstants.isEnLocale? Alignment.topLeft : Alignment.topRight,
+                  child: IconButton(
+                    color: AppColors.black,
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            enableDrag: false,
+                            builder: (context){
+                              return CustomBottomSheetWidget(
+                                height: Get.height * 0.7,
+                                headTitle: 'students'.tr,
+                                withCloseIcon: true,
+                                child: ListView.separated(
+                                  physics: const PageScrollPhysics(),
+                                  padding: AppConstants.edge(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                  itemBuilder: (context, index) => Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(flex: 3, child: Row(
+                                        children: [
+                                          const Icon(Icons.person, color: AppColors.logo,),
+                                          const SizedBox(width: 8,),
+                                          Text('Loay Omar', style: AppFonts.header,),
+                                        ],
+                                      )),
+                                      Expanded(
+                                        child: DefaultRowButton(
+                                          text: "cancelTrip".tr,
+                                          height: 30,
+                                          border: Border.all(
+                                            color: AppColors.error600,
+                                          ),
+                                          color: AppColors.white,
+                                          function: () async{
+                                            await userHomeController.tripCancelByDateAPI(
+                                              context: context,
+                                              userId: widget.students[index].userId,
+                                              date: widget.tripDate!,
+                                              cancel: '1',
+                                              cancelReason: 'سبب الالغاء',
+                                            );
+                                          },
+                                          textColor: AppColors.error600,
+                                          borderRadius: 8,
+                                          svgPic: 'assets/icons/close_red.svg',
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  separatorBuilder: (context, index) => const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    child: Divider(height: 1, color: AppColors.darkBlue100),
+                                  ),
+                                  itemCount: widget.students.length,
+                                ),
+                              );
+                            });
+                      },
+                      icon: Icon(
+                        Icons.menu_rounded,
+                        size: 30,
+                        color: mapController.enableLocation.value
+                            ? AppColors.blue
+                            : Colors.grey,
+                      )),
                 ),
               ],
             );

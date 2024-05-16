@@ -6,6 +6,7 @@ class SubscriptionModel {
   String? tripType;
   String? from;
   String? to;
+  String? remainingDays;
 
 
   SubscriptionModel(
@@ -16,15 +17,17 @@ class SubscriptionModel {
         this.tripType,
         this.from,
         this.to,
+        this.remainingDays,
         });
 
   SubscriptionModel.fromJson(Map<String, dynamic> json) {
-    id = json['order_id'];
-    price = json['price_total'];
-    startDate = json['date_start'];
-    endDate = json['date_end'];
-    tripType = json['trip_round'];
-    from = json['from'];
-    to = json['to'];
+    id = json['order_id']??'';
+    price = json['price_total']??'';
+    startDate = json['date_start']??'';
+    endDate = json['date_end']??'';
+    tripType = json['trip_round']??'';
+    from = json['from']??'';
+    to = json['to']??'';
+    remainingDays = json['remaining_days']??'';
   }
 }

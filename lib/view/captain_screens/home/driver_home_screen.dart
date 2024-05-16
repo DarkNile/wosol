@@ -77,6 +77,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             await onTapRideCard(
                               tripIsRunning: homeDriverController
                                   .driverNextRide[0].tripIsRunning,
+                              tripDate: homeDriverController.driverNextRide[0].tripDate,
                               isReachStart: (homeDriverController
                                   .driverNextRide[0].tripType ==
                                   '2' ||
@@ -254,6 +255,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required String? companyName,
     required String? companyTelephone,
     required String? companyEmail,
+    required String? tripDate,
     required List<Student> students,
     bool isEmployee = false,
   }) async {
@@ -365,6 +367,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               }
               Get.to(() => MapScreen(
                 students: students,
+                tripDate: tripDate!,
               ));
             }
           }else {
@@ -447,6 +450,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             }
             Get.to(() => MapScreen(
                   students: students,
+              tripDate: tripDate!,
                 ));
             // showModalBottomSheet(
             //     context: context,
