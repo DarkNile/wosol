@@ -180,6 +180,7 @@ const Map<String, String> en = {
   'Accept': 'Accept',
   'Deny': 'Deny',
   "studentName": "Student Name",
+  "students": "Students",
   "otp": "OTP",
   "Enter the OTP": "Enter the OTP",
   "change your password": "Change password",
@@ -200,4 +201,5 @@ const Map<String, String> en = {
   "startPoint" : "Start Point",
   "startPointMsg" : "You have arrived at the starting point be ready to receive passengers",
   "startPointSBMsg" : "Be ready to receive passengers",
+  "remainingDays" : "Remaining days",
 };

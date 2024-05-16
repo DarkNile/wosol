@@ -177,6 +177,7 @@ const Map<String, String> ar = {
   'Accept': 'قبول',
   'Deny': 'يرفض',
   "studentName": "اسم الطالب",
+  "students": "الطلاب",
   "otp": "رمز التأكيد",
   "Enter the OTP": "ادخل رمز التأكيد",
   "change your password": "تغير كلمة المرور",
@@ -199,4 +200,5 @@ const Map<String, String> ar = {
   "startPointSBMsg": "كن جاهزًا لاستقبال الركاب",
   "myCalendar": "تقويمي",
   "requestChangeDays": "طلب تغيير الايام",
+  "remainingDays": " الايام المتبقية",
 };

@@ -111,6 +111,10 @@ class SubscriptionsWidget extends StatelessWidget {
                       name: 'to'.tr,
                       value: subscriptionModel.to!,
                     ),
+                    _CustomRowWidget(
+                      name: 'remainingDays'.tr,
+                      value: '${subscriptionModel.remainingDays}',
+                    ),
                   ],
                 )
             ]),
