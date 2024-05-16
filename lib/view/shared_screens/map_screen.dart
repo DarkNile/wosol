@@ -278,7 +278,7 @@ class _MapScreenState extends State<MapScreen> {
                                         children: [
                                           const Icon(Icons.person, color: AppColors.logo,),
                                           const SizedBox(width: 8,),
-                                          Text('Loay Omar', style: AppFonts.header,),
+                                          Text('${widget.students[index].userFname} ${widget.students[index].userLname}', style: AppFonts.header,),
                                         ],
                                       )),
                                       Expanded(
