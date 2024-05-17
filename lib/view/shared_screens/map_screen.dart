@@ -283,24 +283,34 @@ class _MapScreenState extends State<MapScreen> {
                                       )),
                                       Expanded(
                                         child: DefaultRowButton(
-                                          text: "cancelTrip".tr,
+                                          text: widget.students[index].cancelRequest == '0'? "cancelTrip".tr : "unCancelTrip".tr,
                                           height: 30,
-                                          border: Border.all(
+                                          border: widget.students[index].cancelRequest == '0'? Border.all(
                                             color: AppColors.error600,
-                                          ),
-                                          color: AppColors.white,
+                                          ) : null,
+                                          color: widget.students[index].cancelRequest == '0'? AppColors.white : AppColors.error600,
                                           function: () async{
-                                            await userHomeController.tripCancelByDateAPI(
+                                                if(widget.students[index].cancelRequest == '0') {
+                                                  await userHomeController.tripCancelByDateAPI(
                                               context: context,
                                               userId: widget.students[index].userId,
                                               date: widget.tripDate!,
                                               cancel: '1',
                                               cancelReason: 'سبب الالغاء',
                                             );
+                                                }else {
+                                                  // Un Cancel
+                                                  await userHomeController.tripCancelByDateAPI(
+                                                    context: context,
+                                                    userId: widget.students[index].userId,
+                                                    date: widget.tripDate!,
+                                                    cancel: '0',
+                                                  );
+                                                }
                                           },
-                                          textColor: AppColors.error600,
+                                          textColor: widget.students[index].cancelRequest == '0'? AppColors.error600  : AppColors.white,
                                           borderRadius: 8,
-                                          svgPic: 'assets/icons/close_red.svg',
+                                          svgPic: widget.students[index].cancelRequest == '0'? 'assets/icons/close_red.svg' : 'assets/icons/close_white.svg',
                                         ),
                                       )
                                     ],
