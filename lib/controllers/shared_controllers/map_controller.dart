@@ -244,11 +244,24 @@ class MapController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
+
+        defaultSuccessSnackBar(
+            context: Get.context!, message: 'tripEnded'.tr);
+
         return response;
       } else {
+          defaultErrorSnackBar(
+            context: Get.context!,
+            message: response.data['data']['error'],
+          );
+
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: e.response!.data['data']['error'],
+        );
       throw e.response!.data['data']['error'];
     }
   }

@@ -201,4 +201,5 @@ const Map<String, String> ar = {
   "myCalendar": "تقويمي",
   "requestChangeDays": "طلب تغيير الايام",
   "remainingDays": " الايام المتبقية",
+  "tripEnded" : "انتهت الرحلة",
 };

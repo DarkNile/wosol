@@ -202,4 +202,5 @@ const Map<String, String> en = {
   "startPointMsg" : "You have arrived at the starting point be ready to receive passengers",
   "startPointSBMsg" : "Be ready to receive passengers",
   "remainingDays" : "Remaining days",
+  "tripEnded" : "Trip has been Ended",
 };
