@@ -183,7 +183,7 @@ class UserHomeController extends GetxController {
                   ));
           if (context.mounted) {
             !(cancel == "0")
-                ? defaultErrorSnackBar(
+                ? defaultSuccessSnackBar(
                     context: context, message: 'Trip Canceled'.tr)
                 : defaultSuccessSnackBar(
                     context: context, message: 'Trip Un Canceled'.tr);
@@ -201,6 +201,7 @@ class UserHomeController extends GetxController {
         );
       }
     }
+    update();
   }
 
   // ? ===== Calendar Cancel API =====

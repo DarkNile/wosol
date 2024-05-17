@@ -20,7 +20,7 @@ class SubscriptionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (_, setState) => Container(
-        height: isExpanded ? 336 : 64,
+        height: isExpanded ? 378 : 64,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(

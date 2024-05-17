@@ -254,84 +254,88 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 if(AppConstants.isCaptain)
-                  Align(
-                  alignment: AppConstants.isEnLocale? Alignment.topLeft : Alignment.topRight,
-                  child: IconButton(
-                    color: AppColors.black,
-                      onPressed: () {
-                        showModalBottomSheet(
-                            context: context,
-                            isDismissible: false,
-                            enableDrag: false,
-                            builder: (context){
-                              return CustomBottomSheetWidget(
-                                height: Get.height * 0.7,
-                                headTitle: 'students'.tr,
-                                withCloseIcon: true,
-                                child: ListView.separated(
-                                  physics: const PageScrollPhysics(),
-                                  padding: AppConstants.edge(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
-                                  itemBuilder: (context, index) => Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(flex: 3, child: Row(
-                                        children: [
-                                          const Icon(Icons.person, color: AppColors.logo,),
-                                          const SizedBox(width: 8,),
-                                          Text('${widget.students[index].userFname} ${widget.students[index].userLname}', style: AppFonts.header,),
-                                        ],
-                                      )),
-                                      Expanded(
-                                        child: DefaultRowButton(
-                                          text: widget.students[index].cancelRequest == '0'? "cancelTrip".tr : "unCancelTrip".tr,
-                                          height: 30,
-                                          border: widget.students[index].cancelRequest == '0'? Border.all(
-                                            color: AppColors.error600,
-                                          ) : null,
-                                          color: widget.students[index].cancelRequest == '0'? AppColors.white : AppColors.error600,
-                                          function: () async{
-                                                if(widget.students[index].cancelRequest == '0') {
-                                                  await userHomeController.tripCancelByDateAPI(
-                                              context: context,
-                                              userId: widget.students[index].userId,
-                                              date: widget.tripDate!,
-                                              cancel: '1',
-                                              cancelReason: 'سبب الالغاء',
-                                            );
-                                                }else {
-                                                  // Un Cancel
-                                                  await userHomeController.tripCancelByDateAPI(
-                                                    context: context,
-                                                    userId: widget.students[index].userId,
-                                                    date: widget.tripDate!,
-                                                    cancel: '0',
-                                                  );
-                                                }
-                                          },
-                                          textColor: widget.students[index].cancelRequest == '0'? AppColors.error600  : AppColors.white,
-                                          borderRadius: 8,
-                                          svgPic: widget.students[index].cancelRequest == '0'? 'assets/icons/close_red.svg' : 'assets/icons/close_white.svg',
-                                        ),
-                                      )
-                                    ],
+                  GetBuilder<UserHomeController>(
+                    builder: (ctrl) => Align(
+                    alignment: AppConstants.isEnLocale? Alignment.topLeft : Alignment.topRight,
+                    child: IconButton(
+                      color: AppColors.black,
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isDismissible: false,
+                              enableDrag: false,
+                              builder: (context){
+                                return CustomBottomSheetWidget(
+                                  height: Get.height * 0.7,
+                                  headTitle: 'students'.tr,
+                                  withCloseIcon: true,
+                                  child: ListView.separated(
+                                    physics: const PageScrollPhysics(),
+                                    padding: AppConstants.edge(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20)),
+                                    itemBuilder: (context, index) => Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(flex: 3, child: Row(
+                                          children: [
+                                            const Icon(Icons.person, color: AppColors.logo,),
+                                            const SizedBox(width: 8,),
+                                            Text('${widget.students[index].userFname} ${widget.students[index].userLname}', style: AppFonts.header,),
+                                          ],
+                                        )),
+                                        Expanded(
+                                          flex: 2,
+                                          child: DefaultRowButton(
+                                            text: widget.students[index].cancelRequest == '0'? "cancelTrip".tr : "unCancelTrip".tr,
+                                            height: 30,
+                                            border: widget.students[index].cancelRequest == '0'? Border.all(
+                                              color: AppColors.error600,
+                                            ) : null,
+                                            color: widget.students[index].cancelRequest == '0'? AppColors.white : AppColors.error600,
+                                            function: () async{
+                                                  if(widget.students[index].cancelRequest == '0') {
+                                                    widget.students[index].cancelRequest = '1';
+                                                    await userHomeController.tripCancelByDateAPI(
+                                                context: context,
+                                                userId: widget.students[index].userId,
+                                                date: widget.tripDate!,
+                                                cancel: '1',
+                                                cancelReason: 'سبب الالغاء',
+                                              );
+                                                  }else {
+                                                    widget.students[index].cancelRequest = '0';
+                                                    await userHomeController.tripCancelByDateAPI(
+                                                      context: context,
+                                                      userId: widget.students[index].userId,
+                                                      date: widget.tripDate!,
+                                                      cancel: '0',
+                                                    );
+                                                  }
+                                            },
+                                            textColor: widget.students[index].cancelRequest == '0'? AppColors.error600  : AppColors.white,
+                                            borderRadius: 8,
+                                            svgPic: widget.students[index].cancelRequest == '0'? 'assets/icons/close_red.svg' : 'assets/icons/close_white.svg',
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    separatorBuilder: (context, index) => const Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      child: Divider(height: 1, color: AppColors.darkBlue100),
+                                    ),
+                                    itemCount: widget.students.length,
                                   ),
-                                  separatorBuilder: (context, index) => const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10),
-                                    child: Divider(height: 1, color: AppColors.darkBlue100),
-                                  ),
-                                  itemCount: widget.students.length,
-                                ),
-                              );
-                            });
-                      },
-                      icon: Icon(
-                        Icons.menu_rounded,
-                        size: 30,
-                        color: mapController.enableLocation.value
-                            ? AppColors.blue
-                            : Colors.grey,
-                      )),
-                ),
+                                );
+                              });
+                        },
+                        icon: Icon(
+                          Icons.menu_rounded,
+                          size: 30,
+                          color: mapController.enableLocation.value
+                              ? AppColors.blue
+                              : Colors.grey,
+                        )),
+                                    ),
+                  ),
               ],
             );
           }),
