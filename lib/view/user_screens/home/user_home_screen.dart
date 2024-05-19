@@ -123,11 +123,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                       target: mapController.currentLatLng,
                                                       zoom: 14,
                                                     );
-                                                    mapController.userGetEstimatedTime(
-                                                      originLatLng: mapController.currentLatLng,
-                                                      destinationLatLng: mapController.targetLatLng,
-                                                    );
-                                                    mapController.userLiveLocation();
+                                                    // mapController.userGetEstimatedTime(
+                                                    //   originLatLng: mapController.currentLatLng,
+                                                    //   destinationLatLng: mapController.targetLatLng,
+                                                    // );
+                                                    // mapController.userLiveLocation();
                                                   });
                                                   Get.to(() => const MapScreen(
                                                     students: [],

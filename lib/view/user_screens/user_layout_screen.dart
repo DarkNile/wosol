@@ -81,11 +81,11 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
                                 target: mapController.currentLatLng,
                                 zoom: 14,
                               );
-                              mapController.userGetEstimatedTime(
-                                originLatLng: mapController.currentLatLng,
-                                destinationLatLng: mapController.targetLatLng,
-                              );
-                              mapController.userLiveLocation();
+                              // mapController.userGetEstimatedTime(
+                              //   originLatLng: mapController.currentLatLng,
+                              //   destinationLatLng: mapController.targetLatLng,
+                              // );
+                              // mapController.userLiveLocation();
                             });
                             Get.back();
                             Get.to(() => const MapScreen(
