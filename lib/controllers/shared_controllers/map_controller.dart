@@ -136,7 +136,7 @@ class MapController extends GetxController {
   void userLiveLocation() {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 20,
+      distanceFilter: 100,
     );
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
@@ -174,6 +174,7 @@ class MapController extends GetxController {
     update();
   }
 
+  int liveTrackingDistance = 0;
   void liveLocation({
     String endLat = '',
     String endLong = '',
@@ -185,12 +186,13 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 20,
+      distanceFilter: 100,
     );
 
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
+      liveTrackingDistance += 100;
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         previousLatLng = currentLatLng;
         currentLatLng = LatLng(position.latitude, position.longitude);
@@ -209,25 +211,28 @@ class MapController extends GetxController {
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
         }
-        if (previousPosition != null) {
-          double distanceInMeters = Geolocator.distanceBetween(
-            previousPosition!.latitude,
-            previousPosition!.longitude,
-            position.latitude,
-            position.longitude,
-          );
-          if (distanceInMeters >= 25) {
-            mapRepository.sendLiveTracking(
-              tripId: tripId,
-              vehicleId: vehicleId,
-              mapLat: position.latitude.toString(),
-              mapLong: position.longitude.toString(),
+        if(liveTrackingDistance == 3000){
+          liveTrackingDistance = 0;
+          if (previousPosition != null) {
+            double distanceInMeters = Geolocator.distanceBetween(
+              previousPosition!.latitude,
+              previousPosition!.longitude,
+              position.latitude,
+              position.longitude,
             );
+            if (distanceInMeters >= 100) {
+              mapRepository.sendLiveTracking(
+                tripId: tripId,
+                vehicleId: vehicleId,
+                mapLat: position.latitude.toString(),
+                mapLong: position.longitude.toString(),
+              );
 
+              previousPosition = position;
+            }
+          } else {
             previousPosition = position;
           }
-        } else {
-          previousPosition = position;
         }
       }
     });
@@ -585,7 +590,7 @@ bool isWithinDistance(String distanceString) {
     double value = double.parse(
       parts[0].replaceAll(',', ''),
     );
-    if (value <= 25) {
+    if (value <= 100) {
       return true;
     } else {
       return false;

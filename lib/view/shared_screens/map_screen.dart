@@ -128,6 +128,7 @@ class _MapScreenState extends State<MapScreen> {
                     mapController.googleMapController.complete(controller);
                   },
                 ),
+                if(AppConstants.isCaptain)
                 Obx(
                   () => Material(
                     color: Colors.transparent,
@@ -253,7 +254,7 @@ class _MapScreenState extends State<MapScreen> {
                     ),
                   ),
                 ),
-                if(AppConstants.isCaptain)
+                if(AppConstants.isCaptain && widget.students.isNotEmpty)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
                     alignment: AppConstants.isEnLocale? Alignment.topLeft : Alignment.topRight,
