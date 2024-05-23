@@ -30,7 +30,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  final MapController mapController = Get.put<MapController>(MapController());
+  final MapController mapController = Get.find();
   final HomeDriverController homeDriverController =
       Get.put(HomeDriverController());
   final UserHomeController userHomeController =

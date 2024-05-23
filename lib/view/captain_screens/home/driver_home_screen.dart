@@ -23,7 +23,7 @@ class DriverHomeScreen extends StatefulWidget {
 }
 
 class _DriverHomeScreenState extends State<DriverHomeScreen> {
-  MapController mapController = Get.put(MapController());
+  MapController mapController = Get.find();
   HomeDriverController homeDriverController = Get.find<HomeDriverController>();
 
   bool isStartingTrip = false;
