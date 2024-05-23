@@ -360,7 +360,7 @@ class MapController extends GetxController {
               builder: (context) {
                 return RandomSheet(
                   headTitle: "startPoint".tr,
-                  subTitle: "startPointMsg".tr,
+                  subTitle: "${"startPointMsg".tr} *Trip id: $tripId",
                   function: () {
                     reachStartPointApi(
                       tripId: tripId,
@@ -388,7 +388,8 @@ class MapController extends GetxController {
                 headTitle: 'rideEnd'.tr,
                 imagePath: 'assets/images/celebrate.png',
                 headerMsg: '${"congrats".tr} ',
-                subHeaderMsg: 'rideCompletedSuccessfully'.tr,
+                subHeaderMsg:
+                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                 isTrip: true,
                 function: () {
                   tripEnd(tripId: tripId);
