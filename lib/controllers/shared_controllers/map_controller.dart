@@ -35,6 +35,7 @@ class MapController extends GetxController {
   // LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
   bool isToEnd = false;
+  // Timer? timer;
 
   @override
   void onInit() {
@@ -200,18 +201,18 @@ class MapController extends GetxController {
         update();
         getCurrentTargetPolylinePoints();
         getEstimatedTime(
-            isEmployee: isEmployee,
-            originLatLng: currentLatLng,
-            destinationLatLng: targetLatLng,
-            students: students,
-            endLat: endLat,
-            endLong: endLong,
-            tripId: tripId,
-            );
+          isEmployee: isEmployee,
+          originLatLng: currentLatLng,
+          destinationLatLng: targetLatLng,
+          students: students,
+          endLat: endLat,
+          endLong: endLong,
+          tripId: tripId,
+        );
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
         }
-        if(liveTrackingDistance == 3000){
+        if (liveTrackingDistance == 3000) {
           liveTrackingDistance = 0;
           if (previousPosition != null) {
             double distanceInMeters = Geolocator.distanceBetween(
@@ -249,24 +250,23 @@ class MapController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
-
-        defaultSuccessSnackBar(
-            context: Get.context!, message: 'tripEnded'.tr);
+        Get.offAll(() => const DriverLayoutScreen());
+        defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
 
         return response;
       } else {
-          defaultErrorSnackBar(
-            context: Get.context!,
-            message: response.data['data']['error'],
-          );
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
 
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
-        defaultErrorSnackBar(
-          context: Get.context!,
-          message: e.response!.data['data']['error'],
-        );
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
       throw e.response!.data['data']['error'];
     }
   }
@@ -304,7 +304,7 @@ class MapController extends GetxController {
       Response response = await DioHelper.postData(
         url: 'driver/trips/trip_reach_start',
         data: {
-          "trip_id" : tripId,
+          "trip_id": tripId,
         },
       );
       if (response.statusCode == 200) {
@@ -359,13 +359,40 @@ class MapController extends GetxController {
               context: Get.context!,
               isDismissible: false,
               enableDrag: false,
-              builder: (context){
+              builder: (context) {
                 return RandomSheet(
                   headTitle: "startPoint".tr,
                   subTitle: "${"startPointMsg".tr} *Trip id: $tripId",
-                  function: (){
-                    reachStartPointApi(tripId: tripId,);
+                  function: () {
+                    reachStartPointApi(
+                      tripId: tripId,
+                    );
                     Get.back();
+                    // timer = Timer(const Duration(seconds: 10), () {
+                    //   _isEndTrip = true;
+                    //   showModalBottomSheet(
+                    //     context: Get.context!,
+                    //     isDismissible: false,
+                    //     enableDrag: false,
+                    //     builder: (context) {
+                    //       return RideAndTripEndBottomSheet(
+                    //         headTitle: 'rideEnd'.tr,
+                    //         imagePath: 'assets/images/celebrate.png',
+                    //         headerMsg: '${"congrats".tr} ',
+                    //         subHeaderMsg:
+                    //             "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                    //         isTrip: true,
+                    //         function: () async {
+                    //           await tripEnd(tripId: tripId);
+                    //           distantTrack = "10000 km";
+                    //           // isToEnd = false;
+                    //           // _isEndTrip = false;
+                    //           // homeDriverController.getTrips(context);
+                    //         },
+                    //       );
+                    //     },
+                    //   );
+                    // });
                   },
                 );
               });
@@ -388,15 +415,15 @@ class MapController extends GetxController {
                 headTitle: 'rideEnd'.tr,
                 imagePath: 'assets/images/celebrate.png',
                 headerMsg: '${"congrats".tr} ',
-                subHeaderMsg: "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                subHeaderMsg:
+                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                 isTrip: true,
-                function: () {
-                  tripEnd(tripId: tripId);
+                function: () async {
+                  await tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
                   // isToEnd = false;
                   // _isEndTrip = false;
                   // homeDriverController.getTrips(context);
-                  Get.offAll(()=> const DriverLayoutScreen());
                 },
               );
             },
@@ -462,14 +489,14 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
-                        isEmployee: isEmployee,
-                        originLatLng: currentLatLng,
-                        destinationLatLng: targetLatLng,
-                        tripId: tripId,
-                        students: students,
-                        endLong: endLong,
-                        endLat: endLat,
-                        );
+                      isEmployee: isEmployee,
+                      originLatLng: currentLatLng,
+                      destinationLatLng: targetLatLng,
+                      tripId: tripId,
+                      students: students,
+                      endLong: endLong,
+                      endLat: endLat,
+                    );
                     liveLocation(
                       isEmployee: isEmployee,
                     );
@@ -518,13 +545,13 @@ class MapController extends GetxController {
                       zoom: 12,
                     );
                     getEstimatedTime(
-                        isEmployee: isEmployee,
-                        originLatLng: currentLatLng,
-                        destinationLatLng: targetLatLng,
-                        tripId: tripId,
-                        students: students,
-                        endLong: endLong,
-                        endLat: endLat,
+                      isEmployee: isEmployee,
+                      originLatLng: currentLatLng,
+                      destinationLatLng: targetLatLng,
+                      tripId: tripId,
+                      students: students,
+                      endLong: endLong,
+                      endLat: endLat,
                     );
                     liveLocation(
                       isEmployee: isEmployee,

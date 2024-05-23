@@ -16,6 +16,8 @@ class HomeDriverController extends GetxController {
   List<Trip> driverTrips = [];
 
   Future<void> getTrips(BuildContext context) async {
+    driverNextRide = [];
+    driverTrips = [];
     isGettingTrips.value = true;
     try {
       Response response = await AppConstants.homeDriverRepository
