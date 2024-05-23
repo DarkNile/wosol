@@ -35,6 +35,7 @@ class MapController extends GetxController {
   // LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
   bool isToEnd = false;
+  // Timer? timer;
 
   @override
   void onInit() {
@@ -249,6 +250,7 @@ class MapController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
+        Get.offAll(() => const DriverLayoutScreen());
         defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
 
         return response;
@@ -366,6 +368,31 @@ class MapController extends GetxController {
                       tripId: tripId,
                     );
                     Get.back();
+                    // timer = Timer(const Duration(seconds: 10), () {
+                    //   _isEndTrip = true;
+                    //   showModalBottomSheet(
+                    //     context: Get.context!,
+                    //     isDismissible: false,
+                    //     enableDrag: false,
+                    //     builder: (context) {
+                    //       return RideAndTripEndBottomSheet(
+                    //         headTitle: 'rideEnd'.tr,
+                    //         imagePath: 'assets/images/celebrate.png',
+                    //         headerMsg: '${"congrats".tr} ',
+                    //         subHeaderMsg:
+                    //             "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                    //         isTrip: true,
+                    //         function: () async {
+                    //           await tripEnd(tripId: tripId);
+                    //           distantTrack = "10000 km";
+                    //           // isToEnd = false;
+                    //           // _isEndTrip = false;
+                    //           // homeDriverController.getTrips(context);
+                    //         },
+                    //       );
+                    //     },
+                    //   );
+                    // });
                   },
                 );
               });
@@ -391,13 +418,12 @@ class MapController extends GetxController {
                 subHeaderMsg:
                     "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                 isTrip: true,
-                function: () {
-                  tripEnd(tripId: tripId);
+                function: () async {
+                  await tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
                   // isToEnd = false;
                   // _isEndTrip = false;
                   // homeDriverController.getTrips(context);
-                  Get.offAll(() => const DriverLayoutScreen());
                 },
               );
             },

@@ -1,10 +1,10 @@
-
 List<Trip> tripFromJson(Map<String, dynamic> json) =>
     List<Trip>.from(json["data"].map((x) => Trip.fromJson(x)));
 
 Map<String, dynamic> tripToJson(List<Trip> data) => {
-  "data": List<dynamic>.from(data.map((x) => x.toJson())),
-};
+      "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    };
+
 class Trip {
   Trip({
     required this.tripId,
@@ -77,11 +77,15 @@ class Trip {
         fromLong: json["from_long"] ?? "",
         toLat: json["to_lat"] ?? "",
         toLong: json["to_long"] ?? "",
+        // fromLat: "21.6191537108",
+        // fromLong: "39.1487738402",
+        // toLat: "21.6191537108",
+        // toLong: "39.1487738402",
         companyName: json["company_name"] ?? "",
         companyTelephone: json["company_telephone"] ?? "",
         companyEmail: json["company_email"] ?? "",
-        tripIsRunning: json['is_trip_run']?? false,
-        isReachStart: json['is_reach_start']?? false,
+        tripIsRunning: json['is_trip_run'] ?? false,
+        isReachStart: json['is_reach_start'] ?? false,
         students: List<Student>.from(
             json["students"].map((x) => Student.fromJson(x))),
       );

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
-import 'package:wosol/view/shared_screens/main_screens/layout_screen/layout_screen.dart';
 
 import '../../../shared/constants/constants.dart';
 
@@ -21,7 +20,6 @@ class ChangePasswordController extends GetxController {
     passwordValidate = TextFieldValidation.normal;
   }
 
-
   void checkPasswordValidation() {
     if (passwordController.text.length < 5) {
       passwordValidate = TextFieldValidation.notValid;
@@ -32,7 +30,9 @@ class ChangePasswordController extends GetxController {
   }
 
   void checkConfirmPasswordValidation(bool fromProfile) {
-    if ((fromProfile? (confirmPasswordController.text.length < 5) : (confirmPasswordController.text != passwordController.text))) {
+    if ((fromProfile
+        ? (confirmPasswordController.text.length < 5)
+        : (confirmPasswordController.text != passwordController.text))) {
       confirmPasswordValidate = TextFieldValidation.notValid;
     } else {
       confirmPasswordValidate = TextFieldValidation.valid;
@@ -42,10 +42,12 @@ class ChangePasswordController extends GetxController {
 
   RxBool isChangePasswordLoading = false.obs;
 
-  Future<void> changeAuthPasswordAPI(BuildContext context, bool isDriver, String activationCode, String id) async {
+  Future<void> changeAuthPasswordAPI(BuildContext context, bool isDriver,
+      String activationCode, String id) async {
     isChangePasswordLoading.value = true;
     try {
-      if (passwordValidate == TextFieldValidation.valid && confirmPasswordValidate == TextFieldValidation.valid) {
+      if (passwordValidate == TextFieldValidation.valid &&
+          confirmPasswordValidate == TextFieldValidation.valid) {
         await AppConstants.userRepository
             .changeAuthPassword(
           isDriver: isDriver,
@@ -77,7 +79,8 @@ class ChangePasswordController extends GetxController {
   Future<void> changeProfilePasswordAPI(BuildContext context) async {
     isChangePasswordLoading.value = true;
     try {
-      if (passwordValidate == TextFieldValidation.valid && confirmPasswordValidate == TextFieldValidation.valid) {
+      if (passwordValidate == TextFieldValidation.valid &&
+          confirmPasswordValidate == TextFieldValidation.valid) {
         await AppConstants.userRepository
             .changeProfilePassword(
           currentPassword: passwordController.text,
