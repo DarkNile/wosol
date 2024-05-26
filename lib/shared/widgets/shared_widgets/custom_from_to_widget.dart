@@ -13,6 +13,7 @@ class CustomFromToWidget extends StatelessWidget {
   final String? companyName;
   final String? companyTelephone;
   final String? companyEmail;
+  final String? tripId;
 
   const CustomFromToWidget({
     super.key,
@@ -23,6 +24,7 @@ class CustomFromToWidget extends StatelessWidget {
     this.companyName,
     this.companyTelephone,
     this.companyEmail,
+    this.tripId,
   });
 
   @override
@@ -87,18 +89,27 @@ class CustomFromToWidget extends StatelessWidget {
             ),
         ],
       ),
-      if (companyEmail != null) const SizedBox(height: 16),
-      if (companyEmail != null)
-        Row(
-          children: [
-            const Icon(Icons.email_outlined),
-            const SizedBox(
-              width: 12,
+      // if (companyEmail != null) const SizedBox(height: 16),
+      const SizedBox(height: 16),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (companyEmail != null)
+            Row(
+              children: [
+                const Icon(Icons.email_outlined),
+                const SizedBox(
+                  width: 12,
+                ),
+                Text(companyEmail!,
+                    style: AppFonts.button.copyWith(color: AppColors.black800)),
+              ],
             ),
-            Text(companyEmail!,
+          if (tripId != null)
+            Text('*Trip id: $tripId',
                 style: AppFonts.button.copyWith(color: AppColors.black800)),
-          ],
-        ),
+        ],
+      ),
     ]);
   }
 }

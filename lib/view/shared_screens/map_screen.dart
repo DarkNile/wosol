@@ -43,7 +43,6 @@ class _MapScreenState extends State<MapScreen> {
   void dispose() {
     super.dispose();
     KeepScreenOn.turnOff();
-    // mapController.googleMapController.future.then((ctlrer) => ctlrer.dispose());
   }
 
   @override
