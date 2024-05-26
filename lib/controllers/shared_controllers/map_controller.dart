@@ -175,6 +175,7 @@ class MapController extends GetxController {
     update();
   }
 
+  StreamSubscription<Position>? positionStream;
   int liveTrackingDistance = 0;
   void liveLocation({
     String endLat = '',
@@ -190,7 +191,7 @@ class MapController extends GetxController {
       distanceFilter: 100,
     );
 
-    Geolocator.getPositionStream(
+    positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
       liveTrackingDistance += 100;
@@ -250,6 +251,7 @@ class MapController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
+        positionStream!.cancel();
         Get.offAll(() => const DriverLayoutScreen());
         defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
 
