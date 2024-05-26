@@ -77,14 +77,17 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             await onTapRideCard(
                               tripIsRunning: homeDriverController
                                   .driverNextRide[0].tripIsRunning,
-                              tripDate: homeDriverController.driverNextRide[0].tripDate,
+                              tripDate: homeDriverController
+                                  .driverNextRide[0].tripDate,
                               isReachStart: (homeDriverController
-                                  .driverNextRide[0].tripType ==
-                                  '2' ||
-                                  homeDriverController
-                                      .driverNextRide[0].tripType ==
-                                      '3')? homeDriverController
-                                  .driverNextRide[0].isReachStart : false,
+                                              .driverNextRide[0].tripType ==
+                                          '2' ||
+                                      homeDriverController
+                                              .driverNextRide[0].tripType ==
+                                          '3')
+                                  ? homeDriverController
+                                      .driverNextRide[0].isReachStart
+                                  : false,
                               isEmployee: homeDriverController
                                           .driverNextRide[0].tripType ==
                                       '2' ||
@@ -264,6 +267,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       isDismissible: false,
       enableDrag: false,
       builder: (context) => RideStartBottomSheet(
+        tripId: tripId,
         firstButtonFunction: () async {
           /// todo Move this to Trip Confirm
           // homeDriverController.tripStatesAPI(
@@ -288,12 +292,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
           //   state: 3,
           // );
 
-            setState(() {
-              mapController.isToEnd = isReachStart;
-            });
+          setState(() {
+            mapController.isToEnd = isReachStart;
+          });
 
-
-          if(tripIsRunning){
+          if (tripIsRunning) {
             {
               setState(() {
                 isStartingTrip = true;
@@ -307,7 +310,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     students[mapController.currentStudentIndex.value].pickupLat,
                   ),
                   double.parse(
-                    students[mapController.currentStudentIndex.value].pickupLong,
+                    students[mapController.currentStudentIndex.value]
+                        .pickupLong,
                   ),
                 );
                 // mapController.finalLatLng = toLatLng;
@@ -360,62 +364,63 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   driverId: AppConstants.userRepository.driverData.driverId,
                   tripId: tripId,
                   userId:
-                  students[mapController.currentStudentIndex.value].userId,
+                      students[mapController.currentStudentIndex.value].userId,
                   tripUserId: students[mapController.currentStudentIndex.value]
                       .tripUserId,
                 );
               }
               Get.to(() => MapScreen(
-                students: students,
-                tripDate: tripDate!,
-              ));
+                    students: students,
+                    tripDate: tripDate!,
+                  ));
             }
-          }else {
+          } else {
             homeDriverController
-              .tripStatesAPI(
-            context: context,
-            tripId: tripId,
-            state: 0,
-          )
-              .then((value) async {
-            setState(() {
-              isStartingTrip = true;
-            });
+                .tripStatesAPI(
+              context: context,
+              tripId: tripId,
+              state: 0,
+            )
+                .then((value) async {
+              setState(() {
+                isStartingTrip = true;
+              });
 
-            if (isEmployee) {
-              mapController.targetLatLng = fromLatLng;
-            } else {
-              mapController.targetLatLng = LatLng(
-                double.parse(
-                  students[mapController.currentStudentIndex.value].pickupLat,
-                ),
-                double.parse(
-                  students[mapController.currentStudentIndex.value].pickupLong,
-                ),
-              );
-              // mapController.finalLatLng = toLatLng;
-            }
+              if (isEmployee) {
+                mapController.targetLatLng = fromLatLng;
+              } else {
+                mapController.targetLatLng = LatLng(
+                  double.parse(
+                    students[mapController.currentStudentIndex.value].pickupLat,
+                  ),
+                  double.parse(
+                    students[mapController.currentStudentIndex.value]
+                        .pickupLong,
+                  ),
+                );
+                // mapController.finalLatLng = toLatLng;
+              }
 
-            // mapController.targetLatLng = toLatLng;
+              // mapController.targetLatLng = toLatLng;
 
               mapController.markerIcon = await mapController.getBytesFromAsset(
                   'assets/images/location_on.png', 50);
               mapController.currentIcon = await mapController.getBytesFromAsset(
                   'assets/images/navigation_arrow.png', 50);
 
-            await mapController.getCurrentLocation().then((value) async {
-              mapController.currentLatLng =
-                  LatLng(value.latitude, value.longitude);
-              // if (mapController.finalLatLng != null) {
-              //   await mapController.getCurrentFinalPolylinePoints();
-              // }
-              await mapController.getCurrentTargetPolylinePoints();
-              mapController.cameraPosition = CameraPosition(
-                target: mapController.currentLatLng,
-                bearing: mapController.bearing,
-                zoom: 19,
-              );
-              mapController.getEstimatedTime(
+              await mapController.getCurrentLocation().then((value) async {
+                mapController.currentLatLng =
+                    LatLng(value.latitude, value.longitude);
+                // if (mapController.finalLatLng != null) {
+                //   await mapController.getCurrentFinalPolylinePoints();
+                // }
+                await mapController.getCurrentTargetPolylinePoints();
+                mapController.cameraPosition = CameraPosition(
+                  target: mapController.currentLatLng,
+                  bearing: mapController.bearing,
+                  zoom: 19,
+                );
+                mapController.getEstimatedTime(
                   originLatLng: mapController.currentLatLng,
                   destinationLatLng: mapController.targetLatLng,
                   students: students,
@@ -423,119 +428,119 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   isEmployee: isEmployee,
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
-                  );
-              mapController.liveLocation(
+                );
+                mapController.liveLocation(
                   students: students,
                   tripId: tripId,
                   isEmployee: isEmployee,
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
                   vehicleId: vehicleId,
-                  );
-            });
-            setState(() {
-              isStartingTrip = false;
-            });
+                );
+              });
+              setState(() {
+                isStartingTrip = false;
+              });
 
-            Get.back();
-            if (students.isNotEmpty) {
-              mapController.nearbyStudent(
-                driverId: AppConstants.userRepository.driverData.driverId,
-                tripId: tripId,
-                userId:
-                    students[mapController.currentStudentIndex.value].userId,
-                tripUserId: students[mapController.currentStudentIndex.value]
-                    .tripUserId,
-              );
-            }
-            Get.to(() => MapScreen(
-                  students: students,
-              tripDate: tripDate!,
-                ));
-            // showModalBottomSheet(
-            //     context: context,
-            // isDismissible: false,
+              Get.back();
+              if (students.isNotEmpty) {
+                mapController.nearbyStudent(
+                  driverId: AppConstants.userRepository.driverData.driverId,
+                  tripId: tripId,
+                  userId:
+                      students[mapController.currentStudentIndex.value].userId,
+                  tripUserId: students[mapController.currentStudentIndex.value]
+                      .tripUserId,
+                );
+              }
+              Get.to(() => MapScreen(
+                    students: students,
+                    tripDate: tripDate!,
+                  ));
+              // showModalBottomSheet(
+              //     context: context,
+              // isDismissible: false,
               // enableDrag: false,
-            //     builder: (context) => ConfirmPickupBottomSheet(
-            //           title: 'confirmPickup'.tr,
-            //           subTitle: 'canceled'.tr,
-            //           firstButtonFunction: () {
-            //             Get.back();
-            //             showModalBottomSheet(
-            //                 context: context,
-            // isDismissible: false,
-            //   enableDrag: false,
-            //                 builder: (context) => SelectUsersToPickupBottomSheet(
-            //                       function: () {
-            //                         Get.back();
-            //                         showModalBottomSheet(
-            //                             context: context,
-            // isDismissible: false,
-            //   enableDrag: false,
-            //                             builder: (context) =>
-            //                                 _rideAndTripEndBottomSheet());
-            //                       },
-            //                       headTitle: 'Select users to pickup'.tr,
-            //                       titles: const ['Hossam', 'Mostafa Ahmed'],
-            //                       subTitles: const [
-            //                         'Future st, building no 13',
-            //                         'Future st, building no 13'
-            //                       ],
-            //                     ));
-            //           },
-            //           secondButtonFunction: () {
-            //             Get.back();
-            //             showModalBottomSheet(
-            //                 context: context,
-            // isDismissible: false,
-            //   enableDrag: false,
-            //                 isScrollControlled: true,
-            //                 builder: (context) =>
-            //                     CancellationReasonAndReportRideBottomSheet(
-            //                       function: () {
-            //                         Get.back();
-            //                         showModalBottomSheet(
-            //                             context: context,
-            // isDismissible: false,
-            //   enableDrag: false,
-            //                             builder: (context) =>
-            //                                 (SelectUsersToPickupBottomSheet(
-            //                                   function: () {
-            //                                     Get.back();
-            //                                     showModalBottomSheet(
-            //                                         context: context,
-            // isDismissible: false,
+              //     builder: (context) => ConfirmPickupBottomSheet(
+              //           title: 'confirmPickup'.tr,
+              //           subTitle: 'canceled'.tr,
+              //           firstButtonFunction: () {
+              //             Get.back();
+              //             showModalBottomSheet(
+              //                 context: context,
+              // isDismissible: false,
+              //   enableDrag: false,
+              //                 builder: (context) => SelectUsersToPickupBottomSheet(
+              //                       function: () {
+              //                         Get.back();
+              //                         showModalBottomSheet(
+              //                             context: context,
+              // isDismissible: false,
+              //   enableDrag: false,
+              //                             builder: (context) =>
+              //                                 _rideAndTripEndBottomSheet());
+              //                       },
+              //                       headTitle: 'Select users to pickup'.tr,
+              //                       titles: const ['Hossam', 'Mostafa Ahmed'],
+              //                       subTitles: const [
+              //                         'Future st, building no 13',
+              //                         'Future st, building no 13'
+              //                       ],
+              //                     ));
+              //           },
+              //           secondButtonFunction: () {
+              //             Get.back();
+              //             showModalBottomSheet(
+              //                 context: context,
+              // isDismissible: false,
+              //   enableDrag: false,
+              //                 isScrollControlled: true,
+              //                 builder: (context) =>
+              //                     CancellationReasonAndReportRideBottomSheet(
+              //                       function: () {
+              //                         Get.back();
+              //                         showModalBottomSheet(
+              //                             context: context,
+              // isDismissible: false,
+              //   enableDrag: false,
+              //                             builder: (context) =>
+              //                                 (SelectUsersToPickupBottomSheet(
+              //                                   function: () {
+              //                                     Get.back();
+              //                                     showModalBottomSheet(
+              //                                         context: context,
+              // isDismissible: false,
               // enableDrag: false,
-            //                                         builder: (context) =>
-            //                                             _rideAndTripEndBottomSheet());
-            //                                   },
-            //                                   headTitle:
-            //                                       'Select users to pickup'.tr,
-            //                                   titles: const [
-            //                                     'Hossam',
-            //                                     'Mostafa Ahmed'
-            //                                   ],
-            //                                   subTitles: const [
-            //                                     'Future st, building no 13',
-            //                                     'Future st, building no 13'
-            //                                   ],
-            //                                 )));
-            //                       },
-            //                       headTitle: "cancelationReason".tr,
-            //                       reasons: [
-            //                         "noShow".tr,
-            //                         "userCanceledTheTrip".tr,
-            //                         "canceledByCustomer".tr,
-            //                         'other'.tr,
-            //                       ],
-            //                       reasonsSelectedIndex: 3,
-            //                     ));
-            //           },
-            //         ));
-          });
+              //                                         builder: (context) =>
+              //                                             _rideAndTripEndBottomSheet());
+              //                                   },
+              //                                   headTitle:
+              //                                       'Select users to pickup'.tr,
+              //                                   titles: const [
+              //                                     'Hossam',
+              //                                     'Mostafa Ahmed'
+              //                                   ],
+              //                                   subTitles: const [
+              //                                     'Future st, building no 13',
+              //                                     'Future st, building no 13'
+              //                                   ],
+              //                                 )));
+              //                       },
+              //                       headTitle: "cancelationReason".tr,
+              //                       reasons: [
+              //                         "noShow".tr,
+              //                         "userCanceledTheTrip".tr,
+              //                         "canceledByCustomer".tr,
+              //                         'other'.tr,
+              //                       ],
+              //                       reasonsSelectedIndex: 3,
+              //                     ));
+              //           },
+              //         ));
+            });
           }
         },
-        firstButtonText: tripIsRunning? "goToMap".tr : null,
+        firstButtonText: tripIsRunning ? "goToMap".tr : null,
         headTitle:
             '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
         formTime: fromTime,

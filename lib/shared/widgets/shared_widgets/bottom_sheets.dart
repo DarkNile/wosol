@@ -171,6 +171,7 @@ class RideStartBottomSheet extends StatelessWidget {
   final Function()? secondButtonFunction;
   final bool fromUser;
   final bool isLoading;
+  final String? tripId;
 
   const RideStartBottomSheet({
     super.key,
@@ -191,6 +192,7 @@ class RideStartBottomSheet extends StatelessWidget {
     this.companyName,
     this.companyTelephone,
     this.companyEmail,
+    this.tripId,
   });
 
   @override
@@ -200,7 +202,8 @@ class RideStartBottomSheet extends StatelessWidget {
       buttonsContainIcon: fromUser,
       showButtons: true,
       containTwoButtons: fromUser,
-      firstButtonText: firstButtonText?? (fromUser ? "I’m Ready".tr : "Start Ride".tr),
+      firstButtonText:
+          firstButtonText ?? (fromUser ? "I’m Ready".tr : "Start Ride".tr),
       secondButtonText: secondButtonText ?? 'Cancel Ride'.tr,
       firstButtonFunction: firstButtonFunction,
       secondButtonFunction: secondButtonFunction ?? () {},
@@ -229,6 +232,7 @@ class RideStartBottomSheet extends StatelessWidget {
               companyName: companyName,
               companyTelephone: companyTelephone,
               companyEmail: companyEmail,
+              tripId: tripId,
             ),
     );
   }
