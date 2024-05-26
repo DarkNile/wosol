@@ -105,7 +105,7 @@ class CustomFromToWidget extends StatelessWidget {
                     style: AppFonts.button.copyWith(color: AppColors.black800)),
               ],
             ),
-          if (tripId != null)
+          if (tripId != null && companyEmail != null)
             Text('*Trip id: $tripId',
                 style: AppFonts.button.copyWith(color: AppColors.black800)),
         ],
