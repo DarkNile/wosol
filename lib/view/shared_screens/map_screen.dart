@@ -20,9 +20,11 @@ class MapScreen extends StatefulWidget {
     super.key,
     required this.students,
     this.tripDate,
+    this.isRound = false,
   });
   final List<Student> students;
   final String? tripDate;
+  final bool isRound;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -254,7 +256,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ),
-                if (AppConstants.isCaptain && widget.students.isNotEmpty)
+                if (AppConstants.isCaptain && widget.students.isNotEmpty && !widget.isRound)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
                       alignment: AppConstants.isEnLocale

@@ -91,6 +91,7 @@ class NotificationRideRequest extends StatelessWidget {
                         endLat: trip.toLat,
                         endLong: trip.toLong,
                         isEmployee: trip.students.isEmpty,
+                        isRound: trip.coType == 'round' ? true : false,
                       );
                       mapController.liveLocation(
                         students: trip.students,
@@ -99,12 +100,14 @@ class NotificationRideRequest extends StatelessWidget {
                         endLong: trip.toLong,
                         vehicleId: trip.vehicleId,
                         isEmployee: trip.students.isEmpty,
+                        isRound: trip.coType == 'round' ? true : false,
                       );
                     });
 
                     Get.back();
                     Get.to(() => MapScreen(
                           students: trip.students,
+                      isRound: trip.coType == 'round' ? true : false,
                         ));
                   },
                 ),

@@ -30,6 +30,7 @@ class Trip {
     required this.companyEmail,
     required this.tripIsRunning,
     required this.isReachStart,
+    required this.coType,
     required this.students,
   });
 
@@ -56,6 +57,7 @@ class Trip {
   String companyEmail;
   bool tripIsRunning;
   bool isReachStart;
+  String coType;
   List<Student> students;
 
   factory Trip.fromJson(Map<String, dynamic> json) => Trip(
@@ -86,6 +88,7 @@ class Trip {
         companyEmail: json["company_email"] ?? "",
         tripIsRunning: json['is_trip_run'] ?? false,
         isReachStart: json['is_reach_start'] ?? false,
+        coType: json['co_type'] ?? "",
         students: List<Student>.from(
             json["students"].map((x) => Student.fromJson(x))),
       );
@@ -114,6 +117,7 @@ class Trip {
         "company_email": companyEmail,
         "is_trip_run": tripIsRunning,
         "is_reach_start": isReachStart,
+    'co_type' : coType,
         "students": List<dynamic>.from(students.map((x) => x.toJson())),
       };
 }

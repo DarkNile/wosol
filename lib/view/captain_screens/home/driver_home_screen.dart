@@ -79,18 +79,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   .driverNextRide[0].tripIsRunning,
                               tripDate: homeDriverController
                                   .driverNextRide[0].tripDate,
-                              isReachStart: (homeDriverController
-                                              .driverNextRide[0].tripType ==
-                                          '2' ||
+                              isReachStart: (
                                       homeDriverController
                                               .driverNextRide[0].tripType ==
                                           '3')
                                   ? homeDriverController
                                       .driverNextRide[0].isReachStart
                                   : false,
-                              isEmployee: homeDriverController
-                                          .driverNextRide[0].tripType ==
-                                      '2' ||
+                              isEmployee:
                                   homeDriverController
                                           .driverNextRide[0].tripType ==
                                       '3',
@@ -149,6 +145,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   ? homeDriverController
                                       .driverNextRide[0].companyEmail
                                   : null,
+                              coType: homeDriverController.driverNextRide[0].coType == ''? null : homeDriverController.driverNextRide[0].coType,
                               students: homeDriverController
                                   .driverNextRide[0].students,
                             );
@@ -259,6 +256,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required String? companyTelephone,
     required String? companyEmail,
     required String? tripDate,
+    required String? coType,
     required List<Student> students,
     bool isEmployee = false,
   }) async {
@@ -344,6 +342,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   isEmployee: isEmployee,
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
+                  isRound: (coType != null && coType == 'round')
                 );
                 mapController.liveLocation(
                   students: students,
@@ -352,6 +351,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
                   vehicleId: vehicleId,
+                  isRound: (coType != null && coType == 'round')
                 );
               });
               setState(() {
@@ -359,7 +359,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               });
 
               Get.back();
-              if (students.isNotEmpty) {
+              if (students.isNotEmpty && !(coType != null && coType == 'round')) {
                 mapController.nearbyStudent(
                   driverId: AppConstants.userRepository.driverData.driverId,
                   tripId: tripId,
@@ -372,6 +372,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               Get.to(() => MapScreen(
                     students: students,
                     tripDate: tripDate!,
+                isRound: (coType != null && coType == 'round'),
                   ));
             }
           } else {
@@ -428,6 +429,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   isEmployee: isEmployee,
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
+                  isRound: (coType != null && coType == 'round'),
                 );
                 mapController.liveLocation(
                   students: students,
@@ -436,6 +438,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   endLat: toLatLng.latitude.toString(),
                   endLong: toLatLng.longitude.toString(),
                   vehicleId: vehicleId,
+                  isRound: (coType != null && coType == 'round'),
                 );
               });
               setState(() {
@@ -443,7 +446,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               });
 
               Get.back();
-              if (students.isNotEmpty) {
+              if (students.isNotEmpty && !(coType != null && coType == 'round')) {
                 mapController.nearbyStudent(
                   driverId: AppConstants.userRepository.driverData.driverId,
                   tripId: tripId,
@@ -456,6 +459,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               Get.to(() => MapScreen(
                     students: students,
                     tripDate: tripDate!,
+                isRound: (coType != null && coType == 'round'),
                   ));
               // showModalBottomSheet(
               //     context: context,

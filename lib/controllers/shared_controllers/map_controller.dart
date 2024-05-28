@@ -184,6 +184,7 @@ class MapController extends GetxController {
     String vehicleId = '',
     List<Student> students = const [],
     required bool isEmployee,
+    required bool isRound,
   }) {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
@@ -209,6 +210,7 @@ class MapController extends GetxController {
           endLat: endLat,
           endLong: endLong,
           tripId: tripId,
+          isRound: isRound
         );
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
@@ -340,6 +342,7 @@ class MapController extends GetxController {
     String endLong = '',
     String tripId = '',
     required bool isEmployee,
+    required bool isRound,
     required List<Student> students,
   }) async {
     final url =
@@ -430,7 +433,7 @@ class MapController extends GetxController {
               );
             },
           );
-        } else if (_isEndTrip == false && _isConfirmUser == false) {
+        } else if (!_isEndTrip && !_isConfirmUser && !isRound) {
           _isConfirmUser = true;
           showModalBottomSheet(
             context: Get.context!,
@@ -471,17 +474,12 @@ class MapController extends GetxController {
                     );
                   }
                   update();
-                  if (AppConstants.isCaptain) {
+
                     markerIcon = await getBytesFromAsset(
                         'assets/images/location_on.png', 70);
                     currentIcon = await getBytesFromAsset(
                         'assets/images/navigation_arrow.png', 70);
-                  } else {
-                    markerIcon = await getBytesFromAsset(
-                        'assets/images/where_to_vote.png', 70);
-                    currentIcon = await getBytesFromAsset(
-                        'assets/images/person_pin_circle.png', 70);
-                  }
+
                   await getCurrentLocation().then((value) async {
                     Get.back();
                     currentLatLng = LatLng(value.latitude, value.longitude);
@@ -498,9 +496,11 @@ class MapController extends GetxController {
                       students: students,
                       endLong: endLong,
                       endLat: endLat,
+                      isRound: isRound
                     );
                     liveLocation(
                       isEmployee: isEmployee,
+                      isRound: isRound,
                     );
                   });
                 });
@@ -527,17 +527,10 @@ class MapController extends GetxController {
                       double.parse(endLong),
                     );
                   }
-                  if (AppConstants.isCaptain) {
                     markerIcon = await getBytesFromAsset(
                         'assets/images/location_on.png', 70);
                     currentIcon = await getBytesFromAsset(
                         'assets/images/navigation_arrow.png', 70);
-                  } else {
-                    markerIcon = await getBytesFromAsset(
-                        'assets/images/where_to_vote.png', 70);
-                    currentIcon = await getBytesFromAsset(
-                        'assets/images/person_pin_circle.png', 70);
-                  }
                   await getCurrentLocation().then((value) async {
                     Get.back();
                     currentLatLng = LatLng(value.latitude, value.longitude);
@@ -554,15 +547,71 @@ class MapController extends GetxController {
                       students: students,
                       endLong: endLong,
                       endLat: endLat,
+                      isRound: isRound
                     );
                     liveLocation(
                       isEmployee: isEmployee,
+                      isRound: isRound
                     );
                   });
                 });
               },
             ),
           );
+        } else if(!_isEndTrip && !_isConfirmUser && isRound){
+          _isConfirmUser = true;
+          if (students.length - 1 > currentStudentIndex.value) {
+            currentStudentIndex.value++;
+            // nearbyStudent(
+            //   driverId: AppConstants.userRepository.driverData.driverId,
+            //   tripId: tripId,
+            //   userId: students[currentStudentIndex.value].userId,
+            //   tripUserId:
+            //   students[currentStudentIndex.value].tripUserId,
+            // );
+            targetLatLng = LatLng(
+              double.parse(
+                  students[currentStudentIndex.value].pickupLat),
+              double.parse(
+                  students[currentStudentIndex.value].pickupLong),
+            );
+          } else {
+            currentStudentIndex.value++;
+            targetLatLng = LatLng(
+              double.parse(endLat),
+              double.parse(endLong),
+            );
+          }
+          update();
+
+          markerIcon = await getBytesFromAsset(
+              'assets/images/location_on.png', 70);
+          currentIcon = await getBytesFromAsset(
+              'assets/images/navigation_arrow.png', 70);
+
+          await getCurrentLocation().then((value) async {
+            Get.back();
+            currentLatLng = LatLng(value.latitude, value.longitude);
+            await getCurrentTargetPolylinePoints();
+            cameraPosition = CameraPosition(
+              target: currentLatLng,
+              zoom: 12,
+            );
+            getEstimatedTime(
+                isEmployee: isEmployee,
+                originLatLng: currentLatLng,
+                destinationLatLng: targetLatLng,
+                tripId: tripId,
+                students: students,
+                endLong: endLong,
+                endLat: endLat,
+                isRound: isRound
+            );
+            liveLocation(
+              isEmployee: isEmployee,
+              isRound: isRound,
+            );
+          });
         }
       } else {
         _isConfirmUser = false;
