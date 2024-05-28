@@ -96,9 +96,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                               tripId:
                                   homeDriverController.driverNextRide[0].tripId,
                               fromLatLng: LatLng(
-                                double.parse(homeDriverController
+                                homeDriverController
+                                    .driverNextRide[0].fromLat == '' ? 0 : double.parse(homeDriverController
                                     .driverNextRide[0].fromLat),
-                                double.parse(homeDriverController
+                                homeDriverController
+                                    .driverNextRide[0].fromLong == '' ? 0 :double.parse(homeDriverController
                                     .driverNextRide[0].fromLong),
                               ),
                               toLatLng: LatLng(

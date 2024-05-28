@@ -125,7 +125,9 @@ class _MapScreenState extends State<MapScreen> {
                     //   ),
                   },
                   onMapCreated: (GoogleMapController controller) {
-                    mapController.googleMapController.complete(controller);
+                    if(!mapController.googleMapController.isCompleted) {
+                      mapController.googleMapController.complete(controller);
+                    }
                   },
                 ),
                 if (AppConstants.isCaptain)
@@ -188,7 +190,7 @@ class _MapScreenState extends State<MapScreen> {
                                   child: widget.students.isNotEmpty &&
                                           (widget.students.length - 1 >
                                               mapController
-                                                  .currentStudentIndex.value)
+                                                  .currentStudentIndex.value) && !widget.isRound
                                       ? Text(
                                           "${"studentName".tr}: ${widget.students[mapController.currentStudentIndex.value].userFname} ${widget.students[mapController.currentStudentIndex.value].userLname}",
                                           style: AppFonts.medium,
