@@ -65,7 +65,7 @@ class NotificationRideRequest extends StatelessWidget {
                       requestId: driverLayoutController
                           .notificationRequests.first.requestId,
                     );
-                    if (AppConstants.isCaptain) {
+                    if (AppConstants.userType == 'Driver') {
                       mapController.markerIcon =
                           await mapController.getBytesFromAsset(
                               'assets/images/location_on.png', 70);

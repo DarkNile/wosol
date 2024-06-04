@@ -30,7 +30,7 @@ class TermsAndConditions extends StatelessWidget {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
                 child: Text(
-                    AppConstants.isCaptain? profileController.driverTerms : profileController.userTerms,
+                    profileController.terms,
                     textAlign: TextAlign.justify,
                     style: AppFonts.button.copyWith(
                       color: AppColors.black,

@@ -107,21 +107,27 @@ class ProfileCard extends StatelessWidget {
                     );
                   }));
                 },
-                title: AppConstants.isCaptain
+                title: AppConstants.userType == 'Driver'
                     ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
+                : AppConstants.userType == 'Employee'
+                    ? "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}"
                     : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
-                subTitle: AppConstants.isCaptain
+                subTitle: AppConstants.userType == 'Driver'
                     ? AppConstants.userRepository.driverData.userEmail
+                : AppConstants.userType == 'Employee'
+                    ? AppConstants.userRepository.employeeData.userEmail
                     : AppConstants.userRepository.userData.userEmail,
                 isProfile: true,
               );
             }),
           ),
+          if(AppConstants.userType != 'Employee')
           const SizedBox(
             height: 24,
           ),
+          if(AppConstants.userType != 'Employee')
           Container(
-            height: AppConstants.isCaptain ? 195 : 260,
+            height: AppConstants.userType == 'Driver' ? 195 : 260,
             decoration: BoxDecoration(
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
@@ -134,21 +140,21 @@ class ProfileCard extends StatelessWidget {
                   color: AppColors.darkBlue100,
                 );
               },
-              itemCount: AppConstants.isCaptain
+              itemCount: AppConstants.userType == 'Driver'
                   ? captainProfileItems.length
                   : userProfileItems.length,
               itemBuilder: (context, index) {
                 return CustomProfileRowWidget(
-                  image: AppConstants.isCaptain
+                  image: AppConstants.userType == 'Driver'
                       ? captainProfileItems[index].imagePath
                       : userProfileItems[index].imagePath,
-                  title: AppConstants.isCaptain
+                  title: AppConstants.userType == 'Driver'
                       ? captainProfileItems[index].title
                       : userProfileItems[index].title,
-                  subTitle: AppConstants.isCaptain
+                  subTitle: AppConstants.userType == 'Driver'
                       ? captainProfileItems[index].subTitle
                       : userProfileItems[index].subTitle,
-                  onTap: AppConstants.isCaptain
+                  onTap: AppConstants.userType == 'Driver'
                       ? captainProfileItems[index].onTap
                       : userProfileItems[index].onTap,
                   isProfile: false,

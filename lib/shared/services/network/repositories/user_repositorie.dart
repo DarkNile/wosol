@@ -61,18 +61,50 @@ class UserRepository extends GetxService {
     drivingLicence: '',
   );
 
+  DriverData employeeData = DriverData(
+    driverId: "",
+    firstName: "",
+    lastName: "",
+    telephone: "",
+    userEmail: "",
+    userName: "",
+    password: "",
+    birthDate: "",
+    idNo: "",
+    idEndDate: "",
+    licenseType: "",
+    licenseEndDate: "",
+    licenseCity: "",
+    vehicles: "",
+    active: "",
+    lastLogin: "",
+    userAgent: "",
+    loginType: "",
+    token: "",
+    userImage: "",
+    drivingLicence: '',
+  );
+
   Future<Response> signIn({
     required String email,
     required String password,
+    required bool isEmployee,
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: 'login',
+        url: isEmployee? 'employee/login' : 'login',
         data: {
-          'email': email,
+          if(!isEmployee)
+            'email': email,
+          if(isEmployee)
+            'mobile': email,
           'password': password,
         },
       );
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%');
+      print(isEmployee);
+      print(response.statusCode);
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%');
       if (response.statusCode == 200) {
         return response;
       } else {
@@ -85,12 +117,16 @@ class UserRepository extends GetxService {
 
   Future<Response> forgetPassword({
     required String email,
+  required bool fromEmployee
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: 'forget_password',
+        url: fromEmployee? 'employee/forget_password' : 'forget_password',
         data: {
-          'email': email,
+          if(!fromEmployee)
+            'email': email,
+          if(fromEmployee)
+            'mobile': email,
         },
       );
       if (response.statusCode == 200) {
@@ -104,18 +140,20 @@ class UserRepository extends GetxService {
   }
 
   Future<Response> changeAuthPassword({
-    required bool isDriver,
+    required String userType,
     required String id,
     required String activationCode,
     required String newPassword,
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: isDriver? 'forget_password/driver_change_password' : 'forget_password/student_change_password',
+        url: userType == 'driver'? 'forget_password/driver_change_password' : userType == 'employee'? 'employee/check_otp' : 'forget_password/student_change_password',
         data: {
-          if(isDriver)
+          if(userType == 'driver')
             "driver_id": id,
-          if(!isDriver)
+          if(userType == 'employee')
+            "member_id": id,
+          if(userType == 'student')
             "student_id": id,
           "activation_code": activationCode,
           "new_password": newPassword,
@@ -137,11 +175,13 @@ class UserRepository extends GetxService {
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: AppConstants.isCaptain? 'driver/account/change_password' : 'student/account/change_password',
+        url: AppConstants.userType == 'Driver'? 'driver/account/change_password' : AppConstants.userType == 'Employee'? 'employee/password_change' : 'student/account/change_password',
         data: {
-          if(AppConstants.isCaptain)
+          if(AppConstants.userType == 'Driver')
             "driver_id": driverData.driverId,
-          if(!AppConstants.isCaptain)
+          if(AppConstants.userType == 'Employee')
+            "member_id": employeeData.driverId,
+          if(AppConstants.userType == 'Student')
             "user_id": userData.userId,
           "current_password": currentPassword,
           "new_password": newPassword,

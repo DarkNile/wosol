@@ -17,14 +17,14 @@ void main() {
     test('Get Notifications', () async {
       DioHelper.init();
       // await TripHistoryStudentController().getTripsHistory();
-      await NotificationController().getNotifications(isCaptain: false);
+      await NotificationController().getNotifications();
     });
 
     test('Notification Set Read', () async {
       DioHelper.init();
       // await TripHistoryStudentController().getTripsHistory();
       await NotificationController()
-          .notificationSetRead(notificationId: '1', isCaptain: true);
+          .notificationSetRead(notificationId: '1',);
     });
   });
 

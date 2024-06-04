@@ -50,9 +50,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: AppConstants.isCaptain,
+      canPop: AppConstants.userType == 'Driver',
       onPopInvoked: (v) {
-        if (AppConstants.isCaptain) {
+        if (AppConstants.userType == 'Driver') {
           homeDriverController.getTrips(context);
         }
       },
@@ -130,7 +130,7 @@ class _MapScreenState extends State<MapScreen> {
                     }
                   },
                 ),
-                if (AppConstants.isCaptain)
+                if (AppConstants.userType == 'Driver')
                   Obx(
                     () => Material(
                       color: Colors.transparent,
@@ -258,7 +258,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ),
-                if (AppConstants.isCaptain && widget.students.isNotEmpty && !widget.isRound)
+                if (AppConstants.userType == 'Driver' && widget.students.isNotEmpty && !widget.isRound)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
                       alignment: AppConstants.isEnLocale

@@ -14,16 +14,38 @@ import '../../../view/user_screens/user_layout_screen.dart';
 
 class AuthController extends GetxController {
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   TextFieldValidation emailValidation = TextFieldValidation.normal;
+  TextFieldValidation phoneValidation = TextFieldValidation.normal;
   TextFieldValidation passwordValidate = TextFieldValidation.normal;
 
   void clearData() {
     emailController = TextEditingController();
+    phoneController = TextEditingController();
     passwordController = TextEditingController();
     emailValidation = TextFieldValidation.normal;
+    phoneValidation = TextFieldValidation.normal;
     passwordValidate = TextFieldValidation.normal;
+  }
+
+  void checkPhoneValidation() {
+    if (phoneController.text.isEmpty) {
+      phoneValidation = TextFieldValidation.notValid;
+    } else {
+      if (isValidSaudiPhoneNumber("+966${phoneController.text}")) {
+        phoneValidation = TextFieldValidation.valid;
+      } else {
+        phoneValidation = TextFieldValidation.notValid;
+      }
+    }
+    update();
+  }
+
+  bool isValidSaudiPhoneNumber(String phoneNumber) {
+    RegExp saudiRegex = RegExp(r'^(\+966|00966|0)(5[0-9]{8})$');
+    return saudiRegex.hasMatch(phoneNumber);
   }
 
   void checkEmailValidation() {
@@ -55,15 +77,16 @@ class AuthController extends GetxController {
 
   RxBool isLoginLoading = false.obs;
 
-  Future<void> signInAPI(BuildContext context) async {
+  Future<void> signInAPI(BuildContext context, {required bool isEmployee}) async {
     isLoginLoading.value = true;
     try {
-      if (emailValidation == TextFieldValidation.valid &&
+      if ((isEmployee? (phoneValidation == TextFieldValidation.valid) : (emailValidation == TextFieldValidation.valid)) &&
           passwordValidate == TextFieldValidation.valid) {
         await AppConstants.userRepository
             .signIn(
-          email: emailController.text,
+          email: isEmployee? phoneController.text : emailController.text,
           password: passwordController.text,
+          isEmployee: isEmployee
         )
             .then((response) {
           isLoginLoading.value = false;
@@ -75,10 +98,10 @@ class AuthController extends GetxController {
             CacheHelper.setData(key: 'token', value: value.data.token);
             CacheHelper.setData(
               key: 'userType',
-              value: false,
+              value: 'Student',
             );
-            AppConstants.isCaptain = false;
-          } else {
+            AppConstants.userType = 'Student';
+          } else if (response.data['data']['login_type'] == 'Driver'){
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.driverData = value.data;
             CacheHelper.setData(
@@ -86,13 +109,24 @@ class AuthController extends GetxController {
             CacheHelper.setData(key: 'token', value: value.data.token);
             CacheHelper.setData(
               key: 'userType',
-              value: true,
+              value: 'Driver',
             );
-            AppConstants.isCaptain = true;
+            AppConstants.userType = 'Driver';
+          } else if (response.data['data']['login_type'] == 'Employee'){
+            DriverModel value = DriverModel.fromJson(response.data);
+            AppConstants.userRepository.employeeData = value.data;
+            CacheHelper.setData(
+                key: 'EmployeeData', value: jsonEncode(value.data.toJson()));
+            CacheHelper.setData(key: 'token', value: value.data.token);
+            CacheHelper.setData(
+              key: 'userType',
+              value: 'Employee',
+            );
+            AppConstants.userType = 'Employee';
           }
-          Get.to(() => AppConstants.isCaptain
-              ? const DriverLayoutScreen()
-              : const UserLayoutScreen());
+          Get.to(() => AppConstants.userType == 'Student'
+              ? const UserLayoutScreen()
+              : const DriverLayoutScreen());
         });
       }
     } catch (e) {

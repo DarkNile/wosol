@@ -7,13 +7,15 @@ import 'package:wosol/view/shared_screens/auth/forget_password_screen.dart';
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({
     super.key,
+    required this.fromEmployee
   });
+  final bool fromEmployee;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.to(() => ForgetPasswordScreen());
+        Get.to(() => ForgetPasswordScreen(fromEmployee: fromEmployee,));
       },
       child: Text(
         "Forgot Password?".tr,

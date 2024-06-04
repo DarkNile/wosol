@@ -14,7 +14,7 @@ class AppConstants {
   static double screenHeight(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
-  static bool isCaptain = true;
+  static String userType = 'Driver';
   static String userId = '247';
   static String token = '';
   static bool isFirst = true;

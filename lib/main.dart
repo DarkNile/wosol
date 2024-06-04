@@ -32,10 +32,13 @@ void main() async {
   );
   AppConstants.token = await CacheHelper.getData(key: 'token') ?? '';
   AppConstants.isFirst = await CacheHelper.getData(key: 'isFirst') ?? true;
-  AppConstants.isCaptain = await CacheHelper.getData(key: 'userType') ?? true;
-  if (AppConstants.isCaptain && AppConstants.token.isNotEmpty) {
+  AppConstants.userType = await CacheHelper.getData(key: 'userType') ?? '';
+  if (AppConstants.userType == 'Driver' && AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.driverData = DriverData.fromJson(
         jsonDecode(await CacheHelper.getData(key: 'DriverData')));
+  }else if (AppConstants.userType == 'Employee' && AppConstants.token.isNotEmpty) {
+    AppConstants.userRepository.employeeData = DriverData.fromJson(
+        jsonDecode(await CacheHelper.getData(key: 'EmployeeData')));
   } else if (AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.userData = UserData.fromJson(
         jsonDecode(await CacheHelper.getData(key: 'UserData')));
@@ -117,9 +120,8 @@ class _MyAppState extends State<MyApp> {
       fallbackLocale: const Locale("en"),
       home: AppConstants.token.isEmpty
           ? LoginScreen()
-          : (AppConstants.isCaptain
-              ? const DriverLayoutScreen()
-              : UserLayoutScreen()),
+          : (AppConstants.userType == 'Student'
+              ? const UserLayoutScreen() : const DriverLayoutScreen()),
     );
   }
 }

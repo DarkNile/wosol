@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
@@ -10,7 +11,8 @@ import '../../../controllers/shared_controllers/auth_controllers/forget_password
 import '../../../shared/constants/constants.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
-  ForgetPasswordScreen({super.key});
+  ForgetPasswordScreen({super.key, required this.fromEmployee});
+  final bool fromEmployee;
 
   final ForgetPasswordController forgetPasswordController = Get.put(ForgetPasswordController())..clearData();
 
@@ -86,7 +88,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Email".tr,
+                      fromEmployee? 'Phone Number'.tr : "Email".tr,
                       style: AppFonts.style12Urb.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.darkBlue500Base),
@@ -94,19 +96,59 @@ class ForgetPasswordScreen extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
+                    if(!fromEmployee)
                     GetBuilder<ForgetPasswordController>(
                       builder: (_) {
                         return EmailTextField(
                             controller: forgetPasswordController.emailController,
                             onSubmit: (String value) {},
                             onChange: (String value) {
-                              forgetPasswordController.checkEmailValidation();
+                                forgetPasswordController.checkEmailValidation();
                             },
                             hint: 'Email'.tr,
                             label: '',
+                            validateText: 'emailIsntValid'.tr,
                             fieldValidation: forgetPasswordController.emailValidation);
                       },
                     ),
+
+                    if(fromEmployee)
+                      GetBuilder<ForgetPasswordController>(
+                        builder: (_) {
+                          return CustomTextField(
+                            textEditingController:
+                            forgetPasswordController.phoneController,
+                            prefixIcon: Padding(
+                              padding: AppConstants.edge(padding: const EdgeInsets.symmetric(horizontal: 8)),
+                              child: Icon(
+                                Icons.phone,
+                                color: forgetPasswordController.phoneController.text.isEmpty? AppColors.darkBlue400 : AppColors.logo,
+                                size: 24,
+                              ),
+                            ),
+                            fillColor: forgetPasswordController.phoneController.text.isEmpty? AppColors.white
+                                : AppColors.orange50,
+                            onSubmit: (String value) {},
+                            onChange: (String value) {
+                              forgetPasswordController.checkPhoneValidation();
+                            },
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(
+                                  RegExp(r'[\s\-\.\,]')),
+                            ],
+                            textInputType: const TextInputType.numberWithOptions(
+                              decimal: false,
+                              signed: false,
+                            ),
+                            validateText: "phoneIsntValid".tr,
+                            hint: 'Phone Number'.tr,
+                            label: '',
+                            validate: !(forgetPasswordController.phoneValidation ==
+                                TextFieldValidation.notValid),
+                            expands: false,
+                          );
+                        },
+                      ),
                   ],
                 ),
                 const SizedBox(
@@ -116,7 +158,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   return DefaultButton(
                     loading: forgetPasswordController.isWaitingOtpLoading.value,
                     function: () {
-                      forgetPasswordController.getOtpAPI(context);
+                      forgetPasswordController.getOtpAPI(context, fromEmployee: fromEmployee);
                     },
                     text: "Send".tr,
                     borderRadius: 8,

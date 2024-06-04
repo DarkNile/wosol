@@ -12,6 +12,8 @@ import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
 import '../../../controllers/shared_controllers/profile_controller.dart';
+import '../../../models/driver_model.dart';
+import '../../../models/user_model.dart';
 import '../../../shared/constants/constants.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -24,12 +26,16 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   ProfileController profileController =
       Get.put<ProfileController>(ProfileController());
-  String userImage = (AppConstants.isCaptain
+  String userImage = (AppConstants.userType == 'Driver'
               ? AppConstants.userRepository.driverData.userImage
+  : AppConstants.userType == 'Employee'
+      ? AppConstants.userRepository.employeeData.userImage
               : AppConstants.userRepository.userData.userImage)
           .isNotEmpty
-      ? (AppConstants.isCaptain
-          ? AppConstants.userRepository.driverData.userImage
+      ? (AppConstants.userType == 'Driver'
+          ? AppConstants.userRepository.driverData.userImage :
+  AppConstants.userType == 'Employee'
+      ? AppConstants.userRepository.employeeData.userImage
           : AppConstants.userRepository.userData.userImage)
       : 'assets/images/user.png';
 
@@ -40,8 +46,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomHeader(
-              header: AppConstants.isCaptain
-                  ? AppConstants.userRepository.driverData.firstName
+              header: AppConstants.userType == 'Driver'
+                  ? AppConstants.userRepository.driverData.firstName :
+              AppConstants.userType == 'Employee'
+                  ? AppConstants.userRepository.employeeData.firstName
                   : AppConstants.userRepository.userData.userFname,
               svgIcon: 'assets/icons/logo.svg',
               iconWidth: 40,
@@ -65,14 +73,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 GetBuilder<ProfileController>(
                     id: "imageUpdated",
                     builder: (logic) {
-                      userImage = (AppConstants.isCaptain
+                      userImage = (AppConstants.userType == 'Driver'
                                   ? AppConstants
-                                      .userRepository.driverData.userImage
+                                      .userRepository.driverData.userImage :
+                      AppConstants.userType == 'Employee'
+                          ? AppConstants
+                          .userRepository.employeeData.userImage
                                   : AppConstants
                                       .userRepository.userData.userImage)
                               .isNotEmpty
-                          ? (AppConstants.isCaptain
-                              ? AppConstants.userRepository.driverData.userImage
+                          ? (AppConstants.userType == 'Driver'
+                              ? AppConstants.userRepository.driverData.userImage :
+                      AppConstants.userType == 'Employee'
+                          ? AppConstants.userRepository.employeeData.userImage
                               : AppConstants.userRepository.userData.userImage)
                           : 'assets/images/user.png';
                       return ProfileCard(
@@ -103,6 +116,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 DefaultRowButton(
                   function: () async {
                     await CacheHelper.clearAll();
+                    AppConstants.userRepository.userData = UserData(
+                      userId: '',
+                      userType: '',
+                      userFname: '',
+                      userLname: '',
+                      companyName: '',
+                      userEmail: '',
+                      userPass: '',
+                      telephone: '',
+                      supervisorId: '',
+                      userNationality: '',
+                      nationalId: '',
+                      gender: '',
+                      address: '',
+                      userZone: '',
+                      userCity: '',
+                      userDistrict: '',
+                      parentName: '',
+                      parentType: '',
+                      parntNationalId: '',
+                      parentPhone: '',
+                      parentEmail: '',
+                      dateAdded: '',
+                      lastLogin: '',
+                      userAgent: '',
+                      loginType: '',
+                      token: '',
+                      userImage: "",
+                    );
+
+                    AppConstants.userRepository.driverData = DriverData(
+                      driverId: "",
+                      firstName: "",
+                      lastName: "",
+                      telephone: "",
+                      userEmail: "",
+                      userName: "",
+                      password: "",
+                      birthDate: "",
+                      idNo: "",
+                      idEndDate: "",
+                      licenseType: "",
+                      licenseEndDate: "",
+                      licenseCity: "",
+                      vehicles: "",
+                      active: "",
+                      lastLogin: "",
+                      userAgent: "",
+                      loginType: "",
+                      token: "",
+                      userImage: "",
+                      drivingLicence: '',
+                    );
+
+                    AppConstants.userRepository.employeeData = DriverData(
+                      driverId: "",
+                      firstName: "",
+                      lastName: "",
+                      telephone: "",
+                      userEmail: "",
+                      userName: "",
+                      password: "",
+                      birthDate: "",
+                      idNo: "",
+                      idEndDate: "",
+                      licenseType: "",
+                      licenseEndDate: "",
+                      licenseCity: "",
+                      vehicles: "",
+                      active: "",
+                      lastLogin: "",
+                      userAgent: "",
+                      loginType: "",
+                      token: "",
+                      userImage: "",
+                      drivingLicence: '',
+                    );
+
                     Get.offAll(() => LoginScreen());
                   },
                   text: "Logout".tr,

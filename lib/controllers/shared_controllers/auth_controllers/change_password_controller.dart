@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
+import 'package:wosol/view/shared_screens/auth/employee_login_screen.dart';
 import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
 import '../../../shared/constants/constants.dart';
@@ -42,7 +43,7 @@ class ChangePasswordController extends GetxController {
 
   RxBool isChangePasswordLoading = false.obs;
 
-  Future<void> changeAuthPasswordAPI(BuildContext context, bool isDriver,
+  Future<void> changeAuthPasswordAPI(BuildContext context, String userType,
       String activationCode, String id) async {
     isChangePasswordLoading.value = true;
     try {
@@ -50,7 +51,7 @@ class ChangePasswordController extends GetxController {
           confirmPasswordValidate == TextFieldValidation.valid) {
         await AppConstants.userRepository
             .changeAuthPassword(
-          isDriver: isDriver,
+          userType: userType,
           id: id,
           activationCode: activationCode,
           newPassword: passwordController.text,
@@ -61,7 +62,7 @@ class ChangePasswordController extends GetxController {
           print('*********************');
           print(response.data);
           print('*********************');
-          Get.offAll(() => LoginScreen());
+          Get.offAll(() => userType == 'employee'? EmployeeLoginScreen() : LoginScreen());
         });
       }
     } catch (e) {
