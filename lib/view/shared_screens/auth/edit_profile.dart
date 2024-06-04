@@ -63,9 +63,11 @@ class EditProfile extends StatelessWidget {
                                 height: 8,
                               ),
                               CustomTextField(
-                                hint: AppConstants.isCaptain
+                                hint: AppConstants.userType == 'Driver'
                                     ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
-                                    : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
+                                    : AppConstants.userType == 'Student'?
+                                "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}"
+                                : "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}",
                                 validate: true,
                                 enabled: false,
                                 fillColor: AppColors.dividerColor,
@@ -128,11 +130,14 @@ class EditProfile extends StatelessWidget {
                                 label: '',
                                 height: 42,
                                 expands: false,
-                                hint: AppConstants.isCaptain
+                                hint: AppConstants.userType == 'Driver'
                                     ? AppConstants
                                         .userRepository.driverData.userEmail
-                                    : AppConstants
-                                        .userRepository.userData.userEmail,
+                                    : AppConstants.userType == 'Student'
+                                    ? AppConstants
+                                        .userRepository.userData.userEmail
+                                : AppConstants
+                                    .userRepository.employeeData.userEmail,
                                 hintStyle: AppFonts.small.copyWith(
                                   color: AppColors.darkBlue400,
                                 ),

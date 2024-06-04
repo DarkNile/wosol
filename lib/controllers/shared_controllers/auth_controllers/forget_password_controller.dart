@@ -10,14 +10,36 @@ import '../../../shared/widgets/shared_widgets/snakbar.dart';
 
 class ForgetPasswordController extends GetxController {
   TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController otpController = TextEditingController();
 
   TextFieldValidation emailValidation = TextFieldValidation.normal;
+  TextFieldValidation phoneValidation = TextFieldValidation.normal;
 
   void clearData() {
     emailController = TextEditingController();
+    phoneController = TextEditingController();
     otpController = TextEditingController();
     emailValidation = TextFieldValidation.normal;
+    phoneValidation = TextFieldValidation.normal;
+  }
+
+  void checkPhoneValidation() {
+    if (phoneController.text.isEmpty) {
+      phoneValidation = TextFieldValidation.notValid;
+    } else {
+      if (isValidSaudiPhoneNumber("+966${phoneController.text}")) {
+        phoneValidation = TextFieldValidation.valid;
+      } else {
+        phoneValidation = TextFieldValidation.notValid;
+      }
+    }
+    update();
+  }
+
+  bool isValidSaudiPhoneNumber(String phoneNumber) {
+    RegExp saudiRegex = RegExp(r'^(\+966|00966|0)(5[0-9]{8})$');
+    return saudiRegex.hasMatch(phoneNumber);
   }
 
   void checkEmailValidation() {
@@ -43,19 +65,27 @@ class ForgetPasswordController extends GetxController {
   String? otpCode;
   String? id;
   String? type;
-  Future<void> getOtpAPI(BuildContext context) async {
+  Future<void> getOtpAPI(BuildContext context, {required bool fromEmployee}) async {
     isWaitingOtpLoading.value = true;
     try {
-      if (emailValidation == TextFieldValidation.valid) {
+      if (fromEmployee? (phoneValidation == TextFieldValidation.valid) : (emailValidation == TextFieldValidation.valid)) {
         await AppConstants.userRepository
             .forgetPassword(
-          email: emailController.text,
+          email: fromEmployee? phoneController.text : emailController.text,
+          fromEmployee: fromEmployee
         )
             .then((response) {
           isWaitingOtpLoading.value = false;
-          otpCode = response.data['data']['code'].toString();
-          type = response.data['data']['type'];
-          id = type == 'student'? response.data['data']['student_id'] : response.data['data']['driver_id'];
+          if(fromEmployee){
+            otpCode = response.data['data']['activation_code'].toString();
+            type = 'employee';
+            id = response.data['data']['member_id'];
+          } else{
+            otpCode = response.data['data']['code'].toString();
+            type = response.data['data']['type'];
+            id = type == 'student'? response.data['data']['student_id'] : response.data['data']['driver_id'];
+          }
+
           print('*********************');
           print(response.data);
           print('*********************');
@@ -79,7 +109,7 @@ class ForgetPasswordController extends GetxController {
     print(otpCode);
     print(otpController.text);
     if(otpCode == otpController.text){
-      Get.to(()=> ChangePasswordScreen(fromProfile: false, id: id!, isDriver: type == 'student'? false : true, activationCode: otpCode!,));
+      Get.to(()=> ChangePasswordScreen(fromProfile: false, id: id!, userType: type, activationCode: otpCode!,));
     }else{
       defaultErrorSnackBar(
         context: context,

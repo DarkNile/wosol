@@ -14,7 +14,7 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NotificationController notifyController = Get.put(NotificationController())
-      ..getNotifications(isCaptain: AppConstants.isCaptain);
+      ..getNotifications();
     return SafeArea(
       child: Column(
         children: [
@@ -67,7 +67,7 @@ class NotificationsScreen extends StatelessWidget {
                                         .isNotificationsLoading.value = true;
                                     await notifyController.notificationSetRead(
                                         notificationId: notification.nId!,
-                                        isCaptain: AppConstants.isCaptain);
+                                        );
                                     notifyController.notifications[index].read =
                                         "1";
                                     notifyController

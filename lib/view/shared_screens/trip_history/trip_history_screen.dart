@@ -20,7 +20,7 @@ class TripHistoryScreen extends StatelessWidget {
       Get.put(TripHistoryStudentController());
 
   Future<void> getTrips() async {
-    if (AppConstants.isCaptain) {
+    if (AppConstants.userType == 'Driver') {
       tripHistoryDriverController.getTripsHistory();
     } else {
       tripHistoryStudentController.getTripsHistory();
@@ -30,7 +30,7 @@ class TripHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log("Trip History Screen");
-    AppConstants.isCaptain ? log("Captain") : log("Student");
+    AppConstants.userType == 'Driver' ? log("Captain") : AppConstants.userType == 'Employee' ? log("Employee") : log("Student");
     getTrips();
     return SafeArea(
       child: Column(
@@ -79,24 +79,24 @@ class TripHistoryScreen extends StatelessWidget {
                           bottom: 16,
                         ),
                         itemBuilder: (context, index) {
-                          String dateString = AppConstants.isCaptain
+                          String dateString = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].tripDate!
                               : tripHistoryStudentController
                                   .tripsList[index].subData![0].tripDate!;
-                          String time = AppConstants.isCaptain
+                          String time = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].tripTime!
                               : tripHistoryStudentController
                                   .tripsList[index].subData![0].tripTime!;
 
-                          String toCity = AppConstants.isCaptain
+                          String toCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].universityName!
                               : tripHistoryStudentController
                                   .tripsList[index].subData![0].universityName!;
 
-                          String fromCity = AppConstants.isCaptain
+                          String fromCity = AppConstants.userType == 'Driver'
                               ? ''
                               : tripHistoryStudentController
                                   .tripsList[index].subData![0].from!;
@@ -111,7 +111,7 @@ class TripHistoryScreen extends StatelessWidget {
                             toCity: toCity,
                             buttonText: 'rideDetails'.tr,
                             onTap: () {
-                              if (AppConstants.isCaptain) {
+                              if (AppConstants.userType == 'Driver') {
                                 Get.to(() => const CaptainTripDetailsScreen());
                               } else {
                                 Get.to(() => const UserTripDetailsScreen());
@@ -122,7 +122,7 @@ class TripHistoryScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12,
                         ),
-                        itemCount: AppConstants.isCaptain
+                        itemCount: AppConstants.userType == 'Driver'
                             ? tripHistoryDriverController.tripsList.length
                             : tripHistoryStudentController.tripsList.length,
                       ),

@@ -203,4 +203,8 @@ const Map<String, String> en = {
   "startPointSBMsg" : "Be ready to receive passengers",
   "remainingDays" : "Remaining days",
   "tripEnded" : "Trip has been Ended",
+  "loginAsEmployee" : "Login as employee",
+  "loginAsDriverOrUser" : "Login as driver or user",
+  "phoneIsntValid": "Phone number isn't valid",
+  "emailIsntValid": "Email number isn't valid",
 };

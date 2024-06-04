@@ -37,6 +37,8 @@ class EmailTextField extends StatefulWidget {
   final Function(PointerDownEvent)? onTapOutside;
   final InputBorder? border;
 
+  final Widget? prefixIcon;
+
   const EmailTextField({
     super.key,
     this.focusNode,
@@ -60,6 +62,7 @@ class EmailTextField extends StatefulWidget {
     required this.fieldValidation,
     this.label = "Email",
     this.onTapOutside,
+    this.prefixIcon,
   });
 
   @override
@@ -130,7 +133,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     : isTextFieldEmpty
                         ? AppColors.white
                         : AppColors.orange50,
-                prefixIcon: widget.isWithIcon
+                prefixIcon: widget.prefixIcon?? (widget.isWithIcon
                     ? FittedBox(
                         fit: BoxFit.scaleDown,
                         child: SvgPicture.asset(
@@ -143,7 +146,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
                                   AppColors.logo, BlendMode.srcIn),
                         ),
                       )
-                    : null,
+                    : null),
                 labelText: widget.label,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelStyle: AppFonts.medium.copyWith(
@@ -586,17 +589,16 @@ class CustomTextField extends StatelessWidget {
                   hintText: hint,
                   hintStyle: hintStyle ??
                       AppFonts.small.copyWith(
-                        fontSize: 16,
-                        color: AppColors.black,
-                      ),
+                fontSize: 16,
+                  color: AppColors.darkBlue400,
+                ),
                   contentPadding: contentPadding ??
                       AppConstants.edge(
-                          padding: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 12,
-                        bottom: 16,
-                      )),
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          bottom: 18,
+                        ),
+                      ),
                   border: border ??
                       OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -617,7 +619,7 @@ class CustomTextField extends StatelessWidget {
                   enabledBorder: (!validate)
                       ? OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: AppColors.logo,
+                            color: AppColors.error600,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         )
@@ -625,7 +627,7 @@ class CustomTextField extends StatelessWidget {
                           OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
-                              color: AppColors.logo,
+                              color: AppColors.darkBlue200,
                             ),
                           ),
                 ),
@@ -635,12 +637,14 @@ class CustomTextField extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                   top: 8,
+                  left: 20,
+                  right: 20
                 ),
                 child: Text(
                   validateText,
                   style: AppFonts.small.copyWith(
                     fontSize: 14,
-                    color: AppColors.logo,
+                    color: AppColors.error600,
                   ),
                 ),
               ),

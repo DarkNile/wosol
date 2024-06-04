@@ -41,27 +41,38 @@ class _PersonalPictureState extends State<PersonalPicture> {
     formData = FormData.fromMap({
       "image": await MultipartFile.fromFile(selectedProfileImage.path,
           filename: fileName),
-      if (!AppConstants.isCaptain)
+      if (AppConstants.userType == 'Student')
         "user_id": AppConstants.userRepository.userData.userId,
-      if (AppConstants.isCaptain)
+      if (AppConstants.userType == 'Driver')
         "driver_id": AppConstants.userRepository.driverData.driverId,
+      if (AppConstants.userType == 'Employee')
+        "member_id": AppConstants.userRepository.employeeData.driverId,
     });
     try {
       Response response = await DioHelper.postData(
-        url: AppConstants.isCaptain
+        url: AppConstants.userType == 'Driver'
             ? "driver/update_image"
+            : AppConstants.userType == 'Employee'?
+            'employee/update_image'
             : "student/update_image",
         data: {},
         dataObject: formData,
       );
       if (response.statusCode == 200) {
-        if (AppConstants.isCaptain) {
+        if (AppConstants.userType == 'Driver') {
           AppConstants.userRepository.driverData.userImage =
               response.data["data"]["file_name"];
           CacheHelper.setData(
               key: 'DriverData',
               value:
                   jsonEncode(AppConstants.userRepository.driverData.toJson()));
+        } else if (AppConstants.userType == 'Employee') {
+          AppConstants.userRepository.employeeData.userImage =
+          response.data["data"]["file_name"];
+          CacheHelper.setData(
+              key: 'EmployeeData',
+              value:
+              jsonEncode(AppConstants.userRepository.employeeData.toJson()));
         } else {
           AppConstants.userRepository.userData.userImage =
               response.data["data"]["file_name"];
@@ -99,16 +110,22 @@ class _PersonalPictureState extends State<PersonalPicture> {
                     height: 96,
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        (AppConstants.isCaptain
+                        (AppConstants.userType == 'Driver'
                                     ? AppConstants
                                         .userRepository.driverData.userImage
-                                    : AppConstants
+                                    : AppConstants.userType == 'Employee'?
+                        AppConstants
+                            .userRepository.employeeData.userImage
+                        : AppConstants
                                         .userRepository.userData.userImage)
                                 .isNotEmpty
-                            ? (AppConstants.isCaptain
+                            ? (AppConstants.userType == 'Driver'
                                 ? AppConstants
                                     .userRepository.driverData.userImage
-                                : AppConstants
+                                :AppConstants.userType == 'Employee'?
+                        AppConstants
+                            .userRepository.employeeData.userImage
+                        : AppConstants
                                     .userRepository.userData.userImage)
                             : 'assets/icons/logo.svg',
                       ),

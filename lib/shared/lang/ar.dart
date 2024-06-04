@@ -202,4 +202,8 @@ const Map<String, String> ar = {
   "requestChangeDays": "طلب تغيير الايام",
   "remainingDays": " الايام المتبقية",
   "tripEnded" : "انتهت الرحلة",
+  "loginAsEmployee" : "سجل الدخول كموظف",
+  "loginAsDriverOrUser" : "سجل الدخول كسائق او كمستخدم",
+  "phoneIsntValid": "رقم الهاتف غير صالح",
+  "emailIsntValid": "الايميل غير صالح",
 };

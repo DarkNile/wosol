@@ -1,18 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_text_fields.dart';
 import 'package:wosol/shared/widgets/shared_widgets/forgot_password.dart';
+import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 
 import '../../../controllers/shared_controllers/auth_controllers/auth_controller.dart';
-import 'employee_login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class EmployeeLoginScreen extends StatelessWidget {
+  EmployeeLoginScreen({super.key});
 
   final AuthController loginController = Get.put(AuthController())..clearData();
 
@@ -90,15 +91,38 @@ class LoginScreen extends StatelessWidget {
                     ),
                     GetBuilder<AuthController>(
                       builder: (_) {
-                        return EmailTextField(
-                            controller: loginController.emailController,
-                            onSubmit: (String value) {},
-                            onChange: (String value) {
-                              loginController.checkEmailValidation();
-                            },
-                            hint: 'Email'.tr,
-                            label: '',
-                            fieldValidation: loginController.emailValidation);
+                        return CustomTextField(
+                          textEditingController:
+                              loginController.phoneController,
+                          prefixIcon: Padding(
+                            padding: AppConstants.edge(padding: const EdgeInsets.symmetric(horizontal: 8)),
+                            child: Icon(
+                              Icons.phone,
+                              color: loginController.phoneController.text.isEmpty? AppColors.darkBlue400 : AppColors.logo,
+                              size: 24,
+                            ),
+                          ),
+                          fillColor: loginController.phoneController.text.isEmpty? AppColors.white
+                              : AppColors.orange50,
+                          onSubmit: (String value) {},
+                          onChange: (String value) {
+                            loginController.checkPhoneValidation();
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                RegExp(r'[\s\-\.\,]')),
+                          ],
+                          textInputType: const TextInputType.numberWithOptions(
+                            decimal: false,
+                            signed: false,
+                          ),
+                          validateText: "phoneIsntValid".tr,
+                          hint: 'Phone Number'.tr,
+                          label: '',
+                          validate: !(loginController.phoneValidation ==
+                              TextFieldValidation.notValid),
+                          expands: false,
+                        );
                       },
                     ),
                   ],
@@ -138,7 +162,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(
                   height: 12,
                 ),
-                const ForgotPassword(fromEmployee: false,),
+                const ForgotPassword(fromEmployee: true,),
                 const SizedBox(
                   height: 24,
                 ),
@@ -146,7 +170,7 @@ class LoginScreen extends StatelessWidget {
                   return DefaultButton(
                     loading: loginController.isLoginLoading.value,
                     function: () {
-                      loginController.signInAPI(context, isEmployee: false);
+                      loginController.signInAPI(context, isEmployee: true);
                     },
                     text: "Login".tr,
                     borderRadius: 8,
@@ -161,11 +185,11 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => EmployeeLoginScreen());
+                      Get.to(() => LoginScreen());
                     },
                     child: Text(
-                      "loginAsEmployee".tr,
-                      style: AppFonts.header.copyWith(color: AppColors.logo),
+                      "loginAsDriverOrUser".tr,
+                      style: AppFonts.header.copyWith(color: AppColors.logo,),
                     ),
                   ),
                 )

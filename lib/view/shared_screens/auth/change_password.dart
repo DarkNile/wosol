@@ -13,11 +13,11 @@ class ChangePasswordScreen extends StatelessWidget {
   ChangePasswordScreen({super.key,
   required this.fromProfile,
   this.id,
-  this.isDriver,
+  this.userType,
   this.activationCode,});
 
   final bool fromProfile;
-  final bool? isDriver;
+  final String? userType;
   final String? id;
   final String? activationCode;
 
@@ -163,7 +163,7 @@ class ChangePasswordScreen extends StatelessWidget {
                       if(fromProfile){
                         changePasswordController.changeProfilePasswordAPI(context);
                       }else {
-                        changePasswordController.changeAuthPasswordAPI(context, isDriver!, activationCode!, id!);
+                        changePasswordController.changeAuthPasswordAPI(context, userType!, activationCode!, id!);
                       }
                     },
                     text: "Confirm".tr,

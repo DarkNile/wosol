@@ -9,15 +9,20 @@ class NotificationController extends GetxController {
   RxBool isNotificationsLoading = false.obs;
   RxList<NotificationModel> notifications = <NotificationModel>[].obs;
 
-  Future<void> getNotifications({required bool isCaptain}) async {
+  Future<void> getNotifications() async {
     try {
       isNotificationsLoading.value = true;
       String driverId = AppConstants.userRepository.driverData.driverId;
+      String employeeId = AppConstants.userRepository.employeeData.driverId;
       String userId = AppConstants.userRepository.userData.userId;
-      Response response = isCaptain
+      Response response = AppConstants.userType == 'Driver'
           ? await DioHelper.postData(url: 'driver/notifications/view', data: {
               "driver_id": driverId,
             })
+          : AppConstants.userType == 'Employee'
+          ? await DioHelper.postData(url: 'employee/notifications', data: {
+        "member_id": employeeId,
+      })
           : await DioHelper.postData(
               url: 'student/notifications/view/other', data: {"user_id": userId});
       log("response ${response.data}");
@@ -39,13 +44,17 @@ class NotificationController extends GetxController {
   var notificationRead = false.obs;
   var isNotificationSetReadLoading = false.obs;
   Future<void> notificationSetRead(
-      {required String notificationId, required bool isCaptain}) async {
+      {required String notificationId}) async {
     try {
       isNotificationSetReadLoading.value = true;
-      Response response = isCaptain
+      Response response = AppConstants.userType == 'Driver'
           ? await DioHelper.postData(
               url: 'driver/notifications/set_read',
               data: {"n_id": notificationId})
+      : AppConstants.userType == 'Employee'
+          ? await DioHelper.postData(
+          url: 'employee/notifications/set_read',
+          data: {"n_id": notificationId})
           : await DioHelper.postData(
               url: 'student/notifications/view',
               data: {"n_id": notificationId});

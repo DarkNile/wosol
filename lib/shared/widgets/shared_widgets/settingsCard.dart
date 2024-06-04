@@ -56,8 +56,7 @@ class _SettingsCardState extends State<SettingsCard> {
               isSwitcher: false,
               title: 'Terms & Conditions'.tr,
               function: () async{
-                await profileController.userTermsApi();
-                await profileController.driverTermsApi();
+                await profileController.termsApi();
                 Get.to(()=>TermsAndConditions(profileController: profileController));
               },
             ),
