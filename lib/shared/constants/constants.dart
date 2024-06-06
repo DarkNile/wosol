@@ -5,6 +5,7 @@ import 'package:wosol/shared/services/network/repositories/home_driver_repositor
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
 
 import '../../controllers/shared_controllers/main_controllers/localization_controller.dart';
+import '../services/network/repositories/employee_repository.dart';
 import '../services/network/repositories/student_repositorie.dart';
 
 class AppConstants {
@@ -23,6 +24,7 @@ class AppConstants {
 
   static final userRepository = Get.find<UserRepository>();
   static final homeDriverRepository = Get.find<HomeDriverRepository>();
+  static final employeeRepository = Get.find<EmployeeRepository>();
   static final studentRepository = Get.find<StudentRepository>();
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
