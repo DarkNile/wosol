@@ -1,12 +1,15 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:wosol/controllers/captain_controllers/trip_history_driver_controller.dart';
 import 'package:wosol/controllers/user_controllers/trip_history_student_controller.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/view/captain_screens/routes/map_screen.dart';
 import 'package:wosol/view/captain_screens/trip_details/captain_trip_details_screen.dart';
+import 'package:wosol/view/shared_screens/map_screen.dart';
 import 'package:wosol/view/user_screens/trip_details/user_trip_details_screen.dart';
 
 import '../../../shared/widgets/shared_widgets/custom_header.dart';
@@ -22,6 +25,8 @@ class TripHistoryScreen extends StatelessWidget {
   Future<void> getTrips() async {
     if (AppConstants.userType == 'Driver') {
       tripHistoryDriverController.getTripsHistory();
+    } else if (AppConstants.userType == "Employee") {
+      tripHistoryDriverController.getEmployeeTripsHistory();
     } else {
       tripHistoryStudentController.getTripsHistory();
     }
@@ -30,7 +35,11 @@ class TripHistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log("Trip History Screen");
-    AppConstants.userType == 'Driver' ? log("Captain") : AppConstants.userType == 'Employee' ? log("Employee") : log("Student");
+    AppConstants.userType == 'Driver'
+        ? log("Captain")
+        : AppConstants.userType == 'Employee'
+            ? log("Employee")
+            : log("Student");
     getTrips();
     return SafeArea(
       child: Column(
@@ -82,24 +91,38 @@ class TripHistoryScreen extends StatelessWidget {
                           String dateString = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].tripDate!
-                              : tripHistoryStudentController
-                                  .tripsList[index].subData![0].tripDate!;
+                              : AppConstants.userType == "Employee"
+                                  ? tripHistoryDriverController
+                                      .employeeTripsList[index].tripDate
+                                  : tripHistoryStudentController
+                                      .tripsList[index].subData![0].tripDate!;
                           String time = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].tripTime!
-                              : tripHistoryStudentController
-                                  .tripsList[index].subData![0].tripTime!;
+                              : AppConstants.userType == "Employee"
+                                  ? tripHistoryDriverController
+                                      .employeeTripsList[index].tripTime
+                                  : tripHistoryStudentController
+                                      .tripsList[index].subData![0].tripTime!;
 
                           String toCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
                                   .tripsList[index].universityName!
-                              : tripHistoryStudentController
-                                  .tripsList[index].subData![0].universityName!;
+                              : AppConstants.userType == "Employee"
+                                  ? tripHistoryDriverController
+                                      .employeeTripsList[index].companyName
+                                  : tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0]
+                                      .universityName!;
 
                           String fromCity = AppConstants.userType == 'Driver'
                               ? ''
-                              : tripHistoryStudentController
-                                  .tripsList[index].subData![0].from!;
+                              : AppConstants.userType == "Employee"
+                                  ? tripHistoryDriverController
+                                      .employeeTripsList[index].from
+                                  : tripHistoryStudentController
+                                      .tripsList[index].subData![0].from!;
 
                           DateTime originalDate = DateTime.parse(dateString);
 
@@ -109,12 +132,25 @@ class TripHistoryScreen extends StatelessWidget {
                             date: '$date  - $time',
                             fromCity: fromCity,
                             toCity: toCity,
-                            buttonText: 'rideDetails'.tr,
+                            buttonText: AppConstants.userType == "Employee"
+                                ? "Map"
+                                : 'rideDetails'.tr,
                             onTap: () {
                               if (AppConstants.userType == 'Driver') {
                                 Get.to(() => const CaptainTripDetailsScreen());
-                              } else {
+                              } else if (AppConstants.userType == 'Student') {
                                 Get.to(() => const UserTripDetailsScreen());
+                              } else {
+                                Get.to(
+                                  () => MapRoutesScreen(
+                                    fromLatLng: LatLng(tripHistoryDriverController
+                                        .employeeTripsList[index].fromLat, tripHistoryDriverController
+                                        .employeeTripsList[index].fromLong),
+                                    toLatLng: LatLng(tripHistoryDriverController
+                                        .employeeTripsList[index].toLat, tripHistoryDriverController
+                                        .employeeTripsList[index].toLong),
+                                  ),
+                                );
                               }
                             },
                           );
@@ -122,7 +158,8 @@ class TripHistoryScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12,
                         ),
-                        itemCount: AppConstants.userType == 'Driver'
+                        itemCount: AppConstants.userType == 'Driver' ||
+                                AppConstants.userType == "Employee"
                             ? tripHistoryDriverController.tripsList.length
                             : tripHistoryStudentController.tripsList.length,
                       ),
