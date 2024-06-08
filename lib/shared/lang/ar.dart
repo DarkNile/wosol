@@ -206,4 +206,5 @@ const Map<String, String> ar = {
   "loginAsDriverOrUser" : "سجل الدخول كسائق او كمستخدم",
   "phoneIsntValid": "رقم الهاتف غير صالح",
   "emailIsntValid": "الايميل غير صالح",
+  "traddyTrips": "الرحلات الترددية",
 };

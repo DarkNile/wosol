@@ -207,4 +207,5 @@ const Map<String, String> en = {
   "loginAsDriverOrUser" : "Login as driver or user",
   "phoneIsntValid": "Phone number isn't valid",
   "emailIsntValid": "Email number isn't valid",
+  "traddyTrips": "Traddy trips",
 };

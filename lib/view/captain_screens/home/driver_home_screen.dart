@@ -7,6 +7,7 @@ import 'package:wosol/controllers/captain_controllers/home_driver_controller.dar
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
+import 'package:wosol/view/captain_screens/traddy_trips/traddy_trips_list_screen.dart';
 import 'package:wosol/view/shared_screens/map_screen.dart';
 
 import '../../../models/trip_list_model.dart';
@@ -269,114 +270,96 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       builder: (context) => RideStartBottomSheet(
         tripId: tripId,
         firstButtonFunction: () async {
-          /// todo Move this to Trip Confirm
-          // homeDriverController.tripStatesAPI(
-          //   context: context,
-          //   tripId: '32',
-          //   state: 1,
-          // );
-
-          /// todo Move this to Trip End
-          // homeDriverController.tripStatesAPI(
-          //   context: context,
-          //   tripId: '32',
-          //   state: 2,
-          // );
-
-          /// todo Move this to Trip Attendance
-          // homeDriverController.tripStatesAPI(
-          //   context: context,
-          //   tripId: '32',
-          //   tripUserId: "99",
-          //   attendance: "1",
-          //   state: 3,
-          // );
 
           setState(() {
             mapController.isToEnd = isReachStart;
           });
 
           if (tripIsRunning) {
-            {
+
               setState(() {
                 isStartingTrip = true;
               });
 
-              if (isEmployee) {
-                mapController.targetLatLng = fromLatLng;
-              } else {
-                mapController.targetLatLng = LatLng(
-                  double.parse(
-                    students[mapController.currentStudentIndex.value].pickupLat,
-                  ),
-                  double.parse(
-                    students[mapController.currentStudentIndex.value]
-                        .pickupLong,
-                  ),
-                );
-                // mapController.finalLatLng = toLatLng;
+              if(coType != null && coType == 'traddy') {
+                Get.to(TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+              } else{
+                if (isEmployee) {
+                  mapController.targetLatLng = fromLatLng;
+                } else {
+                  mapController.targetLatLng = LatLng(
+                    double.parse(
+                      students[mapController.currentStudentIndex.value].pickupLat,
+                    ),
+                    double.parse(
+                      students[mapController.currentStudentIndex.value]
+                          .pickupLong,
+                    ),
+                  );
+                  // mapController.finalLatLng = toLatLng;
+                }
+
+                // mapController.targetLatLng = toLatLng;
+
+                mapController.markerIcon = await mapController.getBytesFromAsset(
+                    'assets/images/location_on.png', 50);
+                mapController.currentIcon = await mapController.getBytesFromAsset(
+                    'assets/images/navigation_arrow.png', 50);
+
+                await mapController.getCurrentLocation().then((value) async {
+                  mapController.currentLatLng =
+                      LatLng(value.latitude, value.longitude);
+                  // if (mapController.finalLatLng != null) {
+                  //   await mapController.getCurrentFinalPolylinePoints();
+                  // }
+                  await mapController.getCurrentTargetPolylinePoints();
+                  mapController.cameraPosition = CameraPosition(
+                    target: mapController.currentLatLng,
+                    bearing: mapController.bearing,
+                    zoom: 19,
+                  );
+                  mapController.getEstimatedTime(
+                      originLatLng: mapController.currentLatLng,
+                      destinationLatLng: mapController.targetLatLng,
+                      students: students,
+                      tripId: tripId,
+                      isEmployee: isEmployee,
+                      endLat: toLatLng.latitude.toString(),
+                      endLong: toLatLng.longitude.toString(),
+                      isRound: (coType != null && coType == 'round')
+                  );
+                  mapController.liveLocation(
+                      students: students,
+                      tripId: tripId,
+                      isEmployee: isEmployee,
+                      endLat: toLatLng.latitude.toString(),
+                      endLong: toLatLng.longitude.toString(),
+                      vehicleId: vehicleId,
+                      isRound: (coType != null && coType == 'round')
+                  );
+                });
+                setState(() {
+                  isStartingTrip = false;
+                });
+
+                Get.back();
+                if (students.isNotEmpty && !(coType != null && coType == 'round')) {
+                  mapController.nearbyStudent(
+                    driverId: AppConstants.userRepository.driverData.driverId,
+                    tripId: tripId,
+                    userId:
+                    students[mapController.currentStudentIndex.value].userId,
+                    tripUserId: students[mapController.currentStudentIndex.value]
+                        .tripUserId,
+                  );
+                }
+                Get.to(() => MapScreen(
+                  students: students,
+                  tripDate: tripDate!,
+                  isRound: (coType != null && coType == 'round'),
+                ));
               }
 
-              // mapController.targetLatLng = toLatLng;
-
-              mapController.markerIcon = await mapController.getBytesFromAsset(
-                  'assets/images/location_on.png', 50);
-              mapController.currentIcon = await mapController.getBytesFromAsset(
-                  'assets/images/navigation_arrow.png', 50);
-
-              await mapController.getCurrentLocation().then((value) async {
-                mapController.currentLatLng =
-                    LatLng(value.latitude, value.longitude);
-                // if (mapController.finalLatLng != null) {
-                //   await mapController.getCurrentFinalPolylinePoints();
-                // }
-                await mapController.getCurrentTargetPolylinePoints();
-                mapController.cameraPosition = CameraPosition(
-                  target: mapController.currentLatLng,
-                  bearing: mapController.bearing,
-                  zoom: 19,
-                );
-                mapController.getEstimatedTime(
-                  originLatLng: mapController.currentLatLng,
-                  destinationLatLng: mapController.targetLatLng,
-                  students: students,
-                  tripId: tripId,
-                  isEmployee: isEmployee,
-                  endLat: toLatLng.latitude.toString(),
-                  endLong: toLatLng.longitude.toString(),
-                  isRound: (coType != null && coType == 'round')
-                );
-                mapController.liveLocation(
-                  students: students,
-                  tripId: tripId,
-                  isEmployee: isEmployee,
-                  endLat: toLatLng.latitude.toString(),
-                  endLong: toLatLng.longitude.toString(),
-                  vehicleId: vehicleId,
-                  isRound: (coType != null && coType == 'round')
-                );
-              });
-              setState(() {
-                isStartingTrip = false;
-              });
-
-              Get.back();
-              if (students.isNotEmpty && !(coType != null && coType == 'round')) {
-                mapController.nearbyStudent(
-                  driverId: AppConstants.userRepository.driverData.driverId,
-                  tripId: tripId,
-                  userId:
-                      students[mapController.currentStudentIndex.value].userId,
-                  tripUserId: students[mapController.currentStudentIndex.value]
-                      .tripUserId,
-                );
-              }
-              Get.to(() => MapScreen(
-                    students: students,
-                    tripDate: tripDate!,
-                isRound: (coType != null && coType == 'round'),
-                  ));
-            }
           } else {
             homeDriverController
                 .tripStatesAPI(
@@ -388,165 +371,94 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               setState(() {
                 isStartingTrip = true;
               });
+              if (coType != null && coType == 'traddy') {
+                Get.to(TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+              } else{
+                if (isEmployee) {
+                  mapController.targetLatLng = fromLatLng;
+                } else {
+                  mapController.targetLatLng = LatLng(
+                    double.parse(
+                      students[mapController.currentStudentIndex.value]
+                          .pickupLat,
+                    ),
+                    double.parse(
+                      students[mapController.currentStudentIndex.value]
+                          .pickupLong,
+                    ),
+                  );
+                  // mapController.finalLatLng = toLatLng;
+                }
 
-              if (isEmployee) {
-                mapController.targetLatLng = fromLatLng;
-              } else {
-                mapController.targetLatLng = LatLng(
-                  double.parse(
-                    students[mapController.currentStudentIndex.value].pickupLat,
-                  ),
-                  double.parse(
-                    students[mapController.currentStudentIndex.value]
-                        .pickupLong,
-                  ),
-                );
-                // mapController.finalLatLng = toLatLng;
-              }
+                // mapController.targetLatLng = toLatLng;
 
-              // mapController.targetLatLng = toLatLng;
+                mapController.markerIcon =
+                await mapController.getBytesFromAsset(
+                    'assets/images/location_on.png', 50);
+                mapController.currentIcon =
+                await mapController.getBytesFromAsset(
+                    'assets/images/navigation_arrow.png', 50);
 
-              mapController.markerIcon = await mapController.getBytesFromAsset(
-                  'assets/images/location_on.png', 50);
-              mapController.currentIcon = await mapController.getBytesFromAsset(
-                  'assets/images/navigation_arrow.png', 50);
-
-              await mapController.getCurrentLocation().then((value) async {
-                mapController.currentLatLng =
-                    LatLng(value.latitude, value.longitude);
-                // if (mapController.finalLatLng != null) {
-                //   await mapController.getCurrentFinalPolylinePoints();
-                // }
-                await mapController.getCurrentTargetPolylinePoints();
-                mapController.cameraPosition = CameraPosition(
-                  target: mapController.currentLatLng,
-                  bearing: mapController.bearing,
-                  zoom: 19,
-                );
-                mapController.getEstimatedTime(
-                  originLatLng: mapController.currentLatLng,
-                  destinationLatLng: mapController.targetLatLng,
-                  students: students,
-                  tripId: tripId,
-                  isEmployee: isEmployee,
-                  endLat: toLatLng.latitude.toString(),
-                  endLong: toLatLng.longitude.toString(),
-                  isRound: (coType != null && coType == 'round'),
-                );
-                mapController.liveLocation(
-                  students: students,
-                  tripId: tripId,
-                  isEmployee: isEmployee,
-                  endLat: toLatLng.latitude.toString(),
-                  endLong: toLatLng.longitude.toString(),
-                  vehicleId: vehicleId,
-                  isRound: (coType != null && coType == 'round'),
-                );
-              });
-              setState(() {
-                isStartingTrip = false;
-              });
-
-              Get.back();
-              if (students.isNotEmpty && !(coType != null && coType == 'round')) {
-                mapController.nearbyStudent(
-                  driverId: AppConstants.userRepository.driverData.driverId,
-                  tripId: tripId,
-                  userId:
-                      students[mapController.currentStudentIndex.value].userId,
-                  tripUserId: students[mapController.currentStudentIndex.value]
-                      .tripUserId,
-                );
-              }
-              Get.to(() => MapScreen(
+                await mapController.getCurrentLocation().then((value) async {
+                  mapController.currentLatLng =
+                      LatLng(value.latitude, value.longitude);
+                  // if (mapController.finalLatLng != null) {
+                  //   await mapController.getCurrentFinalPolylinePoints();
+                  // }
+                  await mapController.getCurrentTargetPolylinePoints();
+                  mapController.cameraPosition = CameraPosition(
+                    target: mapController.currentLatLng,
+                    bearing: mapController.bearing,
+                    zoom: 19,
+                  );
+                  mapController.getEstimatedTime(
+                    originLatLng: mapController.currentLatLng,
+                    destinationLatLng: mapController.targetLatLng,
                     students: students,
-                    tripDate: tripDate!,
-                isRound: (coType != null && coType == 'round'),
-                  ));
-              // showModalBottomSheet(
-              //     context: context,
-              // isDismissible: false,
-              // enableDrag: false,
-              //     builder: (context) => ConfirmPickupBottomSheet(
-              //           title: 'confirmPickup'.tr,
-              //           subTitle: 'canceled'.tr,
-              //           firstButtonFunction: () {
-              //             Get.back();
-              //             showModalBottomSheet(
-              //                 context: context,
-              // isDismissible: false,
-              //   enableDrag: false,
-              //                 builder: (context) => SelectUsersToPickupBottomSheet(
-              //                       function: () {
-              //                         Get.back();
-              //                         showModalBottomSheet(
-              //                             context: context,
-              // isDismissible: false,
-              //   enableDrag: false,
-              //                             builder: (context) =>
-              //                                 _rideAndTripEndBottomSheet());
-              //                       },
-              //                       headTitle: 'Select users to pickup'.tr,
-              //                       titles: const ['Hossam', 'Mostafa Ahmed'],
-              //                       subTitles: const [
-              //                         'Future st, building no 13',
-              //                         'Future st, building no 13'
-              //                       ],
-              //                     ));
-              //           },
-              //           secondButtonFunction: () {
-              //             Get.back();
-              //             showModalBottomSheet(
-              //                 context: context,
-              // isDismissible: false,
-              //   enableDrag: false,
-              //                 isScrollControlled: true,
-              //                 builder: (context) =>
-              //                     CancellationReasonAndReportRideBottomSheet(
-              //                       function: () {
-              //                         Get.back();
-              //                         showModalBottomSheet(
-              //                             context: context,
-              // isDismissible: false,
-              //   enableDrag: false,
-              //                             builder: (context) =>
-              //                                 (SelectUsersToPickupBottomSheet(
-              //                                   function: () {
-              //                                     Get.back();
-              //                                     showModalBottomSheet(
-              //                                         context: context,
-              // isDismissible: false,
-              // enableDrag: false,
-              //                                         builder: (context) =>
-              //                                             _rideAndTripEndBottomSheet());
-              //                                   },
-              //                                   headTitle:
-              //                                       'Select users to pickup'.tr,
-              //                                   titles: const [
-              //                                     'Hossam',
-              //                                     'Mostafa Ahmed'
-              //                                   ],
-              //                                   subTitles: const [
-              //                                     'Future st, building no 13',
-              //                                     'Future st, building no 13'
-              //                                   ],
-              //                                 )));
-              //                       },
-              //                       headTitle: "cancelationReason".tr,
-              //                       reasons: [
-              //                         "noShow".tr,
-              //                         "userCanceledTheTrip".tr,
-              //                         "canceledByCustomer".tr,
-              //                         'other'.tr,
-              //                       ],
-              //                       reasonsSelectedIndex: 3,
-              //                     ));
-              //           },
-              //         ));
+                    tripId: tripId,
+                    isEmployee: isEmployee,
+                    endLat: toLatLng.latitude.toString(),
+                    endLong: toLatLng.longitude.toString(),
+                    isRound: (coType != null && coType == 'round'),
+                  );
+                  mapController.liveLocation(
+                    students: students,
+                    tripId: tripId,
+                    isEmployee: isEmployee,
+                    endLat: toLatLng.latitude.toString(),
+                    endLong: toLatLng.longitude.toString(),
+                    vehicleId: vehicleId,
+                    isRound: (coType != null && coType == 'round'),
+                  );
+                });
+                setState(() {
+                  isStartingTrip = false;
+                });
+
+                Get.back();
+                if (students.isNotEmpty &&
+                    !(coType != null && coType == 'round')) {
+                  mapController.nearbyStudent(
+                    driverId: AppConstants.userRepository.driverData.driverId,
+                    tripId: tripId,
+                    userId:
+                    students[mapController.currentStudentIndex.value].userId,
+                    tripUserId: students[mapController.currentStudentIndex
+                        .value]
+                        .tripUserId,
+                  );
+                }
+                Get.to(() =>
+                    MapScreen(
+                      students: students,
+                      tripDate: tripDate!,
+                      isRound: (coType != null && coType == 'round'),
+                    ));
+              }
             });
           }
         },
-        firstButtonText: tripIsRunning ? "goToMap".tr : null,
+        firstButtonText: (tripIsRunning && coType != null && coType == 'traddy') ? "tripDetails".tr : tripIsRunning? "goToMap".tr : null,
         headTitle:
             '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
         formTime: fromTime,
