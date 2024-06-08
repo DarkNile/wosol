@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
 
@@ -146,6 +147,22 @@ class HomeDriverRepository extends GetxService {
         data: {
           "driver_id": driverId,
         },
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
+  Future<Response> getTraddyTrips({required String tripId}) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/traddy_request_list',
+        data: {'driver_id': AppConstants.userRepository.driverData.driverId, "trip_id": tripId},
       );
       if (response.statusCode == 200) {
         return response;

@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/traddy_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 
 import '../../models/notification_request_model.dart';
 import '../../models/trip_list_model.dart';
+import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
 
 class HomeDriverController extends GetxController {
@@ -144,6 +146,84 @@ class HomeDriverController extends GetxController {
           message: e.toString(),
         );
       }
+    }
+  }
+
+  late Timer traddyTimer;
+  bool traddyTripsStatesLoading = false;
+  List<TraddyModel> traddyTrips = [];
+  Future<void> getTraddyTripsAPI({
+    required BuildContext context,
+    required String tripId,
+
+  }) async {
+    traddyTripsStatesLoading = true;
+    try {
+      Response response = await AppConstants.homeDriverRepository
+          .getTraddyTrips(
+        tripId: tripId,
+      );
+
+      if(response.statusCode == 200){
+        if (response.data['status'] == 'success') {
+          traddyTripsStatesLoading = false;
+          traddyTrips = traddyTripsFromJson(response.data);
+        } else {
+          if (context.mounted) {
+            defaultErrorSnackBar(
+              context: context,
+              message: response.data['data']['error'],
+            );
+          }
+          traddyTripsStatesLoading = false;
+        }
+      } else{
+        if (context.mounted) {
+          defaultErrorSnackBar(
+            context: context,
+            message: response.data['data']['error'],
+          );
+        }
+        traddyTripsStatesLoading = false;
+      }
+    } catch (e) {
+      traddyTripsStatesLoading = false;
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+    }
+    update();
+  }
+
+  Future<void> requestRideApprovedApi({
+    required String requestId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/notifications/reuqest_ride_approved',
+        data: {
+          "request_id": requestId,
+        },
+      );
+      if (response.statusCode == 200) {
+        defaultSuccessSnackBar(
+          context: Get.context!,
+          message: "generalSuccessMsg".tr,
+        );
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
     }
   }
 }

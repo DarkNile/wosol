@@ -590,7 +590,7 @@ class MapController extends GetxController {
               'assets/images/navigation_arrow.png', 70);
 
           await getCurrentLocation().then((value) async {
-            Get.back();
+            // Get.back();
             currentLatLng = LatLng(value.latitude, value.longitude);
             await getCurrentTargetPolylinePoints();
             cameraPosition = CameraPosition(
