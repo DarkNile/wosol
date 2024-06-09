@@ -72,110 +72,114 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                 Navigator.pop(context, true);
               },
             ),
-            Expanded(
-              child: widget.homeDriverController.traddyTrips.isEmpty
-                  ? Center(
-                      child: Text(
-                        'waitTheTrips'.tr,
-                        style: AppFonts.header,
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 24, horizontal: 16),
-                      itemBuilder: (context, index) => Container(
-                        width: Get.width,
-                        height: 135,
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: AppColors.white900,
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(2, 2),
-                              blurRadius: 4,
-                              color: AppColors.black.withOpacity(0.15),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '${'name'.tr}:  ',
-                                        style: AppFonts.header
-                                            .copyWith(fontSize: 16),
-                                      ),
-                                      Text(
-                                        widget.homeDriverController
-                                            .traddyTrips[index].employeeName,
-                                        style: AppFonts.medium,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '${'Phone Number'.tr}:  ',
-                                        style: AppFonts.header
-                                            .copyWith(fontSize: 16),
-                                      ),
-                                      Text(
-                                        widget.homeDriverController
-                                            .traddyTrips[index].employeePhone,
-                                        style: AppFonts.medium,
-                                      ),
-                                    ],
-                                  ),
+            GetBuilder<HomeDriverController>(
+              builder: (context) {
+                return Expanded(
+                  child: widget.homeDriverController.traddyTrips.isEmpty
+                      ? Center(
+                          child: Text(
+                            'waitTheTrips'.tr,
+                            style: AppFonts.header,
+                          ),
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 24, horizontal: 16),
+                          itemBuilder: (context, index) => Container(
+                            width: Get.width,
+                            height: 135,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.white900,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(2, 2),
+                                  blurRadius: 4,
+                                  color: AppColors.black.withOpacity(0.15),
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '${'Email'.tr}:  ',
-                                    style:
-                                        AppFonts.header.copyWith(fontSize: 16),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${'name'.tr}:  ',
+                                            style: AppFonts.header
+                                                .copyWith(fontSize: 16),
+                                          ),
+                                          Text(
+                                            widget.homeDriverController
+                                                .traddyTrips[index].employeeName,
+                                            style: AppFonts.medium,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${'Phone Number'.tr}:  ',
+                                            style: AppFonts.header
+                                                .copyWith(fontSize: 16),
+                                          ),
+                                          Text(
+                                            widget.homeDriverController
+                                                .traddyTrips[index].employeePhone,
+                                            style: AppFonts.medium,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '${'Email'.tr}:  ',
+                                        style:
+                                            AppFonts.header.copyWith(fontSize: 16),
+                                      ),
+                                      Text(
+                                        widget.homeDriverController
+                                            .traddyTrips[index].employeeEmail,
+                                        style: AppFonts.medium,
+                                      ),
+                                    ],
                                   ),
-                                  Text(
+                                ),
+                                DefaultButton(
+                                  function: () {
                                     widget.homeDriverController
-                                        .traddyTrips[index].employeeEmail,
-                                    style: AppFonts.medium,
-                                  ),
-                                ],
-                              ),
+                                        .requestRideApprovedApi(
+                                            requestId: widget.homeDriverController
+                                                .traddyTrips[index].requestId)
+                                        .then((value) => openGoogleMaps(
+                                            double.parse(widget.homeDriverController
+                                                .traddyTrips[index].lat),
+                                            double.parse(widget.homeDriverController
+                                                .traddyTrips[index].lng)));
+                                  },
+                                  height: 40,
+                                  text: 'approve'.tr,
+                                )
+                              ],
                             ),
-                            DefaultButton(
-                              function: () {
-                                widget.homeDriverController
-                                    .requestRideApprovedApi(
-                                        requestId: widget.homeDriverController
-                                            .traddyTrips[index].requestId)
-                                    .then((value) => openGoogleMaps(
-                                        double.parse(widget.homeDriverController
-                                            .traddyTrips[index].lat),
-                                        double.parse(widget.homeDriverController
-                                            .traddyTrips[index].lng)));
-                              },
-                              height: 40,
-                              text: 'approve'.tr,
-                            )
-                          ],
+                          ),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 12,
+                          ),
+                          itemCount: widget.homeDriverController.traddyTrips.length,
                         ),
-                      ),
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 12,
-                      ),
-                      itemCount: widget.homeDriverController.traddyTrips.length,
-                    ),
+                );
+              }
             ),
           ],
         ),
