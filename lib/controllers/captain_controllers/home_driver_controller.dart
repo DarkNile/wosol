@@ -149,7 +149,7 @@ class HomeDriverController extends GetxController {
     }
   }
 
-  late Timer traddyTimer;
+  Timer? traddyTimer;
   bool traddyTripsStatesLoading = false;
   List<TraddyModel> traddyTrips = [];
   Future<void> getTraddyTripsAPI({

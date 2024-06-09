@@ -208,4 +208,6 @@ const Map<String, String> en = {
   "phoneIsntValid": "Phone number isn't valid",
   "emailIsntValid": "Email number isn't valid",
   "traddyTrips": "Traddy trips",
+  "approve": "Approve",
+  "waitTheTrips": "Wait the trips",
 };
