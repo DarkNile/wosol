@@ -51,9 +51,10 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
   void openGoogleMaps(double latitude, double longitude) async {
     final String googleMapsUrl =
         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    final Uri googleMapUri = Uri.parse(googleMapsUrl);
 
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+    if (await canLaunchUrl(googleMapUri)) {
+      await launchUrl(googleMapUri);
     } else {
       throw 'Could not open the map.';
     }
