@@ -277,16 +277,18 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
           if (tripIsRunning) {
 
-              setState(() {
-                isStartingTrip = true;
-              });
+
 
               if(coType != null && coType == 'traddy') {
-                Get.to(TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+                Get.back();
+                Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
               } else{
                 if (isEmployee) {
                   mapController.targetLatLng = fromLatLng;
                 } else {
+                  setState(() {
+                    isStartingTrip = true;
+                  });
                   mapController.targetLatLng = LatLng(
                     double.parse(
                       students[mapController.currentStudentIndex.value].pickupLat,
@@ -368,12 +370,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
               state: 0,
             )
                 .then((value) async {
-              setState(() {
-                isStartingTrip = true;
-              });
               if (coType != null && coType == 'traddy') {
-                Get.to(TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+                Get.back();
+                Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
               } else{
+                setState(() {
+                  isStartingTrip = true;
+                });
                 if (isEmployee) {
                   mapController.targetLatLng = fromLatLng;
                 } else {

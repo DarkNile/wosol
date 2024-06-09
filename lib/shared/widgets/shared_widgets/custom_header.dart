@@ -189,7 +189,7 @@ class CustomHeaderWithBackButton extends StatelessWidget {
       height: height,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.dividerColor,
         border: Border(
           bottom: BorderSide(
             color: AppColors.darkBlue100,

@@ -207,4 +207,6 @@ const Map<String, String> ar = {
   "phoneIsntValid": "رقم الهاتف غير صالح",
   "emailIsntValid": "الايميل غير صالح",
   "traddyTrips": "الرحلات الترددية",
+  "approve": "قبول",
+  "waitTheTrips": "انتظر الرحلات",
 };
