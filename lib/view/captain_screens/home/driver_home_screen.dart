@@ -80,17 +80,15 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   .driverNextRide[0].tripIsRunning,
                               tripDate: homeDriverController
                                   .driverNextRide[0].tripDate,
-                              isReachStart: (
-                                      homeDriverController
-                                              .driverNextRide[0].tripType ==
-                                          '3')
+                              isReachStart: (homeDriverController
+                                          .driverNextRide[0].tripType ==
+                                      '3')
                                   ? homeDriverController
                                       .driverNextRide[0].isReachStart
                                   : false,
-                              isEmployee:
-                                  homeDriverController
-                                          .driverNextRide[0].tripType ==
-                                      '3',
+                              isEmployee: homeDriverController
+                                      .driverNextRide[0].tripType ==
+                                  '3',
                               context: context,
                               vehicleId: homeDriverController
                                   .driverNextRide[0].vehicleId,
@@ -98,11 +96,17 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   homeDriverController.driverNextRide[0].tripId,
                               fromLatLng: LatLng(
                                 homeDriverController
-                                    .driverNextRide[0].fromLat == '' ? 0 : double.parse(homeDriverController
-                                    .driverNextRide[0].fromLat),
+                                            .driverNextRide[0].fromLat ==
+                                        ''
+                                    ? 0
+                                    : double.parse(homeDriverController
+                                        .driverNextRide[0].fromLat),
                                 homeDriverController
-                                    .driverNextRide[0].fromLong == '' ? 0 :double.parse(homeDriverController
-                                    .driverNextRide[0].fromLong),
+                                            .driverNextRide[0].fromLong ==
+                                        ''
+                                    ? 0
+                                    : double.parse(homeDriverController
+                                        .driverNextRide[0].fromLong),
                               ),
                               toLatLng: LatLng(
                                 double.parse(homeDriverController
@@ -148,7 +152,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   ? homeDriverController
                                       .driverNextRide[0].companyEmail
                                   : null,
-                              coType: homeDriverController.driverNextRide[0].coType == ''? null : homeDriverController.driverNextRide[0].coType,
+                              coType: homeDriverController
+                                          .driverNextRide[0].coType ==
+                                      ''
+                                  ? null
+                                  : homeDriverController
+                                      .driverNextRide[0].coType,
                               students: homeDriverController
                                   .driverNextRide[0].students,
                             );
@@ -270,103 +279,102 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       builder: (context) => RideStartBottomSheet(
         tripId: tripId,
         firstButtonFunction: () async {
-
           setState(() {
             mapController.isToEnd = isReachStart;
           });
 
           if (tripIsRunning) {
-
-
-
-              if(coType != null && coType == 'traddy') {
-
-                homeDriverController
-                    .getTraddyTripsAPI(context: context, tripId: tripId).then((value){
-                  Get.back();
-                  Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,
-                    fromLatLng: fromLatLng, toLatLng: toLatLng, mapController: mapController,));
-                });
-              } else{
-                if (isEmployee) {
-                  mapController.targetLatLng = fromLatLng;
-                } else {
-                  setState(() {
-                    isStartingTrip = true;
-                  });
-                  mapController.targetLatLng = LatLng(
-                    double.parse(
-                      students[mapController.currentStudentIndex.value].pickupLat,
-                    ),
-                    double.parse(
-                      students[mapController.currentStudentIndex.value]
-                          .pickupLong,
-                    ),
-                  );
-                  // mapController.finalLatLng = toLatLng;
-                }
-
-                // mapController.targetLatLng = toLatLng;
-
-                mapController.markerIcon = await mapController.getBytesFromAsset(
-                    'assets/images/location_on.png', 50);
-                mapController.currentIcon = await mapController.getBytesFromAsset(
-                    'assets/images/navigation_arrow.png', 50);
-
-                await mapController.getCurrentLocation().then((value) async {
-                  mapController.currentLatLng =
-                      LatLng(value.latitude, value.longitude);
-                  // if (mapController.finalLatLng != null) {
-                  //   await mapController.getCurrentFinalPolylinePoints();
-                  // }
-                  await mapController.getCurrentTargetPolylinePoints();
-                  mapController.cameraPosition = CameraPosition(
-                    target: mapController.currentLatLng,
-                    bearing: mapController.bearing,
-                    zoom: 19,
-                  );
-                  mapController.getEstimatedTime(
-                      originLatLng: mapController.currentLatLng,
-                      destinationLatLng: mapController.targetLatLng,
-                      students: students,
-                      tripId: tripId,
-                      isEmployee: isEmployee,
-                      endLat: toLatLng.latitude.toString(),
-                      endLong: toLatLng.longitude.toString(),
-                      isRound: (coType != null && coType == 'round')
-                  );
-                  mapController.liveLocation(
-                      students: students,
-                      tripId: tripId,
-                      isEmployee: isEmployee,
-                      endLat: toLatLng.latitude.toString(),
-                      endLong: toLatLng.longitude.toString(),
-                      vehicleId: vehicleId,
-                      isRound: (coType != null && coType == 'round')
-                  );
-                });
-                setState(() {
-                  isStartingTrip = false;
-                });
-
+            if (coType != null && coType == 'traddy') {
+              homeDriverController
+                  .getTraddyTripsAPI(context: context, tripId: tripId)
+                  .then((value) {
                 Get.back();
-                if (students.isNotEmpty && !(coType != null && coType == 'round')) {
-                  mapController.nearbyStudent(
-                    driverId: AppConstants.userRepository.driverData.driverId,
-                    tripId: tripId,
-                    userId:
-                    students[mapController.currentStudentIndex.value].userId,
-                    tripUserId: students[mapController.currentStudentIndex.value]
-                        .tripUserId,
-                  );
-                }
-                Get.to(() => MapScreen(
-                  students: students,
-                  tripDate: tripDate!,
-                  isRound: (coType != null && coType == 'round'),
-                ));
+                Get.to(() => TraddyTripsScreen(
+                      homeDriverController: homeDriverController,
+                      tripId: tripId,
+                      fromLatLng: fromLatLng,
+                      toLatLng: toLatLng,
+                      mapController: mapController,
+                    ));
+              });
+            } else {
+              if (isEmployee) {
+                mapController.targetLatLng = fromLatLng;
+              } else {
+                setState(() {
+                  isStartingTrip = true;
+                });
+                mapController.targetLatLng = LatLng(
+                  double.parse(
+                    students[mapController.currentStudentIndex.value].pickupLat,
+                  ),
+                  double.parse(
+                    students[mapController.currentStudentIndex.value]
+                        .pickupLong,
+                  ),
+                );
+                // mapController.finalLatLng = toLatLng;
               }
 
+              // mapController.targetLatLng = toLatLng;
+
+              mapController.markerIcon = await mapController.getBytesFromAsset(
+                  'assets/images/location_on.png', 50);
+              mapController.currentIcon = await mapController.getBytesFromAsset(
+                  'assets/images/navigation_arrow.png', 50);
+
+              await mapController.getCurrentLocation().then((value) async {
+                mapController.currentLatLng =
+                    LatLng(value.latitude, value.longitude);
+                // if (mapController.finalLatLng != null) {
+                //   await mapController.getCurrentFinalPolylinePoints();
+                // }
+                await mapController.getCurrentTargetPolylinePoints();
+                mapController.cameraPosition = CameraPosition(
+                  target: mapController.currentLatLng,
+                  bearing: mapController.bearing,
+                  zoom: 19,
+                );
+                mapController.getEstimatedTime(
+                    originLatLng: mapController.currentLatLng,
+                    destinationLatLng: mapController.targetLatLng,
+                    students: students,
+                    tripId: tripId,
+                    isEmployee: isEmployee,
+                    endLat: toLatLng.latitude.toString(),
+                    endLong: toLatLng.longitude.toString(),
+                    isRound: (coType != null && coType == 'round'));
+                mapController.liveLocation(
+                    students: students,
+                    tripId: tripId,
+                    isEmployee: isEmployee,
+                    endLat: toLatLng.latitude.toString(),
+                    endLong: toLatLng.longitude.toString(),
+                    vehicleId: vehicleId,
+                    isRound: (coType != null && coType == 'round'));
+              });
+              setState(() {
+                isStartingTrip = false;
+              });
+
+              Get.back();
+              if (students.isNotEmpty &&
+                  !(coType != null && coType == 'round')) {
+                mapController.nearbyStudent(
+                  driverId: AppConstants.userRepository.driverData.driverId,
+                  tripId: tripId,
+                  userId:
+                      students[mapController.currentStudentIndex.value].userId,
+                  tripUserId: students[mapController.currentStudentIndex.value]
+                      .tripUserId,
+                );
+              }
+              Get.to(() => MapScreen(
+                    students: students,
+                    tripDate: tripDate!,
+                    isRound: (coType != null && coType == 'round'),
+                  ));
+            }
           } else {
             homeDriverController
                 .tripStatesAPI(
@@ -377,12 +385,18 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                 .then((value) async {
               if (coType != null && coType == 'traddy') {
                 homeDriverController
-                    .getTraddyTripsAPI(context: context, tripId: tripId).then((value){
+                    .getTraddyTripsAPI(context: context, tripId: tripId)
+                    .then((value) {
                   Get.back();
-                  Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,
-                    fromLatLng: fromLatLng, toLatLng: toLatLng, mapController: mapController,));
+                  Get.to(() => TraddyTripsScreen(
+                        homeDriverController: homeDriverController,
+                        tripId: tripId,
+                        fromLatLng: fromLatLng,
+                        toLatLng: toLatLng,
+                        mapController: mapController,
+                      ));
                 });
-              } else{
+              } else {
                 setState(() {
                   isStartingTrip = true;
                 });
@@ -404,12 +418,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
                 // mapController.targetLatLng = toLatLng;
 
-                mapController.markerIcon =
-                await mapController.getBytesFromAsset(
-                    'assets/images/location_on.png', 50);
+                mapController.markerIcon = await mapController
+                    .getBytesFromAsset('assets/images/location_on.png', 50);
                 mapController.currentIcon =
-                await mapController.getBytesFromAsset(
-                    'assets/images/navigation_arrow.png', 50);
+                    await mapController.getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 50);
 
                 await mapController.getCurrentLocation().then((value) async {
                   mapController.currentLatLng =
@@ -453,15 +466,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   mapController.nearbyStudent(
                     driverId: AppConstants.userRepository.driverData.driverId,
                     tripId: tripId,
-                    userId:
-                    students[mapController.currentStudentIndex.value].userId,
-                    tripUserId: students[mapController.currentStudentIndex
-                        .value]
-                        .tripUserId,
+                    userId: students[mapController.currentStudentIndex.value]
+                        .userId,
+                    tripUserId:
+                        students[mapController.currentStudentIndex.value]
+                            .tripUserId,
                   );
                 }
-                Get.to(() =>
-                    MapScreen(
+                Get.to(() => MapScreen(
                       students: students,
                       tripDate: tripDate!,
                       isRound: (coType != null && coType == 'round'),
@@ -470,7 +482,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             });
           }
         },
-        firstButtonText: (tripIsRunning && coType != null && coType == 'traddy') ? "tripDetails".tr : tripIsRunning? "goToMap".tr : null,
+        firstButtonText: (tripIsRunning && coType != null && coType == 'traddy')
+            ? "tripDetails".tr
+            : tripIsRunning
+                ? "goToMap".tr
+                : null,
         headTitle:
             '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
         formTime: fromTime,
@@ -485,12 +501,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     );
   }
 
-  // Widget _rideAndTripEndBottomSheet() {
-  //   return RideAndTripEndBottomSheet(
-  //     headTitle: 'rideEnd'.tr,
-  //     imagePath: 'assets/images/celebrate.png',
-  //     headerMsg: '${"congrats".tr} ',
-  //     subHeaderMsg: 'rideCompletedSuccessfully'.tr,
-  //   );
-  // }
+// Widget _rideAndTripEndBottomSheet() {
+//   return RideAndTripEndBottomSheet(
+//     headTitle: 'rideEnd'.tr,
+//     imagePath: 'assets/images/celebrate.png',
+//     headerMsg: '${"congrats".tr} ',
+//     subHeaderMsg: 'rideCompletedSuccessfully'.tr,
+//   );
+// }
 }
