@@ -171,6 +171,8 @@ class CustomHeaderWithBackButton extends StatelessWidget {
     this.itemsColor,
     this.headerColor,
     this.elevation = 1,
+    this.isTraddy = false,
+    this.traddyFunction,
   });
 
   final double height;
@@ -182,6 +184,8 @@ class CustomHeaderWithBackButton extends StatelessWidget {
   final Color? headerColor;
   final double elevation;
   final Alignment? textAlignment;
+  final bool isTraddy;
+  final Function()? traddyFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -244,6 +248,13 @@ class CustomHeaderWithBackButton extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
+          if(isTraddy)
+            const Spacer(),
+          if(isTraddy)
+            IconButton(
+              onPressed: traddyFunction,
+              icon: const Icon(Icons.location_on_outlined),
+            ),
         ],
       ),
     );

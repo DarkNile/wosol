@@ -210,4 +210,5 @@ const Map<String, String> en = {
   "traddyTrips": "Traddy trips",
   "approve": "Approve",
   "waitTheTrips": "Wait the trips",
+  "yourRequestHaveBeenSentSuccessfully": "Your request have been sent successfully",
 };

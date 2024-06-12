@@ -280,8 +280,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
 
               if(coType != null && coType == 'traddy') {
-                Get.back();
-                Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+
+                homeDriverController
+                    .getTraddyTripsAPI(context: context, tripId: tripId).then((value){
+                  Get.back();
+                  Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,
+                    fromLatLng: fromLatLng, toLatLng: toLatLng, mapController: mapController,));
+                });
               } else{
                 if (isEmployee) {
                   mapController.targetLatLng = fromLatLng;
@@ -371,8 +376,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             )
                 .then((value) async {
               if (coType != null && coType == 'traddy') {
-                Get.back();
-                Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,));
+                homeDriverController
+                    .getTraddyTripsAPI(context: context, tripId: tripId).then((value){
+                  Get.back();
+                  Get.to(()=> TraddyTripsScreen(homeDriverController: homeDriverController, tripId: tripId,
+                    fromLatLng: fromLatLng, toLatLng: toLatLng, mapController: mapController,));
+                });
               } else{
                 setState(() {
                   isStartingTrip = true;
