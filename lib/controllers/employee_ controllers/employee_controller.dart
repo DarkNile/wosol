@@ -22,7 +22,7 @@ class EmployeeController extends GetxController {
       print("responssss $response");
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
-          employeeNextRide = [tripFromJson(response.data)[0]];
+          employeeNextRide = tripFromJson(response.data);
           isGettingTrips.value = false;
         } else {
           if (context.mounted) {
