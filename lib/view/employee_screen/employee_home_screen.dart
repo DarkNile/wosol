@@ -13,6 +13,7 @@ import 'package:wosol/view/shared_screens/map_screen.dart';
 
 import '../../../models/trip_list_model.dart';
 import '../../../shared/constants/constants.dart';
+import '../../shared/widgets/shared_widgets/snakbar.dart';
 import '../captain_screens/home/widgets/ride_card.dart';
 
 // ignore: must_be_immutable
@@ -45,7 +46,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomHeader(
-              header: AppConstants.userRepository.driverData.firstName,
+              header: AppConstants.userRepository.employeeData.firstName,
               svgIcon: "",
               iconWidth: 0,
               iconHeight: 0,
@@ -241,12 +242,14 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                               target: mapController.currentLatLng,
                               zoom: 14,
                             );
-                            employeeController.requestRide(
+                            if(context.mounted) {
+                              employeeController.requestRide(
                               context: context,
                               groupId: employeeController.groups[index].groupId,
                               lat: value.latitude.toString(),
                               lng: value.longitude.toString(),
                             );
+                            }
                             // mapController.userGetEstimatedTime(
                             //   originLatLng: mapController.currentLatLng,
                             //   destinationLatLng: mapController.targetLatLng,
@@ -256,6 +259,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           Get.to(() => const MapScreen(
                                 students: [],
                               ));
+                          defaultSuccessSnackBar(context: Get.context!, message: 'yourRequestHaveBeenSentSuccessfully'.tr);
                         },
                       ),
                   separatorBuilder: (context, index) => const SizedBox(

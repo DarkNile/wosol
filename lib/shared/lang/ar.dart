@@ -209,4 +209,5 @@ const Map<String, String> ar = {
   "traddyTrips": "الرحلات الترددية",
   "approve": "قبول",
   "waitTheTrips": "انتظر الرحلات",
+  "yourRequestHaveBeenSentSuccessfully": "لقد تم إرسال طلبك بنجاح",
 };

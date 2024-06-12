@@ -10,6 +10,7 @@ import '../../models/notification_request_model.dart';
 import '../../models/trip_list_model.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
+import '../../view/captain_screens/driver_layout_screen.dart';
 
 class HomeDriverController extends GetxController {
   RxBool isGettingTrips = false.obs;
@@ -224,6 +225,38 @@ class HomeDriverController extends GetxController {
         context: Get.context!,
         message: e.response!.data['data']['error'],
       );
+    }
+  }
+
+  Future<Response> tripEnd({
+    required String tripId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/trips/trip_end',
+        data: {
+          "trip_id": tripId,
+        },
+      );
+      if (response.statusCode == 200) {
+        Get.offAll(() => const DriverLayoutScreen());
+        defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
+
+        return response;
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
+      throw e.response!.data['data']['error'];
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +23,12 @@ class MapScreen extends StatefulWidget {
     required this.students,
     this.tripDate,
     this.isRound = false,
+    this.isTraddy = false,
   });
   final List<Student> students;
   final String? tripDate;
   final bool isRound;
+  final bool isTraddy;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -44,6 +48,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void dispose() {
     super.dispose();
+    mapController.googleMapController =
+        Completer<GoogleMapController>();
     KeepScreenOn.turnOff();
   }
 
@@ -92,6 +98,13 @@ class _MapScreenState extends State<MapScreen> {
                     //   icon:
                     //   BitmapDescriptor.fromBytes(mapController.markerIcon),
                     // ),
+                    if(mapController.startIcon != null)
+                      Marker(
+                        markerId: const MarkerId('start'),
+                        position: mapController.startLatLng,
+                        icon:
+                        BitmapDescriptor.fromBytes(mapController.startIcon!),
+                      ),
                     Marker(
                       markerId: const MarkerId('target'),
                       position: mapController.targetLatLng,
@@ -165,6 +178,7 @@ class _MapScreenState extends State<MapScreen> {
                           const SizedBox(
                             height: 15,
                           ),
+                          if(!widget.isTraddy)
                           Container(
                             height: 100,
                             width: double.infinity,
@@ -258,7 +272,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ),
-                if (AppConstants.userType == 'Driver' && widget.students.isNotEmpty && !widget.isRound)
+                if (AppConstants.userType == 'Driver' && widget.students.isNotEmpty && !widget.isRound && !widget.isTraddy)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
                       alignment: AppConstants.isEnLocale

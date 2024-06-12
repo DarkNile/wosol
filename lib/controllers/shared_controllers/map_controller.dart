@@ -32,6 +32,7 @@ class MapController extends GetxController {
   LatLng? previousLatLng;
   late LatLng currentLatLng;
   late LatLng targetLatLng;
+  late LatLng startLatLng;
   // LatLng? finalLatLng;
   RxBool enableLocation = true.obs;
   bool isToEnd = false;
@@ -43,15 +44,24 @@ class MapController extends GetxController {
     getCurrentLocation();
   }
 
-  Future<void> getCurrentTargetPolylinePoints() async {
+  Future<void> getCurrentTargetPolylinePoints({bool drawNormal = true}) async {
     polylineCurrentTarget = [];
     PolylinePoints polylinePoints = PolylinePoints();
     try {
-      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      late PolylineResult result;
+      if(drawNormal) {
+        result = await polylinePoints.getRouteBetweenCoordinates(
         AppConstants.googleApiKey,
         PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
         PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
       );
+      } else{
+        result = await polylinePoints.getRouteBetweenCoordinates(
+          AppConstants.googleApiKey,
+          PointLatLng(startLatLng.latitude, startLatLng.longitude),
+          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+        );
+      }
 
       if (result.points.isNotEmpty) {
         for (var point in result.points) {
@@ -105,6 +115,7 @@ class MapController extends GetxController {
       zoom: cameraPosition.zoom,
     );
     cameraPosition = newCameraPosition;
+
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(newCameraPosition),
     );
@@ -134,7 +145,7 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
-  void userLiveLocation() {
+  void userLiveLocation({bool getEstimatedTime = true, bool drawCurrentTargetPolyline  = true}) {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
@@ -144,9 +155,13 @@ class MapController extends GetxController {
     ).listen((Position position) {
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         currentLatLng = LatLng(position.latitude, position.longitude);
-        getCurrentTargetPolylinePoints();
-        userGetEstimatedTime(
+        if(drawCurrentTargetPolyline) {
+          getCurrentTargetPolylinePoints();
+        }
+        if(getEstimatedTime) {
+          userGetEstimatedTime(
             originLatLng: currentLatLng, destinationLatLng: targetLatLng);
+        }
         cameraToPosition(currentLatLng);
         update();
       }
@@ -624,6 +639,7 @@ class MapController extends GetxController {
   }
 
   late Uint8List markerIcon;
+  Uint8List? startIcon;
   late Uint8List currentIcon;
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
