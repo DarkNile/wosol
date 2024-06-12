@@ -83,6 +83,7 @@ class NotificationRideRequest extends StatelessWidget {
                         target: mapController.currentLatLng,
                         zoom: 14,
                       );
+                      mapController.targetLatLng = LatLng(double.parse(trip.toLat), double.parse(trip.toLong));
                       mapController.getEstimatedTime(
                         originLatLng: mapController.currentLatLng,
                         destinationLatLng: mapController.targetLatLng,
