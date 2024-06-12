@@ -448,7 +448,7 @@ class MapController extends GetxController {
               );
             },
           );
-        } else if (!_isEndTrip && !_isConfirmUser && !isRound) {
+        } else if (_isEndTrip == false && _isConfirmUser == false && isRound == false) {
           _isConfirmUser = true;
           showModalBottomSheet(
             context: Get.context!,
@@ -573,7 +573,7 @@ class MapController extends GetxController {
               },
             ),
           );
-        } else if(!_isEndTrip && !_isConfirmUser && isRound){
+        } else if(_isEndTrip == false && _isConfirmUser == false && isRound == true){
           _isConfirmUser = true;
           if (students.length - 1 > currentStudentIndex.value) {
             currentStudentIndex.value++;
