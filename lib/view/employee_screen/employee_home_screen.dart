@@ -256,10 +256,6 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                             // );
                             // mapController.userLiveLocation();
                           });
-                          Get.to(() => const MapScreen(
-                                students: [],
-                              ));
-                          defaultSuccessSnackBar(context: Get.context!, message: 'yourRequestHaveBeenSentSuccessfully'.tr);
                         },
                       ),
                   separatorBuilder: (context, index) => const SizedBox(

@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart' hide Response;
 
 import '../../models/groups_list_model.dart';
 import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
+import '../../view/shared_screens/map_screen.dart';
 
 class EmployeeController extends GetxController {
   RxBool isGettingTrips = false.obs;
@@ -88,21 +88,32 @@ class EmployeeController extends GetxController {
     required String lng,
   }) async {
     try {
-      await AppConstants.employeeRepository
+      Response response = await AppConstants.employeeRepository
           .requestRide(
         employeeId: AppConstants.userRepository.employeeData.driverId,
         groupId: groupId,
         lat: lat,
         lng: lng,
-      )
-          .then((response) {
-        update();
-      });
-    } catch (e) {
+      );
+      if(response.statusCode == 200){
+        if(response.data['status'] == 'success'){
+          Get.to(() => const MapScreen(
+            students: [],
+          ));
+          if(context.mounted) {
+            defaultSuccessSnackBar(context: context, message: response.data['data']['data']);
+          }
+        } else if(response.data['status'] == 'error'){
+          if(context.mounted) {
+            defaultErrorSnackBar(context: context, message: response.data['data']['data']);
+          }
+        }
+      }
+    } on DioException catch (e) {
       if (context.mounted) {
         defaultErrorSnackBar(
           context: context,
-          message: e.toString(),
+          message: e.response!.data['data']['data'],
         );
       }
     }

@@ -201,6 +201,10 @@ class MapController extends GetxController {
     required bool isEmployee,
     required bool isRound,
   }) {
+    defaultSuccessSnackBar(
+      context: Get.context!,
+      message: "Trip Id: $tripId",
+    );
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -360,6 +364,10 @@ class MapController extends GetxController {
     required bool isRound,
     required List<Student> students,
   }) async {
+    defaultSuccessSnackBar(
+      context: Get.context!,
+      message: "Trip Id: $tripId",
+    );
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
