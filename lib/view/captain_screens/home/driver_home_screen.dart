@@ -32,6 +32,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   @override
   void initState() {
     super.initState();
+    if(mapController.positionStream != null) {
+      mapController.positionStream!.cancel();
+      mapController.positionStream = null;
+    }
     if (context.mounted) {
       homeDriverController.getTrips(context);
     }

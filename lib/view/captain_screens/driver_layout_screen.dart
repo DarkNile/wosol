@@ -32,6 +32,7 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
   @override
   void initState() {
     // homeDriverController.getTrips(context);
+    driverLayoutController.navBarIndex.value = 0;
     if (AppConstants.userType != 'Employee') {
       if (context.mounted) {
         driverLayoutController.notificationTimer =
