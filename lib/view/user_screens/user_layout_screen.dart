@@ -36,6 +36,7 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
 
   @override
   void initState() {
+    userLayoutController.navBarIndex.value = 0;
     userLayoutController .notificationTimer =
         Timer.periodic(const Duration(seconds: 30), (timer) {
           userLayoutController

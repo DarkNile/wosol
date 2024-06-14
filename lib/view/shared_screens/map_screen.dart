@@ -50,6 +50,10 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
     mapController.googleMapController =
         Completer<GoogleMapController>();
+    if(mapController.positionStream != null) {
+      mapController.positionStream!.cancel();
+      mapController.positionStream = null;
+    }
     KeepScreenOn.turnOff();
   }
 

@@ -201,9 +201,9 @@ class MapController extends GetxController {
     required bool isEmployee,
     required bool isRound,
   }) {
-    defaultSuccessSnackBar(
+defaultSuccessSnackBar(
       context: Get.context!,
-      message: "Trip Id: $tripId",
+      message: "From Live Location Trip Id: $tripId",
     );
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
@@ -273,6 +273,7 @@ class MapController extends GetxController {
       );
       if (response.statusCode == 200) {
         positionStream!.cancel();
+        positionStream = null;
         Get.offAll(() => const DriverLayoutScreen());
         defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
 
@@ -364,10 +365,6 @@ class MapController extends GetxController {
     required bool isRound,
     required List<Student> students,
   }) async {
-    defaultSuccessSnackBar(
-      context: Get.context!,
-      message: "Trip Id: $tripId",
-    );
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
@@ -379,6 +376,10 @@ class MapController extends GetxController {
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
+      defaultSuccessSnackBar(
+        context: Get.context!,
+        message: "From Get Estimated Time Trip Id: $tripId",
+      );
       ///End trip bs
       if (isWithinDistance(distantTrack)) {
         if (isEmployee && !isToEnd) {
@@ -449,6 +450,10 @@ class MapController extends GetxController {
                 function: () async {
                   await tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
+                  if(positionStream != null) {
+                    positionStream!.cancel();
+                    positionStream = null;
+                  }
                   // isToEnd = false;
                   // _isEndTrip = false;
                   // homeDriverController.getTrips(context);
