@@ -192,6 +192,12 @@ class MapController extends GetxController {
   }
 
   String currentTripId = "";
+  String currentEndLat = "";
+  String currentEndLong = "";
+  String currentVehicleId = "";
+  List<Student> currentStudents = const [];
+  bool currentIsEmployee = false;
+  bool currentIsRound = false;
   StreamSubscription<Position>? positionStream;
   int liveTrackingDistance = 0;
   void liveLocation({
@@ -218,6 +224,12 @@ class MapController extends GetxController {
       locationSettings: locationSettings,
     ).listen((Position position) {
       tripId = currentTripId;
+      endLat = currentEndLat;
+      endLong = currentEndLong;
+      vehicleId = currentVehicleId;
+      students = currentStudents;
+      isEmployee = currentIsEmployee;
+      isRound = currentIsRound;
       debugPrint("posotitotnn $position --- $tripId -- $currentTripId");
       liveTrackingDistance += 100;
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {

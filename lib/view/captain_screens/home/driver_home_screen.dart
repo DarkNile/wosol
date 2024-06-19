@@ -288,6 +288,12 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             Navigator.pop(bottomSheetContext);
             mapController.currentTripId = tripId;
             mapController.currentStudentIndex.value = 0;
+            mapController.currentEndLat = toLatLng.latitude.toString();
+            mapController.currentEndLong = toLatLng.longitude.toString();
+            mapController.currentVehicleId = vehicleId;
+            mapController.currentStudents = students;
+            mapController.currentIsEmployee = isEmployee;
+            mapController.currentIsRound =(coType != null && coType == 'round');
             mapController.positionStream?.cancel();
             mapController.positionStream = null;
             try {
