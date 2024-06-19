@@ -49,13 +49,13 @@ class MapController extends GetxController {
     PolylinePoints polylinePoints = PolylinePoints();
     try {
       late PolylineResult result;
-      if(drawNormal) {
+      if (drawNormal) {
         result = await polylinePoints.getRouteBetweenCoordinates(
-        AppConstants.googleApiKey,
-        PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
-        PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
-      );
-      } else{
+          AppConstants.googleApiKey,
+          PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+        );
+      } else {
         result = await polylinePoints.getRouteBetweenCoordinates(
           AppConstants.googleApiKey,
           PointLatLng(startLatLng.latitude, startLatLng.longitude),
@@ -69,13 +69,13 @@ class MapController extends GetxController {
         }
       } else {
         if (kDebugMode) {
-          print(result.errorMessage);
+          debugPrint(result.errorMessage);
         }
       }
       update();
     } catch (e) {
       if (kDebugMode) {
-        print("eeeeeeeeeeeeeee $e");
+        debugPrint("eeeeeeeeeeeeeee $e");
       }
     }
   }
@@ -145,7 +145,8 @@ class MapController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
-  void userLiveLocation({bool getEstimatedTime = true, bool drawCurrentTargetPolyline  = true}) {
+  void userLiveLocation(
+      {bool getEstimatedTime = true, bool drawCurrentTargetPolyline = true}) {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
       distanceFilter: 100,
@@ -155,12 +156,12 @@ class MapController extends GetxController {
     ).listen((Position position) {
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         currentLatLng = LatLng(position.latitude, position.longitude);
-        if(drawCurrentTargetPolyline) {
+        if (drawCurrentTargetPolyline) {
           getCurrentTargetPolylinePoints();
         }
-        if(getEstimatedTime) {
+        if (getEstimatedTime) {
           userGetEstimatedTime(
-            originLatLng: currentLatLng, destinationLatLng: targetLatLng);
+              originLatLng: currentLatLng, destinationLatLng: targetLatLng);
         }
         cameraToPosition(currentLatLng);
         update();
@@ -172,7 +173,7 @@ class MapController extends GetxController {
     required LatLng originLatLng,
     required LatLng destinationLatLng,
   }) async {
-    print("caaaaallll");
+    debugPrint("caaaaallll");
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
@@ -183,13 +184,14 @@ class MapController extends GetxController {
       distantTrack =
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
-      print("ressponseeee ${response.data}");
+      debugPrint("ressponseeee ${response.data}");
     } else {
       throw Exception('Failed to load place details');
     }
     update();
   }
 
+  String currentTripId = "";
   StreamSubscription<Position>? positionStream;
   int liveTrackingDistance = 0;
   void liveLocation({
@@ -201,10 +203,11 @@ class MapController extends GetxController {
     required bool isEmployee,
     required bool isRound,
   }) {
-defaultSuccessSnackBar(
-      context: Get.context!,
-      message: "From Live Location Trip Id: $tripId",
-    );
+    debugPrint("from liveee locationnnn  $tripId");
+// defaultSuccessSnackBar(
+//       context: Get.context!,
+//       message: "From Live Location Trip Id: $tripId",
+//     );
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -214,6 +217,8 @@ defaultSuccessSnackBar(
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
+      tripId = currentTripId;
+      debugPrint("posotitotnn $position --- $tripId -- $currentTripId");
       liveTrackingDistance += 100;
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         previousLatLng = currentLatLng;
@@ -221,16 +226,16 @@ defaultSuccessSnackBar(
 
         update();
         getCurrentTargetPolylinePoints();
+        debugPrint("geee estimateddd one $tripId");
         getEstimatedTime(
-          isEmployee: isEmployee,
-          originLatLng: currentLatLng,
-          destinationLatLng: targetLatLng,
-          students: students,
-          endLat: endLat,
-          endLong: endLong,
-          tripId: tripId,
-          isRound: isRound
-        );
+            isEmployee: isEmployee,
+            originLatLng: currentLatLng,
+            destinationLatLng: targetLatLng,
+            students: students,
+            endLat: endLat,
+            endLong: endLong,
+            tripId: tripId,
+            isRound: isRound);
         if (enableLocation.value) {
           cameraToPosition(currentLatLng);
         }
@@ -365,6 +370,7 @@ defaultSuccessSnackBar(
     required bool isRound,
     required List<Student> students,
   }) async {
+    debugPrint("geetttt estimateddd $tripId");
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
@@ -376,10 +382,12 @@ defaultSuccessSnackBar(
           response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
-      defaultSuccessSnackBar(
-        context: Get.context!,
-        message: "From Get Estimated Time Trip Id: $tripId",
-      );
+      // defaultSuccessSnackBar(
+      //   context: Get.context!,
+      //   message: "From Get Estimated Time Trip Id: $tripId",
+      // );
+      debugPrint("iusss yo enddd ${isToEnd}");
+
       ///End trip bs
       if (isWithinDistance(distantTrack)) {
         if (isEmployee && !isToEnd) {
@@ -450,7 +458,7 @@ defaultSuccessSnackBar(
                 function: () async {
                   await tripEnd(tripId: tripId);
                   distantTrack = "10000 km";
-                  if(positionStream != null) {
+                  if (positionStream != null) {
                     positionStream!.cancel();
                     positionStream = null;
                   }
@@ -461,7 +469,9 @@ defaultSuccessSnackBar(
               );
             },
           );
-        } else if (_isEndTrip == false && _isConfirmUser == false && isRound == false) {
+        } else if (_isEndTrip == false &&
+            _isConfirmUser == false &&
+            isRound == false) {
           _isConfirmUser = true;
           showModalBottomSheet(
             context: Get.context!,
@@ -503,10 +513,10 @@ defaultSuccessSnackBar(
                   }
                   update();
 
-                    markerIcon = await getBytesFromAsset(
-                        'assets/images/location_on.png', 70);
-                    currentIcon = await getBytesFromAsset(
-                        'assets/images/navigation_arrow.png', 70);
+                  markerIcon = await getBytesFromAsset(
+                      'assets/images/location_on.png', 70);
+                  currentIcon = await getBytesFromAsset(
+                      'assets/images/navigation_arrow.png', 70);
 
                   await getCurrentLocation().then((value) async {
                     Get.back();
@@ -516,16 +526,17 @@ defaultSuccessSnackBar(
                       target: currentLatLng,
                       zoom: 12,
                     );
+                    debugPrint("geee estimateddd 2 $tripId");
                     getEstimatedTime(
-                      isEmployee: isEmployee,
-                      originLatLng: currentLatLng,
-                      destinationLatLng: targetLatLng,
-                      tripId: tripId,
-                      students: students,
-                      endLong: endLong,
-                      endLat: endLat,
-                      isRound: isRound
-                    );
+                        isEmployee: isEmployee,
+                        originLatLng: currentLatLng,
+                        destinationLatLng: targetLatLng,
+                        tripId: tripId,
+                        students: students,
+                        endLong: endLong,
+                        endLat: endLat,
+                        isRound: isRound);
+                    debugPrint("live stresaaaam  6$tripId");
                     liveLocation(
                       isEmployee: isEmployee,
                       isRound: isRound,
@@ -555,10 +566,10 @@ defaultSuccessSnackBar(
                       double.parse(endLong),
                     );
                   }
-                    markerIcon = await getBytesFromAsset(
-                        'assets/images/location_on.png', 70);
-                    currentIcon = await getBytesFromAsset(
-                        'assets/images/navigation_arrow.png', 70);
+                  markerIcon = await getBytesFromAsset(
+                      'assets/images/location_on.png', 70);
+                  currentIcon = await getBytesFromAsset(
+                      'assets/images/navigation_arrow.png', 70);
                   await getCurrentLocation().then((value) async {
                     Get.back();
                     currentLatLng = LatLng(value.latitude, value.longitude);
@@ -567,26 +578,27 @@ defaultSuccessSnackBar(
                       target: currentLatLng,
                       zoom: 12,
                     );
+                    debugPrint("geee estimateddd 3 $tripId");
                     getEstimatedTime(
-                      isEmployee: isEmployee,
-                      originLatLng: currentLatLng,
-                      destinationLatLng: targetLatLng,
-                      tripId: tripId,
-                      students: students,
-                      endLong: endLong,
-                      endLat: endLat,
-                      isRound: isRound
-                    );
-                    liveLocation(
-                      isEmployee: isEmployee,
-                      isRound: isRound
-                    );
+                        isEmployee: isEmployee,
+                        originLatLng: currentLatLng,
+                        destinationLatLng: targetLatLng,
+                        tripId: tripId,
+                        students: students,
+                        endLong: endLong,
+                        endLat: endLat,
+                        isRound: isRound);
+                    debugPrint("live stresaaaam 5 $tripId");
+
+                    liveLocation(isEmployee: isEmployee, isRound: isRound);
                   });
                 });
               },
             ),
           );
-        } else if(_isEndTrip == false && _isConfirmUser == false && isRound == true){
+        } else if (_isEndTrip == false &&
+            _isConfirmUser == false &&
+            isRound == true) {
           _isConfirmUser = true;
           if (students.length - 1 > currentStudentIndex.value) {
             currentStudentIndex.value++;
@@ -598,10 +610,8 @@ defaultSuccessSnackBar(
             //   students[currentStudentIndex.value].tripUserId,
             // );
             targetLatLng = LatLng(
-              double.parse(
-                  students[currentStudentIndex.value].pickupLat),
-              double.parse(
-                  students[currentStudentIndex.value].pickupLong),
+              double.parse(students[currentStudentIndex.value].pickupLat),
+              double.parse(students[currentStudentIndex.value].pickupLong),
             );
           } else {
             currentStudentIndex.value++;
@@ -612,10 +622,10 @@ defaultSuccessSnackBar(
           }
           update();
 
-          markerIcon = await getBytesFromAsset(
-              'assets/images/location_on.png', 70);
-          currentIcon = await getBytesFromAsset(
-              'assets/images/navigation_arrow.png', 70);
+          markerIcon =
+              await getBytesFromAsset('assets/images/location_on.png', 70);
+          currentIcon =
+              await getBytesFromAsset('assets/images/navigation_arrow.png', 70);
 
           await getCurrentLocation().then((value) async {
             // Get.back();
@@ -625,6 +635,7 @@ defaultSuccessSnackBar(
               target: currentLatLng,
               zoom: 12,
             );
+            debugPrint("geee estimateddd 4 $tripId");
             getEstimatedTime(
                 isEmployee: isEmployee,
                 originLatLng: currentLatLng,
@@ -633,8 +644,8 @@ defaultSuccessSnackBar(
                 students: students,
                 endLong: endLong,
                 endLat: endLat,
-                isRound: isRound
-            );
+                isRound: isRound);
+            debugPrint("live stresaaaam 4 $tripId");
             liveLocation(
               isEmployee: isEmployee,
               isRound: isRound,
