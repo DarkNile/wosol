@@ -242,14 +242,14 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                               target: mapController.currentLatLng,
                               zoom: 14,
                             );
-                            if(context.mounted) {
                               employeeController.requestRide(
-                              context: context,
                               groupId: employeeController.groups[index].groupId,
                               lat: value.latitude.toString(),
                               lng: value.longitude.toString(),
+                                date: tripDate!,
                             );
-                            }
+
+
                             // mapController.userGetEstimatedTime(
                             //   originLatLng: mapController.currentLatLng,
                             //   destinationLatLng: mapController.targetLatLng,

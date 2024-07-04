@@ -40,10 +40,12 @@ class UserHomeController extends GetxController {
   // ? ===== Get Trips =====
   RxBool isGettingTrips = false.obs;
   RxList<TripModel> tripsList = <TripModel>[].obs;
-  Future<void> getTrips() async {
+  Future<void> getTrips({bool containLoading = true}) async {
     try {
       log("Get Trips Loading");
-      isGettingTrips.value = true;
+      if(containLoading) {
+        isGettingTrips.value = true;
+      }
       String userId = AppConstants.userRepository.userData.userId;
       // var token = await CacheHelper.getData(key: 'token');
       Response response = await DioHelper.postData(

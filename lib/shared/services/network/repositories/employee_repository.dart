@@ -46,6 +46,7 @@ class EmployeeRepository extends GetxService {
     required String groupId,
     required String lat,
     required String lng,
+    required String date,
   }) async {
     try {
       Response response = await DioHelper.postData(
@@ -55,6 +56,7 @@ class EmployeeRepository extends GetxService {
           "group_id": groupId,
           "lat": lat,
           "lng": lng,
+          'trip_date' : date,
         },
       );
       if (response.statusCode == 200) {

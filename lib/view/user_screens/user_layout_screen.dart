@@ -42,6 +42,7 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
           userLayoutController
               .getNotificationRequests(context: context)
               .then((value) {
+              userHomeController.getTrips(containLoading: false);
                 if(userLayoutController.studentNotifications != null) {
                   if(userLayoutController.studentNotifications!.type == 'trip_start' || userLayoutController.studentNotifications!.type == 'trip_attendace'){
                     showModalBottomSheet(
