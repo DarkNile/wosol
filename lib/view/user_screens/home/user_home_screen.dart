@@ -136,6 +136,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                   onTapCancel(
                                                     context: context,
                                                     isTrip: true,
+                                                    tripId: userHomeController
+                                                        .tripsList[index]
+                                                        .subData![indexSubData].tripId,
+                                                    tripUserId: userHomeController
+                                                        .tripsList[index]
+                                                        .subData![indexSubData].userId,
                                                     isCancel: userHomeController
                                                             .tripsList[index]
                                                             .subData![
@@ -305,6 +311,8 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     String? calendarDate,
     required bool isCancel,
     required String userId,
+    String? tripUserId,
+    String? tripId,
   }) async {
     showModalBottomSheet(
         context: context,
@@ -332,20 +340,22 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                   if (isTrip) {
                     //  Cancel
                     if (isCancel) {
-                      await userHomeController.tripCancelByDateAPI(
+                      await userHomeController.tripCancelAPI(
                         context: context,
                         userId: userId,
-                        date: tripDate!,
                         cancel: '1',
                         cancelReason: 'سبب الالغاء',
+                        tripUserId: tripUserId!,
+                        tripId: tripId!,
                       );
                     } else {
                       // Un Cancel
-                      await userHomeController.tripCancelByDateAPI(
+                      await userHomeController.tripCancelAPI(
                         context: context,
                         userId: userId,
-                        date: tripDate!,
                         cancel: '0',
+                        tripUserId: tripUserId!,
+                        tripId: tripId!,
                       );
                     }
                   } else {

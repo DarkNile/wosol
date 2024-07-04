@@ -18,6 +18,7 @@ import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
+import '../captain_controllers/home_driver_controller.dart';
 
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
@@ -209,6 +210,7 @@ class MapController extends GetxController {
     required bool isEmployee,
     required bool isRound,
   }) {
+    HomeDriverController homeDriverController = Get.put(HomeDriverController());
     debugPrint("from liveee locationnnn  $tripId");
 // defaultSuccessSnackBar(
 //       context: Get.context!,
@@ -223,6 +225,8 @@ class MapController extends GetxController {
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
+      homeDriverController.getTrips(Get.context!, containLoading: false);
+      currentStudents = homeDriverController.driverNextRide[0].students;
       tripId = currentTripId;
       endLat = currentEndLat;
       endLong = currentEndLong;
@@ -608,6 +612,7 @@ class MapController extends GetxController {
               },
             ),
           );
+
         } else if (_isEndTrip == false &&
             _isConfirmUser == false &&
             isRound == true) {

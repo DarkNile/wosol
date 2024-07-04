@@ -18,10 +18,12 @@ class HomeDriverController extends GetxController {
   List<Trip> driverNextRide = [];
   List<Trip> driverTrips = [];
 
-  Future<void> getTrips(BuildContext context) async {
+  Future<void> getTrips(BuildContext context, {bool containLoading = true}) async {
     driverNextRide = [];
     driverTrips = [];
-    isGettingTrips.value = true;
+    if(containLoading) {
+      isGettingTrips.value = true;
+    }
     try {
       Response response = await AppConstants.homeDriverRepository
           .getTrips(AppConstants.userRepository.driverData.driverId);

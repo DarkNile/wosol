@@ -82,40 +82,36 @@ class EmployeeController extends GetxController {
   }
 
   void requestRide({
-    required BuildContext context,
     required String groupId,
     required String lat,
     required String lng,
+    required String date,
   }) async {
     try {
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%');
       Response response = await AppConstants.employeeRepository
           .requestRide(
         employeeId: AppConstants.userRepository.employeeData.driverId,
         groupId: groupId,
         lat: lat,
         lng: lng,
+        date: date,
       );
       if(response.statusCode == 200){
         if(response.data['status'] == 'success'){
           Get.to(() => const MapScreen(
             students: [],
           ));
-          if(context.mounted) {
-            defaultSuccessSnackBar(context: context, message: response.data['data']['data']);
-          }
+            //defaultSuccessSnackBar(context: Get.context!, message: response.data['data']['data']);
         } else if(response.data['status'] == 'error'){
-          if(context.mounted) {
-            defaultErrorSnackBar(context: context, message: response.data['data']['data']);
-          }
+            defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
         }
       }
     } on DioException catch (e) {
-      if (context.mounted) {
         defaultErrorSnackBar(
-          context: context,
+          context: Get.context!,
           message: e.response!.data['data']['data'],
         );
-      }
     }
     update();
   }

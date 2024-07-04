@@ -11,6 +11,7 @@ import 'package:wosol/controllers/user_controllers/user_home_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
 import '../../controllers/captain_controllers/home_driver_controller.dart';
+import '../../controllers/employee_ controllers/employee_controller.dart';
 import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/constants/style/colors.dart';
@@ -39,6 +40,7 @@ class _MapScreenState extends State<MapScreen> {
   final HomeDriverController homeDriverController =
       Get.put(HomeDriverController());
   final UserHomeController userHomeController = Get.put(UserHomeController());
+  EmployeeController employeeController = Get.put(EmployeeController());
   @override
   void initState() {
     super.initState();
@@ -64,6 +66,11 @@ class _MapScreenState extends State<MapScreen> {
       onPopInvoked: (v) {
         if (AppConstants.userType == 'Driver') {
           homeDriverController.getTrips(context);
+        } else if (AppConstants.userType == 'Student') {
+          userHomeController.getTrips();
+          userHomeController.getCalendarData();
+        } else if (AppConstants.userType == 'Employee') {
+          employeeController.getTrips(context);
         }
       },
       child: SafeArea(
