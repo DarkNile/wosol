@@ -33,6 +33,7 @@ class TripModel {
 class SubData {
   String? tripId;
   String? userId;
+  String? tripUserId;
   String? userType;
   String? tourismType;
   String? userFname;
@@ -63,6 +64,7 @@ class SubData {
   SubData(
       {this.tripId,
       this.userId,
+      this.tripUserId,
       this.userType,
       this.tourismType,
       this.userFname,
@@ -94,6 +96,7 @@ class SubData {
   SubData.fromJson(Map<String, dynamic> json) {
     tripId = json['trip_id'];
     userId = json['user_id'];
+    tripUserId = json['trip_user_id'];
     userType = json['user_type'];
     tourismType = json['tourism_type'];
     userFname = json['user_fname'];
@@ -126,6 +129,7 @@ class SubData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['trip_id'] = tripId;
     data['user_id'] = userId;
+    data['trip_user_id'] = userId;
     data['user_type'] = userType;
     data['tourism_type'] = tourismType;
     data['user_fname'] = userFname;
