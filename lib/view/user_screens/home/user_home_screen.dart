@@ -141,7 +141,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                         .subData![indexSubData].tripId,
                                                     tripUserId: userHomeController
                                                         .tripsList[index]
-                                                        .subData![indexSubData].userId,
+                                                        .subData![indexSubData].tripUserId,
                                                     isCancel: userHomeController
                                                             .tripsList[index]
                                                             .subData![

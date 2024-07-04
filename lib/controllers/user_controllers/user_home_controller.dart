@@ -120,9 +120,10 @@ class UserHomeController extends GetxController {
           .then((response) {
         tripCancelLoading.value = false;
         Get.back();
+        getTrips();
         if (context.mounted) {
           !(cancel == "0")
-              ? defaultErrorSnackBar(
+              ? defaultSuccessSnackBar(
                   context: context, message: 'Trip Canceled'.tr)
               : defaultSuccessSnackBar(
                   context: context, message: 'Trip Un Canceled'.tr);
