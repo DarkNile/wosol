@@ -227,6 +227,8 @@ class MapController extends GetxController {
     ).listen((Position position) {
       homeDriverController.getTrips(Get.context!, containLoading: false);
       currentStudents = homeDriverController.driverNextRide[0].students;
+      targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
+      currentStudentIndex.value = 0;
       tripId = currentTripId;
       endLat = currentEndLat;
       endLong = currentEndLong;

@@ -22,12 +22,12 @@ class MapScreen extends StatefulWidget {
   const MapScreen({
     super.key,
     required this.students,
-    this.tripDate,
+    this.tripId,
     this.isRound = false,
     this.isTraddy = false,
   });
   final List<Student> students;
-  final String? tripDate;
+  final String? tripId;
   final bool isRound;
   final bool isTraddy;
 
@@ -354,25 +354,27 @@ class _MapScreenState extends State<MapScreen> {
                                                     '0') {
                                                   widget.students[index]
                                                       .cancelRequest = '1';
-                                                  await userHomeController
-                                                      .tripCancelByDateAPI(
+                                                  await userHomeController.tripCancelAPI(
                                                     context: context,
                                                     userId: widget
                                                         .students[index].userId,
-                                                    date: widget.tripDate!,
                                                     cancel: '1',
                                                     cancelReason: 'سبب الالغاء',
+                                                    tripUserId: widget
+                                                        .students[index].tripUserId,
+                                                    tripId: widget.tripId!,
                                                   );
                                                 } else {
                                                   widget.students[index]
                                                       .cancelRequest = '0';
-                                                  await userHomeController
-                                                      .tripCancelByDateAPI(
+                                                  await userHomeController.tripCancelAPI(
                                                     context: context,
                                                     userId: widget
                                                         .students[index].userId,
-                                                    date: widget.tripDate!,
                                                     cancel: '0',
+                                                    tripUserId: widget
+                                                        .students[index].tripUserId,
+                                                    tripId: widget.tripId!,
                                                   );
                                                 }
                                               },

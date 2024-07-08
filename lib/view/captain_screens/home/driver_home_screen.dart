@@ -394,7 +394,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
 
                   Get.to(() => MapScreen(
                         students: students,
-                        tripDate: tripDate!,
+                        tripId: tripId,
                         isRound: (coType != null && coType == 'round'),
                       ));
                 }
@@ -504,7 +504,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     }
                     Get.to(() => MapScreen(
                           students: students,
-                          tripDate: tripDate!,
+                          tripId: tripId,
                           isRound: (coType != null && coType == 'round'),
                         ));
                   }
