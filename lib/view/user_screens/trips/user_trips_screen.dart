@@ -50,6 +50,11 @@ class _UserTripsScreenState extends State<UserTripsScreen> {
                             ...List.generate(
                                 userLayoutController.studentRoutes.length,
                                 (index) => TripCardWidget(
+                                      tripId: userLayoutController
+                                          .studentRoutes[index]
+                                          .subData
+                                          .first
+                                          .tripId,
                                       fromLocation: userLayoutController
                                           .studentRoutes[index]
                                           .subData
@@ -75,16 +80,20 @@ class _UserTripsScreenState extends State<UserTripsScreen> {
                                           .subData
                                           .first
                                           .tripDate,
-                                      fromTime: AppConstants.getTimeFromDateString(userLayoutController
-                                          .studentRoutes[index]
-                                          .subData
-                                          .first
-                                          .tripStart),
-                                      toTime:AppConstants.getTimeFromDateString(userLayoutController
-                                          .studentRoutes[index]
-                                          .subData
-                                          .first
-                                          .tripStart),
+                                      fromTime:
+                                          AppConstants.getTimeFromDateString(
+                                              userLayoutController
+                                                  .studentRoutes[index]
+                                                  .subData
+                                                  .first
+                                                  .tripStart),
+                                      toTime:
+                                          AppConstants.getTimeFromDateString(
+                                              userLayoutController
+                                                  .studentRoutes[index]
+                                                  .subData
+                                                  .first
+                                                  .tripStart),
                                     )),
                           ],
                         ),

@@ -216,6 +216,7 @@ class RideStartBottomSheet extends StatelessWidget {
       firstButtonLoading: isLoading,
       child: fromUser
           ? UserTripDetailWidget(
+              tripId: tripId!,
               fromTime: formTime!,
               toTime: toTime!,
               fromLocation: formPlace!,
