@@ -19,23 +19,27 @@ class TripCardWidget extends StatelessWidget {
   final bool withCancel;
   final bool withBorder;
   final void Function()? onCancel;
+  final void Function()? onViewMap;
   final bool isCancel;
   final bool tripIsRunning;
-  const TripCardWidget(
-      {super.key,
-      this.withCancel = false,
-      this.withBorder = true,
-      this.onCancel,
-      required this.fromLocation,
-      required this.fromTitle,
-      required this.toLocation,
-      required this.toTitle,
-      required this.date,
-      required this.fromTime,
-      required this.toTime,
-      this.isCancel = true,
-      this.tripIsRunning = false,
-      });
+  final String tripId;
+  const TripCardWidget({
+    super.key,
+    this.withCancel = false,
+    this.withBorder = true,
+    this.onCancel,
+    this.onViewMap,
+    required this.fromLocation,
+    required this.fromTitle,
+    required this.toLocation,
+    required this.toTitle,
+    required this.date,
+    required this.fromTime,
+    required this.toTime,
+    this.isCancel = true,
+    this.tripIsRunning = false,
+    required this.tripId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +62,58 @@ class TripCardWidget extends StatelessWidget {
               toLocation: toLocation,
               toTitle: toTitle,
               date: date,
+              tripId: tripId,
             )),
             if (withCancel)
-              DefaultRowButton(
-                      text: tripIsRunning? "goToMap".tr : (isCancel ? "cancelTrip".tr : "unCancelTrip".tr),
+              Row(
+                children: [
+                  if (tripIsRunning)
+                    Expanded(
+                      child: DefaultRowButton(
+                        text: "goToMap".tr,
+                        height: 42,
+                        border: withBorder
+                            ? Border.all(
+                                color: AppColors.error600,
+                              )
+                            : null,
+                        color: AppColors.logo,
+                        function: onViewMap,
+                        textColor:
+                            withBorder ? AppColors.error600 : AppColors.white,
+                        borderRadius: 8,
+                        containIcon: false,
+                        svgPic: withBorder
+                            ? 'assets/icons/close_red.svg'
+                            : 'assets/icons/close_white.svg',
+                      ),
+                    ),
+                  if (tripIsRunning)
+                    const SizedBox(
+                      width: 16,
+                    ),
+                  Expanded(
+                    child: DefaultRowButton(
+                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
                       height: 42,
-                      border: withBorder? Border.all(
-                        color: AppColors.error600,
-                      ) : null,
-                      color: tripIsRunning? AppColors.logo : (withBorder?  AppColors.white : AppColors.error600),
+                      border: withBorder
+                          ? Border.all(
+                              color: AppColors.error600,
+                            )
+                          : null,
+                      color: withBorder ? AppColors.white : AppColors.error600,
                       function: onCancel,
-                      textColor: withBorder? AppColors.error600 : AppColors.white,
+                      textColor:
+                          withBorder ? AppColors.error600 : AppColors.white,
                       borderRadius: 8,
-                      containIcon: tripIsRunning? false : true,
-                      svgPic: withBorder? 'assets/icons/close_red.svg' : 'assets/icons/close_white.svg',
-                    )
+                      containIcon: true,
+                      svgPic: withBorder
+                          ? 'assets/icons/close_red.svg'
+                          : 'assets/icons/close_white.svg',
+                    ),
+                  ),
+                ],
+              )
           ],
         ),
       ),

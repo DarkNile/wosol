@@ -33,7 +33,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async{
+      onRefresh: () async {
         userHomeController.getTrips();
         userHomeController.getCalendarData();
       },
@@ -92,6 +92,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                     .length
                                                 : 2,
                                             (indexSubData) => TripCardWidget(
+                                              tripId: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .tripId!,
                                               isCancel: userHomeController
                                                       .tripsList[index]
                                                       .subData![indexSubData]
@@ -99,64 +103,88 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                   "0",
                                               tripIsRunning: userHomeController
                                                   .tripsList[index]
-                                                  .subData![indexSubData].tripIsRunning!,
+                                                  .subData![indexSubData]
+                                                  .tripIsRunning!,
                                               withCancel: true,
                                               withBorder: false,
-                                              onCancel: () async {
-                                                if(userHomeController
-                                                    .tripsList[index]
-                                                    .subData![indexSubData].tripIsRunning!){
-                                                  mapController.markerIcon =
-                                                  await mapController.getBytesFromAsset(
-                                                      'assets/images/where_to_vote.png', 70);
-                                                  mapController.currentIcon =
-                                                  await mapController.getBytesFromAsset(
-                                                      'assets/images/person_pin_circle.png', 70);
-                                                  mapController.targetLatLng = LatLng(double.parse(userHomeController.tripsList[index].subData![indexSubData].dropLat!), double.parse(userHomeController.tripsList[index].subData![indexSubData].dropLong!));
+                                              onViewMap: () async {
+                                                mapController.markerIcon =
+                                                    await mapController
+                                                        .getBytesFromAsset(
+                                                            'assets/images/where_to_vote.png',
+                                                            70);
+                                                mapController.currentIcon =
+                                                    await mapController
+                                                        .getBytesFromAsset(
+                                                            'assets/images/person_pin_circle.png',
+                                                            70);
+                                                mapController.targetLatLng =
+                                                    LatLng(
+                                                        double.parse(
+                                                            userHomeController
+                                                                .tripsList[
+                                                                    index]
+                                                                .subData![
+                                                                    indexSubData]
+                                                                .dropLat!),
+                                                        double.parse(
+                                                            userHomeController
+                                                                .tripsList[
+                                                                    index]
+                                                                .subData![
+                                                                    indexSubData]
+                                                                .dropLong!));
+                                                await mapController
+                                                    .getCurrentLocation()
+                                                    .then((value) async {
+                                                  mapController.currentLatLng =
+                                                      LatLng(value.latitude,
+                                                          value.longitude);
                                                   await mapController
-                                                      .getCurrentLocation()
-                                                      .then((value) async {
-                                                    mapController.currentLatLng =
-                                                        LatLng(value.latitude, value.longitude);
-                                                    await mapController.getCurrentTargetPolylinePoints();
-                                                    mapController.cameraPosition = CameraPosition(
-                                                      target: mapController.currentLatLng,
-                                                      zoom: 14,
-                                                    );
-                                                    // mapController.userGetEstimatedTime(
-                                                    //   originLatLng: mapController.currentLatLng,
-                                                    //   destinationLatLng: mapController.targetLatLng,
-                                                    // );
-                                                    // mapController.userLiveLocation();
-                                                  });
-                                                  Get.to(() => const MapScreen(
-                                                    students: [],
-                                                  ));
-                                                }else {
-                                                  onTapCancel(
-                                                    context: context,
-                                                    isTrip: true,
-                                                    tripId: userHomeController
-                                                        .tripsList[index]
-                                                        .subData![indexSubData].tripId,
-                                                    tripUserId: userHomeController
-                                                        .tripsList[index]
-                                                        .subData![indexSubData].tripUserId,
-                                                    isCancel: userHomeController
-                                                            .tripsList[index]
-                                                            .subData![
-                                                                indexSubData]
-                                                            .cancelRequest! ==
-                                                        "0",
-                                                    tripDate: userHomeController
-                                                        .tripsList[index]
-                                                        .subData![indexSubData]
-                                                        .tripDate!,
-                                                    userId: userHomeController
-                                                        .tripsList[index]
-                                                        .subData![indexSubData]
-                                                        .userId!);
-                                                }
+                                                      .getCurrentTargetPolylinePoints();
+                                                  mapController.cameraPosition =
+                                                      CameraPosition(
+                                                    target: mapController
+                                                        .currentLatLng,
+                                                    zoom: 14,
+                                                  );
+                                                  // mapController.userGetEstimatedTime(
+                                                  //   originLatLng: mapController.currentLatLng,
+                                                  //   destinationLatLng: mapController.targetLatLng,
+                                                  // );
+                                                  // mapController.userLiveLocation();
+                                                });
+                                                Get.to(() => const MapScreen(
+                                                      students: [],
+                                                    ));
+                                              },
+                                              onCancel: () async {
+                                                onTapCancel(
+                                                  context: context,
+                                                  isTrip: true,
+                                                  tripId: userHomeController
+                                                      .tripsList[index]
+                                                      .subData![indexSubData]
+                                                      .tripId,
+                                                  tripUserId: userHomeController
+                                                      .tripsList[index]
+                                                      .subData![indexSubData]
+                                                      .tripUserId,
+                                                  isCancel: userHomeController
+                                                          .tripsList[index]
+                                                          .subData![
+                                                              indexSubData]
+                                                          .cancelRequest! ==
+                                                      "0",
+                                                  tripDate: userHomeController
+                                                      .tripsList[index]
+                                                      .subData![indexSubData]
+                                                      .tripDate!,
+                                                  userId: userHomeController
+                                                      .tripsList[index]
+                                                      .subData![indexSubData]
+                                                      .userId!,
+                                                );
                                               },
                                               fromLocation: userHomeController
                                                   .tripsList[index]
@@ -207,13 +235,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                   userHomeController
                                       .calendarData[0].subData!.isEmpty)
                               ? Center(
-                                  child:
-                                      Text("No Trips".tr, style: AppFonts.medium),
+                                  child: Text("No Trips".tr,
+                                      style: AppFonts.medium),
                                 )
                               : Column(
                                   children: [
                                     ...List.generate(
-                                        userHomeController.calendarData.length <=
+                                        userHomeController
+                                                    .calendarData.length <=
                                                 5
                                             ? userHomeController
                                                 .calendarData.length
@@ -227,6 +256,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                       .length,
                                                   (indexSubData) =>
                                                       TripCardWidget(
+                                                    tripId: userHomeController
+                                                        .calendarData[index]
+                                                        .subData![indexSubData]
+                                                        .calendarId!,
                                                     isCancel: userHomeController
                                                             .calendarData[index]
                                                             .subData![
@@ -239,14 +272,18 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                             .subData![
                                                                 indexSubData]
                                                             .from!,
-                                                    fromTitle: userHomeController
-                                                        .calendarData[index]
-                                                        .subData![indexSubData]
-                                                        .from!,
-                                                    toLocation: userHomeController
-                                                        .calendarData[index]
-                                                        .subData![indexSubData]
-                                                        .universityName!,
+                                                    fromTitle:
+                                                        userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .from!,
+                                                    toLocation:
+                                                        userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .universityName!,
                                                     toTitle: userHomeController
                                                         .calendarData[index]
                                                         .subData![indexSubData]
@@ -272,11 +309,13 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                                 .subData![
                                                                     indexSubData]
                                                                 .date!,
-                                                        userId: userHomeController
-                                                            .calendarData[index]
-                                                            .subData![
-                                                                indexSubData]
-                                                            .userId!,
+                                                        userId:
+                                                            userHomeController
+                                                                .calendarData[
+                                                                    index]
+                                                                .subData![
+                                                                    indexSubData]
+                                                                .userId!,
                                                         isTrip: false,
                                                         isCancel: userHomeController
                                                                 .calendarData[

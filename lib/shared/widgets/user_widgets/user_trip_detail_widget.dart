@@ -14,20 +14,24 @@ class UserTripDetailWidget extends StatelessWidget {
   final String date;
   final String fromTime;
   final String toTime;
-  const UserTripDetailWidget(
-      {super.key,
-      required this.fromLocation,
-      required this.fromTitle,
-      required this.toLocation,
-      required this.toTitle,
-      required this.date,
-      required this.fromTime,
-      required this.toTime});
+  final String tripId;
+  const UserTripDetailWidget({
+    super.key,
+    required this.fromLocation,
+    required this.fromTitle,
+    required this.toLocation,
+    required this.toTitle,
+    required this.date,
+    required this.fromTime,
+    required this.toTime,
+    required this.tripId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       _CustomLocationRowWidget(
+        tripId: tripId,
         location: fromLocation,
         time: date,
         isFrom: true,
@@ -113,9 +117,14 @@ class _CustomLocationRowWidget extends StatelessWidget {
   final String location;
   final String? time;
   final bool isFrom;
+  final String? tripId;
 
-  const _CustomLocationRowWidget(
-      {required this.location, required this.time, required this.isFrom});
+  const _CustomLocationRowWidget({
+    required this.location,
+    required this.time,
+    required this.isFrom,
+    this.tripId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +165,23 @@ class _CustomLocationRowWidget extends StatelessWidget {
           width: 4,
         ),
         Expanded(
-          child: Text(location,
-              overflow: TextOverflow.ellipsis,
-              style: AppFonts.button.copyWith(
-                  fontSize: 13.0.sp(context),
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.darkBlue300)),
+          child: Text(
+            location,
+            overflow: TextOverflow.ellipsis,
+            style: AppFonts.button.copyWith(
+                fontSize: 13.0.sp(context),
+                fontWeight: FontWeight.w500,
+                color: AppColors.darkBlue300),
+          ),
         ),
+        if (tripId != null)
+          Text(
+            'Trip id: $tripId',
+            style: AppFonts.button.copyWith(
+                fontSize: 13.0.sp(context),
+                fontWeight: FontWeight.w500,
+                color: AppColors.darkBlue300),
+          ),
       ]),
     );
   }
