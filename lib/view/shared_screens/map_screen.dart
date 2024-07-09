@@ -154,6 +154,14 @@ class _MapScreenState extends State<MapScreen> {
                     }
                   },
                 ),
+                if (AppConstants.userType == 'Student')
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    padding: const EdgeInsets.only(top: 20),
+                      onPressed: (){Get.back();},
+                      icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black,)),
+                ),
                 if (AppConstants.userType == 'Driver')
                   Obx(
                     () => Material(
