@@ -225,10 +225,13 @@ class MapController extends GetxController {
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-      homeDriverController.getTrips(Get.context!, containLoading: false);
-      currentStudents = homeDriverController.driverNextRide[0].students;
-      targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
-      currentStudentIndex.value = 0;
+      homeDriverController.getTrips(Get.context!, containLoading: false).then((v){
+        currentStudents = homeDriverController.driverNextRide[0].students;
+        if(currentStudents.isNotEmpty){
+          targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
+          currentStudentIndex.value = 0;
+        }
+      });
       tripId = currentTripId;
       endLat = currentEndLat;
       endLong = currentEndLong;
