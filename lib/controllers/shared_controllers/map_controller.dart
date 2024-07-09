@@ -230,6 +230,8 @@ class MapController extends GetxController {
         if(currentStudents.isNotEmpty){
           targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
           currentStudentIndex.value = 0;
+        }else{
+          currentStudentIndex.value = 1;
         }
       });
       tripId = currentTripId;
