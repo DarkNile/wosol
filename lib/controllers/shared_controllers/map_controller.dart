@@ -231,7 +231,7 @@ class MapController extends GetxController {
           targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
           currentStudentIndex.value = 0;
         }else{
-          currentStudentIndex.value = 1;
+          currentStudentIndex.value = -1;
         }
       });
       tripId = currentTripId;
@@ -462,8 +462,8 @@ class MapController extends GetxController {
           );
           update();
         } else if (((students.isEmpty && isToEnd) ||
-                (students.isNotEmpty &&
-                    currentStudentIndex.value == students.length)) &&
+                (students.isEmpty &&
+                    currentStudentIndex.value == -1)) &&
             _isEndTrip == false) {
           _isEndTrip = true;
           showModalBottomSheet(
