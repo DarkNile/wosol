@@ -2,19 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>WOSOL needs access to your photo library to upload your profile picture.</string>
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
-<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
-<key>NSLocationAlwaysUsageDescription</key>
-<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
-<key>NSLocationTemporaryUsageDescriptionDictionary</key>
-<dict>
-  <key>Location Access</key>
-  <string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
-</dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -37,6 +26,16 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>WOSOL needs access to your location to get your pick up point on the map to reach your destination.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>WOSOL needs access to your photo library to upload your profile picture.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -54,9 +53,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>
