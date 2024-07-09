@@ -219,7 +219,7 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 1,
+      distanceFilter: 100,
     );
 
     positionStream = Geolocator.getPositionStream(
