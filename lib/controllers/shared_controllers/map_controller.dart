@@ -540,7 +540,6 @@ class MapController extends GetxController {
                   homeDriverController
                       .getTrips(Get.context!, containLoading: false)
                       .then((v) async {
-                    print("------- ${currentStudentIndex}");
                     if (homeDriverController.driverNextRide.isNotEmpty) {
                       currentStudents =
                           homeDriverController.driverNextRide[0].students;
