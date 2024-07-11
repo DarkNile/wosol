@@ -18,10 +18,11 @@ class HomeDriverController extends GetxController {
   List<Trip> driverNextRide = [];
   List<Trip> driverTrips = [];
 
-  Future<void> getTrips(BuildContext context, {bool containLoading = true}) async {
+  Future<void> getTrips(BuildContext context,
+      {bool containLoading = true}) async {
     driverNextRide = [];
     driverTrips = [];
-    if(containLoading) {
+    if (containLoading) {
       isGettingTrips.value = true;
     }
     try {
@@ -30,6 +31,8 @@ class HomeDriverController extends GetxController {
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
           driverTrips = tripFromJson(response.data);
+          driverTrips
+              .removeWhere((e) => e.tripType == '1' && e.students.isEmpty);
           driverNextRide = [driverTrips[0]];
           driverTrips.removeAt(0);
           isGettingTrips.value = false;
@@ -158,16 +161,15 @@ class HomeDriverController extends GetxController {
   Future<void> getTraddyTripsAPI({
     required BuildContext context,
     required String tripId,
-
   }) async {
     traddyTripsStatesLoading = true;
     try {
-      Response response = await AppConstants.homeDriverRepository
-          .getTraddyTrips(
+      Response response =
+          await AppConstants.homeDriverRepository.getTraddyTrips(
         tripId: tripId,
       );
 
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
           traddyTripsStatesLoading = false;
           traddyTrips = traddyTripsFromJson(response.data);
@@ -180,7 +182,7 @@ class HomeDriverController extends GetxController {
           }
           traddyTripsStatesLoading = false;
         }
-      } else{
+      } else {
         if (context.mounted) {
           defaultErrorSnackBar(
             context: context,

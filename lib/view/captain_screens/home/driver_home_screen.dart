@@ -276,7 +276,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required List<Student> students,
     bool isEmployee = false,
   }) async {
-    print("trippp ioddd ${tripId}");
+    print("trippp ioddd $tripId");
     showModalBottomSheet(
       context: context,
       isDismissible: false,
@@ -293,7 +293,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             mapController.currentVehicleId = vehicleId;
             mapController.currentStudents = students;
             mapController.currentIsEmployee = isEmployee;
-            mapController.currentIsRound =(coType != null && coType == 'round');
+            mapController.currentIsRound =
+                (coType != null && coType == 'round');
             mapController.positionStream?.cancel();
             mapController.positionStream = null;
             try {
