@@ -52,16 +52,24 @@ class MapController extends GetxController {
       late PolylineResult result;
       if (drawNormal) {
         result = await polylinePoints.getRouteBetweenCoordinates(
-          AppConstants.googleApiKey,
-          PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
-          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+          googleApiKey: AppConstants.googleApiKey,
+          request: PolylineRequest(
+            origin:
+                PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+            destination:
+                PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+            mode: TravelMode.driving,
+          ),
         );
       } else {
         result = await polylinePoints.getRouteBetweenCoordinates(
-          AppConstants.googleApiKey,
-          PointLatLng(startLatLng.latitude, startLatLng.longitude),
-          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
-        );
+            googleApiKey: AppConstants.googleApiKey,
+            request: PolylineRequest(
+              origin: PointLatLng(startLatLng.latitude, startLatLng.longitude),
+              destination:
+                  PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+              mode: TravelMode.driving,
+            ));
       }
 
       if (result.points.isNotEmpty) {
@@ -225,13 +233,19 @@ class MapController extends GetxController {
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-      homeDriverController.getTrips(Get.context!, containLoading: false).then((v){
-        currentStudents = homeDriverController.driverNextRide[0].students;
-        if(currentStudents.isNotEmpty){
-          targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat), double.parse(currentStudents[0].pickupLong));
-          currentStudentIndex.value = 0;
-        }else{
-          currentStudentIndex.value = -1;
+      homeDriverController
+          .getTrips(Get.context!, containLoading: false)
+          .then((v) {
+        print("------- ${currentStudentIndex}");
+        if (homeDriverController.driverNextRide.isNotEmpty) {
+          currentStudents = homeDriverController.driverNextRide[0].students;
+          if (currentStudents.isNotEmpty) {
+            targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat),
+                double.parse(currentStudents[0].pickupLong));
+            currentStudentIndex.value = 0;
+          } else {
+            currentStudentIndex.value = -1;
+          }
         }
       });
       tripId = currentTripId;
@@ -241,7 +255,11 @@ class MapController extends GetxController {
       students = currentStudents;
       isEmployee = currentIsEmployee;
       isRound = currentIsRound;
-      debugPrint("posotitotnn $position --- $tripId -- $currentTripId");
+      for (var student in currentStudents) {
+        print("studenttt ${student.userLname}");
+      }
+      debugPrint(
+          "posotitotnn $position --- $tripId -- $currentTripId -- currentOndex ${currentStudentIndex} -- ");
       liveTrackingDistance += 100;
       if (LatLng(position.latitude, position.longitude) != currentLatLng) {
         previousLatLng = currentLatLng;
@@ -271,6 +289,7 @@ class MapController extends GetxController {
               position.latitude,
               position.longitude,
             );
+            print("sssss #{distanceInMeters ${distanceInMeters}");
             if (distanceInMeters >= 100) {
               mapRepository.sendLiveTracking(
                 tripId: tripId,
@@ -393,6 +412,8 @@ class MapController extends GetxController {
     required bool isRound,
     required List<Student> students,
   }) async {
+    HomeDriverController homeDriverController = Get.put(HomeDriverController());
+
     debugPrint("geetttt estimateddd $tripId");
     final url =
         'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
@@ -412,7 +433,11 @@ class MapController extends GetxController {
       debugPrint("iusss yo enddd ${isToEnd}");
 
       ///End trip bs
+      ///
       if (isWithinDistance(distantTrack)) {
+        print("isToEnd ${isToEnd}");
+        print("currenttttt ${currentStudentIndex}");
+        print("student list: ${students.isEmpty}");
         if (isEmployee && !isToEnd) {
           isToEnd = true;
           showModalBottomSheet(
@@ -456,14 +481,14 @@ class MapController extends GetxController {
                   },
                 );
               });
+          print("------- ${currentStudentIndex}");
           targetLatLng = LatLng(
             double.parse(endLat),
             double.parse(endLong),
           );
           update();
         } else if (((students.isEmpty && isToEnd) ||
-                (students.isEmpty &&
-                    currentStudentIndex.value == -1)) &&
+                (students.isEmpty && currentStudentIndex.value == -1)) &&
             _isEndTrip == false) {
           _isEndTrip = true;
           showModalBottomSheet(
@@ -501,7 +526,7 @@ class MapController extends GetxController {
             isDismissible: false,
             enableDrag: false,
             backgroundColor: Colors.black.withOpacity(0.3),
-            builder: (context) => ConfirmPickupBottomSheet(
+            builder: (bottomContext) => ConfirmPickupBottomSheet(
               title: students[currentStudentIndex.value].userFname,
               subTitle: students[currentStudentIndex.value].address,
               firstButtonFunction: () {
@@ -512,58 +537,82 @@ class MapController extends GetxController {
                   isAttended: true,
                 )
                     .then((value) async {
-                  if (students.length - 1 > currentStudentIndex.value) {
-                    currentStudentIndex.value++;
-                    nearbyStudent(
-                      driverId: AppConstants.userRepository.driverData.driverId,
-                      tripId: tripId,
-                      userId: students[currentStudentIndex.value].userId,
-                      tripUserId:
-                          students[currentStudentIndex.value].tripUserId,
-                    );
-                    targetLatLng = LatLng(
-                      double.parse(
-                          students[currentStudentIndex.value].pickupLat),
-                      double.parse(
-                          students[currentStudentIndex.value].pickupLong),
-                    );
-                  } else {
-                    currentStudentIndex.value++;
-                    targetLatLng = LatLng(
-                      double.parse(endLat),
-                      double.parse(endLong),
-                    );
-                  }
-                  update();
+                  homeDriverController
+                      .getTrips(Get.context!, containLoading: false)
+                      .then((v) async {
+                    print("------- ${currentStudentIndex}");
+                    if (homeDriverController.driverNextRide.isNotEmpty) {
+                      currentStudents =
+                          homeDriverController.driverNextRide[0].students;
+                      if (currentStudents.isNotEmpty) {
+                        targetLatLng = LatLng(
+                            double.parse(currentStudents[0].pickupLat),
+                            double.parse(currentStudents[0].pickupLong));
+                        currentStudentIndex.value = 0;
+                        nearbyStudent(
+                          driverId:
+                              AppConstants.userRepository.driverData.driverId,
+                          tripId: tripId,
+                          userId: students[currentStudentIndex.value].userId,
+                          tripUserId:
+                              students[currentStudentIndex.value].tripUserId,
+                        );
+                      } else {
+                        targetLatLng =
+                            LatLng(double.parse(endLat), double.parse(endLong));
+                        currentStudentIndex.value = -1;
+                      }
+                    }
 
-                  markerIcon = await getBytesFromAsset(
-                      'assets/images/location_on.png', 70);
-                  currentIcon = await getBytesFromAsset(
-                      'assets/images/navigation_arrow.png', 70);
+                    // if (students.length - 1 > currentStudentIndex.value) {
+                    //   // currentStudentIndex.value++;
+                    //
+                    //   targetLatLng = LatLng(
+                    //     double.parse(
+                    //         students[currentStudentIndex.value].pickupLat),
+                    //     double.parse(
+                    //         students[currentStudentIndex.value].pickupLong),
+                    //   );
+                    // } else {
+                    //   currentStudentIndex.value++;
+                    //   targetLatLng = LatLng(
+                    //     double.parse(endLat),
+                    //     double.parse(endLong),
+                    //   );
+                    // }
+                    update();
 
-                  await getCurrentLocation().then((value) async {
-                    Get.back();
-                    currentLatLng = LatLng(value.latitude, value.longitude);
-                    await getCurrentTargetPolylinePoints();
-                    cameraPosition = CameraPosition(
-                      target: currentLatLng,
-                      zoom: 12,
-                    );
-                    debugPrint("geee estimateddd 2 $tripId");
-                    getEstimatedTime(
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/location_on.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 70);
+
+                    await getCurrentLocation().then((value) async {
+                      if (Navigator.of(bottomContext).canPop()) {
+                        Navigator.of(bottomContext).pop();
+                      }
+                      currentLatLng = LatLng(value.latitude, value.longitude);
+                      await getCurrentTargetPolylinePoints();
+                      cameraPosition = CameraPosition(
+                        target: currentLatLng,
+                        zoom: 12,
+                      );
+                      debugPrint("geee estimateddd 2 $tripId");
+                      getEstimatedTime(
+                          isEmployee: isEmployee,
+                          originLatLng: currentLatLng,
+                          destinationLatLng: targetLatLng,
+                          tripId: tripId,
+                          students: students,
+                          endLong: endLong,
+                          endLat: endLat,
+                          isRound: isRound);
+                      debugPrint("live stresaaaam  6$tripId");
+                      liveLocation(
                         isEmployee: isEmployee,
-                        originLatLng: currentLatLng,
-                        destinationLatLng: targetLatLng,
-                        tripId: tripId,
-                        students: students,
-                        endLong: endLong,
-                        endLat: endLat,
-                        isRound: isRound);
-                    debugPrint("live stresaaaam  6$tripId");
-                    liveLocation(
-                      isEmployee: isEmployee,
-                      isRound: isRound,
-                    );
+                        isRound: isRound,
+                      );
+                    });
                   });
                 });
               },
@@ -575,7 +624,7 @@ class MapController extends GetxController {
                   isAttended: false,
                 )
                     .then((value) async {
-                  if (students.length - 1 > currentStudentIndex.value) {
+                  if (students.isNotEmpty) {
                     currentStudentIndex.value++;
                     targetLatLng = LatLng(
                       double.parse(
@@ -594,7 +643,9 @@ class MapController extends GetxController {
                   currentIcon = await getBytesFromAsset(
                       'assets/images/navigation_arrow.png', 70);
                   await getCurrentLocation().then((value) async {
-                    Get.back();
+                    if (Navigator.of(bottomContext).canPop()) {
+                      Navigator.of(bottomContext).pop();
+                    }
                     currentLatLng = LatLng(value.latitude, value.longitude);
                     await getCurrentTargetPolylinePoints();
                     cameraPosition = CameraPosition(
@@ -619,7 +670,6 @@ class MapController extends GetxController {
               },
             ),
           );
-
         } else if (_isEndTrip == false &&
             _isConfirmUser == false &&
             isRound == true) {

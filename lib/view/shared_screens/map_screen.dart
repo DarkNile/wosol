@@ -220,10 +220,8 @@ class _MapScreenState extends State<MapScreen> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10.0, vertical: 8),
-                                  child: widget.students.isNotEmpty &&
-                                          (widget.students.length - 1 >
-                                              mapController
-                                                  .currentStudentIndex.value) && !widget.isRound
+                                  child: widget.students.isNotEmpty &&mapController
+                                      .currentStudentIndex.value != -1 && !widget.isRound
                                       ? Text(
                                           "${"studentName".tr}: ${widget.students[mapController.currentStudentIndex.value].userFname} ${widget.students[mapController.currentStudentIndex.value].userLname}",
                                           style: AppFonts.medium,

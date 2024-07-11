@@ -31,10 +31,12 @@ class HomeDriverController extends GetxController {
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
           driverTrips = tripFromJson(response.data);
-          driverTrips
-              .removeWhere((e) => e.tripType == '1' && e.students.isEmpty);
+          // driverTrips
+          //     .removeWhere((e) => e.tripType == '1' && e.students.isEmpty);
           driverNextRide = [driverTrips[0]];
+          print("ssss ${driverNextRide.first.tripId}");
           driverTrips.removeAt(0);
+
           isGettingTrips.value = false;
         } else {
           if (context.mounted) {

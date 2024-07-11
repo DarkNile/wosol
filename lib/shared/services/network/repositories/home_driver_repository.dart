@@ -114,7 +114,7 @@ class HomeDriverRepository extends GetxService {
     }
   }
 
-  Future<Response> sendTripAttendance({
+  Future<Response?> sendTripAttendance({
     required String tripId,
     required String userId,
     required bool isAttended,
@@ -134,7 +134,8 @@ class HomeDriverRepository extends GetxService {
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
-      throw e.response!.data['data']['error'];
+      print("eeeee ${e.toString()}");
+      return null;
     }
   }
 
@@ -162,7 +163,10 @@ class HomeDriverRepository extends GetxService {
     try {
       Response response = await DioHelper.postData(
         url: 'driver/traddy_request_list',
-        data: {'driver_id': AppConstants.userRepository.driverData.driverId, "trip_id": tripId},
+        data: {
+          'driver_id': AppConstants.userRepository.driverData.driverId,
+          "trip_id": tripId
+        },
       );
       if (response.statusCode == 200) {
         return response;

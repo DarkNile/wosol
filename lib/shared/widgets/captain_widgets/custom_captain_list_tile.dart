@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 
@@ -82,9 +83,14 @@ class CustomCaptainListTileWidget extends StatelessWidget {
                             : AppFonts.button
                                 .copyWith(color: AppColors.black800)),
                     const SizedBox(height: 2),
-                    Text(subTitle,
-                        style: AppFonts.small
-                            .copyWith(color: AppColors.darkBlue400)),
+                    SizedBox(
+                      width: AppConstants.screenWidth(context) - 230,
+                      child: Text(subTitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppFonts.small
+                              .copyWith(color: AppColors.darkBlue400)),
+                    ),
                   ],
                 ),
           const Spacer(),

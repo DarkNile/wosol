@@ -323,16 +323,20 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     setState(() {
                       isStartingTrip = true;
                     });
-                    mapController.targetLatLng = LatLng(
-                      double.parse(
-                        students[mapController.currentStudentIndex.value]
-                            .pickupLat,
-                      ),
-                      double.parse(
-                        students[mapController.currentStudentIndex.value]
-                            .pickupLong,
-                      ),
-                    );
+                    if (students.isNotEmpty) {
+                      mapController.targetLatLng = LatLng(
+                        double.parse(
+                          students[mapController.currentStudentIndex.value]
+                              .pickupLat,
+                        ),
+                        double.parse(
+                          students[mapController.currentStudentIndex.value]
+                              .pickupLong,
+                        ),
+                      );
+                    } else {
+                      mapController.targetLatLng = toLatLng;
+                    }
                     // mapController.finalLatLng = toLatLng;
                   }
 
@@ -428,16 +432,20 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       mapController.targetLatLng = fromLatLng;
                     } else {
                       print("sssss ${mapController.currentStudentIndex.value}");
-                      mapController.targetLatLng = LatLng(
-                        double.parse(
-                          students[mapController.currentStudentIndex.value]
-                              .pickupLat,
-                        ),
-                        double.parse(
-                          students[mapController.currentStudentIndex.value]
-                              .pickupLong,
-                        ),
-                      );
+                      if (students.isNotEmpty) {
+                        mapController.targetLatLng = LatLng(
+                          double.parse(
+                            students[mapController.currentStudentIndex.value]
+                                .pickupLat,
+                          ),
+                          double.parse(
+                            students[mapController.currentStudentIndex.value]
+                                .pickupLong,
+                          ),
+                        );
+                      } else {
+                        mapController.targetLatLng = toLatLng;
+                      }
                       // mapController.finalLatLng = toLatLng;
                     }
 
