@@ -52,24 +52,18 @@ class MapController extends GetxController {
       late PolylineResult result;
       if (drawNormal) {
         result = await polylinePoints.getRouteBetweenCoordinates(
-          googleApiKey: AppConstants.googleApiKey,
-          request: PolylineRequest(
-            origin:
-                PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
-            destination:
-                PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
-            mode: TravelMode.driving,
-          ),
+          AppConstants.googleApiKey,
+          PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+          travelMode: TravelMode.driving,
         );
       } else {
         result = await polylinePoints.getRouteBetweenCoordinates(
-            googleApiKey: AppConstants.googleApiKey,
-            request: PolylineRequest(
-              origin: PointLatLng(startLatLng.latitude, startLatLng.longitude),
-              destination:
-                  PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
-              mode: TravelMode.driving,
-            ));
+          AppConstants.googleApiKey,
+          PointLatLng(startLatLng.latitude, startLatLng.longitude),
+          PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+          travelMode: TravelMode.driving,
+        );
       }
 
       if (result.points.isNotEmpty) {
