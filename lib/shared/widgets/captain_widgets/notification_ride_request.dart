@@ -91,16 +91,31 @@ class NotificationRideRequest extends StatelessWidget {
                         tripId: trip.tripId,
                         endLat: trip.toLat,
                         endLong: trip.toLong,
-                        isEmployee: trip.students.isEmpty,
+                        isEmployee: trip.tripType ==
+                            '3',
+                        isStudent: trip.tripType ==
+                            '1',
                         isRound: trip.coType == 'round' ? true : false,
                       );
+                      mapController.currentTripId = trip.tripId;
+                      mapController.currentStudentIndex.value = 0;
+                      mapController.currentEndLat = trip.toLat;
+                      mapController.currentEndLong = trip.toLong;
+                      mapController.currentVehicleId = trip.vehicleId;
+                      mapController.currentStudents = trip.students;
+                      mapController.currentIsEmployee = trip.tripType == '3';
+                      mapController.currentIsStudent = trip.tripType == '1';
+                      mapController.currentIsRound = trip.coType == 'round' ? true : false;
                       mapController.liveLocation(
                         students: trip.students,
                         tripId: trip.tripId,
                         endLat: trip.toLat,
                         endLong: trip.toLong,
                         vehicleId: trip.vehicleId,
-                        isEmployee: trip.students.isEmpty,
+                        isEmployee: trip.tripType ==
+                        '3',
+                        isStudent: trip.tripType ==
+                            '1',
                         isRound: trip.coType == 'round' ? true : false,
                       );
                     });
