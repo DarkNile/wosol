@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../controllers/captain_controllers/driver_layout_controller.dart';
-import '../../../controllers/captain_controllers/home_driver_controller.dart';
 import '../../../controllers/shared_controllers/map_controller.dart';
 import '../../../models/trip_list_model.dart';
 import '../../../view/shared_screens/map_screen.dart';
