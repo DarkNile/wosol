@@ -154,7 +154,6 @@ class _MapScreenState extends State<MapScreen> {
                     }
                   },
                 ),
-                if (AppConstants.userType == 'Student')
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
@@ -217,16 +216,18 @@ class _MapScreenState extends State<MapScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 8),
-                                  child: widget.students.isNotEmpty &&mapController
-                                      .currentStudentIndex.value != -1 && !widget.isRound
-                                      ? Text(
-                                          "${"studentName".tr}: ${widget.students[mapController.currentStudentIndex.value].userFname} ${widget.students[mapController.currentStudentIndex.value].userLname}",
-                                          style: AppFonts.medium,
-                                        )
-                                      : Container(),
+                                GetBuilder<MapController>(
+                                  builder: (context)=>  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 8),
+                                    child: mapController.currentStudents.isNotEmpty &&mapController
+                                        .currentStudentIndex.value != -1 && !widget.isRound
+                                        ? Text(
+                                            "${"studentName".tr}: ${mapController.currentStudents[0].userFname} ${mapController.currentStudents[0].userLname}",
+                                            style: AppFonts.medium,
+                                          )
+                                        : Container(),
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -292,7 +293,7 @@ class _MapScreenState extends State<MapScreen> {
                 if (AppConstants.userType == 'Driver' && widget.students.isNotEmpty && !widget.isRound && !widget.isTraddy)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
-                      alignment: AppConstants.isEnLocale
+                      alignment: !AppConstants.isEnLocale
                           ? Alignment.topLeft
                           : Alignment.topRight,
                       child: IconButton(
