@@ -227,21 +227,25 @@ class MapController extends GetxController {
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-      homeDriverController
-          .getTrips(Get.context!, containLoading: false)
-          .then((v) {
-        print("------- ${currentStudentIndex}");
-        if (homeDriverController.driverNextRide.isNotEmpty) {
-          currentStudents = homeDriverController.driverNextRide[0].students;
-          if (currentStudents.isNotEmpty) {
-            targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat),
-                double.parse(currentStudents[0].pickupLong));
-            currentStudentIndex.value = 0;
-          } else {
-            currentStudentIndex.value = -1;
+      if(isRound == false){
+        homeDriverController
+            .getTrips(Get.context!, containLoading: false)
+            .then((v) {
+          print("------- ${currentStudentIndex}");
+          if (homeDriverController.driverNextRide.isNotEmpty) {
+            currentStudents = homeDriverController.driverNextRide[0].students;
+            if (currentStudents.isNotEmpty) {
+              targetLatLng = LatLng(double.parse(currentStudents[0].pickupLat),
+                  double.parse(currentStudents[0].pickupLong));
+              currentStudentIndex.value = 0;
+            } else {
+              currentStudentIndex.value = -1;
+            }
           }
-        }
-      });
+        });
+      }else{
+        currentStudents = homeDriverController.driverNextRide[0].students;
+      }
       tripId = currentTripId;
       endLat = currentEndLat;
       endLong = currentEndLong;
@@ -482,7 +486,8 @@ class MapController extends GetxController {
           );
           update();
         } else if (((students.isEmpty && isToEnd) ||
-                (students.isEmpty && currentStudentIndex.value == -1)) &&
+                ((students.isEmpty && currentStudentIndex.value == -1 && isRound == false) || (students.isNotEmpty &&
+                    currentStudentIndex.value == students.length && isRound == true))) &&
             _isEndTrip == false) {
           _isEndTrip = true;
           showModalBottomSheet(
