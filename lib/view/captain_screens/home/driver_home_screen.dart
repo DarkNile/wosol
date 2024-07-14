@@ -93,6 +93,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                               isEmployee: homeDriverController
                                       .driverNextRide[0].tripType ==
                                   '3',
+                              isStudent: homeDriverController
+                                  .driverNextRide[0].tripType ==
+                                  '1',
                               context: context,
                               vehicleId: homeDriverController
                                   .driverNextRide[0].vehicleId,
@@ -275,6 +278,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
     required String? coType,
     required List<Student> students,
     bool isEmployee = false,
+    required bool isStudent,
   }) async {
     print("trippp ioddd $tripId");
     showModalBottomSheet(
@@ -293,6 +297,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             mapController.currentVehicleId = vehicleId;
             mapController.currentStudents = students;
             mapController.currentIsEmployee = isEmployee;
+            mapController.currentIsStudent = isStudent;
             mapController.currentIsRound =
                 (coType != null && coType == 'round');
             mapController.positionStream?.cancel();
@@ -367,6 +372,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         students: students,
                         tripId: tripId,
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         endLat: toLatLng.latitude.toString(),
                         endLong: toLatLng.longitude.toString(),
                         isRound: (coType != null && coType == 'round'));
@@ -375,6 +381,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         students: students,
                         tripId: tripId,
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         endLat: toLatLng.latitude.toString(),
                         endLong: toLatLng.longitude.toString(),
                         vehicleId: vehicleId,
@@ -477,6 +484,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         students: students,
                         tripId: tripId,
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         endLat: toLatLng.latitude.toString(),
                         endLong: toLatLng.longitude.toString(),
                         isRound: (coType != null && coType == 'round'),
@@ -486,6 +494,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         students: students,
                         tripId: tripId,
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         endLat: toLatLng.latitude.toString(),
                         endLong: toLatLng.longitude.toString(),
                         vehicleId: vehicleId,

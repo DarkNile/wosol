@@ -200,6 +200,7 @@ class MapController extends GetxController {
   String currentVehicleId = "";
   List<Student> currentStudents = const [];
   bool currentIsEmployee = false;
+  bool currentIsStudent = false;
   bool currentIsRound = false;
   StreamSubscription<Position>? positionStream;
   int liveTrackingDistance = 0;
@@ -210,6 +211,7 @@ class MapController extends GetxController {
     String vehicleId = '',
     List<Student> students = const [],
     required bool isEmployee,
+    required bool isStudent,
     required bool isRound,
   }) {
     HomeDriverController homeDriverController = Get.put(HomeDriverController());
@@ -227,7 +229,14 @@ class MapController extends GetxController {
     positionStream = Geolocator.getPositionStream(
       locationSettings: locationSettings,
     ).listen((Position position) {
-      if(isRound == false){
+      isStudent = currentIsStudent;
+      tripId = currentTripId;
+      endLat = currentEndLat;
+      endLong = currentEndLong;
+      vehicleId = currentVehicleId;
+      isEmployee = currentIsEmployee;
+      isRound = currentIsRound;
+      if(isRound == false && isStudent){
         homeDriverController
             .getTrips(Get.context!, containLoading: false)
             .then((v) {
@@ -246,13 +255,7 @@ class MapController extends GetxController {
       }else{
         currentStudents = homeDriverController.driverNextRide[0].students;
       }
-      tripId = currentTripId;
-      endLat = currentEndLat;
-      endLong = currentEndLong;
-      vehicleId = currentVehicleId;
       students = currentStudents;
-      isEmployee = currentIsEmployee;
-      isRound = currentIsRound;
       for (var student in currentStudents) {
         print("studenttt ${student.userLname}");
       }
@@ -268,6 +271,7 @@ class MapController extends GetxController {
         debugPrint("geee estimateddd one $tripId");
         getEstimatedTime(
             isEmployee: isEmployee,
+            isStudent: isStudent,
             originLatLng: currentLatLng,
             destinationLatLng: targetLatLng,
             students: students,
@@ -407,6 +411,7 @@ class MapController extends GetxController {
     String endLong = '',
     String tripId = '',
     required bool isEmployee,
+    required bool isStudent,
     required bool isRound,
     required List<Student> students,
   }) async {
@@ -598,6 +603,7 @@ class MapController extends GetxController {
                       debugPrint("geee estimateddd 2 $tripId");
                       getEstimatedTime(
                           isEmployee: isEmployee,
+                          isStudent: isStudent,
                           originLatLng: currentLatLng,
                           destinationLatLng: targetLatLng,
                           tripId: tripId,
@@ -608,6 +614,7 @@ class MapController extends GetxController {
                       debugPrint("live stresaaaam  6$tripId");
                       liveLocation(
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         isRound: isRound,
                       );
                     });
@@ -653,6 +660,7 @@ class MapController extends GetxController {
                     debugPrint("geee estimateddd 3 $tripId");
                     getEstimatedTime(
                         isEmployee: isEmployee,
+                        isStudent: isStudent,
                         originLatLng: currentLatLng,
                         destinationLatLng: targetLatLng,
                         tripId: tripId,
@@ -662,7 +670,7 @@ class MapController extends GetxController {
                         isRound: isRound);
                     debugPrint("live stresaaaam 5 $tripId");
 
-                    liveLocation(isEmployee: isEmployee, isRound: isRound);
+                    liveLocation(isEmployee: isEmployee, isRound: isRound, isStudent: isStudent);
                   });
                 });
               },
@@ -710,6 +718,7 @@ class MapController extends GetxController {
             debugPrint("geee estimateddd 4 $tripId");
             getEstimatedTime(
                 isEmployee: isEmployee,
+                isStudent: isStudent,
                 originLatLng: currentLatLng,
                 destinationLatLng: targetLatLng,
                 tripId: tripId,
@@ -720,6 +729,7 @@ class MapController extends GetxController {
             debugPrint("live stresaaaam 4 $tripId");
             liveLocation(
               isEmployee: isEmployee,
+              isStudent: isStudent,
               isRound: isRound,
             );
           });
