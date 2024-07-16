@@ -211,4 +211,7 @@ const Map<String, String> en = {
   "approve": "Approve",
   "waitTheTrips": "Wait the trips",
   "yourRequestHaveBeenSentSuccessfully": "Your request have been sent successfully",
+  "waitStudentsMsg": "Wait for the students to leave school",
+  "waitEmployeeMsg": "Wait for employees to leave the company",
+  "employeesTrip": "Employees trip",
 };

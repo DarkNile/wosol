@@ -202,6 +202,7 @@ class MapController extends GetxController {
   bool currentIsEmployee = false;
   bool currentIsStudent = false;
   bool currentIsRound = false;
+  bool isFirstTripType = false;
   StreamSubscription<Position>? positionStream;
   int liveTrackingDistance = 0;
   void liveLocation({
@@ -213,6 +214,7 @@ class MapController extends GetxController {
     required bool isEmployee,
     required bool isStudent,
     required bool isRound,
+    required bool firstTripType,
   }) {
     HomeDriverController homeDriverController = Get.put(HomeDriverController());
     debugPrint("from liveee locationnnn  $tripId");
@@ -236,6 +238,7 @@ class MapController extends GetxController {
       vehicleId = currentVehicleId;
       isEmployee = currentIsEmployee;
       isRound = currentIsRound;
+      firstTripType = isFirstTripType;
       if(isRound == false && isStudent){
         homeDriverController
             .getTrips(Get.context!, containLoading: false)
@@ -272,6 +275,7 @@ class MapController extends GetxController {
         getEstimatedTime(
             isEmployee: isEmployee,
             isStudent: isStudent,
+            firstTripType: firstTripType,
             originLatLng: currentLatLng,
             destinationLatLng: targetLatLng,
             students: students,
@@ -414,6 +418,7 @@ class MapController extends GetxController {
     required bool isStudent,
     required bool isRound,
     required List<Student> students,
+    required bool firstTripType,
   }) async {
     HomeDriverController homeDriverController = Get.put(HomeDriverController());
 
@@ -493,7 +498,7 @@ class MapController extends GetxController {
         } else if (((students.isEmpty && isToEnd) ||
                 ((students.isEmpty && currentStudentIndex.value == -1 && isRound == false) || (students.isNotEmpty &&
                     currentStudentIndex.value == students.length && isRound == true))) &&
-            _isEndTrip == false) {
+            _isEndTrip == false && firstTripType) {
           _isEndTrip = true;
           showModalBottomSheet(
             context: Get.context!,
@@ -531,14 +536,15 @@ class MapController extends GetxController {
             enableDrag: false,
             backgroundColor: Colors.black.withOpacity(0.3),
             builder: (bottomContext) => ConfirmPickupBottomSheet(
-              title: students[currentStudentIndex.value].userFname,
-              subTitle: students[currentStudentIndex.value].address,
+              title: students[currentStudentIndex.value].isStartPoint? 'studentTrip'.tr : students[currentStudentIndex.value].userFname,
+              subTitle: students[currentStudentIndex.value].isStartPoint? 'waitStudentsMsg'.tr :  students[currentStudentIndex.value].address,
               firstButtonFunction: () {
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
                   tripId: tripId,
                   userId: students[currentStudentIndex.value].tripUserId,
                   isAttended: true,
+                  isStartPoint: students[currentStudentIndex.value].isStartPoint,
                 )
                     .then((value) async {
                   homeDriverController
@@ -561,9 +567,39 @@ class MapController extends GetxController {
                               students[currentStudentIndex.value].tripUserId,
                         );
                       } else {
-                        targetLatLng =
-                            LatLng(double.parse(endLat), double.parse(endLong));
-                        currentStudentIndex.value = -1;
+                        if(firstTripType) {
+                          targetLatLng =
+                              LatLng(
+                                  double.parse(endLat), double.parse(endLong));
+                          currentStudentIndex.value = -1;
+                        } else {
+                          showModalBottomSheet(
+                            context: Get.context!,
+                            isDismissible: false,
+                            enableDrag: false,
+                            builder: (context) {
+                              return RideAndTripEndBottomSheet(
+                                headTitle: 'rideEnd'.tr,
+                                imagePath: 'assets/images/celebrate.png',
+                                headerMsg: '${"congrats".tr} ',
+                                subHeaderMsg:
+                                "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                                isTrip: true,
+                                function: () async {
+                                  await tripEnd(tripId: tripId);
+                                  distantTrack = "10000 km";
+                                  if (positionStream != null) {
+                                    positionStream!.cancel();
+                                    positionStream = null;
+                                  }
+                                  // isToEnd = false;
+                                  // _isEndTrip = false;
+                                  // homeDriverController.getTrips(context);
+                                },
+                              );
+                            },
+                          );
+                        }
                       }
                     }
 
@@ -604,6 +640,7 @@ class MapController extends GetxController {
                       getEstimatedTime(
                           isEmployee: isEmployee,
                           isStudent: isStudent,
+                          firstTripType: firstTripType,
                           originLatLng: currentLatLng,
                           destinationLatLng: targetLatLng,
                           tripId: tripId,
@@ -615,6 +652,7 @@ class MapController extends GetxController {
                       liveLocation(
                         isEmployee: isEmployee,
                         isStudent: isStudent,
+                        firstTripType: firstTripType,
                         isRound: isRound,
                       );
                     });
@@ -627,6 +665,7 @@ class MapController extends GetxController {
                   tripId: tripId,
                   userId: students[currentStudentIndex.value].tripUserId,
                   isAttended: false,
+                  isStartPoint: students[currentStudentIndex.value].isStartPoint
                 )
                     .then((value) async {
                   if (students.isNotEmpty) {
@@ -661,6 +700,7 @@ class MapController extends GetxController {
                     getEstimatedTime(
                         isEmployee: isEmployee,
                         isStudent: isStudent,
+                        firstTripType: firstTripType,
                         originLatLng: currentLatLng,
                         destinationLatLng: targetLatLng,
                         tripId: tripId,
@@ -670,7 +710,7 @@ class MapController extends GetxController {
                         isRound: isRound);
                     debugPrint("live stresaaaam 5 $tripId");
 
-                    liveLocation(isEmployee: isEmployee, isRound: isRound, isStudent: isStudent);
+                    liveLocation(isEmployee: isEmployee, isRound: isRound, isStudent: isStudent, firstTripType: firstTripType,);
                   });
                 });
               },
@@ -680,6 +720,15 @@ class MapController extends GetxController {
             _isConfirmUser == false &&
             isRound == true) {
           _isConfirmUser = true;
+          if(students[currentStudentIndex.value].isStartPoint){
+            RandomSheet(
+              headTitle: "employeesTrip".tr,
+              subTitle: "waitEmployeeMsg".tr,
+              function: () {
+                Get.back();
+              },
+            );
+          }
           if (students.length - 1 > currentStudentIndex.value) {
             currentStudentIndex.value++;
             // nearbyStudent(
@@ -694,11 +743,40 @@ class MapController extends GetxController {
               double.parse(students[currentStudentIndex.value].pickupLong),
             );
           } else {
-            currentStudentIndex.value++;
-            targetLatLng = LatLng(
-              double.parse(endLat),
-              double.parse(endLong),
-            );
+            if(firstTripType) {
+              currentStudentIndex.value++;
+              targetLatLng = LatLng(
+                double.parse(endLat),
+                double.parse(endLong),
+              );
+            } else {
+              showModalBottomSheet(
+                context: Get.context!,
+                isDismissible: false,
+                enableDrag: false,
+                builder: (context) {
+                  return RideAndTripEndBottomSheet(
+                    headTitle: 'rideEnd'.tr,
+                    imagePath: 'assets/images/celebrate.png',
+                    headerMsg: '${"congrats".tr} ',
+                    subHeaderMsg:
+                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                    isTrip: true,
+                    function: () async {
+                      await tripEnd(tripId: tripId);
+                      distantTrack = "10000 km";
+                      if (positionStream != null) {
+                        positionStream!.cancel();
+                        positionStream = null;
+                      }
+                      // isToEnd = false;
+                      // _isEndTrip = false;
+                      // homeDriverController.getTrips(context);
+                    },
+                  );
+                },
+              );
+            }
           }
           update();
 
@@ -719,6 +797,7 @@ class MapController extends GetxController {
             getEstimatedTime(
                 isEmployee: isEmployee,
                 isStudent: isStudent,
+                firstTripType: firstTripType,
                 originLatLng: currentLatLng,
                 destinationLatLng: targetLatLng,
                 tripId: tripId,
@@ -730,6 +809,7 @@ class MapController extends GetxController {
             liveLocation(
               isEmployee: isEmployee,
               isStudent: isStudent,
+              firstTripType: firstTripType,
               isRound: isRound,
             );
           });

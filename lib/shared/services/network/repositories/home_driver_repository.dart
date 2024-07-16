@@ -118,6 +118,7 @@ class HomeDriverRepository extends GetxService {
     required String tripId,
     required String userId,
     required bool isAttended,
+    required bool isStartPoint,
   }) async {
     try {
       Response response = await DioHelper.postData(
@@ -126,6 +127,7 @@ class HomeDriverRepository extends GetxService {
           "trip_id": tripId,
           "trip_user_id": userId,
           "attendance": isAttended ? "1" : "2",
+          "isStartPoint": isStartPoint,
         },
       );
       if (response.statusCode == 200) {

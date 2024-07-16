@@ -31,6 +31,7 @@ void main() async {
     permanent: true,
   );
   AppConstants.token = await CacheHelper.getData(key: 'token') ?? '';
+  print('token********************************* ${AppConstants.token}');
   AppConstants.isFirst = await CacheHelper.getData(key: 'isFirst') ?? true;
   AppConstants.userType = await CacheHelper.getData(key: 'userType') ?? '';
   if (AppConstants.userType == 'Driver' && AppConstants.token.isNotEmpty) {

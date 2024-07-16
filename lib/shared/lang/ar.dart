@@ -210,4 +210,7 @@ const Map<String, String> ar = {
   "approve": "قبول",
   "waitTheTrips": "انتظر الرحلات",
   "yourRequestHaveBeenSentSuccessfully": "لقد تم إرسال طلبك بنجاح",
+  "waitStudentsMsg": "انتظر خروج الطلاب من المدرسة",
+  "waitEmployeeMsg": "انتظر خروج الموظفين من الشركة",
+  "employeesTrip": "رحلة الموظفين",
 };
