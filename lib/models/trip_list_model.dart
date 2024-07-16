@@ -139,6 +139,7 @@ class Student {
     required this.userDistrict,
     required this.pickupLat,
     required this.pickupLong,
+    required this.isStartPoint,
   });
 
   String tripUserId;
@@ -156,6 +157,7 @@ class Student {
   String userDistrict;
   String pickupLat;
   String pickupLong;
+  bool isStartPoint;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
         tripUserId: json["trip_user_id"] ?? "",
@@ -173,6 +175,7 @@ class Student {
         userDistrict: json["user_district"] ?? "",
         pickupLat: json["pickup_lat"] ?? "",
         pickupLong: json["pickup_long"] ?? "",
+        isStartPoint: json["isStartPoint"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -191,5 +194,6 @@ class Student {
         "user_district": userDistrict,
         "pickup_lat": pickupLat,
         "pickup_long": pickupLong,
+        "isStartPoint": isStartPoint,
       };
 }

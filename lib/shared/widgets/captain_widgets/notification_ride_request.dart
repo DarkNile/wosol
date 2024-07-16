@@ -94,6 +94,7 @@ class NotificationRideRequest extends StatelessWidget {
                             '3',
                         isStudent: trip.tripType ==
                             '1',
+                        firstTripType: trip.tripRound == '1',
                         isRound: trip.coType == 'round' ? true : false,
                       );
                       mapController.currentTripId = trip.tripId;
@@ -104,6 +105,7 @@ class NotificationRideRequest extends StatelessWidget {
                       mapController.currentStudents = trip.students;
                       mapController.currentIsEmployee = trip.tripType == '3';
                       mapController.currentIsStudent = trip.tripType == '1';
+                      mapController.isFirstTripType = trip.tripRound == '1';
                       mapController.currentIsRound = trip.coType == 'round' ? true : false;
                       mapController.liveLocation(
                         students: trip.students,
@@ -115,6 +117,7 @@ class NotificationRideRequest extends StatelessWidget {
                         '3',
                         isStudent: trip.tripType ==
                             '1',
+                        firstTripType: trip.tripRound == '1',
                         isRound: trip.coType == 'round' ? true : false,
                       );
                     });
