@@ -71,13 +71,13 @@ class UserLayoutController extends GetxController {
         studentRoutes.value = List<TripData>.from(response.data['data']
             .map((data) => TripData.fromJson(data))
             .toList());
-        isGettingStudentRoutes.value = false;
-      } else {
-        throw (response.data['data']['error']);
       }
+      isGettingStudentRoutes.value = false;
     } on DioException catch (e) {
+      isGettingStudentRoutes.value = false;
       throw e.response!.data['data']['error'];
     }
+
   }
 
   StudentLocation studentLocation = StudentLocation();
