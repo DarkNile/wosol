@@ -239,7 +239,7 @@ class MapController extends GetxController {
       isEmployee = currentIsEmployee;
       isRound = currentIsRound;
       firstTripType = isFirstTripType;
-      if(isRound == false && isStudent){
+      if (isRound == false && isStudent) {
         homeDriverController
             .getTrips(Get.context!, containLoading: false)
             .then((v) {
@@ -255,7 +255,7 @@ class MapController extends GetxController {
             }
           }
         });
-      }else{
+      } else {
         currentStudents = homeDriverController.driverNextRide[0].students;
       }
       students = currentStudents;
@@ -496,9 +496,14 @@ class MapController extends GetxController {
           );
           update();
         } else if (((students.isEmpty && isToEnd) ||
-                ((students.isEmpty && currentStudentIndex.value == -1 && isRound == false) || (students.isNotEmpty &&
-                    currentStudentIndex.value == students.length && isRound == true))) &&
-            _isEndTrip == false && firstTripType) {
+                ((students.isEmpty &&
+                        currentStudentIndex.value == -1 &&
+                        isRound == false) ||
+                    (students.isNotEmpty &&
+                        currentStudentIndex.value == students.length &&
+                        isRound == true))) &&
+            _isEndTrip == false &&
+            firstTripType) {
           _isEndTrip = true;
           showModalBottomSheet(
             context: Get.context!,
@@ -536,20 +541,28 @@ class MapController extends GetxController {
             enableDrag: false,
             backgroundColor: Colors.black.withOpacity(0.3),
             builder: (bottomContext) => ConfirmPickupBottomSheet(
-              title: students[currentStudentIndex.value].isStartPoint? 'studentTrip'.tr : students[currentStudentIndex.value].userFname,
-              subTitle: students[currentStudentIndex.value].isStartPoint? 'waitStudentsMsg'.tr :  students[currentStudentIndex.value].address,
+              title: students[currentStudentIndex.value].isStartPoint
+                  ? 'studentTrip'.tr
+                  : students[currentStudentIndex.value].userFname,
+              subTitle: students[currentStudentIndex.value].isStartPoint
+                  ? 'waitStudentsMsg'.tr
+                  : students[currentStudentIndex.value].address,
               firstButtonFunction: () {
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
                   tripId: tripId,
                   userId: students[currentStudentIndex.value].tripUserId,
                   isAttended: true,
-                  isStartPoint: students[currentStudentIndex.value].isStartPoint,
+                  isStartPoint:
+                      students[currentStudentIndex.value].isStartPoint,
                 )
                     .then((value) async {
                   homeDriverController
                       .getTrips(Get.context!, containLoading: false)
                       .then((v) async {
+                    if (Navigator.of(bottomContext).canPop()) {
+                      Navigator.of(bottomContext).pop();
+                    }
                     if (homeDriverController.driverNextRide.isNotEmpty) {
                       currentStudents =
                           homeDriverController.driverNextRide[0].students;
@@ -567,23 +580,22 @@ class MapController extends GetxController {
                               students[currentStudentIndex.value].tripUserId,
                         );
                       } else {
-                        if(firstTripType) {
-                          targetLatLng =
-                              LatLng(
-                                  double.parse(endLat), double.parse(endLong));
+                        if (firstTripType) {
+                          targetLatLng = LatLng(
+                              double.parse(endLat), double.parse(endLong));
                           currentStudentIndex.value = -1;
                         } else {
                           showModalBottomSheet(
                             context: Get.context!,
                             isDismissible: false,
                             enableDrag: false,
-                            builder: (context) {
+                            builder: (endContext) {
                               return RideAndTripEndBottomSheet(
                                 headTitle: 'rideEnd'.tr,
                                 imagePath: 'assets/images/celebrate.png',
                                 headerMsg: '${"congrats".tr} ',
                                 subHeaderMsg:
-                                "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                                 isTrip: true,
                                 function: () async {
                                   await tripEnd(tripId: tripId);
@@ -627,9 +639,6 @@ class MapController extends GetxController {
                         'assets/images/navigation_arrow.png', 70);
 
                     await getCurrentLocation().then((value) async {
-                      if (Navigator.of(bottomContext).canPop()) {
-                        Navigator.of(bottomContext).pop();
-                      }
                       currentLatLng = LatLng(value.latitude, value.longitude);
                       await getCurrentTargetPolylinePoints();
                       cameraPosition = CameraPosition(
@@ -660,13 +669,16 @@ class MapController extends GetxController {
                 });
               },
               secondButtonFunction: () {
+                if (Navigator.of(bottomContext).canPop()) {
+                  Navigator.of(bottomContext).pop();
+                }
                 AppConstants.homeDriverRepository
                     .sendTripAttendance(
-                  tripId: tripId,
-                  userId: students[currentStudentIndex.value].tripUserId,
-                  isAttended: false,
-                  isStartPoint: students[currentStudentIndex.value].isStartPoint
-                )
+                        tripId: tripId,
+                        userId: students[currentStudentIndex.value].tripUserId,
+                        isAttended: false,
+                        isStartPoint:
+                            students[currentStudentIndex.value].isStartPoint)
                     .then((value) async {
                   if (students.isNotEmpty) {
                     currentStudentIndex.value++;
@@ -687,9 +699,6 @@ class MapController extends GetxController {
                   currentIcon = await getBytesFromAsset(
                       'assets/images/navigation_arrow.png', 70);
                   await getCurrentLocation().then((value) async {
-                    if (Navigator.of(bottomContext).canPop()) {
-                      Navigator.of(bottomContext).pop();
-                    }
                     currentLatLng = LatLng(value.latitude, value.longitude);
                     await getCurrentTargetPolylinePoints();
                     cameraPosition = CameraPosition(
@@ -710,7 +719,12 @@ class MapController extends GetxController {
                         isRound: isRound);
                     debugPrint("live stresaaaam 5 $tripId");
 
-                    liveLocation(isEmployee: isEmployee, isRound: isRound, isStudent: isStudent, firstTripType: firstTripType,);
+                    liveLocation(
+                      isEmployee: isEmployee,
+                      isRound: isRound,
+                      isStudent: isStudent,
+                      firstTripType: firstTripType,
+                    );
                   });
                 });
               },
@@ -720,7 +734,7 @@ class MapController extends GetxController {
             _isConfirmUser == false &&
             isRound == true) {
           _isConfirmUser = true;
-          if(students[currentStudentIndex.value].isStartPoint){
+          if (students[currentStudentIndex.value].isStartPoint) {
             RandomSheet(
               headTitle: "employeesTrip".tr,
               subTitle: "waitEmployeeMsg".tr,
@@ -743,7 +757,7 @@ class MapController extends GetxController {
               double.parse(students[currentStudentIndex.value].pickupLong),
             );
           } else {
-            if(firstTripType) {
+            if (firstTripType) {
               currentStudentIndex.value++;
               targetLatLng = LatLng(
                 double.parse(endLat),
@@ -760,7 +774,7 @@ class MapController extends GetxController {
                     imagePath: 'assets/images/celebrate.png',
                     headerMsg: '${"congrats".tr} ',
                     subHeaderMsg:
-                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                        "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                     isTrip: true,
                     function: () async {
                       await tripEnd(tripId: tripId);
