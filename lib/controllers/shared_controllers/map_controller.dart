@@ -577,7 +577,7 @@ class MapController extends GetxController {
                             context: Get.context!,
                             isDismissible: false,
                             enableDrag: false,
-                            builder: (context) {
+                            builder: (endContext) {
                               return RideAndTripEndBottomSheet(
                                 headTitle: 'rideEnd'.tr,
                                 imagePath: 'assets/images/celebrate.png',
