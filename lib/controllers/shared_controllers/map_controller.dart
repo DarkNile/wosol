@@ -537,9 +537,9 @@ class MapController extends GetxController {
             isRound == false) {
           _isConfirmUser = true;
           if(students.isNotEmpty){
-            defaultSuccessSnackBar(context: Get.context!, message: '${students[currentStudentIndex.value].pickupLat}...${students[currentStudentIndex.value].pickupLong}...${currentStudentIndex.value}');
-          }
-          showModalBottomSheet(
+           // defaultSuccessSnackBar(context: Get.context!, message: '${students[currentStudentIndex.value].pickupLat}...${students[currentStudentIndex.value].pickupLong}...${currentStudentIndex.value}');
+
+            showModalBottomSheet(
             context: Get.context!,
             isDismissible: false,
             enableDrag: false,
@@ -734,6 +734,7 @@ class MapController extends GetxController {
               },
             ),
           );
+          }
         } else if (_isEndTrip == false &&
             _isConfirmUser == false &&
             isRound == true) {
