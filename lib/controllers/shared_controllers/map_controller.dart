@@ -327,6 +327,7 @@ class MapController extends GetxController {
       if (response.statusCode == 200) {
         positionStream!.cancel();
         positionStream = null;
+        currentStudentIndex.value = 0;
         Get.offAll(() => const DriverLayoutScreen());
         defaultSuccessSnackBar(context: Get.context!, message: 'tripEnded'.tr);
 
@@ -535,6 +536,9 @@ class MapController extends GetxController {
             _isConfirmUser == false &&
             isRound == false) {
           _isConfirmUser = true;
+          if(students.isNotEmpty){
+            defaultSuccessSnackBar(context: Get.context!, message: '${students[currentStudentIndex.value].pickupLat}...${students[currentStudentIndex.value].pickupLong}...${currentStudentIndex.value}');
+          }
           showModalBottomSheet(
             context: Get.context!,
             isDismissible: false,
