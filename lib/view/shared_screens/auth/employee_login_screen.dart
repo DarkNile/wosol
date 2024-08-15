@@ -81,7 +81,7 @@ class EmployeeLoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Email".tr,
+                      'Phone Number'.tr,
                       style: AppFonts.style12Urb.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.darkBlue500Base),
