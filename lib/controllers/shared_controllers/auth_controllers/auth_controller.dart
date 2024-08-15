@@ -93,6 +93,7 @@ class AuthController extends GetxController {
           if (response.data['data']['login_type'] == 'Student') {
             UserModel value = UserModel.fromJson(response.data);
             AppConstants.userRepository.userData = value.data;
+            AppConstants.token = value.data.token;
             CacheHelper.setData(
                 key: 'UserData', value: jsonEncode(value.data.toJson()));
             CacheHelper.setData(key: 'token', value: value.data.token);
@@ -104,6 +105,7 @@ class AuthController extends GetxController {
           } else if (response.data['data']['login_type'] == 'Driver'){
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.driverData = value.data;
+            AppConstants.token = value.data.token;
             CacheHelper.setData(
                 key: 'DriverData', value: jsonEncode(value.data.toJson()));
             CacheHelper.setData(key: 'token', value: value.data.token);
@@ -115,6 +117,7 @@ class AuthController extends GetxController {
           } else if (response.data['data']['login_type'] == 'Employee'){
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.employeeData = value.data;
+            AppConstants.token = value.data.token;
             CacheHelper.setData(
                 key: 'EmployeeData', value: jsonEncode(value.data.toJson()));
             CacheHelper.setData(key: 'token', value: value.data.token);
