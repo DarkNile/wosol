@@ -1,5 +1,7 @@
 // import 'package:device_preview/device_preview.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,13 +39,15 @@ void main() async {
   if (AppConstants.userType == 'Driver' && AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.driverData = DriverData.fromJson(
         jsonDecode(await CacheHelper.getData(key: 'DriverData')));
-  }else if (AppConstants.userType == 'Employee' && AppConstants.token.isNotEmpty) {
+  } else if (AppConstants.userType == 'Employee' &&
+      AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.employeeData = DriverData.fromJson(
         jsonDecode(await CacheHelper.getData(key: 'EmployeeData')));
   } else if (AppConstants.token.isNotEmpty) {
     AppConstants.userRepository.userData = UserData.fromJson(
         jsonDecode(await CacheHelper.getData(key: 'UserData')));
   }
+  Upgrader.clearSavedSettings(); // Clear any saved preferences, if needed
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.white,
     statusBarIconBrightness: Brightness.dark,
@@ -55,10 +59,22 @@ void main() async {
   //   builder: (context) => const MyApp(),
   // ));
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       color: Colors.transparent,
-      home: MyApp(),
+      home: UpgradeAlert(
+          showIgnore: false,
+          showLater: false,
+          shouldPopScope: () => false,
+          barrierDismissible: false,
+          dialogStyle: Platform.isIOS
+              ? UpgradeDialogStyle.cupertino
+              : UpgradeDialogStyle.material,
+          upgrader: Upgrader(
+            debugDisplayAlways: false,
+            debugLogging: true,
+          ),
+          child: const MyApp()),
     ),
   );
 }
@@ -80,6 +96,7 @@ class _MyAppState extends State<MyApp> {
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -122,7 +139,8 @@ class _MyAppState extends State<MyApp> {
       home: AppConstants.token.isEmpty
           ? LoginScreen()
           : (AppConstants.userType == 'Student'
-              ? const UserLayoutScreen() : const DriverLayoutScreen()),
+              ? const UserLayoutScreen()
+              : const DriverLayoutScreen()),
     );
   }
 }

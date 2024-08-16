@@ -11,7 +11,7 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 149,
+      height: 200,
       padding: AppConstants.edge(
         padding: const EdgeInsets.only(
           top: 12,
@@ -45,22 +45,57 @@ class InfoCard extends StatelessWidget {
           const SizedBox(height: 10),
           Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                "assets/icons/call.svg",
-                width: 40,
-                height: 40,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/call.svg",
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(width: 10),
+                      Text('+966 920 003 790',
+                          textDirection: TextDirection.ltr,
+                          textAlign: TextAlign.center,
+                          style: AppFonts.medium.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.logo)),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/email_icon.svg",
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(width: 10),
+                      Text('care@wosol.net',
+                          textDirection: TextDirection.ltr,
+                          textAlign: TextAlign.center,
+                          style: AppFonts.medium.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.logo)),
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(width: 10),
-              Text('+966 123 456 789',
-                  textDirection: TextDirection.ltr,
-                  textAlign: TextAlign.center,
-                  style: AppFonts.medium.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.logo)),
+              const SizedBox(height: 10),
             ],
           ),
         ],
