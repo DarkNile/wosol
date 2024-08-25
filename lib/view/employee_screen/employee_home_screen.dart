@@ -72,6 +72,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     )
                   : employeeController.employeeNextRide.isNotEmpty
                       ? RideCard(
+                fromDriver: false,
                           onTap: () async {
                             await onTapRideCard(
                               tripIsRunning: employeeController

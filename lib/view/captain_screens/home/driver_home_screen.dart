@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:wosol/controllers/captain_controllers/home_driver_controller.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -78,6 +79,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     )
                   : homeDriverController.driverNextRide.isNotEmpty
                       ? RideCard(
+                fromDriver: true,
                           onTap: () async {
                             await onTapRideCard(
                               tripIsRunning: homeDriverController
@@ -182,6 +184,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                       ? "assets/icons/employee_trip.svg"
                                       : "assets/icons/tourism_trip.svg",
                           time: homeDriverController.driverNextRide[0].tripTime,
+                date: DateFormat('yyyy-MM-dd',).format(DateTime.parse(homeDriverController
+                    .driverTrips[0].tripDate)),
                           isNextRide: true,
                         )
                       : const SizedBox();
@@ -212,6 +216,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                             itemCount: homeDriverController.driverTrips.length,
                             itemBuilder: (context, index) {
                               return RideCard(
+                                fromDriver: true,
                                 onTap: () {
                                   showModalBottomSheet(
                                     context: context,
@@ -244,6 +249,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                         : "assets/icons/tourism_trip.svg",
                                 time: homeDriverController
                                     .driverTrips[index].tripTime,
+                                date: DateFormat('yyyy-MM-dd').format(DateTime.parse(homeDriverController
+                                    .driverTrips[0].tripDate)),
                               );
                             },
                             separatorBuilder: (context, index) =>

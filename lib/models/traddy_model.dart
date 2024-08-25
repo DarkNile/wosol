@@ -22,6 +22,8 @@ class TraddyModel {
   String driverId;
   String vehicleId;
   String dateAdded;
+  String driverReach;
+  String driverReachDate;
 
 
   TraddyModel({
@@ -40,6 +42,8 @@ class TraddyModel {
     required this.driverId,
     required this.vehicleId,
     required this.dateAdded,
+    required this.driverReach,
+    required this.driverReachDate,
 
   });
 
@@ -60,6 +64,8 @@ class TraddyModel {
       driverId: json['driver_id'] ?? "",
       vehicleId: json['vehicle_id'] ?? "",
       dateAdded: json['date_added'] ?? "",
+      driverReach: json['driver_reach'] ?? "",
+      driverReachDate: json['driver_reach_date'] ?? "",
     );
   }
 
@@ -80,6 +86,8 @@ class TraddyModel {
       'driver_id': driverId,
       'vehicle_id': vehicleId,
       'date_added': dateAdded,
+      'driver_reach': driverReach,
+      'driver_reach_date': driverReachDate,
     };
   }
 }

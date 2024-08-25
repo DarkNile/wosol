@@ -1,6 +1,8 @@
 // import 'package:device_preview/device_preview.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ import 'package:wosol/shared/dialogs/location_dialog.dart';
 import 'package:wosol/shared/lang/localization.dart';
 import 'package:wosol/shared/services/local/cache_helper.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
+import 'package:wosol/shared/services/network/notifications_services.dart';
 import 'package:wosol/shared/services/network/repositories/home_driver_repository.dart';
 import 'package:wosol/shared/services/network/repositories/student_repositorie.dart';
 import 'package:wosol/shared/services/network/repositories/user_repositorie.dart';
@@ -24,9 +27,20 @@ import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 import 'package:wosol/view/user_screens/user_layout_screen.dart';
 
 import 'controllers/shared_controllers/main_controllers/localization_controller.dart';
+import 'firebase_option.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await NotificationServices().onInit();
   await CacheHelper.init();
   Get.put(
     UserRepository(),

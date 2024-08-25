@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456313641764",
+    "project_id": "wosol-app",
+    "storage_bucket": "wosol-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456313641764:android:9ec9a5ada2a1bf93eb31b1",
+        "android_client_info": {
+          "package_name": "com.DigitalPartner.wosol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZmQpC1tyskxp68NlTspF-FBz-HEBH_Js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
