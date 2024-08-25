@@ -207,6 +207,40 @@ class HomeDriverController extends GetxController {
     update();
   }
 
+  Future<void> driverReachApi({
+    required String requestId,
+    required int index,
+    required HomeDriverController homeDriverController,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/reach_employee/is_reach',
+        data: {
+          "request_id": requestId,
+        },
+      );
+      if (response.statusCode == 200) {
+        homeDriverController
+            .traddyTrips[index].driverReach = '1';
+        defaultSuccessSnackBar(
+          context: Get.context!,
+          message: "notificationHasBeenSent".tr,
+        );
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
+    }
+    update();
+  }
+
   Future<void> requestRideApprovedApi({
     required String requestId,
   }) async {

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:wosol/models/driver_model.dart';
@@ -91,6 +94,12 @@ class UserRepository extends GetxService {
     required bool isEmployee,
   }) async {
     try {
+      String? deviceId;
+      if(isEmployee){
+        DeviceInfoService deviceInfoService = DeviceInfoService();
+        deviceId = await deviceInfoService.getDeviceId();
+      }
+
       Response response = await DioHelper.postData(
         url: isEmployee? 'employee/login' : 'login',
         data: {
@@ -99,6 +108,8 @@ class UserRepository extends GetxService {
           if(isEmployee)
             'mobile': email,
           'password': password,
+          if(isEmployee)
+            'device_id' : deviceId,
         },
       );
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
@@ -214,5 +225,20 @@ class UserRepository extends GetxService {
     } on DioException catch (e) {
       throw e.response!.data['data']['error'];
     }
+  }
+}
+
+class DeviceInfoService {
+  final DeviceInfoPlugin _deviceInfoPlugin = DeviceInfoPlugin();
+
+  Future<String?> getDeviceId() async {
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await _deviceInfoPlugin.androidInfo;
+      return androidInfo.id; // Use 'id' instead of 'androidId'
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await _deviceInfoPlugin.iosInfo;
+      return iosInfo.identifierForVendor; // Unique ID on iOS
+    }
+    return null;
   }
 }

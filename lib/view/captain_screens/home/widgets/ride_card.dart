@@ -11,15 +11,19 @@ class RideCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.time,
+    this.date,
     required this.imgPath,
     this.isNextRide = false,
+    required this.fromDriver,
     required this.onTap,
   });
   final void Function() onTap;
   final String title;
   final String imgPath;
   final String time;
+  final String? date;
   final bool isNextRide;
+  final bool fromDriver;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -51,7 +55,7 @@ class RideCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${"from".tr} $title\n${isNextRide ? "${"at".tr} $time" : "${"at".tr} $time"}",
+                    "${"from".tr} $title\n${fromDriver ? "$date" : "${"at".tr} $time"}",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,

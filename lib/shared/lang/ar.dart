@@ -81,6 +81,8 @@ const Map<String, String> ar = {
   'Canceled by customer support': 'تم الإلغاء بواسطة دعم العملاء',
   'Other': 'آخر',
   "Send": "يرسل",
+  "SendNotification": "إرسال إشعار",
+  "notificationHasBeenSent": "لقد تم إرسال الإشعار",
   "Confirm": "تأكيد",
   "Select users to pickup": "حدد المستخدمين لالتقاط",
   "Ride end": "نهاية الركوب",

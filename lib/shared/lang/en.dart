@@ -82,6 +82,8 @@ const Map<String, String> en = {
   'Canceled by customer support': 'Canceled by customer support',
   'Other': 'Other',
   "Send": "Send",
+  "SendNotification": "Send notification",
+  "notificationHasBeenSent": "Notification has been sent",
   "Confirm": "Confirm",
   "Select users to pickup": "Select users to pickup",
   "Ride end": "Ride end",

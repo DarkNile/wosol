@@ -122,7 +122,7 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                               vertical: 24, horizontal: 16),
                           itemBuilder: (context, index) => Container(
                             width: Get.width,
-                            height: 135,
+                            // height: 135,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
@@ -190,6 +190,23 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                                     ],
                                   ),
                                 ),
+                                if(widget.homeDriverController
+                                    .traddyTrips[index].driverReach == '0')
+                                DefaultButton(
+                                  function: () {
+                                    widget.homeDriverController.driverReachApi(
+                                        requestId: widget.homeDriverController
+                                        .traddyTrips[index].requestId,
+                                      index: index,
+                                      homeDriverController: widget.homeDriverController,
+                                    );
+                                  },
+                                  height: 40,
+                                  text: 'SendNotification'.tr,
+                                ),
+                                if(widget.homeDriverController
+                                    .traddyTrips[index].driverReach == '0')
+                                  const SizedBox(height: 8,),
                                 DefaultButton(
                                   function: () {
                                     widget.homeDriverController
@@ -204,7 +221,7 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                                   },
                                   height: 40,
                                   text: 'approve'.tr,
-                                )
+                                ),
                               ],
                             ),
                           ),
