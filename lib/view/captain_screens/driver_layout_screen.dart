@@ -31,6 +31,11 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
   @override
   void initState() {
+    // AppConstants.getFcmToken();
+    // FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+    //   AppConstants.fcmToken = newToken;
+    // });
+
     // homeDriverController.getTrips(context);
     driverLayoutController.navBarIndex.value = 0;
     if (AppConstants.userType != 'Employee') {

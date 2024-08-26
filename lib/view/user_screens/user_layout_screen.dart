@@ -35,6 +35,11 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
 
   @override
   void initState() {
+    // AppConstants.getFcmToken();
+    // FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+    //   AppConstants.fcmToken = newToken;
+    // });
+
     userLayoutController.navBarIndex.value = 0;
     userLayoutController.notificationTimer =
         Timer.periodic(const Duration(seconds: 30), (timer) {

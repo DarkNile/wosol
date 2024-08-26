@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,7 @@ class AppConstants {
   static String userType = 'Driver';
   static String userId = '247';
   static String token = '';
+  static String? fcmToken = '';
   static bool isFirst = true;
 
   static String googleApiKey = 'AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
@@ -29,6 +31,10 @@ class AppConstants {
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
       localizationController.currentLocale().languageCode == 'en';
+
+  // static void getFcmToken() async {
+  //   AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
+  // }
 
   static EdgeInsets edge({
     EdgeInsets padding = EdgeInsets.zero,
