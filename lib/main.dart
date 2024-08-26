@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:wosol/controllers/captain_controllers/notification_driver_controller.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
+import 'package:wosol/firebase_options.dart';
 import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
@@ -27,7 +28,6 @@ import 'package:wosol/view/shared_screens/auth/login_screen.dart';
 import 'package:wosol/view/user_screens/user_layout_screen.dart';
 
 import 'controllers/shared_controllers/main_controllers/localization_controller.dart';
-import 'firebase_option.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
