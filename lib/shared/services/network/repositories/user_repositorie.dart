@@ -94,11 +94,8 @@ class UserRepository extends GetxService {
     required bool isEmployee,
   }) async {
     try {
-      String? deviceId;
-      if(isEmployee){
-        DeviceInfoService deviceInfoService = DeviceInfoService();
-        deviceId = await deviceInfoService.getDeviceId();
-      }
+      DeviceInfoService deviceInfoService = DeviceInfoService();
+      String? deviceId = await deviceInfoService.getDeviceId();
 
       Response response = await DioHelper.postData(
         url: isEmployee? 'employee/login' : 'login',
