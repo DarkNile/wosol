@@ -98,15 +98,12 @@ class UserRepository extends GetxService {
       String? deviceId = await deviceInfoService.getDeviceId();
 
       Response response = await DioHelper.postData(
-        url: isEmployee? 'employee/login' : 'login',
+        url: isEmployee ? 'employee/login' : 'login',
         data: {
-          if(!isEmployee)
-            'email': email,
-          if(isEmployee)
-            'mobile': email,
+          if (!isEmployee) 'email': email,
+          if (isEmployee) 'mobile': email,
           'password': password,
-          if(isEmployee)
-            'device_id' : deviceId,
+          if (isEmployee) 'device_id': deviceId,
         },
       );
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
@@ -123,18 +120,14 @@ class UserRepository extends GetxService {
     }
   }
 
-  Future<Response> forgetPassword({
-    required String email,
-  required bool fromEmployee
-  }) async {
+  Future<Response> forgetPassword(
+      {required String email, required bool fromEmployee}) async {
     try {
       Response response = await DioHelper.postData(
-        url: fromEmployee? 'employee/forget_password' : 'forget_password',
+        url: fromEmployee ? 'employee/forget_password' : 'forget_password',
         data: {
-          if(!fromEmployee)
-            'email': email,
-          if(fromEmployee)
-            'mobile': email,
+          if (!fromEmployee) 'email': email,
+          if (fromEmployee) 'mobile': email,
         },
       );
       if (response.statusCode == 200) {
@@ -155,14 +148,15 @@ class UserRepository extends GetxService {
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: userType == 'driver'? 'forget_password/driver_change_password' : userType == 'employee'? 'employee/check_otp' : 'forget_password/student_change_password',
+        url: userType == 'driver'
+            ? 'forget_password/driver_change_password'
+            : userType == 'employee'
+                ? 'employee/check_otp'
+                : 'forget_password/student_change_password',
         data: {
-          if(userType == 'driver')
-            "driver_id": id,
-          if(userType == 'employee')
-            "member_id": id,
-          if(userType == 'student')
-            "student_id": id,
+          if (userType == 'driver') "driver_id": id,
+          if (userType == 'employee') "member_id": id,
+          if (userType == 'student') "student_id": id,
           "activation_code": activationCode,
           "new_password": newPassword,
         },
@@ -183,14 +177,17 @@ class UserRepository extends GetxService {
   }) async {
     try {
       Response response = await DioHelper.postData(
-        url: AppConstants.userType == 'Driver'? 'driver/account/change_password' : AppConstants.userType == 'Employee'? 'employee/password_change' : 'student/account/change_password',
+        url: AppConstants.userType == 'Driver'
+            ? 'driver/account/change_password'
+            : AppConstants.userType == 'Employee'
+                ? 'employee/password_change'
+                : 'student/account/change_password',
         data: {
-          if(AppConstants.userType == 'Driver')
+          if (AppConstants.userType == 'Driver')
             "driver_id": driverData.driverId,
-          if(AppConstants.userType == 'Employee')
+          if (AppConstants.userType == 'Employee')
             "member_id": employeeData.driverId,
-          if(AppConstants.userType == 'Student')
-            "user_id": userData.userId,
+          if (AppConstants.userType == 'Student') "user_id": userData.userId,
           "current_password": currentPassword,
           "new_password": newPassword,
         },
@@ -210,7 +207,7 @@ class UserRepository extends GetxService {
       Response response = await DioHelper.postData(
         url: "student/subscription",
         data: {
-          "user_id" : userData.userId,
+          "user_id": userData.userId,
         },
       );
 
@@ -231,9 +228,11 @@ class DeviceInfoService {
   Future<String?> getDeviceId() async {
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await _deviceInfoPlugin.androidInfo;
+      print('Android Device ID: ${androidInfo.id}');
       return androidInfo.id; // Use 'id' instead of 'androidId'
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await _deviceInfoPlugin.iosInfo;
+      print('iOS Device ID: ${iosInfo.identifierForVendor}');
       return iosInfo.identifierForVendor; // Unique ID on iOS
     }
     return null;
