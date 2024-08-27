@@ -32,9 +32,9 @@ class AppConstants {
   static bool get isEnLocale =>
       localizationController.currentLocale().languageCode == 'en';
 
-  // static void getFcmToken() async {
-  //   AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
-  // }
+  static void getFcmToken() async {
+    AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
+  }
 
   static EdgeInsets edge({
     EdgeInsets padding = EdgeInsets.zero,
