@@ -34,6 +34,7 @@ class AppConstants {
 
   static void getFcmToken() async {
     AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
+    print('FCM Token: ${AppConstants.fcmToken}');
   }
 
   static EdgeInsets edge({
