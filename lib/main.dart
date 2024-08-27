@@ -42,6 +42,10 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await NotificationServices().onInit();
   await CacheHelper.init();
+  AppConstants.getFcmToken();
+  // FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+  //   AppConstants.fcmToken = newToken;
+  // });
   Get.put(
     UserRepository(),
     permanent: true,

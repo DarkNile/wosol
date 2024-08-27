@@ -94,8 +94,8 @@ class UserRepository extends GetxService {
     required bool isEmployee,
   }) async {
     try {
-      DeviceInfoService deviceInfoService = DeviceInfoService();
-      String? deviceId = await deviceInfoService.getDeviceId();
+      // DeviceInfoService deviceInfoService = DeviceInfoService();
+      // String? deviceId = await deviceInfoService.getDeviceId();
 
       Response response = await DioHelper.postData(
         url: isEmployee ? 'employee/login' : 'login',
@@ -103,7 +103,7 @@ class UserRepository extends GetxService {
           if (!isEmployee) 'email': email,
           if (isEmployee) 'mobile': email,
           'password': password,
-          if (isEmployee) 'device_id': deviceId,
+          'device_id': AppConstants.fcmToken,
         },
       );
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
