@@ -216,4 +216,5 @@ const Map<String, String> en = {
   "waitStudentsMsg": "Wait for the students to leave school",
   "waitEmployeeMsg": "Wait for employees to leave the company",
   "employeesTrip": "Employees trip",
+  "Traddy": "Traddy",
 };

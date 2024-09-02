@@ -215,4 +215,5 @@ const Map<String, String> ar = {
   "waitStudentsMsg": "انتظر خروج الطلاب من المدرسة",
   "waitEmployeeMsg": "انتظر خروج الموظفين من الشركة",
   "employeesTrip": "رحلة الموظفين",
+  "Traddy": "رحلة ترددي",
 };

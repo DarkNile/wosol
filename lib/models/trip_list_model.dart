@@ -17,6 +17,7 @@ class Trip {
     required this.to,
     required this.tripDate,
     required this.tripTime,
+    required this.tripTimeEnd,
     required this.tripRound,
     required this.tripStatus,
     required this.tripStart,
@@ -44,6 +45,7 @@ class Trip {
   String to;
   String tripDate;
   String tripTime;
+  String tripTimeEnd;
   String tripRound;
   String tripStatus;
   String tripStart;
@@ -71,6 +73,7 @@ class Trip {
         to: json["to"] ?? "",
         tripDate: json["trip_date"] ?? "",
         tripTime: json["trip_time"] ?? "",
+        tripTimeEnd: json["trip_time_end"] ?? "",
         tripRound: json["trip_round"] ?? "",
         tripStatus: json["trip_status"] ?? "",
         tripStart: json["trip_start"] ?? "",
@@ -104,6 +107,7 @@ class Trip {
         "to": to,
         "trip_date": tripDate,
         "trip_time": tripTime,
+        "trip_time_end": tripTimeEnd,
         "trip_round": tripRound,
         "trip_status": tripStatus,
         "trip_start": tripStart,
