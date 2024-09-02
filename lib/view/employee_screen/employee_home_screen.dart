@@ -161,7 +161,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                                   .employeeNextRide[0].students,
                             );
                           },
-                          title: employeeController.employeeNextRide[0].from,
+                          title: employeeController.employeeNextRide[0].coType == 'traddy'? 'Traddy'.tr : employeeController.employeeNextRide[0].from,
                           imgPath:
                               employeeController.employeeNextRide[0].tripType ==
                                       '1'
@@ -171,7 +171,9 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                                           '2'
                                       ? "assets/icons/employee_trip.svg"
                                       : "assets/icons/tourism_trip.svg",
-                          time: employeeController.employeeNextRide[0].tripTime,
+                          time: "${'from'.tr} ${employeeController.employeeNextRide[0].tripTime} ${'to'.tr} ${employeeController.employeeNextRide[0].tripTimeEnd}",
+                companyName: employeeController.employeeNextRide[0].companyName,
+                isTraddy: true,
                           isNextRide: true,
                         )
                       : const SizedBox();

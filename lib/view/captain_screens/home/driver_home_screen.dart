@@ -185,7 +185,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                       : "assets/icons/tourism_trip.svg",
                           time: homeDriverController.driverNextRide[0].tripTime,
                 date: DateFormat('yyyy-MM-dd',).format(DateTime.parse(homeDriverController
-                    .driverTrips[0].tripDate)),
+                    .driverNextRide[0].tripDate)),
                           isNextRide: true,
                         )
                       : const SizedBox();
@@ -250,7 +250,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                 time: homeDriverController
                                     .driverTrips[index].tripTime,
                                 date: DateFormat('yyyy-MM-dd').format(DateTime.parse(homeDriverController
-                                    .driverTrips[0].tripDate)),
+                                    .driverTrips[index].tripDate)),
                               );
                             },
                             separatorBuilder: (context, index) =>
