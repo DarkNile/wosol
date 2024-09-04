@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wosol/models/subscription_model.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
@@ -12,15 +13,17 @@ import '../../constants/constants.dart';
 class SubscriptionsWidget extends StatelessWidget {
   // Put Model Here
   SubscriptionsWidget({super.key, required this.subscriptionModel});
+
   final SubscriptionModel subscriptionModel;
 
   double height = 62;
   bool isExpanded = true;
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (_, setState) => Container(
-        height: isExpanded ? 378 : 64,
+        height: isExpanded ? 466 : 64,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
@@ -76,23 +79,21 @@ class SubscriptionsWidget extends StatelessWidget {
                     ),
                     _CustomRowWidget(
                       isBackGroundWhite: false,
-                      name: 'startDate'.tr,
-                      value: DateFormat(
-                          'dd, MMM, yyyy',
-                          AppConstants
-                              .isEnLocale
-                              ? 'en_US'
-                              : "ar")
+                      name: 'Subscription date'.tr,
+                      value: DateFormat('dd, MMM, yyyy',
+                              AppConstants.isEnLocale ? 'en_US' : "ar")
+                          .format(DateTime.parse(subscriptionModel.dateAdd!)),
+                    ),
+                    _CustomRowWidget(
+                      name: 'Subscription start date'.tr,
+                      value: DateFormat('dd, MMM, yyyy',
+                              AppConstants.isEnLocale ? 'en_US' : "ar")
                           .format(DateTime.parse(subscriptionModel.startDate!)),
                     ),
                     _CustomRowWidget(
-                      name: 'endDate'.tr,
-                      value: DateFormat(
-                          'dd, MMM, yyyy',
-                          AppConstants
-                              .isEnLocale
-                              ? 'en_US'
-                              : "ar")
+                      name: 'Subscription end date'.tr,
+                      value: DateFormat('dd, MMM, yyyy',
+                              AppConstants.isEnLocale ? 'en_US' : "ar")
                           .format(DateTime.parse(subscriptionModel.endDate!)),
                     ),
                     _CustomRowWidget(
@@ -115,6 +116,12 @@ class SubscriptionsWidget extends StatelessWidget {
                       name: 'remainingDays'.tr,
                       value: '${subscriptionModel.remainingDays}',
                     ),
+                    _CustomRowWidget(
+                      name: 'Contract link'.tr,
+                      value: '${subscriptionModel.contractUrl}',
+                      isLink: true,
+                      isBackGroundWhite: false,
+                    ),
                   ],
                 )
             ]),
@@ -128,11 +135,24 @@ class _CustomRowWidget extends StatelessWidget {
   final String name;
   final String value;
   final bool isBackGroundWhite;
-  const _CustomRowWidget(
-      {this.isLocation = false,
-      required this.name,
-      required this.value,
-      this.isBackGroundWhite = true});
+  final bool isLink;
+
+  const _CustomRowWidget({
+    this.isLocation = false,
+    required this.name,
+    required this.value,
+    this.isBackGroundWhite = true,
+    this.isLink = false,
+  });
+
+  Future<void> _launchURL() async {
+    Uri uri = Uri.parse(value);
+    try {
+      await launchUrl(uri);
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,12 +170,28 @@ class _CustomRowWidget extends StatelessWidget {
                 color: AppColors.darkBlue400,
                 fontWeight: FontWeight.w400,
               )),
-          !isLocation
-              ? Text(value,
-                  style: AppFonts.medium.copyWith(
-                    color: AppColors.black800,
-                    fontWeight: FontWeight.w500,
-                  ))
+          if (isLink)
+            const SizedBox(
+              width: 25,
+            ),
+          !isLocation || isLink
+              ? Expanded(
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: isLink ? _launchURL : null,
+                    child: Text(value,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                        maxLines: 1,
+                        style: AppFonts.medium.copyWith(
+                          color: isLink ? AppColors.blue : AppColors.black800,
+                          fontWeight: FontWeight.w500,
+                        )),
+                  ),
+                )
               : Row(
                   children: [
                     SvgPicture.asset(

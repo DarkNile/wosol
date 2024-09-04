@@ -3,6 +3,8 @@ class SubscriptionModel {
   String? price;
   String? startDate;
   String? endDate;
+  String? dateAdd;
+  String? contractUrl;
   String? tripType;
   String? from;
   String? to;
@@ -14,6 +16,8 @@ class SubscriptionModel {
         this.price,
         this.startDate,
         this.endDate,
+        this.dateAdd,
+        this.contractUrl,
         this.tripType,
         this.from,
         this.to,
@@ -25,6 +29,8 @@ class SubscriptionModel {
     price = json['price_total']??'';
     startDate = json['date_start']??'';
     endDate = json['date_end']??'';
+    dateAdd = json['date_added']??'';
+    contractUrl = json['contract_url']??'';
     tripType = json['trip_round']??'';
     from = json['from']??'';
     to = json['to']??'';
