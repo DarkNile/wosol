@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ import 'controllers/shared_controllers/main_controllers/localization_controller.
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

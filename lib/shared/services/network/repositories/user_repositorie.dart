@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wosol/models/driver_model.dart';
 import 'package:wosol/models/user_model.dart';
 import 'package:wosol/shared/services/network/dio_helper.dart';
@@ -96,6 +97,8 @@ class UserRepository extends GetxService {
     try {
       // DeviceInfoService deviceInfoService = DeviceInfoService();
       // String? deviceId = await deviceInfoService.getDeviceId();
+      final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      final String version = packageInfo.version;
 
       Response response = await DioHelper.postData(
         url: isEmployee ? 'employee/login' : 'login',
@@ -104,6 +107,7 @@ class UserRepository extends GetxService {
           if (isEmployee) 'mobile': email,
           'password': password,
           'device_id': AppConstants.fcmToken,
+          'app_ver': version,
         },
       );
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
