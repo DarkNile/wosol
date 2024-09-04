@@ -91,28 +91,29 @@ class SubscriptionsWidget extends StatelessWidget {
                           .format(DateTime.parse(subscriptionModel.startDate!)),
                     ),
                     _CustomRowWidget(
+                      isBackGroundWhite: false,
                       name: 'Subscription end date'.tr,
                       value: DateFormat('dd, MMM, yyyy',
                               AppConstants.isEnLocale ? 'en_US' : "ar")
                           .format(DateTime.parse(subscriptionModel.endDate!)),
                     ),
                     _CustomRowWidget(
-                      isBackGroundWhite: false,
                       name: 'tripType'.tr,
                       value: subscriptionModel.tripType!,
                     ),
                     _CustomRowWidget(
+                      isBackGroundWhite: false,
                       isLocation: true,
                       name: 'from'.tr,
                       value: subscriptionModel.from!,
                     ),
                     _CustomRowWidget(
                       isLocation: true,
-                      isBackGroundWhite: false,
                       name: 'to'.tr,
                       value: subscriptionModel.to!,
                     ),
                     _CustomRowWidget(
+                      isBackGroundWhite: false,
                       name: 'remainingDays'.tr,
                       value: '${subscriptionModel.remainingDays}',
                     ),
@@ -120,7 +121,6 @@ class SubscriptionsWidget extends StatelessWidget {
                       name: 'Contract link'.tr,
                       value: '${subscriptionModel.contractUrl}',
                       isLink: true,
-                      isBackGroundWhite: false,
                     ),
                   ],
                 )
