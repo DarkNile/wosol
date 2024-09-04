@@ -216,4 +216,9 @@ const Map<String, String> ar = {
   "waitEmployeeMsg": "انتظر خروج الموظفين من الشركة",
   "employeesTrip": "رحلة الموظفين",
   "Traddy": "رحلة ترددي",
+  "Subscription start date": "تاريخ بداية الاشتراك",
+  "Subscription end date": "تاريخ نهاية الاشتراك",
+  "Subscription date": "تاريخ الاشتراك",
+  "Contract link": "رابط العقد",
+  "": "",
 };
