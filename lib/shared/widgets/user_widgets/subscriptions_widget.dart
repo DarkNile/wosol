@@ -23,7 +23,7 @@ class SubscriptionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (_, setState) => Container(
-        height: isExpanded ? 466 : 64,
+        height: isExpanded ? 510 : 64,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
         clipBehavior: Clip.antiAlias,
         decoration: ShapeDecoration(
@@ -123,6 +123,7 @@ class SubscriptionsWidget extends StatelessWidget {
                       isLink: true,
                     ),
                     _CustomRowWidget(
+                      isBackGroundWhite: false,
                       name: 'Invoice link'.tr,
                       value: '${subscriptionModel.invoiceUrl}',
                       isLink: true,

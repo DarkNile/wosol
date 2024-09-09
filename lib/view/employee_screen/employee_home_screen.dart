@@ -9,11 +9,9 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/services/network/repositories/employee_repository.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_bottom_sheet_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
-import 'package:wosol/view/shared_screens/map_screen.dart';
 
 import '../../../models/trip_list_model.dart';
 import '../../../shared/constants/constants.dart';
-import '../../shared/widgets/shared_widgets/snakbar.dart';
 import '../captain_screens/home/widgets/ride_card.dart';
 
 // ignore: must_be_immutable
@@ -72,7 +70,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                     )
                   : employeeController.employeeNextRide.isNotEmpty
                       ? RideCard(
-                fromDriver: false,
+                          fromDriver: false,
                           onTap: () async {
                             await onTapRideCard(
                               tripIsRunning: employeeController
@@ -161,7 +159,11 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                                   .employeeNextRide[0].students,
                             );
                           },
-                          title: employeeController.employeeNextRide[0].coType == 'traddy'? 'Traddy'.tr : employeeController.employeeNextRide[0].from,
+                          title:
+                              employeeController.employeeNextRide[0].coType ==
+                                      'traddy'
+                                  ? 'Traddy'.tr
+                                  : employeeController.employeeNextRide[0].from,
                           imgPath:
                               employeeController.employeeNextRide[0].tripType ==
                                       '1'
@@ -171,9 +173,11 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                                           '2'
                                       ? "assets/icons/employee_trip.svg"
                                       : "assets/icons/tourism_trip.svg",
-                          time: "${'from'.tr} ${employeeController.employeeNextRide[0].tripTime} ${'to'.tr} ${employeeController.employeeNextRide[0].tripTimeEnd}",
-                companyName: employeeController.employeeNextRide[0].companyName,
-                isTraddy: true,
+                          time:
+                              "${'from'.tr} ${employeeController.employeeNextRide[0].tripTime} ${'to'.tr} ${employeeController.employeeNextRide[0].tripTimeEnd}",
+                          companyName: employeeController
+                              .employeeNextRide[0].companyName,
+                          isTraddy: true,
                           isNextRide: true,
                         )
                       : const SizedBox();
@@ -245,13 +249,12 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                               target: mapController.currentLatLng,
                               zoom: 14,
                             );
-                              employeeController.requestRide(
+                            employeeController.requestRide(
                               groupId: employeeController.groups[index].groupId,
                               lat: value.latitude.toString(),
                               lng: value.longitude.toString(),
-                                date: tripDate!,
+                              date: tripDate!,
                             );
-
 
                             // mapController.userGetEstimatedTime(
                             //   originLatLng: mapController.currentLatLng,
