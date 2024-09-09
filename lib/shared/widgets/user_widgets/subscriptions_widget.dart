@@ -122,6 +122,11 @@ class SubscriptionsWidget extends StatelessWidget {
                       value: '${subscriptionModel.contractUrl}',
                       isLink: true,
                     ),
+                    _CustomRowWidget(
+                      name: 'Invoice link'.tr,
+                      value: '${subscriptionModel.invoiceUrl}',
+                      isLink: true,
+                    ),
                   ],
                 )
             ]),

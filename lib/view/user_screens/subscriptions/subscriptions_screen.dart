@@ -39,22 +39,29 @@ class SubscriptionsScreen extends StatelessWidget {
                         style: AppFonts.header,
                       ),
                       customDivider(),
-                      SubscriptionsWidget(subscriptionModel: profileController.currentSubscription!,),
-                      if(profileController.previousSubscriptions.isNotEmpty)
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      if(profileController.previousSubscriptions.isNotEmpty)
-                      Text(
-                        "previous".tr,
-                        style: AppFonts.header,
-                      ),
+                      if (profileController.currentSubscription != null)
+                        SubscriptionsWidget(
+                          subscriptionModel:
+                              profileController.currentSubscription!,
+                        ),
+                      if (profileController.previousSubscriptions.isNotEmpty)
+                        const SizedBox(
+                          height: 24,
+                        ),
+                      if (profileController.previousSubscriptions.isNotEmpty)
+                        Text(
+                          "previous".tr,
+                          style: AppFonts.header,
+                        ),
                       ...List.generate(
                           profileController.previousSubscriptions.length,
                           (index) => Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 10),
-                                child: SubscriptionsWidget(subscriptionModel: profileController.previousSubscriptions[index],),
+                                child: SubscriptionsWidget(
+                                  subscriptionModel: profileController
+                                      .previousSubscriptions[index],
+                                ),
                               ))
                     ],
                   ),
