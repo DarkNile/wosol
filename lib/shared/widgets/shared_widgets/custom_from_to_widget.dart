@@ -89,8 +89,7 @@ class CustomFromToWidget extends StatelessWidget {
             ),
         ],
       ),
-      if (companyEmail != null)
-        const SizedBox(height: 16),
+      if (companyEmail != null) const SizedBox(height: 16),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -105,9 +104,9 @@ class CustomFromToWidget extends StatelessWidget {
                     style: AppFonts.button.copyWith(color: AppColors.black800)),
               ],
             ),
-          if (tripId != null && companyEmail != null)
-            Text('*Trip id: $tripId',
-                style: AppFonts.button.copyWith(color: AppColors.black800)),
+          // if (tripId != null && companyEmail != null)
+          //   Text('*Trip id: $tripId',
+          //       style: AppFonts.button.copyWith(color: AppColors.black800)),
         ],
       ),
     ]);

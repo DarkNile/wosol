@@ -79,7 +79,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                     )
                   : homeDriverController.driverNextRide.isNotEmpty
                       ? RideCard(
-                fromDriver: true,
+                          fromDriver: true,
                           onTap: () async {
                             await onTapRideCard(
                               tripIsRunning: homeDriverController
@@ -96,10 +96,11 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                       .driverNextRide[0].tripType ==
                                   '3',
                               isStudent: homeDriverController
-                                  .driverNextRide[0].tripType ==
+                                      .driverNextRide[0].tripType ==
                                   '1',
                               firstTripType: homeDriverController
-                                  .driverNextRide[0].tripRound != '2',
+                                      .driverNextRide[0].tripRound !=
+                                  '2',
                               context: context,
                               vehicleId: homeDriverController
                                   .driverNextRide[0].vehicleId,
@@ -173,7 +174,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   .driverNextRide[0].students,
                             );
                           },
-                          title: homeDriverController.driverNextRide[0].from,
+                          title:
+                              homeDriverController.driverNextRide[0].coType ==
+                                      'traddy'
+                                  ? 'Traddy'.tr
+                                  : homeDriverController.driverNextRide[0].from,
+                          isTraddy:
+                              homeDriverController.driverNextRide[0].coType ==
+                                  'traddy',
                           imgPath:
                               homeDriverController.driverNextRide[0].tripType ==
                                       '1'
@@ -183,9 +191,20 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                           '2'
                                       ? "assets/icons/employee_trip.svg"
                                       : "assets/icons/tourism_trip.svg",
-                          time: homeDriverController.driverNextRide[0].tripTime,
-                date: DateFormat('yyyy-MM-dd',).format(DateTime.parse(homeDriverController
-                    .driverNextRide[0].tripDate)),
+                          time: homeDriverController.driverNextRide[0].coType ==
+                                  'traddy'
+                              ? "${'from'.tr} ${homeDriverController.driverNextRide[0].tripTime} ${'to'.tr} ${homeDriverController.driverNextRide[0].tripTimeEnd}"
+                              : homeDriverController.driverNextRide[0].tripTime,
+                          companyName:
+                              homeDriverController.driverNextRide[0].coType ==
+                                      'traddy'
+                                  ? homeDriverController
+                                      .driverNextRide[0].companyName
+                                  : null,
+                          date: DateFormat(
+                            'yyyy-MM-dd',
+                          ).format(DateTime.parse(
+                              homeDriverController.driverNextRide[0].tripDate)),
                           isNextRide: true,
                         )
                       : const SizedBox();
@@ -237,7 +256,14 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                   );
                                 },
                                 title: homeDriverController
-                                    .driverTrips[index].from,
+                                            .driverTrips[index].coType ==
+                                        'traddy'
+                                    ? 'Traddy'.tr
+                                    : homeDriverController
+                                        .driverTrips[index].from,
+                                isTraddy: homeDriverController
+                                        .driverTrips[index].coType ==
+                                    'traddy',
                                 imgPath: homeDriverController
                                             .driverTrips[index].tripType ==
                                         '1'
@@ -248,9 +274,20 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                         ? "assets/icons/employee_trip.svg"
                                         : "assets/icons/tourism_trip.svg",
                                 time: homeDriverController
-                                    .driverTrips[index].tripTime,
-                                date: DateFormat('yyyy-MM-dd').format(DateTime.parse(homeDriverController
-                                    .driverTrips[index].tripDate)),
+                                            .driverTrips[index].coType ==
+                                        'traddy'
+                                    ? "${'from'.tr} ${homeDriverController.driverTrips[index].tripTime} ${'to'.tr} ${homeDriverController.driverTrips[index].tripTimeEnd}"
+                                    : homeDriverController
+                                        .driverTrips[index].tripTime,
+                                companyName: homeDriverController
+                                            .driverTrips[index].coType ==
+                                        'traddy'
+                                    ? homeDriverController
+                                        .driverTrips[index].companyName
+                                    : null,
+                                date: DateFormat('yyyy-MM-dd').format(
+                                    DateTime.parse(homeDriverController
+                                        .driverTrips[index].tripDate)),
                               );
                             },
                             separatorBuilder: (context, index) =>
