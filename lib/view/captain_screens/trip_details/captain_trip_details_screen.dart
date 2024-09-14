@@ -4,8 +4,13 @@ import 'package:wosol/shared/widgets/captain_widgets/user_list_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/tripDetailsCard.dart';
 
+import '../../../models/trip_history_driver_model.dart';
+
 class CaptainTripDetailsScreen extends StatelessWidget {
-  const CaptainTripDetailsScreen({super.key});
+  const CaptainTripDetailsScreen({super.key, required this.dateTime, required this.from, required this.to});
+  final String dateTime;
+  final String from;
+  final String to;
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +29,17 @@ class CaptainTripDetailsScreen extends StatelessWidget {
               child: ListView(
                 physics: const PageScrollPhysics(),
                 children: [
-                  const TripDetailsCard(
-                      date: 'Dec 22  - 08:10 am',
+                  TripDetailsCard(
+                      date: dateTime,
                       fromCity:
-                          'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
+                          from,
                       toCity:
-                          'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
+                          to,
                       isCaptain: true),
-                  customDivider(),
-                  const UserListWidget(),
-                  customDivider(),
-                  const UserListWidget(hasSubTitle: false),
+                 // customDivider(),
+                //  const UserListWidget(),
+                 // customDivider(),
+                 // const UserListWidget(hasSubTitle: false),
                 ],
               ),
             ),
