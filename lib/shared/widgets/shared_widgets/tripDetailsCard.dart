@@ -114,9 +114,9 @@ class TripDetailsCard extends StatelessWidget {
           const SizedBox(
             height: 26,
           ),
-          const CustomRowWithDotWidget(
+           CustomRowWithDotWidget(
             text:
-                'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
+                fromCity,
           ),
           const SizedBox(
             height: 26,

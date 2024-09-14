@@ -5,7 +5,8 @@ class TripHistoryDriverModel {
   String? driverName;
   String? vehicleId;
   String? vehiclePlate;
-  String? universityName;
+  String? to;
+  String? from;
   String? tripDate;
   String? tripTime;
   String? tripRound;
@@ -24,7 +25,8 @@ class TripHistoryDriverModel {
     this.driverName,
     this.vehicleId,
     this.vehiclePlate,
-    this.universityName,
+    this.from,
+    this.to,
     this.tripDate,
     this.tripTime,
     this.tripRound,
@@ -49,7 +51,8 @@ class TripHistoryDriverModel {
     driverName = json['driver_name'];
     vehicleId = json['vehicle_id'];
     vehiclePlate = json['vehicle_plate'];
-    universityName = json['university_name'];
+    from = json['from'];
+    to = json['to'];
     tripDate = json['trip_date'];
     tripTime = json['trip_time'];
     tripRound = json['trip_round'];
@@ -70,7 +73,8 @@ class TripHistoryDriverModel {
     data['driver_name'] = driverName;
     data['vehicle_id'] = vehicleId;
     data['vehicle_plate'] = vehiclePlate;
-    data['university_name'] = universityName;
+    data['from'] = from;
+    data['to'] = to;
     data['trip_date'] = tripDate;
     data['trip_time'] = tripTime;
     data['trip_round'] = tripRound;

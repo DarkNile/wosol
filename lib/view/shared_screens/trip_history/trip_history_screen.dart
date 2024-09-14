@@ -107,7 +107,7 @@ class TripHistoryScreen extends StatelessWidget {
 
                           String toCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
-                                  .tripsList[index].universityName!
+                                  .tripsList[index].to!
                               : AppConstants.userType == "Employee"
                                   ? tripHistoryDriverController
                                       .employeeTripsList[index].companyName
@@ -117,7 +117,8 @@ class TripHistoryScreen extends StatelessWidget {
                                       .universityName!;
 
                           String fromCity = AppConstants.userType == 'Driver'
-                              ? ''
+                              ? tripHistoryDriverController
+                              .tripsList[index].from!
                               : AppConstants.userType == "Employee"
                                   ? tripHistoryDriverController
                                       .employeeTripsList[index].from
@@ -137,9 +138,17 @@ class TripHistoryScreen extends StatelessWidget {
                                 : 'rideDetails'.tr,
                             onTap: () {
                               if (AppConstants.userType == 'Driver') {
-                                Get.to(() => const CaptainTripDetailsScreen());
+                                Get.to(() => CaptainTripDetailsScreen(
+                                  dateTime: '$date  - $time',
+                                  from: fromCity,
+                                  to: toCity,
+                                ));
                               } else if (AppConstants.userType == 'Student') {
-                                Get.to(() => const UserTripDetailsScreen());
+                                Get.to(() => UserTripDetailsScreen(
+                                  dateTime: '$date  - $time',
+                                  from: fromCity,
+                                  to: toCity,
+                                ));
                               } else {
                                 Get.to(
                                   () => MapRoutesScreen(

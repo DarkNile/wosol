@@ -7,8 +7,13 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 import 'package:wosol/shared/widgets/shared_widgets/tripDetailsCard.dart';
 import 'package:wosol/view/user_screens/trip_details/widget/rate_card_widget.dart';
 
+import '../../../models/trip_history_student_model.dart';
+
 class UserTripDetailsScreen extends StatelessWidget {
-  const UserTripDetailsScreen({super.key});
+  const UserTripDetailsScreen({super.key, required this.dateTime, required this.from, required this.to});
+  final String dateTime;
+  final String from;
+  final String to;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +36,12 @@ class UserTripDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TripDetailsCard(
-                      date: 'Dec 22  - 08:10 am',
+                    TripDetailsCard(
+                      date: dateTime,
                       fromCity:
-                          'Mecca Center, FR8C+HXF, At Taniem, Makkah 24224, Saudi Arabia',
+                          from,
                       toCity:
-                          'King Abelaziz Usiversity, F6QV+J49, Unnamed Road King Abdulaziz University, Jeddah 21589, Saudi Arabia',
+                          to,
                       isCaptain: false,
                     ),
                     customDivider(),
