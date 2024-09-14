@@ -10,10 +10,11 @@ import 'package:wosol/view/user_screens/trip_details/widget/rate_card_widget.dar
 import '../../../models/trip_history_student_model.dart';
 
 class UserTripDetailsScreen extends StatelessWidget {
-  const UserTripDetailsScreen({super.key, required this.dateTime, required this.from, required this.to});
+  const UserTripDetailsScreen({super.key, required this.dateTime, required this.from, required this.to, required this.captainName});
   final String dateTime;
   final String from;
   final String to;
+  final String captainName;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                           from,
                       toCity:
                           to,
+                      captainName: captainName,
                       isCaptain: false,
                     ),
                     customDivider(),
