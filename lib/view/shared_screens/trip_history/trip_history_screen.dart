@@ -148,6 +148,8 @@ class TripHistoryScreen extends StatelessWidget {
                                   dateTime: '$date  - $time',
                                   from: fromCity,
                                   to: toCity,
+                                  captainName: tripHistoryStudentController
+                                      .tripsList[index].subData![0].driverName!,
                                 ));
                               } else {
                                 Get.to(
