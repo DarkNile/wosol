@@ -78,4 +78,39 @@ class UserChangeDaysController extends GetxController {
       }
     }
   }
+
+  // ------ Change Days Time  ------
+  TextEditingController startTimeTextEditingController =
+      TextEditingController();
+  TextEditingController endTimeTextEditingController = TextEditingController();
+
+  Future<void> onTapChangeTime(
+      {required BuildContext context, required bool isStart}) async {
+    TimeOfDay? time = await showTimePicker(
+      context: context,
+      initialEntryMode: TimePickerEntryMode.inputOnly,
+      initialTime: isStart
+          ? const TimeOfDay(hour: 6, minute: 0)
+          : const TimeOfDay(hour: 13, minute: 0),
+    );
+    if (time != null && context.mounted) {
+      if (isStart) {
+        if (time.hour < 6 || time.hour > 10) {
+          log("Start time must be between 6-10 AM");
+          defaultErrorSnackBar(
+              context: context, message: "Start time must be between 6-10 AM");
+          return;
+        }
+        startTimeTextEditingController.text = time.format(context);
+      } else {
+        if (time.hour < 13 || time.hour > 18) {
+          log("End time must be between 1-6 PM");
+          defaultErrorSnackBar(
+              context: context, message: "End time must be between 1-6 PM");
+          return;
+        }
+        endTimeTextEditingController.text = time.format(context);
+      }
+    }
+  }
 }
