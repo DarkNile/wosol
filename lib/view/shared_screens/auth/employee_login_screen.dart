@@ -185,7 +185,7 @@ class EmployeeLoginScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => LoginScreen());
+                      Get.offAll(() => LoginScreen());
                     },
                     child: Text(
                       "loginAsDriverOrUser".tr,

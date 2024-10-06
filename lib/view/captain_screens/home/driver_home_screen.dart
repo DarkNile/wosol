@@ -13,6 +13,7 @@ import 'package:wosol/view/shared_screens/map_screen.dart';
 
 import '../../../models/trip_list_model.dart';
 import '../../../shared/constants/constants.dart';
+import '../../../shared/services/network/dio_helper.dart';
 import '../../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'widgets/ride_card.dart';
 
@@ -33,6 +34,13 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
   @override
   void initState() {
     super.initState();
+    mapController.getCurrentLocation().then((p)async{
+      await DioHelper.postData(url: '/driver/tracking/add', data: {
+        "driver_id": AppConstants.userRepository.driverData.driverId,
+        "map_lat": p.latitude.toString(),
+        "map_long": p.longitude.toString(),
+      });
+    });
     if (mapController.positionStream != null) {
       mapController.positionStream!.cancel();
       mapController.positionStream = null;
@@ -336,7 +344,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
         return RideStartBottomSheet(
           tripId: tripId,
           firstButtonFunction: () async {
-            Navigator.pop(bottomSheetContext);
+            // Navigator.pop(bottomSheetContext);
             mapController.currentTripId = tripId;
             mapController.isFirstTripType = firstTripType;
             mapController.currentStudentIndex.value = 0;
