@@ -11,19 +11,16 @@ class UpdateChangeDaysScreen extends StatelessWidget {
   final ChangeDaysModel changeDaysModel;
   final int index;
   final UserChangeDaysController controller;
-  UpdateChangeDaysScreen(
+  const UpdateChangeDaysScreen(
       {super.key,
       required this.changeDaysModel,
       required this.controller,
       required this.index});
 
-  final startTimeTextEditingController = TextEditingController();
-  final endTimeTextEditingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    startTimeTextEditingController.text = changeDaysModel.time1;
-    endTimeTextEditingController.text = changeDaysModel.time2;
+    controller.startTimeTextEditingController.text = changeDaysModel.time1;
+    controller.endTimeTextEditingController.text = changeDaysModel.time2;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
@@ -45,32 +42,48 @@ class UpdateChangeDaysScreen extends StatelessWidget {
                     const SizedBox(
                       height: 100,
                     ),
-                    CustomTextField(
-                      validate: true,
-                      hint: "Start Time".tr,
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Icon(Icons.calendar_month_outlined),
+                    GestureDetector(
+                      onTap: () async {
+                        await controller.onTapChangeTime(
+                            context: context, isStart: true);
+                      },
+                      child: CustomTextField(
+                        validate: true,
+                        enabled: false,
+                        hint: "Start Time".tr,
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Icon(Icons.calendar_month_outlined),
+                        ),
+                        textEditingController:
+                            controller.startTimeTextEditingController,
+                        onSubmit: (val) {},
+                        label: "Start Time".tr,
+                        expands: false,
                       ),
-                      textEditingController: startTimeTextEditingController,
-                      onSubmit: (val) {},
-                      label: "Start Time".tr,
-                      expands: false,
                     ),
                     const SizedBox(
                       height: 8,
                     ),
-                    CustomTextField(
-                      validate: true,
-                      hint: "End Time".tr,
-                      prefixIcon: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Icon(Icons.calendar_month_outlined),
+                    GestureDetector(
+                      onTap: () async {
+                        await controller.onTapChangeTime(
+                            context: context, isStart: false);
+                      },
+                      child: CustomTextField(
+                        validate: true,
+                        enabled: false,
+                        hint: "End Time".tr,
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: Icon(Icons.calendar_month_outlined),
+                        ),
+                        textEditingController:
+                            controller.endTimeTextEditingController,
+                        onSubmit: (val) {},
+                        label: "End Time".tr,
+                        expands: false,
                       ),
-                      textEditingController: endTimeTextEditingController,
-                      onSubmit: (val) {},
-                      label: "End Time".tr,
-                      expands: false,
                     ),
                     const SizedBox(
                       height: 14,
@@ -104,10 +117,10 @@ class UpdateChangeDaysScreen extends StatelessWidget {
                                       dayId: changeDaysModel.dayId,
                                       orderId: changeDaysModel.orderId,
                                       dayName: changeDaysModel.dayName,
-                                      time1:
-                                          startTimeTextEditingController.text,
-                                      time2:
-                                          endTimeTextEditingController.text));
+                                      time1: controller
+                                          .startTimeTextEditingController.text,
+                                      time2: controller
+                                          .endTimeTextEditingController.text));
                               if (controller.changeDaysUpdateDone.value &&
                                   context.mounted) {
                                 controller.getChangeDays(context: context);
