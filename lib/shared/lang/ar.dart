@@ -221,4 +221,6 @@ const Map<String, String> ar = {
   "Subscription date": "تاريخ الاشتراك",
   "Contract link": "رابط العقد",
   "Invoice link": "ايصال الدفع",
+  "No Internet connection.": "لا يوجد اتصال بالإنترنت.",
+  "": "",
 };
