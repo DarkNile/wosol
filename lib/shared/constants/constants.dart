@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +34,27 @@ class AppConstants {
   static final localizationController = Get.find<LocalizationController>();
   static bool get isEnLocale =>
       localizationController.currentLocale().languageCode == 'en';
+
+  static Future<bool> isConnectedToInternet() async {
+    try {
+      // Check the type of connectivity
+      var connectivityResult = await Connectivity().checkConnectivity();
+      if (connectivityResult.contains(ConnectivityResult.none)) {
+        return false;
+      }
+
+      // Confirm by making a connection to a reliable server
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Error checking internet connection: $e');
+    }
+    return false;
+  }
+
 
   static void getFcmToken() async {
     AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
