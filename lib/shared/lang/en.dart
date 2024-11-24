@@ -224,4 +224,6 @@ const Map<String, String> en = {
   "Subscription date": "Subscription date",
   "Contract link": "Contract link",
   "Invoice link": "Invoice Receipt",
+  "No Internet connection.": "No Internet connection.",
+  "": "",
 };
