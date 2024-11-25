@@ -112,10 +112,12 @@ class AllWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      AppConstants.formatDateToWeekday(
-                        calendarData[index].date!,
-                        AppConstants.localizationController.currentLocale(),
-                      ),
+                      '${
+                    AppConstants.formatDateToWeekday(
+                      calendarData[index].date!,
+                      AppConstants.localizationController.currentLocale(),
+                    )
+                  } - ${calendarData[index].date!}',
                       style:
                           AppFonts.header.copyWith(color: AppColors.black800)),
                   const SizedBox(

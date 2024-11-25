@@ -95,6 +95,24 @@ class _PersonalPictureState extends State<PersonalPicture> {
 
   @override
   Widget build(BuildContext context) {
+    String profilePic = (AppConstants.userType == 'Driver'
+        ? AppConstants
+        .userRepository.driverData.userImage
+        : AppConstants.userType == 'Employee'?
+    AppConstants
+        .userRepository.employeeData.userImage
+        : AppConstants
+        .userRepository.userData.userImage)
+        .isNotEmpty
+        ? (AppConstants.userType == 'Driver'
+        ? AppConstants
+        .userRepository.driverData.userImage
+        :AppConstants.userType == 'Employee'?
+    AppConstants
+        .userRepository.employeeData.userImage
+        : AppConstants
+        .userRepository.userData.userImage)
+        : 'assets/images/user.png';
     return InkWell(
       onTap: () {
         pickImageFromGallery(context);
@@ -108,28 +126,12 @@ class _PersonalPictureState extends State<PersonalPicture> {
                 SizedBox(
                     width: 96,
                     height: 96,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        (AppConstants.userType == 'Driver'
-                                    ? AppConstants
-                                        .userRepository.driverData.userImage
-                                    : AppConstants.userType == 'Employee'?
-                        AppConstants
-                            .userRepository.employeeData.userImage
-                        : AppConstants
-                                        .userRepository.userData.userImage)
-                                .isNotEmpty
-                            ? (AppConstants.userType == 'Driver'
-                                ? AppConstants
-                                    .userRepository.driverData.userImage
-                                :AppConstants.userType == 'Employee'?
-                        AppConstants
-                            .userRepository.employeeData.userImage
-                        : AppConstants
-                                    .userRepository.userData.userImage)
-                            : 'assets/icons/logo.svg',
-                      ),
-                    )),
+                    child: profilePic == 'assets/images/user.png'?  CircleAvatar(
+                      backgroundImage: AssetImage(profilePic),
+                    ) : CircleAvatar(
+                      backgroundImage: NetworkImage(profilePic),
+                    )
+                ),
                 Positioned(
                   bottom: 0,
                   right: 0,
