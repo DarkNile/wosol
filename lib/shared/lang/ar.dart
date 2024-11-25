@@ -95,7 +95,7 @@ const Map<String, String> ar = {
   "Ride has been canceled": "تم إلغاء الرحلة",
   "Thank you for being kind and save others' time.":
       "شكرًا لك على لطفك وتوفير وقت الآخرين.",
-  'Turn off': 'أطفأ',
+  'Turn off': 'الغاء',
   'Turn on': 'تشغيل',
   "turnOffThisWeek": 'إيقاف هذا الأسبوع فقط',
   "turnOnThisWeek": 'تشغيل هذا الأسبوع فقط',
