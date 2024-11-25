@@ -52,6 +52,8 @@ class CustomRouteCardWidget extends StatelessWidget {
                 from: 'viewOnMap'.tr,
                 isButton: true,
                 onTapButton: () {
+
+                  print('Trip id: ${driverRoute.tripId}\nFrom lat: ${driverRoute.fromLat}\nFrom lng: ${driverRoute.fromLong}\nTo lat: ${driverRoute.toLat}\nTo lng: ${driverRoute.toLong}');
                   Get.to(
                     () => MapRoutesScreen(
                       fromLatLng: LatLng(

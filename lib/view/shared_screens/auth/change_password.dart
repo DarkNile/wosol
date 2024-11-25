@@ -160,6 +160,8 @@ class ChangePasswordScreen extends StatelessWidget {
                   return DefaultButton(
                     loading: changePasswordController.isChangePasswordLoading.value,
                     function: () {
+                      changePasswordController.checkPasswordValidation();
+                      changePasswordController.checkConfirmPasswordValidation(fromProfile);
                       if(fromProfile){
                         changePasswordController.changeProfilePasswordAPI(context);
                       }else {

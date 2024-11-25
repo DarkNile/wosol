@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upgrader/upgrader.dart';
@@ -36,6 +37,51 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
+Future<void> checkLocationService() async {
+  // Check if location services are enabled
+  bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!isLocationServiceEnabled) {
+    print('Location services are disabled. Please enable them.');
+    // Optionally, show a dialog or redirect the user to the location settings
+    return;
+  }
+
+  // Check for location permission
+  LocationPermission permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    // Request permission
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      print('Location permission is denied.');
+      return;
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    // Handle the case where permissions are permanently denied
+    print(
+        'Location permissions are permanently denied. Please enable them in settings.');
+    return;
+  }
+
+  print('Location services are enabled, and permissions are granted.');
+}
+
+Future<void> enforceLocationService() async {
+  bool isLocationServiceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!isLocationServiceEnabled) {
+    // Redirect user to enable location services
+    await Geolocator.openLocationSettings();
+    print('Redirecting user to location settings.');
+  }
+}
+
+void handleLocationCheck() async {
+  await checkLocationService();
+  await enforceLocationService();
+}
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,6 +93,7 @@ void main() async {
   await NotificationServices().onInit();
   await CacheHelper.init();
   AppConstants.getFcmToken();
+  handleLocationCheck();
   // FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
   //   AppConstants.fcmToken = newToken;
   // });
