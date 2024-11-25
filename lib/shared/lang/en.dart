@@ -178,9 +178,9 @@ const Map<String, String> en = {
   'Delete': 'Delete',
   'MarkAsRead': 'Mark As Read',
   'locationPermissionDriverTitle':
-      'Background Location Service is used to track the bus driver by WOSOL company’s staff to be sure he’s on the right track.',
+      'Location Service is used to identify pick-up points to ensure accurate and efficient navigation to destinations.',
   'locationPermissionUserTitle':
-      'Location Service is used to spot the students’ pick up points by the bus driver to reach their destinations.',
+      'Location Service is used to identify pick-up points to ensure accurate and efficient navigation to destinations.',
   'Accept': 'Accept',
   'Deny': 'Deny',
   "studentName": "Student Name",

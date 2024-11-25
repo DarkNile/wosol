@@ -127,7 +127,9 @@ getLocationPermission(BuildContext context) {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("locationPermissionUserTitle".tr,
+                      Text(AppConstants.isEnLocale?
+                      'Location Service is used to spot the students’ pick up points by the bus driver to reach their destinations.'
+                          : 'يتم استخدام خدمة الموقع لتحديد نقاط الالتقاء للطلاب من قبل سائق الحافلة للوصول إلى وجهاتهم.',
                           style: AppFonts.header),
                       const Expanded(child: SizedBox()),
                       Row(

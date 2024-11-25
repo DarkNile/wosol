@@ -207,7 +207,7 @@ class UserRepository extends GetxService {
         throw (response.data['data']['error']);
       }
     } on DioException catch (e) {
-      throw e.response!.data['data']['error'];
+      throw e.response!.data['data']['status'];
     }
   }
 

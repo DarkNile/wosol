@@ -52,9 +52,9 @@ class _PersonalPictureState extends State<PersonalPicture> {
       Response response = await DioHelper.postData(
         url: AppConstants.userType == 'Driver'
             ? "driver/update_image"
-            : AppConstants.userType == 'Employee'
-                ? 'employee/update_image'
-                : "student/update_image",
+            : AppConstants.userType == 'Employee'?
+            'employee/update_image'
+            : "student/update_image",
         data: {},
         dataObject: formData,
       );
@@ -68,11 +68,11 @@ class _PersonalPictureState extends State<PersonalPicture> {
                   jsonEncode(AppConstants.userRepository.driverData.toJson()));
         } else if (AppConstants.userType == 'Employee') {
           AppConstants.userRepository.employeeData.userImage =
-              response.data["data"]["file_name"];
+          response.data["data"]["file_name"];
           CacheHelper.setData(
               key: 'EmployeeData',
-              value: jsonEncode(
-                  AppConstants.userRepository.employeeData.toJson()));
+              value:
+              jsonEncode(AppConstants.userRepository.employeeData.toJson()));
         } else {
           AppConstants.userRepository.userData.userImage =
               response.data["data"]["file_name"];
@@ -95,6 +95,24 @@ class _PersonalPictureState extends State<PersonalPicture> {
 
   @override
   Widget build(BuildContext context) {
+    String profilePic = (AppConstants.userType == 'Driver'
+        ? AppConstants
+        .userRepository.driverData.userImage
+        : AppConstants.userType == 'Employee'?
+    AppConstants
+        .userRepository.employeeData.userImage
+        : AppConstants
+        .userRepository.userData.userImage)
+        .isNotEmpty
+        ? (AppConstants.userType == 'Driver'
+        ? AppConstants
+        .userRepository.driverData.userImage
+        :AppConstants.userType == 'Employee'?
+    AppConstants
+        .userRepository.employeeData.userImage
+        : AppConstants
+        .userRepository.userData.userImage)
+        : 'assets/images/user.png';
     return InkWell(
       onTap: () {
         pickImageFromGallery(context);
@@ -108,28 +126,12 @@ class _PersonalPictureState extends State<PersonalPicture> {
                 SizedBox(
                     width: 96,
                     height: 96,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        (AppConstants.userType == 'Driver'
-                                    ? AppConstants
-                                        .userRepository.driverData.userImage
-                                    : AppConstants.userType == 'Employee'
-                                        ? AppConstants.userRepository
-                                            .employeeData.userImage
-                                        : AppConstants
-                                            .userRepository.userData.userImage)
-                                .isNotEmpty
-                            ? (AppConstants.userType == 'Driver'
-                                ? AppConstants
-                                    .userRepository.driverData.userImage
-                                : AppConstants.userType == 'Employee'
-                                    ? AppConstants
-                                        .userRepository.employeeData.userImage
-                                    : AppConstants
-                                        .userRepository.userData.userImage)
-                            : 'assets/icons/logo.svg',
-                      ),
-                    )),
+                    child: profilePic == 'assets/images/user.png'?  CircleAvatar(
+                      backgroundImage: AssetImage(profilePic),
+                    ) : CircleAvatar(
+                      backgroundImage: NetworkImage(profilePic),
+                    )
+                ),
                 Positioned(
                   bottom: 0,
                   right: 0,

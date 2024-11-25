@@ -98,7 +98,7 @@ const Map<String, String> ar = {
   "Ride has been canceled": "تم إلغاء الرحلة",
   "Thank you for being kind and save others' time.":
       "شكرًا لك على لطفك وتوفير وقت الآخرين.",
-  'Turn off': 'أطفأ',
+  'Turn off': 'الغاء',
   'Turn on': 'تشغيل',
   "turnOffThisWeek": 'إيقاف هذا الأسبوع فقط',
   "turnOnThisWeek": 'تشغيل هذا الأسبوع فقط',
@@ -176,9 +176,9 @@ const Map<String, String> ar = {
   'Delete': 'حذف',
   'MarkAsRead': 'ضع إشارة مقروء',
   'locationPermissionDriverTitle':
-      'يتم استخدام خدمة الموقع في الخلفية لتتبع سائق الحافلة من قبل موظفي شركة WOSOL للتأكد من أنه على المسار الصحيح.',
+      'تُستخدم خدمة تحديد الموقع لتحديد نقاط الالتقاء لضمان التنقل بدقة وكفاءة إلى الوجهات.',
   'locationPermissionUserTitle':
-      'يتم استخدام خدمة الموقع لتحديد نقاط الالتقاء للطلاب من قبل سائق الحافلة للوصول إلى وجهاتهم.',
+      'تُستخدم خدمة تحديد الموقع لتحديد نقاط الالتقاء لضمان التنقل بدقة وكفاءة إلى الوجهات.',
   'Accept': 'قبول',
   'Deny': 'يرفض',
   "studentName": "اسم الطالب",

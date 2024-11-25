@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:wosol/shared/constants/constants.dart';
+import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
 
 
 class DioHelper {
@@ -32,21 +34,26 @@ class DioHelper {
     Object? dataObject,
     required Map<String, dynamic> data,
   }) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': AppConstants.token,
-    };
+    bool haveConnection = await AppConstants.isConnectedToInternet();
+    if(haveConnection){
+      dio.options.headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': AppConstants.token,
+      };
 
-    Response response = await dio.post(
-      url,
-      queryParameters: query,
-      data: dataObject ?? data,
-    );
-    if (response.statusCode == 200) {
-      return response;
+      Response response = await dio.post(
+        url,
+        queryParameters: query,
+        data: dataObject ?? data,
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw Exception(response.data['message']);
+      }
     } else {
-      throw Exception(response.data['message']);
+      throw 'No Internet connection.'.tr;
     }
   }
 
@@ -55,15 +62,20 @@ class DioHelper {
     String? token,
     Map<String, dynamic>? query,
   }) async {
-    dio.options.headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': AppConstants.token,
-    };
+    bool haveConnection = await AppConstants.isConnectedToInternet();
+    if(haveConnection){
+      dio.options.headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': AppConstants.token,
+      };
 
-    return await dio.get(
-      url,
-      queryParameters: query,
-    );
+      return await dio.get(
+        url,
+        queryParameters: query,
+      );
+    } else {
+      throw 'No Internet connection.'.tr;
+    }
   }
 }

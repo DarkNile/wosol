@@ -106,5 +106,6 @@ class ChangePasswordController extends GetxController {
       }
     }
     isChangePasswordLoading.value = false;
+    update();
   }
 }
