@@ -77,17 +77,19 @@ class AuthController extends GetxController {
 
   RxBool isLoginLoading = false.obs;
 
-  Future<void> signInAPI(BuildContext context, {required bool isEmployee}) async {
+  Future<void> signInAPI(BuildContext context,
+      {required bool isEmployee}) async {
     isLoginLoading.value = true;
     try {
-      if ((isEmployee? (phoneValidation == TextFieldValidation.valid) : (emailValidation == TextFieldValidation.valid)) &&
+      if ((isEmployee
+              ? (phoneValidation == TextFieldValidation.valid)
+              : (emailValidation == TextFieldValidation.valid)) &&
           passwordValidate == TextFieldValidation.valid) {
         await AppConstants.userRepository
             .signIn(
-          email: isEmployee? phoneController.text : emailController.text,
-          password: passwordController.text,
-          isEmployee: isEmployee
-        )
+                email: isEmployee ? phoneController.text : emailController.text,
+                password: passwordController.text,
+                isEmployee: isEmployee)
             .then((response) {
           isLoginLoading.value = false;
           if (response.data['data']['login_type'] == 'Student') {
@@ -102,7 +104,7 @@ class AuthController extends GetxController {
               value: 'Student',
             );
             AppConstants.userType = 'Student';
-          } else if (response.data['data']['login_type'] == 'Driver'){
+          } else if (response.data['data']['login_type'] == 'Driver') {
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.driverData = value.data;
             AppConstants.token = value.data.token;
@@ -114,7 +116,7 @@ class AuthController extends GetxController {
               value: 'Driver',
             );
             AppConstants.userType = 'Driver';
-          } else if (response.data['data']['login_type'] == 'Employee'){
+          } else if (response.data['data']['login_type'] == 'Employee') {
             DriverModel value = DriverModel.fromJson(response.data);
             AppConstants.userRepository.employeeData = value.data;
             AppConstants.token = value.data.token;
@@ -127,7 +129,7 @@ class AuthController extends GetxController {
             );
             AppConstants.userType = 'Employee';
           }
-          Get.to(() => AppConstants.userType == 'Student'
+          Get.offAll(() => AppConstants.userType == 'Student'
               ? const UserLayoutScreen()
               : const DriverLayoutScreen());
         });

@@ -35,9 +35,9 @@ class ProfileCard extends StatelessWidget {
       ProfileCustomModel(
         imagePath: "assets/icons/receipt.svg",
         title: "subscriptions".tr,
-        subTitle: "monthly".tr,
+        subTitle: getSubscriptionType(profileController.currentSubscription?.startDate ?? "" , profileController.currentSubscription?.endDate ?? ""),
         onTap: () async {
-          await profileController.subscriptionApi();
+
           Get.to(() => SubscriptionsScreen(
                 profileController: profileController,
               ));
@@ -166,4 +166,23 @@ class ProfileCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String getSubscriptionType(String startDate, String endDate) {
+  // Parse the dates from strings to DateTime objects
+  final DateTime? start = DateTime.tryParse(startDate);
+  final DateTime? end = DateTime.tryParse(endDate);
+
+  // Calculate the duration in days
+  if(start != null && end!= null) {
+    final int durationInDays = end.difference(start).inDays;
+    if (durationInDays >= 365) {
+      return 'Yearly'.tr;
+    } else if (durationInDays >= 28 && durationInDays <= 31) {
+      return 'monthly'.tr;
+    }
+  }else{
+    return '';
+  }
+  return '';
 }

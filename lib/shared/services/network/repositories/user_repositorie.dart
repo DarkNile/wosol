@@ -115,7 +115,12 @@ class UserRepository extends GetxService {
       print(response.statusCode);
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
       if (response.statusCode == 200) {
-        return response;
+        if(response.data['status'] == "success"){
+          return response;
+        }else{
+          throw (response.data['data']['error']);
+        }
+
       } else {
         throw (response.data['data']['error']);
       }

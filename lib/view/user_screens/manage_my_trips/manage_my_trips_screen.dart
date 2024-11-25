@@ -28,7 +28,11 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
   @override
   void initState() {
     tabController = TabController(
-        length: userHomeController.calendarData.length + 1, vsync: this);
+        length: userHomeController.calendarData.length + 1, vsync: this,
+    );
+    tabController.addListener(() {
+      selectIndex.value = tabController.index;
+    },);
     super.initState();
   }
 
@@ -62,6 +66,7 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
                 Expanded(
                     child: TabBarView(
                   controller: tabController,
+
                   children: [
                     ...List.generate(
                       userHomeController.calendarData.length + 1,

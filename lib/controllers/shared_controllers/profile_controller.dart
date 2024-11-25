@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:launcher_name/constants.dart';
 import 'package:wosol/models/subscription_model.dart';
 
 import '../../shared/constants/constants.dart';
@@ -27,7 +28,11 @@ class ProfileController extends GetxController {
   Future<void> termsApi() async {
     try {
       Response response = await DioHelper.postData(
-        url: AppConstants.userType == 'Driver'? 'driver/terms' : AppConstants.userType == 'Employee'? 'employee/terms' : 'student/terms',
+        url: AppConstants.userType == 'Driver'
+            ? 'driver/terms'
+            : AppConstants.userType == 'Employee'
+                ? 'employee/terms'
+                : 'student/terms',
         data: {},
       );
       if (response.statusCode == 200) {
@@ -54,21 +59,28 @@ class ProfileController extends GetxController {
     currentSubscription = null;
     previousSubscriptions = [];
     isSubscriptionLoading.value = true;
+    update(['imageUpdated']);
+
+    log("currentSubscription $currentSubscription");
     try {
       Response response = await AppConstants.userRepository.subscription();
 
       if (response.statusCode == 200) {
         bool setCurrent = true;
         response.data['data'].forEach((sub) {
-          if(setCurrent){
+
+          if (setCurrent) {
             currentSubscription = SubscriptionModel.fromJson(sub);
             setCurrent = false;
-          }else{
+          } else {
             previousSubscriptions.add(SubscriptionModel.fromJson(sub));
           }
         });
+        isSubscriptionLoading.value = false;
+        update(['imageUpdated']);
       } else {
         isSubscriptionLoading.value = false;
+        update(['imageUpdated']);
         defaultErrorSnackBar(
           context: Get.context!,
           message: response.data['data']['error'],
@@ -76,6 +88,7 @@ class ProfileController extends GetxController {
       }
     } on DioException catch (e) {
       isSubscriptionLoading.value = false;
+      update(['imageUpdated']);
       defaultErrorSnackBar(
         context: Get.context!,
         message: e.response!.data['data']['error'],

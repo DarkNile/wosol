@@ -14,6 +14,8 @@ const Map<String, String> ar = {
   "tripDetails": "تفاصيل الرحلة",
   "subscriptions": "الاشتراكات",
   "current": "حالي",
+  "Yearly":"سنوي",
+
   "previous": "سابق",
   "rate": "التقييم",
   "noRating": "لا يوجد تقييم",
@@ -22,6 +24,7 @@ const Map<String, String> ar = {
   "manageMyTrips": "إدارة رحلاتي",
   "Welcome": "مرحبا",
   "Enter your account here": "أدخل حسابك هنا",
+  "Enter your phone here": "أدخل رقمك هنا",
   "Enter your email here": "أدخل الايميل هنا",
   "Email": "البريد الإلكتروني",
   "Password": "كلمة المرور",

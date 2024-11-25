@@ -6,6 +6,7 @@ import '../dio_helper.dart';
 class EmployeeRepository extends GetxService {
   // ? ===== Get Trips =====
   Future<Response> getTrips(String employeeId) async {
+    print("fggg $employeeId");
     try {
       Response response = await DioHelper.postData(
         url: 'employee/trips',

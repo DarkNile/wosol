@@ -19,22 +19,25 @@ class EmployeeController extends GetxController {
     try {
       Response response = await AppConstants.employeeRepository
           .getTrips(AppConstants.userRepository.employeeData.driverId);
-      print("responssss $response");
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
           employeeNextRide = tripFromJson(response.data);
           isGettingTrips.value = false;
         } else {
-          if (context.mounted) {
+          if (context.mounted &&
+              ((response.data['data'] is Map) &&
+                  (response.data['data'] as Map).containsKey('error'))) {
             defaultErrorSnackBar(
               context: context,
-              message: response.data['data']['error'],
+              message: response.data['data']['error'] ?? "",
             );
           }
           isGettingTrips.value = false;
         }
       } else {
-        if (context.mounted) {
+        if (context.mounted&&
+            ((response.data['data'] is Map) &&
+                (response.data['data'] as Map).containsKey('error'))) {
           defaultErrorSnackBar(
             context: context,
             message: response.data['data']['error'],
@@ -89,29 +92,28 @@ class EmployeeController extends GetxController {
   }) async {
     try {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-      Response response = await AppConstants.employeeRepository
-          .requestRide(
+      Response response = await AppConstants.employeeRepository.requestRide(
         employeeId: AppConstants.userRepository.employeeData.driverId,
         groupId: groupId,
         lat: lat,
         lng: lng,
         date: date,
       );
-      if(response.statusCode == 200){
-        if(response.data['status'] == 'success'){
+      if (response.statusCode == 200) {
+        if (response.data['status'] == 'success') {
           Get.to(() => const MapScreen(
-            students: [],
-          ));
-            //defaultSuccessSnackBar(context: Get.context!, message: response.data['data']['data']);
-        } else if(response.data['status'] == 'error'){
-            defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
+                students: [],
+              ));
+          //defaultSuccessSnackBar(context: Get.context!, message: response.data['data']['data']);
+        } else if (response.data['status'] == 'error') {
+          defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
         }
       }
     } on DioException catch (e) {
-        defaultErrorSnackBar(
-          context: Get.context!,
-          message: e.response!.data['data']['data'],
-        );
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['data'],
+      );
     }
     update();
   }

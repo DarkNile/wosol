@@ -28,16 +28,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Get.put<ProfileController>(ProfileController());
   String userImage = (AppConstants.userType == 'Driver'
               ? AppConstants.userRepository.driverData.userImage
-  : AppConstants.userType == 'Employee'
-      ? AppConstants.userRepository.employeeData.userImage
-              : AppConstants.userRepository.userData.userImage)
+              : AppConstants.userType == 'Employee'
+                  ? AppConstants.userRepository.employeeData.userImage
+                  : AppConstants.userRepository.userData.userImage)
           .isNotEmpty
       ? (AppConstants.userType == 'Driver'
-          ? AppConstants.userRepository.driverData.userImage :
-  AppConstants.userType == 'Employee'
-      ? AppConstants.userRepository.employeeData.userImage
-          : AppConstants.userRepository.userData.userImage)
+          ? AppConstants.userRepository.driverData.userImage
+          : AppConstants.userType == 'Employee'
+              ? AppConstants.userRepository.employeeData.userImage
+              : AppConstants.userRepository.userData.userImage)
       : 'assets/images/user.png';
+
+  @override
+  void initState() {
+    if (AppConstants.userType == "Student") {
+      profileController.subscriptionApi();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +55,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           CustomHeader(
               header: AppConstants.userType == 'Driver'
-                  ? AppConstants.userRepository.driverData.firstName :
-              AppConstants.userType == 'Employee'
-                  ? AppConstants.userRepository.employeeData.firstName
-                  : AppConstants.userRepository.userData.userFname,
+                  ? AppConstants.userRepository.driverData.firstName
+                  : AppConstants.userType == 'Employee'
+                      ? AppConstants.userRepository.employeeData.firstName
+                      : AppConstants.userRepository.userData.userFname,
               svgIcon: 'assets/icons/logo.svg',
               iconWidth: 40,
               iconHeight: 40,
@@ -75,23 +83,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     builder: (logic) {
                       userImage = (AppConstants.userType == 'Driver'
                                   ? AppConstants
-                                      .userRepository.driverData.userImage :
-                      AppConstants.userType == 'Employee'
-                          ? AppConstants
-                          .userRepository.employeeData.userImage
-                                  : AppConstants
-                                      .userRepository.userData.userImage)
+                                      .userRepository.driverData.userImage
+                                  : AppConstants.userType == 'Employee'
+                                      ? AppConstants
+                                          .userRepository.employeeData.userImage
+                                      : AppConstants
+                                          .userRepository.userData.userImage)
                               .isNotEmpty
                           ? (AppConstants.userType == 'Driver'
-                              ? AppConstants.userRepository.driverData.userImage :
-                      AppConstants.userType == 'Employee'
-                          ? AppConstants.userRepository.employeeData.userImage
-                              : AppConstants.userRepository.userData.userImage)
+                              ? AppConstants.userRepository.driverData.userImage
+                              : AppConstants.userType == 'Employee'
+                                  ? AppConstants
+                                      .userRepository.employeeData.userImage
+                                  : AppConstants
+                                      .userRepository.userData.userImage)
                           : 'assets/images/user.png';
-                      return ProfileCard(
-                        profileController: profileController,
-                        userImage: userImage,
-                      );
+                      return profileController.isSubscriptionLoading.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ProfileCard(
+                              profileController: profileController,
+                              userImage: userImage,
+                            );
                     }),
                 Padding(
                   padding: const EdgeInsets.only(top: 24, bottom: 12),
