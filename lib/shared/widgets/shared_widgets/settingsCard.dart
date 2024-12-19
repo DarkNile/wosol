@@ -53,11 +53,13 @@ class _SettingsCardState extends State<SettingsCard> {
               color: AppColors.darkBlue100,
             ),
             CustomSettingRowWidget(
+              isWithTitleOnly: false,
               isSwitcher: false,
               title: 'Terms & Conditions'.tr,
-              function: () async{
+              function: () async {
                 await profileController.termsApi();
-                Get.to(()=>TermsAndConditions(profileController: profileController));
+                Get.to(() =>
+                    TermsAndConditions(profileController: profileController));
               },
             ),
             const Divider(
@@ -65,10 +67,11 @@ class _SettingsCardState extends State<SettingsCard> {
               color: AppColors.darkBlue100,
             ),
             CustomSettingRowWidget(
+              isWithTitleOnly: false,
               isSwitcher: false,
               title: 'change your password'.tr,
-              function: (){
-                Get.to(()=>ChangePasswordScreen(fromProfile: true));
+              function: () {
+                Get.to(() => ChangePasswordScreen(fromProfile: true));
               },
             ),
             const Divider(
@@ -76,6 +79,7 @@ class _SettingsCardState extends State<SettingsCard> {
               color: AppColors.darkBlue100,
             ),
             CustomSettingRowWidget(
+              isWithTitleOnly: false,
               onTapChangeLanguage: () async {
                 AppConstants.isEnLocale
                     ? await AppConstants.localizationController

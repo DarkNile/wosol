@@ -16,6 +16,7 @@ import '../shared_widgets/bottom_sheets.dart';
 // ignore: must_be_immutable
 class CustomUserManageCardWidget extends StatelessWidget {
   final bool hasHint;
+  final bool isOldDate;
   final bool hasButton;
   final bool isCancel;
   final void Function()? buttonFunction;
@@ -31,6 +32,7 @@ class CustomUserManageCardWidget extends StatelessWidget {
     this.hasHint = false,
     this.hasButton = false,
     this.isCancel = true,
+    required this.isOldDate,
     // required this.userManageTripsController,
     required this.manageTrips,
     required this.userHomeController,
@@ -60,6 +62,7 @@ class CustomUserManageCardWidget extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomSettingRowWidget(
+                    isWithTitleOnly: isOldDate,
                     isSwitcher: true,
                     isManageScreen: true,
                     isSwitcherOn: manageTrips.isToggleOn.value,

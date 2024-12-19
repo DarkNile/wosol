@@ -15,11 +15,13 @@ class CustomSettingRowWidget extends StatelessWidget {
     this.onTapChangeLanguage,
     this.toggleIcon,
     this.function,
+    required this.isWithTitleOnly,
     this.isWithArrow = true,
     this.isSwitcherOn = false,
   });
   final bool isSwitcher;
   final bool isSwitcherOn;
+  final bool isWithTitleOnly;
   final String title;
   final bool lang;
   final bool isManageScreen;
@@ -36,7 +38,10 @@ class CustomSettingRowWidget extends StatelessWidget {
         height: isManageScreen ? 26 : 51,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: isManageScreen ? 0 : 12),
-          child: isSwitcher
+          child:isWithTitleOnly ?  Text(title,
+              style: AppFonts.medium.copyWith(
+                color: AppColors.black800,
+              )) :  isSwitcher
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

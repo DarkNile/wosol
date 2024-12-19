@@ -50,6 +50,7 @@ class _UserTripsScreenState extends State<UserTripsScreen> {
                             ...List.generate(
                                 userLayoutController.studentRoutes.length,
                                 (index) => TripCardWidget(
+                                      isOldDate: false,
                                       tripId: userLayoutController
                                           .studentRoutes[index]
                                           .subData

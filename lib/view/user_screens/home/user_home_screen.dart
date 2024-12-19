@@ -92,6 +92,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                     .length
                                                 : 2,
                                             (indexSubData) => TripCardWidget(
+                                              isOldDate: userHomeController
+                                                  .tripsList[index]
+                                                  .subData![indexSubData]
+                                                  .isOldDate ?? false,
                                               tripId: userHomeController
                                                   .tripsList[index]
                                                   .subData![indexSubData]
@@ -256,6 +260,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                       .length,
                                                   (indexSubData) =>
                                                       TripCardWidget(
+                                                    isOldDate: userHomeController
+                                                            .calendarData[index]
+                                                            .subData![
+                                                                indexSubData]
+                                                            .isOldDate ??
+                                                        false,
                                                     tripId: userHomeController
                                                         .calendarData[index]
                                                         .subData![indexSubData]

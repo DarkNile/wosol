@@ -79,12 +79,12 @@ class _UserLocationsScreenState extends State<UserLocationsScreen> {
                             child: LocationCardWidget(
                               title: "University",
                               address: userLayoutController
-                                  .studentLocation.homeAddress!,
+                                  .studentLocation.universityName!,
                               latLng: LatLng(
                                 userLayoutController
-                                    .studentLocation.homeLatitude!,
+                                    .studentLocation.universityLatitude!,
                                 userLayoutController
-                                    .studentLocation.homeLongitude!,
+                                    .studentLocation.universityLongitude!,
                               ),
                             ),
                           ),

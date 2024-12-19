@@ -28,11 +28,14 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
   @override
   void initState() {
     tabController = TabController(
-        length: userHomeController.calendarData.length + 1, vsync: this,
+      length: userHomeController.calendarData.length + 1,
+      vsync: this,
     );
-    tabController.addListener(() {
-      selectIndex.value = tabController.index;
-    },);
+    tabController.addListener(
+      () {
+        selectIndex.value = tabController.index;
+      },
+    );
     super.initState();
   }
 
@@ -66,7 +69,6 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
                 Expanded(
                     child: TabBarView(
                   controller: tabController,
-
                   children: [
                     ...List.generate(
                       userHomeController.calendarData.length + 1,
@@ -117,18 +119,17 @@ class AllWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      '${
-                    AppConstants.formatDateToWeekday(
-                      calendarData[index].date!,
-                      AppConstants.localizationController.currentLocale(),
-                    )
-                  } - ${calendarData[index].date!}',
+                      '${AppConstants.formatDateToWeekday(
+                        calendarData[index].date!,
+                        AppConstants.localizationController.currentLocale(),
+                      )} - ${calendarData[index].date!}',
                       style:
                           AppFonts.header.copyWith(color: AppColors.black800)),
                   const SizedBox(
                     height: 10,
                   ),
                   CustomUserManageCardWidget(
+                    isOldDate:calendarData[index].subData![0].isOldDate ?? false ,
                     calenderId: calendarData[index].subData![0].calendarId!,
                     userId: calendarData[index].subData![0].userId!,
                     calenderDate: calendarData[index].subData![0].cancelDate!,
@@ -153,6 +154,7 @@ class AllWidget extends StatelessWidget {
                     ),
                   if (calendarData[index].subData!.length > 1)
                     CustomUserManageCardWidget(
+                      isOldDate:calendarData[index].subData![1].isOldDate ?? false ,
                       calenderId: calendarData[index].subData![1].calendarId!,
                       userId: calendarData[index].subData![1].userId!,
                       calenderDate: calendarData[index].subData![1].cancelDate!,

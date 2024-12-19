@@ -45,8 +45,12 @@ class EditProfile extends StatelessWidget {
                               horizontal: 16, vertical: 24)),
                       color: AppColors.white,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           PersonalPicture(profileController: profileController,),
+                          Center(
+                              child: PersonalPicture(
+                            profileController: profileController,
+                          )),
                           const SizedBox(
                             height: 24,
                           ),
@@ -62,29 +66,16 @@ class EditProfile extends StatelessWidget {
                               const SizedBox(
                                 height: 8,
                               ),
-                              CustomTextField(
-                                hint: AppConstants.userType == 'Driver'
+                              Text(
+                                AppConstants.userType == 'Driver'
                                     ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
-                                    : AppConstants.userType == 'Student'?
-                                "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}"
-                                : "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}",
-                                validate: true,
-                                enabled: false,
-                                fillColor: AppColors.dividerColor,
-                                height: 42,
-                                textEditingController: TextEditingController(),
-                                onSubmit: (v) {},
-                                label: '',
-                                expands: false,
-                                hintStyle: AppFonts.small.copyWith(
-                                  color: AppColors.darkBlue400,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.darkBlue200,
-                                  ),
-                                ),
+                                    : AppConstants.userType == 'Student'
+                                        ? "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}"
+                                        : "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}",
+                                style: AppFonts.style12Urb.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColors.black),
                               ),
                             ],
                           ),
@@ -103,7 +94,13 @@ class EditProfile extends StatelessWidget {
                               const SizedBox(
                                 height: 8,
                               ),
-                              const CustomPhoneField(),
+                              Text(
+                                "+965 ${AppConstants.userType == 'Driver' ? AppConstants.userRepository.driverData.telephone : AppConstants.userType == 'Employee' ? AppConstants.userRepository.employeeData.telephone : AppConstants.userRepository.userData.telephone}",
+                                style: AppFonts.style12Urb.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColors.black),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -121,32 +118,19 @@ class EditProfile extends StatelessWidget {
                               const SizedBox(
                                 height: 8,
                               ),
-                              CustomTextField(
-                                validate: true,
-                                enabled: false,
-                                fillColor: AppColors.dividerColor,
-                                textEditingController: TextEditingController(),
-                                onSubmit: (v) {},
-                                label: '',
-                                height: 42,
-                                expands: false,
-                                hint: AppConstants.userType == 'Driver'
+                              Text(
+                                AppConstants.userType == 'Driver'
                                     ? AppConstants
                                         .userRepository.driverData.userEmail
                                     : AppConstants.userType == 'Student'
-                                    ? AppConstants
-                                        .userRepository.userData.userEmail
-                                : AppConstants
-                                    .userRepository.employeeData.userEmail,
-                                hintStyle: AppFonts.small.copyWith(
-                                  color: AppColors.darkBlue400,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.darkBlue200,
-                                  ),
-                                ),
+                                        ? AppConstants
+                                            .userRepository.userData.userEmail
+                                        : AppConstants.userRepository
+                                            .employeeData.userEmail,
+                                style: AppFonts.style12Urb.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColors.black),
                               ),
                             ],
                           ),

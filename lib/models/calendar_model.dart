@@ -30,6 +30,7 @@ class CalendarData {
   String? endTime;
   List<SubData>? subData;
 
+
   CalendarData({this.date, this.startTime, this.endTime, this.subData});
 
   CalendarData.fromJson(Map<String, dynamic> json) {
@@ -59,6 +60,7 @@ class CalendarData {
 class SubData {
   String? calendarId;
   String? orderId;
+  bool? isOldDate;
   String? userId;
   String? firstName;
   String? lastName;
@@ -101,6 +103,7 @@ class SubData {
     orderId = json['order_id'];
     userId = json['user_id'];
     firstName = json['first_name'];
+    isOldDate = json['old_date'] ?? false;
     lastName = json['last_name'];
     date = json['date'];
     time = json['time'];

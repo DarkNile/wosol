@@ -57,7 +57,7 @@ class MapRoutesScreenState extends State<MapRoutesScreen> {
                 },
                 initialCameraPosition: CameraPosition(
                   target: widget.fromLatLng,
-                  zoom: 8,
+                  zoom: 14,
                 ),
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);

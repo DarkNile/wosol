@@ -60,41 +60,44 @@ class SubData {
   String? carModel;
   String? carSeats;
   bool? tripIsRunning;
+  bool? isOldDate;
 
-  SubData(
-      {this.tripId,
-      this.userId,
-      this.tripUserId,
-      this.userType,
-      this.tourismType,
-      this.userFname,
-      this.userLname,
-      this.tripDate,
-      this.tripTime,
-      this.tripRound,
-      this.driverName,
-      this.driverPhone,
-      this.plateNumber,
-      this.cancelRequest,
-      this.cancelReason,
-      this.cancelDate,
-      this.from,
-      this.universityName,
-      this.gateName,
-      this.pickupLat,
-      this.pickupLong,
-      this.dropLat,
-      this.dropLong,
-      this.tripStatus,
-      this.tripStart,
-      this.tripEnd,
-      this.carModel,
-      this.carSeats,
-        this.tripIsRunning,
-      });
+  SubData({
+    this.tripId,
+    this.userId,
+    this.isOldDate,
+    this.tripUserId,
+    this.userType,
+    this.tourismType,
+    this.userFname,
+    this.userLname,
+    this.tripDate,
+    this.tripTime,
+    this.tripRound,
+    this.driverName,
+    this.driverPhone,
+    this.plateNumber,
+    this.cancelRequest,
+    this.cancelReason,
+    this.cancelDate,
+    this.from,
+    this.universityName,
+    this.gateName,
+    this.pickupLat,
+    this.pickupLong,
+    this.dropLat,
+    this.dropLong,
+    this.tripStatus,
+    this.tripStart,
+    this.tripEnd,
+    this.carModel,
+    this.carSeats,
+    this.tripIsRunning,
+  });
 
   SubData.fromJson(Map<String, dynamic> json) {
     tripId = json['trip_id'];
+    isOldDate = json['old_date'] ?? false;
     userId = json['user_id'];
     tripUserId = json['trip_user_id'];
     userType = json['user_type'];
@@ -122,7 +125,7 @@ class SubData {
     tripEnd = json['trip_end'];
     carModel = json['car_model'];
     carSeats = json['car_seats'];
-    tripIsRunning = json['is_trip_run']?? false;
+    tripIsRunning = json['is_trip_run'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -155,7 +158,7 @@ class SubData {
     data['trip_end'] = tripEnd;
     data['car_model'] = carModel;
     data['car_seats'] = carSeats;
-    data['is_trip_run'] = tripIsRunning?? false;
+    data['is_trip_run'] = tripIsRunning ?? false;
     return data;
   }
 }

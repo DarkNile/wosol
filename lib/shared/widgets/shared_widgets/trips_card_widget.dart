@@ -21,11 +21,13 @@ class TripCardWidget extends StatelessWidget {
   final void Function()? onCancel;
   final void Function()? onViewMap;
   final bool isCancel;
+  final bool isOldDate;
   final bool tripIsRunning;
   final String tripId;
   const TripCardWidget({
     super.key,
     this.withCancel = false,
+    required this.isOldDate,
     this.withBorder = true,
     this.onCancel,
     this.onViewMap,
@@ -44,7 +46,7 @@ class TripCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainerCardWithBorderWidget(
-      height: withCancel ? (295 + 10 + 7) : (236 + 24 + 10),
+      height: withCancel && !isOldDate ? (295 + 10 + 7) : (236 + 24 + 10),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         child: Column(
@@ -92,26 +94,28 @@ class TripCardWidget extends StatelessWidget {
                     const SizedBox(
                       width: 16,
                     ),
-                  Expanded(
-                    child: DefaultRowButton(
-                      text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
-                      height: 42,
-                      border: withBorder
-                          ? Border.all(
-                              color: AppColors.error600,
-                            )
-                          : null,
-                      color: withBorder ? AppColors.white : AppColors.error600,
-                      function: onCancel,
-                      textColor:
-                          withBorder ? AppColors.error600 : AppColors.white,
-                      borderRadius: 8,
-                      containIcon: true,
-                      svgPic: withBorder
-                          ? 'assets/icons/close_red.svg'
-                          : 'assets/icons/close_white.svg',
+                  if (!isOldDate)
+                    Expanded(
+                      child: DefaultRowButton(
+                        text: isCancel ? "cancelTrip".tr : "unCancelTrip".tr,
+                        height: 42,
+                        border: withBorder
+                            ? Border.all(
+                                color: AppColors.error600,
+                              )
+                            : null,
+                        color:
+                            withBorder ? AppColors.white : AppColors.error600,
+                        function: onCancel,
+                        textColor:
+                            withBorder ? AppColors.error600 : AppColors.white,
+                        borderRadius: 8,
+                        containIcon: true,
+                        svgPic: withBorder
+                            ? 'assets/icons/close_red.svg'
+                            : 'assets/icons/close_white.svg',
+                      ),
                     ),
-                  ),
                 ],
               )
           ],
