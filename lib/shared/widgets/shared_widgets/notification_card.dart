@@ -80,13 +80,13 @@ class NotificationCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text(notificationTime,
-                              softWrap: true,
-                              style:
-                                  // Todo use Appfonts with copyWith
-                                  AppFonts.medium.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500)),
+                          // Text(notificationTime,
+                          //     softWrap: true,
+                          //     style:
+                          //         // Todo use Appfonts with copyWith
+                          //         AppFonts.medium.copyWith(
+                          //             fontSize: 12,
+                          //             fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ),

@@ -107,7 +107,8 @@ class TripHistoryScreen extends StatelessWidget {
 
                           String toCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
-                                  .tripsList[index].to!
+                                      .tripsList[index].to ??
+                                  ''
                               : AppConstants.userType == "Employee"
                                   ? tripHistoryDriverController
                                       .employeeTripsList[index].companyName
@@ -118,7 +119,7 @@ class TripHistoryScreen extends StatelessWidget {
 
                           String fromCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
-                              .tripsList[index].from!
+                                  .tripsList[index].from!
                               : AppConstants.userType == "Employee"
                                   ? tripHistoryDriverController
                                       .employeeTripsList[index].from
@@ -139,27 +140,33 @@ class TripHistoryScreen extends StatelessWidget {
                             onTap: () {
                               if (AppConstants.userType == 'Driver') {
                                 Get.to(() => CaptainTripDetailsScreen(
-                                  dateTime: '$date  - $time',
-                                  from: fromCity,
-                                  to: toCity,
-                                ));
+                                      dateTime: '$date  - $time',
+                                      from: fromCity,
+                                      to: toCity,
+                                    ));
                               } else if (AppConstants.userType == 'Student') {
                                 Get.to(() => UserTripDetailsScreen(
-                                  dateTime: '$date  - $time',
-                                  from: fromCity,
-                                  to: toCity,
-                                  captainName: tripHistoryStudentController
-                                      .tripsList[index].subData![0].driverName!,
-                                ));
+                                      dateTime: '$date  - $time',
+                                      from: fromCity,
+                                      to: toCity,
+                                      captainName: tripHistoryStudentController
+                                          .tripsList[index]
+                                          .subData![0]
+                                          .driverName!,
+                                    ));
                               } else {
                                 Get.to(
                                   () => MapRoutesScreen(
-                                    fromLatLng: LatLng(tripHistoryDriverController
-                                        .employeeTripsList[index].fromLat, tripHistoryDriverController
-                                        .employeeTripsList[index].fromLong),
-                                    toLatLng: LatLng(tripHistoryDriverController
-                                        .employeeTripsList[index].toLat, tripHistoryDriverController
-                                        .employeeTripsList[index].toLong),
+                                    fromLatLng: LatLng(
+                                        tripHistoryDriverController
+                                            .employeeTripsList[index].fromLat,
+                                        tripHistoryDriverController
+                                            .employeeTripsList[index].fromLong),
+                                    toLatLng: LatLng(
+                                        tripHistoryDriverController
+                                            .employeeTripsList[index].toLat,
+                                        tripHistoryDriverController
+                                            .employeeTripsList[index].toLong),
                                   ),
                                 );
                               }
