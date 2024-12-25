@@ -6,7 +6,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
 
-
 class DioHelper {
   static late Dio dio;
   static init() {
@@ -18,13 +17,13 @@ class DioHelper {
         receiveTimeout: const Duration(seconds: 30),
       ),
     )..interceptors.add(
-      PrettyDioLogger(
-        requestBody: true,
-        requestHeader: true,
-        responseHeader: true,
-        responseBody: true,
-      ),
-    );;
+        PrettyDioLogger(
+          requestBody: true,
+          requestHeader: true,
+          responseHeader: true,
+          responseBody: true,
+        ),
+      );
   }
 
   static Future<Response> postData({
@@ -35,7 +34,7 @@ class DioHelper {
     required Map<String, dynamic> data,
   }) async {
     bool haveConnection = await AppConstants.isConnectedToInternet();
-    if(haveConnection){
+    if (haveConnection) {
       dio.options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -63,7 +62,7 @@ class DioHelper {
     Map<String, dynamic>? query,
   }) async {
     bool haveConnection = await AppConstants.isConnectedToInternet();
-    if(haveConnection){
+    if (haveConnection) {
       dio.options.headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
