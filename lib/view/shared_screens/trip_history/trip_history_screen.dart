@@ -9,7 +9,6 @@ import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/view/captain_screens/routes/map_screen.dart';
 import 'package:wosol/view/captain_screens/trip_details/captain_trip_details_screen.dart';
-import 'package:wosol/view/shared_screens/map_screen.dart';
 import 'package:wosol/view/user_screens/trip_details/user_trip_details_screen.dart';
 
 import '../../../shared/widgets/shared_widgets/custom_header.dart';
@@ -67,7 +66,7 @@ class TripHistoryScreen extends StatelessWidget {
                       child: const CircularProgressIndicator()),
                 );
               } // add or to user
-              return tripHistoryDriverController.tripsList.isEmpty &&
+              return tripHistoryDriverController.tripsList.isEmpty ||
                       tripHistoryStudentController.tripsList.isEmpty
                   ? Center(
                       child: Padding(

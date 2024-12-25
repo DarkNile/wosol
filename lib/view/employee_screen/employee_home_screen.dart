@@ -237,7 +237,6 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                           mapController.currentIcon =
                               await mapController.getBytesFromAsset(
                                   'assets/images/person_pin_circle.png', 70);
-                          mapController.targetLatLng = toLatLng;
                           await mapController
                               .getCurrentLocation()
                               .then((value) async {
@@ -249,12 +248,18 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                               target: mapController.currentLatLng,
                               zoom: 14,
                             );
-                            employeeController.requestRide(
+                            final target = await employeeController.requestRide(
                               groupId: employeeController.groups[index].groupId,
                               lat: value.latitude.toString(),
                               lng: value.longitude.toString(),
                               date: tripDate!,
                             );
+
+                            if (target == null) {
+                              mapController.targetLatLng = toLatLng;
+                            } else {
+                              mapController.targetLatLng = target;
+                            }
 
                             // mapController.userGetEstimatedTime(
                             //   originLatLng: mapController.currentLatLng,
