@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../models/groups_list_model.dart';
 import '../../models/trip_list_model.dart';
@@ -35,7 +36,7 @@ class EmployeeController extends GetxController {
           isGettingTrips.value = false;
         }
       } else {
-        if (context.mounted&&
+        if (context.mounted &&
             ((response.data['data'] is Map) &&
                 (response.data['data'] as Map).containsKey('error'))) {
           defaultErrorSnackBar(
@@ -84,7 +85,7 @@ class EmployeeController extends GetxController {
     update();
   }
 
-  void requestRide({
+  Future<LatLng?> requestRide({
     required String groupId,
     required String lat,
     required String lng,
@@ -92,29 +93,40 @@ class EmployeeController extends GetxController {
   }) async {
     try {
       print('%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-      Response response = await AppConstants.employeeRepository.requestRide(
+      final response = await AppConstants.employeeRepository.requestRide(
         employeeId: AppConstants.userRepository.employeeData.driverId,
         groupId: groupId,
         lat: lat,
         lng: lng,
         date: date,
       );
-      if (response.statusCode == 200) {
-        if (response.data['status'] == 'success') {
-          Get.to(() => const MapScreen(
-                students: [],
-              ));
-          //defaultSuccessSnackBar(context: Get.context!, message: response.data['data']['data']);
-        } else if (response.data['status'] == 'error') {
-          defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
-        }
+
+      if (response != null) {
+        Get.to(() => const MapScreen(
+              students: [],
+            ));
+        update();
+        return response;
+      } else {
+        defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
+        return null;
       }
+      // if (response.statusCode == 200) {
+      //   if (response.data['status'] == 'success') {
+      // Get.to(() => const MapScreen(
+      //       students: [],
+      //     ));
+      //defaultSuccessSnackBar(context: Get.context!, message: response.data['data']['data']);
+      //   } else if (response.data['status'] == 'error') {
+      // defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
+      //   }
+      // }
     } on DioException catch (e) {
       defaultErrorSnackBar(
         context: Get.context!,
         message: e.response!.data['data']['data'],
       );
+      return null;
     }
-    update();
   }
 }

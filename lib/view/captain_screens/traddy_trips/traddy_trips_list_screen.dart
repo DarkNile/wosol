@@ -78,164 +78,174 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                 Navigator.pop(context, true);
               },
               traddyFunction: () async {
-                widget.mapController.markerIcon =
-                await widget.mapController.getBytesFromAsset(
-                    'assets/images/location_on.png', 50);
-                widget.mapController.startIcon =
-                await widget.mapController.getBytesFromAsset(
-                    'assets/images/location_on.png', 50);
-                widget.mapController.currentIcon =
-                await widget.mapController.getBytesFromAsset(
-                    'assets/images/navigation_arrow.png', 50);
+                widget.mapController.markerIcon = await widget.mapController
+                    .getBytesFromAsset('assets/images/location_on.png', 50);
+                widget.mapController.startIcon = await widget.mapController
+                    .getBytesFromAsset('assets/images/location_on.png', 50);
+                widget.mapController.currentIcon = await widget.mapController
+                    .getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 50);
                 widget.mapController.startLatLng = widget.fromLatLng;
                 widget.mapController.targetLatLng = widget.toLatLng;
 
-                await widget.mapController.getCurrentLocation().then((value) async {
+                await widget.mapController
+                    .getCurrentLocation()
+                    .then((value) async {
                   widget.mapController.currentLatLng =
                       LatLng(value.latitude, value.longitude);
-                  await widget.mapController.getCurrentTargetPolylinePoints(drawNormal: false);
+                  await widget.mapController
+                      .getCurrentTargetPolylinePoints(drawNormal: false);
                   widget.mapController.cameraPosition = CameraPosition(
                     target: widget.mapController.currentLatLng,
                     bearing: widget.mapController.bearing,
                     zoom: 19,
                   );
-                  widget.mapController.userLiveLocation(getEstimatedTime: false, drawCurrentTargetPolyline: false);
+                  widget.mapController.userLiveLocation(
+                      getEstimatedTime: false,
+                      drawCurrentTargetPolyline: false);
                   Get.to(() => const MapScreen(
-                    students: [],
-                    isTraddy: true,
-                  ));
+                        students: [],
+                        isTraddy: true,
+                      ));
                 });
               },
             ),
-            GetBuilder<HomeDriverController>(
-              builder: (context) {
-                return Expanded(
-                  child: widget.homeDriverController.traddyTrips.isEmpty
-                      ? Center(
-                          child: Text(
-                            'waitTheTrips'.tr,
-                            style: AppFonts.header,
+            GetBuilder<HomeDriverController>(builder: (context) {
+              return Expanded(
+                child: widget.homeDriverController.traddyTrips.isEmpty
+                    ? Center(
+                        child: Text(
+                          'waitTheTrips'.tr,
+                          style: AppFonts.header,
+                        ),
+                      )
+                    : ListView.separated(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 24, horizontal: 16),
+                        itemBuilder: (context, index) => Container(
+                          width: Get.width,
+                          // height: 135,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: AppColors.white900,
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(2, 2),
+                                blurRadius: 4,
+                                color: AppColors.black.withOpacity(0.15),
+                              ),
+                            ],
                           ),
-                        )
-                      : ListView.separated(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 24, horizontal: 16),
-                          itemBuilder: (context, index) => Container(
-                            width: Get.width,
-                            // height: 135,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: AppColors.white900,
-                              boxShadow: [
-                                BoxShadow(
-                                  offset: const Offset(2, 2),
-                                  blurRadius: 4,
-                                  color: AppColors.black.withOpacity(0.15),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            '${'name'.tr}:  ',
-                                            style: AppFonts.header
-                                                .copyWith(fontSize: 16),
-                                          ),
-                                          Text(
-                                            widget.homeDriverController
-                                                .traddyTrips[index].employeeName,
-                                            style: AppFonts.medium,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            '${'Phone Number'.tr}:  ',
-                                            style: AppFonts.header
-                                                .copyWith(fontSize: 16),
-                                          ),
-                                          Text(
-                                            widget.homeDriverController
-                                                .traddyTrips[index].employeePhone,
-                                            style: AppFonts.medium,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '${'Email'.tr}:  ',
-                                        style:
-                                            AppFonts.header.copyWith(fontSize: 16),
-                                      ),
-                                      Text(
-                                        widget.homeDriverController
-                                            .traddyTrips[index].employeeEmail,
-                                        style: AppFonts.medium,
-                                      ),
-                                    ],
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '${'name'.tr}:  ',
+                                    style:
+                                        AppFonts.header.copyWith(fontSize: 16),
                                   ),
-                                ),
-                                if(widget.homeDriverController
-                                    .traddyTrips[index].driverReach == '0')
+                                  Text(
+                                    widget.homeDriverController
+                                        .traddyTrips[index].employeeName,
+                                    style: AppFonts.medium,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${'Phone Number'.tr}:  ',
+                                    style:
+                                        AppFonts.header.copyWith(fontSize: 16),
+                                  ),
+                                  Text(
+                                    widget.homeDriverController
+                                        .traddyTrips[index].employeePhone,
+                                    style: AppFonts.medium,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${'Email'.tr}:  ',
+                                    style:
+                                        AppFonts.header.copyWith(fontSize: 16),
+                                  ),
+                                  Text(
+                                    widget.homeDriverController
+                                        .traddyTrips[index].employeeEmail,
+                                    style: AppFonts.medium,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              if (widget.homeDriverController.traddyTrips[index]
+                                      .driverReach ==
+                                  '0')
                                 DefaultButton(
                                   function: () {
                                     widget.homeDriverController.driverReachApi(
-                                        requestId: widget.homeDriverController
-                                        .traddyTrips[index].requestId,
+                                      requestId: widget.homeDriverController
+                                          .traddyTrips[index].requestId,
                                       index: index,
-                                      homeDriverController: widget.homeDriverController,
+                                      homeDriverController:
+                                          widget.homeDriverController,
                                     );
                                   },
                                   height: 40,
                                   text: 'SendNotification'.tr,
                                 ),
-                                if(widget.homeDriverController
-                                    .traddyTrips[index].driverReach == '0')
-                                  const SizedBox(height: 8,),
-                                DefaultButton(
-                                  function: () {
-                                    widget.homeDriverController
-                                        .requestRideApprovedApi(
-                                            requestId: widget.homeDriverController
-                                                .traddyTrips[index].requestId)
-                                        .then((value) => openGoogleMaps(
-                                            double.parse(widget.homeDriverController
-                                                .traddyTrips[index].lat),
-                                            double.parse(widget.homeDriverController
-                                                .traddyTrips[index].lng)));
-                                  },
-                                  height: 40,
-                                  text: 'approve'.tr,
+                              if (widget.homeDriverController.traddyTrips[index]
+                                      .driverReach ==
+                                  '0')
+                                const SizedBox(
+                                  height: 8,
                                 ),
-                              ],
-                            ),
+                              DefaultButton(
+                                function: () {
+                                  widget.homeDriverController
+                                      .requestRideApprovedApi(
+                                          requestId: widget.homeDriverController
+                                              .traddyTrips[index].requestId)
+                                      .then((value) => openGoogleMaps(
+                                          double.parse(widget
+                                              .homeDriverController
+                                              .traddyTrips[index]
+                                              .lat),
+                                          double.parse(widget
+                                              .homeDriverController
+                                              .traddyTrips[index]
+                                              .lng)));
+                                },
+                                height: 40,
+                                text: 'approve'.tr,
+                              ),
+                            ],
                           ),
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 12,
-                          ),
-                          itemCount: widget.homeDriverController.traddyTrips.length,
                         ),
-                );
-              }
-            ),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 12,
+                        ),
+                        itemCount:
+                            widget.homeDriverController.traddyTrips.length,
+                      ),
+              );
+            }),
             DefaultButton(
-              function: () async{
-                await widget.homeDriverController.tripEnd(tripId: widget.tripId);
+              function: () async {
+                await widget.homeDriverController
+                    .tripEnd(tripId: widget.tripId);
                 widget.mapController.positionStream!.cancel();
                 widget.mapController.startIcon = null;
               },

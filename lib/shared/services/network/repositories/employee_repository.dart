@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../dio_helper.dart';
 
@@ -42,7 +43,7 @@ class EmployeeRepository extends GetxService {
     }
   }
 
-  Future<Response> requestRide({
+  Future<LatLng?> requestRide({
     required String employeeId,
     required String groupId,
     required String lat,
@@ -50,18 +51,19 @@ class EmployeeRepository extends GetxService {
     required String date,
   }) async {
     try {
-      Response response = await DioHelper.postData(
+      final response = await DioHelper.postData(
         url: 'employee/request_ride',
         data: {
           "member_id": employeeId,
           "group_id": groupId,
           "lat": lat,
           "lng": lng,
-          'trip_date' : date,
+          'trip_date': date,
         },
       );
       if (response.statusCode == 200) {
-        return response;
+        return LatLng(double.tryParse(response.data['data']['to_lat']) ?? 0.0,
+            double.tryParse(response.data['data']['to_long']) ?? 0.0);
       } else {
         throw (response.data['data']['error']);
       }

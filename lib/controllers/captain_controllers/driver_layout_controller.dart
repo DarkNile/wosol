@@ -62,7 +62,9 @@ class DriverLayoutController extends GetxController {
       )
           .then((response) {
         if (context.mounted) {
-          if ((response.data["success"] == "true")) {}
+          if ((response.data["success"] == "true")) {
+            print('success');
+          }
         }
       });
     } catch (e) {
