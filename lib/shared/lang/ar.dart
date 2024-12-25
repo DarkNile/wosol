@@ -14,8 +14,7 @@ const Map<String, String> ar = {
   "tripDetails": "تفاصيل الرحلة",
   "subscriptions": "الاشتراكات",
   "current": "حالي",
-  "Yearly":"سنوي",
-
+  "Yearly": "سنوي",
   "previous": "سابق",
   "rate": "التقييم",
   "noRating": "لا يوجد تقييم",
@@ -225,5 +224,13 @@ const Map<String, String> ar = {
   "Contract link": "رابط العقد",
   "Invoice link": "ايصال الدفع",
   "No Internet connection.": "لا يوجد اتصال بالإنترنت.",
+  "attendance": "الحضور",
+  "Your Attendance": "حضورك",
+  "myAttendance": "حضوري",
+  "trip date": "تاريخ الرحلة",
+  "trip time": "وقت الرحلة",
+  "attendance status": "حالة الحضور",
+  "present": "حضور",
+  "absent": "غياب",
   "": "",
 };

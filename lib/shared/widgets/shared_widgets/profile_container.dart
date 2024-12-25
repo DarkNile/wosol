@@ -9,6 +9,7 @@ import 'package:wosol/view/captain_screens/routes/routes_screen.dart';
 import 'package:wosol/view/captain_screens/vehicles/vehicles_screen.dart';
 import 'package:wosol/view/shared_screens/auth/edit_profile.dart';
 import 'package:wosol/view/shared_screens/main_screens/driver_license_screen.dart';
+import 'package:wosol/view/user_screens/attendance/user_attendance_screen.dart';
 import 'package:wosol/view/user_screens/locations/user_locations_screen.dart';
 import 'package:wosol/view/user_screens/subscriptions/subscriptions_screen.dart';
 import 'package:wosol/view/user_screens/trips/user_trips_screen.dart';
@@ -23,6 +24,7 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //
     List<ProfileCustomModel> userProfileItems = [
       ProfileCustomModel(
         imagePath: "assets/icons/location.svg",
@@ -35,12 +37,21 @@ class ProfileCard extends StatelessWidget {
       ProfileCustomModel(
         imagePath: "assets/icons/receipt.svg",
         title: "subscriptions".tr,
-        subTitle: getSubscriptionType(profileController.currentSubscription?.startDate ?? "" , profileController.currentSubscription?.endDate ?? ""),
+        subTitle: getSubscriptionType(
+            profileController.currentSubscription?.startDate ?? "",
+            profileController.currentSubscription?.endDate ?? ""),
         onTap: () async {
-
           Get.to(() => SubscriptionsScreen(
                 profileController: profileController,
               ));
+        },
+      ),
+      ProfileCustomModel(
+        imagePath: "assets/icons/NA-note.svg",
+        title: "attendance".tr,
+        subTitle: "Your Attendance".tr,
+        onTap: () {
+          Get.to(() => UserAttendanceScreen());
         },
       ),
       ProfileCustomModel(
@@ -60,6 +71,7 @@ class ProfileCard extends StatelessWidget {
         },
       ),
     ];
+    //
     List<ProfileCustomModel> captainProfileItems = [
       ProfileCustomModel(
         imagePath: "assets/icons/bus.svg",
@@ -86,6 +98,7 @@ class ProfileCard extends StatelessWidget {
         },
       ),
     ];
+    //
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
@@ -109,59 +122,63 @@ class ProfileCard extends StatelessWidget {
                 },
                 title: AppConstants.userType == 'Driver'
                     ? "${AppConstants.userRepository.driverData.firstName} ${AppConstants.userRepository.driverData.lastName}"
-                : AppConstants.userType == 'Employee'
-                    ? "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}"
-                    : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
+                    : AppConstants.userType == 'Employee'
+                        ? "${AppConstants.userRepository.employeeData.firstName} ${AppConstants.userRepository.employeeData.lastName}"
+                        : "${AppConstants.userRepository.userData.userFname} ${AppConstants.userRepository.userData.userLname}",
                 subTitle: AppConstants.userType == 'Driver'
                     ? AppConstants.userRepository.driverData.userEmail
-                : AppConstants.userType == 'Employee'
-                    ? AppConstants.userRepository.employeeData.userEmail
-                    : AppConstants.userRepository.userData.userEmail,
+                    : AppConstants.userType == 'Employee'
+                        ? AppConstants.userRepository.employeeData.userEmail
+                        : AppConstants.userRepository.userData.userEmail,
                 isProfile: true,
               );
             }),
           ),
-          if(AppConstants.userType != 'Employee')
-          const SizedBox(
-            height: 24,
-          ),
-          if(AppConstants.userType != 'Employee')
-          Container(
-            height: AppConstants.userType == 'Driver' ? 195 : 260,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(8),
+          if (AppConstants.userType != 'Employee')
+            const SizedBox(
+              height: 24,
             ),
-            child: ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  height: 1,
-                  color: AppColors.darkBlue100,
-                );
-              },
-              itemCount: AppConstants.userType == 'Driver'
-                  ? captainProfileItems.length
-                  : userProfileItems.length,
-              itemBuilder: (context, index) {
-                return CustomProfileRowWidget(
-                  image: AppConstants.userType == 'Driver'
-                      ? captainProfileItems[index].imagePath
-                      : userProfileItems[index].imagePath,
-                  title: AppConstants.userType == 'Driver'
-                      ? captainProfileItems[index].title
-                      : userProfileItems[index].title,
-                  subTitle: AppConstants.userType == 'Driver'
-                      ? captainProfileItems[index].subTitle
-                      : userProfileItems[index].subTitle,
-                  onTap: AppConstants.userType == 'Driver'
-                      ? captainProfileItems[index].onTap
-                      : userProfileItems[index].onTap,
-                  isProfile: false,
-                );
-              },
+          if (AppConstants.userType != 'Employee')
+            Container(
+              height: AppConstants.userType == 'Driver'
+                  ? 195
+                  :
+                  // old  260,
+                  330,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    height: 1,
+                    color: AppColors.darkBlue100,
+                  );
+                },
+                itemCount: AppConstants.userType == 'Driver'
+                    ? captainProfileItems.length
+                    : userProfileItems.length,
+                itemBuilder: (context, index) {
+                  return CustomProfileRowWidget(
+                    image: AppConstants.userType == 'Driver'
+                        ? captainProfileItems[index].imagePath
+                        : userProfileItems[index].imagePath,
+                    title: AppConstants.userType == 'Driver'
+                        ? captainProfileItems[index].title
+                        : userProfileItems[index].title,
+                    subTitle: AppConstants.userType == 'Driver'
+                        ? captainProfileItems[index].subTitle
+                        : userProfileItems[index].subTitle,
+                    onTap: AppConstants.userType == 'Driver'
+                        ? captainProfileItems[index].onTap
+                        : userProfileItems[index].onTap,
+                    isProfile: false,
+                  );
+                },
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -174,14 +191,14 @@ String getSubscriptionType(String startDate, String endDate) {
   final DateTime? end = DateTime.tryParse(endDate);
 
   // Calculate the duration in days
-  if(start != null && end!= null) {
+  if (start != null && end != null) {
     final int durationInDays = end.difference(start).inDays;
     if (durationInDays >= 365) {
       return 'Yearly'.tr;
     } else if (durationInDays >= 28 && durationInDays <= 31) {
       return 'monthly'.tr;
     }
-  }else{
+  } else {
     return '';
   }
   return '';
