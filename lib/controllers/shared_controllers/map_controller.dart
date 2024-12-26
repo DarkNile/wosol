@@ -466,6 +466,7 @@ class MapController extends GetxController {
         print("student list: ${students.isEmpty}");
         if (isEmployee && !isToEnd) {
           isToEnd = true;
+
           showModalBottomSheet(
               context: Get.context!,
               isDismissible: false,
@@ -507,6 +508,7 @@ class MapController extends GetxController {
                   },
                 );
               });
+
           print("------- ${currentStudentIndex}");
           targetLatLng = LatLng(
             double.parse(endLat),
@@ -763,15 +765,16 @@ class MapController extends GetxController {
             _isConfirmUser == false &&
             isRound == true) {
           _isConfirmUser = true;
-          if (students[currentStudentIndex.value].isStartPoint) {
-            RandomSheet(
-              headTitle: "employeesTrip".tr,
-              subTitle: "waitEmployeeMsg".tr,
-              function: () {
-                Get.back();
-              },
-            );
-          }
+          //todo 2
+          // if (students[currentStudentIndex.value].isStartPoint) {
+          //   RandomSheet(
+          //     headTitle: "employeesTrip".tr,
+          //     subTitle: "waitEmployeeMsg".tr,
+          //     function: () {
+          //       Get.back();
+          //     },
+          //   );
+          // }
           if (students.length - 1 > currentStudentIndex.value) {
             currentStudentIndex.value++;
             // nearbyStudent(

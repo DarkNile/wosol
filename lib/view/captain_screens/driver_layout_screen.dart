@@ -38,40 +38,41 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
 
     // homeDriverController.getTrips(context);
     driverLayoutController.navBarIndex.value = 0;
-    if (AppConstants.userType != 'Employee') {
-      if (context.mounted) {
-        driverLayoutController.notificationTimer =
-            Timer.periodic(const Duration(minutes: 2), (timer) {
-          driverLayoutController
-              .getNotificationRequests(context: context)
-              .then((value) {
-            if (driverLayoutController.notificationRequests.isNotEmpty) {
-              for (var i in homeDriverController.driverTrips) {
-                if (driverLayoutController.notificationRequests
-                            .any((element) => element.tripId == i.tripId) &&
-                        i.tripType == "2" ||
-                    i.tripType == "3") {
-                  showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (context) {
-                      return Material(
-                        color: Colors.transparent,
-                        child: NotificationRideRequest(
-                          driverLayoutController: driverLayoutController,
-                          mapController: mapController,
-                          trip: i,
-                        ),
-                      );
-                    },
-                  );
-                }
-              }
-            }
-          });
-        });
-      }
-    }
+    //todo 1
+    // if (AppConstants.userType != 'Employee') {
+    //   if (context.mounted) {
+    //     driverLayoutController.notificationTimer =
+    //         Timer.periodic(const Duration(minutes: 2), (timer) {
+    //       driverLayoutController
+    //           .getNotificationRequests(context: context)
+    //           .then((value) {
+    //         if (driverLayoutController.notificationRequests.isNotEmpty) {
+    //           for (var i in homeDriverController.driverTrips) {
+    //             if (driverLayoutController.notificationRequests
+    //                         .any((element) => element.tripId == i.tripId) &&
+    //                     i.tripType == "2" ||
+    //                 i.tripType == "3") {
+    //               showDialog(
+    //                 barrierDismissible: false,
+    //                 context: context,
+    //                 builder: (context) {
+    //                   return Material(
+    //                     color: Colors.transparent,
+    //                     child: NotificationRideRequest(
+    //                       driverLayoutController: driverLayoutController,
+    //                       mapController: mapController,
+    //                       trip: i,
+    //                     ),
+    //                   );
+    //                 },
+    //               );
+    //             }
+    //           }
+    //         }
+    //       });
+    //     });
+    //   }
+    // }
     super.initState();
   }
 
