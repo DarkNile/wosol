@@ -97,6 +97,7 @@ class UserRepository extends GetxService {
     try {
       // DeviceInfoService deviceInfoService = DeviceInfoService();
       // String? deviceId = await deviceInfoService.getDeviceId();
+      await AppConstants.getFcmToken();
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final String version = packageInfo.version;
 
@@ -115,12 +116,11 @@ class UserRepository extends GetxService {
       print(response.statusCode);
       print('%%%%%%%%%%%%%%%%%%%%%%%%%');
       if (response.statusCode == 200) {
-        if(response.data['status'] == "success"){
+        if (response.data['status'] == "success") {
           return response;
-        }else{
+        } else {
           throw (response.data['data']['error']);
         }
-
       } else {
         throw (response.data['data']['error']);
       }
