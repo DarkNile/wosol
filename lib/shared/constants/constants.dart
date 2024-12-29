@@ -55,8 +55,7 @@ class AppConstants {
     return false;
   }
 
-
-  static void getFcmToken() async {
+  static Future<void> getFcmToken() async {
     AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
     print('FCM Token: ${AppConstants.fcmToken}');
   }

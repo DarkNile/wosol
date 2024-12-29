@@ -81,8 +81,6 @@ void handleLocationCheck() async {
   await enforceLocationService();
 }
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -92,7 +90,7 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await NotificationServices().onInit();
   await CacheHelper.init();
-  AppConstants.getFcmToken();
+  await AppConstants.getFcmToken();
   handleLocationCheck();
   // FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
   //   AppConstants.fcmToken = newToken;
