@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wosol/controllers/shared_controllers/contact_data_controller.dart';
 import 'package:wosol/models/manage_trips_model.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
@@ -27,6 +28,7 @@ class _ManageMyTripUsersScreenState extends State<ManageMyTripUsersScreen>
 
   @override
   void initState() {
+    Get.put<ContactDataController>(ContactDataController());
     tabController = TabController(
       length: userHomeController.calendarData.length + 1,
       vsync: this,
@@ -129,7 +131,8 @@ class AllWidget extends StatelessWidget {
                     height: 10,
                   ),
                   CustomUserManageCardWidget(
-                    isOldDate:calendarData[index].subData![0].isOldDate ?? false ,
+                    isOldDate:
+                        calendarData[index].subData![0].isOldDate ?? false,
                     calenderId: calendarData[index].subData![0].calendarId!,
                     userId: calendarData[index].subData![0].userId!,
                     calenderDate: calendarData[index].subData![0].cancelDate!,
@@ -154,7 +157,8 @@ class AllWidget extends StatelessWidget {
                     ),
                   if (calendarData[index].subData!.length > 1)
                     CustomUserManageCardWidget(
-                      isOldDate:calendarData[index].subData![1].isOldDate ?? false ,
+                      isOldDate:
+                          calendarData[index].subData![1].isOldDate ?? false,
                       calenderId: calendarData[index].subData![1].calendarId!,
                       userId: calendarData[index].subData![1].userId!,
                       calenderDate: calendarData[index].subData![1].cancelDate!,

@@ -232,5 +232,6 @@ const Map<String, String> ar = {
   "attendance status": "حالة الحضور",
   "present": "حضور",
   "absent": "غياب",
+  "No Data Received": "لم يتم استلام البيانات",
   "": "",
 };
