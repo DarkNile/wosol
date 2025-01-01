@@ -37,15 +37,15 @@ class _NotificationMenuWidgetState extends State<NotificationMenuWidget> {
               svg: 'assets/icons/location-tick.svg',
               text: "MarkAsRead".tr,
             )),
-        PopupMenuItem(
-          height: 42,
-          value: "Delete",
-          child: MenuItemWidget(
-            withBorder: false,
-            svg: 'assets/icons/tick-square.svg',
-            text: "Delete".tr,
-          ),
-        ),
+        // PopupMenuItem(
+        //   height: 42,
+        //   value: "Delete",
+        //   child: MenuItemWidget(
+        //     withBorder: false,
+        //     svg: 'assets/icons/tick-square.svg',
+        //     text: "Delete".tr,
+        //   ),
+        // ),
       ],
     );
   }

@@ -30,6 +30,7 @@ class NotificationsScreen extends StatelessWidget {
                 color: AppColors.white,
                 child: Obx(
                   () {
+                    print("leee ${notifyController.notifications.length}");
                     if (notifyController.isNotificationsLoading.value) {
                       return const Center(
                         child: CircularProgressIndicator(),
