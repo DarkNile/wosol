@@ -235,5 +235,6 @@ const Map<String, String> en = {
   "attendance status": "Attendance Status",
   "present": "Present",
   "absent": "Absent",
+  "No Data Received": "No Data Received",
   "": "",
 };
