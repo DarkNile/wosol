@@ -236,5 +236,6 @@ const Map<String, String> en = {
   "present": "Present",
   "absent": "Absent",
   "No Data Received": "No Data Received",
+  "confirmEndTrip": "Are you sure you want to end the trip?",
   "": "",
 };

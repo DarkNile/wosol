@@ -860,6 +860,8 @@ class _HeadingWidget extends StatelessWidget {
 class RandomSheet extends StatelessWidget {
   final String headTitle;
   final String subTitle;
+  final double height;
+  final bool withCloseIcon;
   final Function() function;
 
   const RandomSheet({
@@ -867,6 +869,8 @@ class RandomSheet extends StatelessWidget {
     required this.headTitle,
     required this.subTitle,
     required this.function,
+    this.height = 250,
+    this.withCloseIcon = false,
   });
 
   @override
@@ -876,8 +880,8 @@ class RandomSheet extends StatelessWidget {
       buttonsContainIcon: false,
       firstButtonText: 'Confirm'.tr,
       firstButtonFunction: function,
-      withCloseIcon: false,
-      height: 250,
+      withCloseIcon: withCloseIcon,
+      height: height,
       //243,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
