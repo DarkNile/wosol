@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wosol/controllers/shared_controllers/map_controller.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
+import 'package:wosol/shared/widgets/shared_widgets/bottom_sheets.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_header.dart';
 
@@ -243,11 +244,24 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
               );
             }),
             DefaultButton(
-              function: () async {
-                await widget.homeDriverController
-                    .tripEnd(tripId: widget.tripId);
-                widget.mapController.positionStream!.cancel();
-                widget.mapController.startIcon = null;
+              function: () {
+                showModalBottomSheet(
+                    context: context,
+                      isDismissible: false,
+                      enableDrag: false,
+                      builder: (context) => RandomSheet(
+                        headTitle: 'endTrip'.tr,
+                        subTitle: 'confirmEndTrip'.tr,
+                        height: 220,
+                        withCloseIcon: true,
+                        function: () async{
+                          await widget.homeDriverController
+                              .tripEnd(tripId: widget.tripId);
+                          widget.mapController.positionStream!.cancel();
+                          widget.mapController.startIcon = null;
+                        },
+                      ),
+                  );
               },
               marginBottom: 16,
               marginTop: 16,

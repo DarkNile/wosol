@@ -233,5 +233,6 @@ const Map<String, String> ar = {
   "present": "حضور",
   "absent": "غياب",
   "No Data Received": "لم يتم استلام البيانات",
+  "confirmEndTrip": "هل أنت متأكد أنك تريد إنهاء الرحلة؟",
   "": "",
 };
