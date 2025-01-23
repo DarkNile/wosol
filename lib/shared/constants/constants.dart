@@ -56,8 +56,20 @@ class AppConstants {
   }
 
   static Future<void> getFcmToken() async {
-    AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
-    print('FCM Token: ${AppConstants.fcmToken}');
+    await Future.delayed(const Duration(seconds: 5));
+    if (Platform.isIOS) {
+      if (await FirebaseMessaging.instance.getAPNSToken() != null) {
+        AppConstants.fcmToken =
+            await FirebaseMessaging.instance.getToken() ?? "";
+      }
+    } else {
+      AppConstants.fcmToken = await FirebaseMessaging.instance.getToken() ?? "";
+    }
+    debugPrint("FCM Token: ${AppConstants.fcmToken}");
+
+  FirebaseMessaging.instance.setAutoInitEnabled(true);
+    // AppConstants.fcmToken = await FirebaseMessaging.instance.getToken();
+    // print('FCM Token: ${AppConstants.fcmToken}');
   }
 
   static EdgeInsets edge({

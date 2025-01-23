@@ -39,9 +39,12 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
   void initState() {
     widget.homeDriverController.traddyTimer =
         Timer.periodic(const Duration(seconds: 30), (timer) {
-      if (context.mounted) {
-        widget.homeDriverController
-            .getTraddyTripsAPI(context: context, tripId: widget.tripId);
+      if(!widget.homeDriverController.resendLoading){
+        if (context.mounted) {
+          widget.homeDriverController
+              .getTraddyTripsAPI(context: context, tripId: widget.tripId);
+          widget.homeDriverController.wosolSettingApi(context: context);
+        }
       }
     });
     super.initState();
@@ -192,27 +195,66 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                                 height: 8,
                               ),
                               if (widget.homeDriverController.traddyTrips[index]
-                                      .driverReach ==
-                                  '0')
+                                      .notificationCounter
+                                   <
+                                      3)
                                 DefaultButton(
+                                  marginBottom: 8,
                                   function: () {
-                                    widget.homeDriverController.driverReachApi(
-                                      requestId: widget.homeDriverController
-                                          .traddyTrips[index].requestId,
-                                      index: index,
-                                      homeDriverController:
-                                          widget.homeDriverController,
-                                    );
+                                    if (!widget
+                                        .homeDriverController.traddyTrips[index].resendLoading) {
+                                      widget
+                                          .homeDriverController.traddyTrips[index].notificationCounter++;
+
+                                      widget
+                                          .homeDriverController.timer.cancel();
+                                      widget
+                                          .homeDriverController.traddyTrips[index].resendLoading = true;
+                                      widget.homeDriverController.resendLoading = true;
+                                      widget
+                                          .homeDriverController.start = 15;
+                                      const oneSec = Duration(seconds: 1);
+
+                                      widget
+                                          .homeDriverController.timer = Timer.periodic(
+                                        oneSec,
+                                            (Timer timer) {
+                                          if (widget
+                                              .homeDriverController.start < 1) {
+                                            widget
+                                                .homeDriverController.traddyTrips[index].resendLoading = false;
+                                            widget.homeDriverController.resendLoading = false;
+                                            timer.cancel();
+                                          } else {
+                                            widget
+                                                .homeDriverController.start--;
+                                          }
+                                          widget
+                                              .homeDriverController.update();
+                                        },
+                                      );
+                                      widget.homeDriverController
+                                          .driverReachApi(
+                                        requestId: widget.homeDriverController
+                                            .traddyTrips[index].requestId,
+                                        index: index,
+                                        homeDriverController:
+                                            widget.homeDriverController,
+                                      );
+                                    }
                                   },
                                   height: 40,
-                                  text: 'SendNotification'.tr,
+                                  text: (widget
+                                          .homeDriverController.traddyTrips[index].resendLoading)
+                                      ? '${widget.homeDriverController.start}'
+                                      : 'SendNotification'.tr,
                                 ),
-                              if (widget.homeDriverController.traddyTrips[index]
-                                      .driverReach ==
-                                  '0')
-                                const SizedBox(
-                                  height: 8,
-                                ),
+                              // if (widget.homeDriverController.traddyTrips[index]
+                              //         .driverReach ==
+                              //     '0')
+                              //   const SizedBox(
+                              //     height: 8,
+                              //   ),
                               DefaultButton(
                                 function: () {
                                   widget.homeDriverController
@@ -243,25 +285,26 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                       ),
               );
             }),
-            DefaultButton(
+            if(widget.homeDriverController.showEndTrip.value)
+              DefaultButton(
               function: () {
                 showModalBottomSheet(
-                    context: context,
-                      isDismissible: false,
-                      enableDrag: false,
-                      builder: (context) => RandomSheet(
-                        headTitle: 'endTrip'.tr,
-                        subTitle: 'confirmEndTrip'.tr,
-                        height: 220,
-                        withCloseIcon: true,
-                        function: () async{
-                          await widget.homeDriverController
-                              .tripEnd(tripId: widget.tripId);
-                          widget.mapController.positionStream!.cancel();
-                          widget.mapController.startIcon = null;
-                        },
-                      ),
-                  );
+                  context: context,
+                  isDismissible: false,
+                  enableDrag: false,
+                  builder: (context) => RandomSheet(
+                    headTitle: 'endTrip'.tr,
+                    subTitle: 'confirmEndTrip'.tr,
+                    height: 220,
+                    withCloseIcon: true,
+                    function: () async {
+                      await widget.homeDriverController
+                          .tripEnd(tripId: widget.tripId);
+                      widget.mapController.positionStream!.cancel();
+                      widget.mapController.startIcon = null;
+                    },
+                  ),
+                );
               },
               marginBottom: 16,
               marginTop: 16,

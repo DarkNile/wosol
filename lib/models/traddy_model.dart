@@ -24,6 +24,8 @@ class TraddyModel {
   String dateAdded;
   String driverReach;
   String driverReachDate;
+  int notificationCounter;
+  bool resendLoading;
 
 
   TraddyModel({
@@ -44,6 +46,8 @@ class TraddyModel {
     required this.dateAdded,
     required this.driverReach,
     required this.driverReachDate,
+    required this.notificationCounter,
+    this.resendLoading = false,
 
   });
 
@@ -66,6 +70,7 @@ class TraddyModel {
       dateAdded: json['date_added'] ?? "",
       driverReach: json['driver_reach'] ?? "",
       driverReachDate: json['driver_reach_date'] ?? "",
+      notificationCounter: json['notification_count'] == null? 0 : int.parse(json['notification_count']),
     );
   }
 
@@ -88,6 +93,7 @@ class TraddyModel {
       'date_added': dateAdded,
       'driver_reach': driverReach,
       'driver_reach_date': driverReachDate,
+      'notification_count': notificationCounter,
     };
   }
 }

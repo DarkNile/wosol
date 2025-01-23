@@ -368,6 +368,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                   homeDriverController
                       .getTraddyTripsAPI(context: context, tripId: tripId)
                       .then((value) {
+                    homeDriverController.wosolSettingApi(context: context);
                     // Get.back();
                     Get.to(() => TraddyTripsScreen(
                           homeDriverController: homeDriverController,
@@ -481,6 +482,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                         .getTraddyTripsAPI(context: context, tripId: tripId)
                         .then((value) {
                       // Get.back();
+                      homeDriverController.wosolSettingApi(context: context);
                       Get.to(() => TraddyTripsScreen(
                             homeDriverController: homeDriverController,
                             tripId: tripId,

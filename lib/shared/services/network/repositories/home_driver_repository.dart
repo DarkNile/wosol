@@ -161,6 +161,21 @@ class HomeDriverRepository extends GetxService {
     }
   }
 
+  Future<Response> wosolSetting() async {
+    try {
+      Response response = await DioHelper.getData(
+        url: 'wosol_setting/setting',
+      );
+      if (response.statusCode == 200) {
+        return response;
+      } else {
+        throw (response.data['data']['error']);
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['data']['error'];
+    }
+  }
+
   Future<Response> getTraddyTrips({required String tripId}) async {
     try {
       Response response = await DioHelper.postData(

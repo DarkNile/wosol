@@ -30,7 +30,7 @@ class HomeDriverController extends GetxController {
           .getTrips(AppConstants.userRepository.driverData.driverId);
       if (response.statusCode == 200) {
         if (response.data['status'] == 'success') {
-          if(response.data['data'].isNotEmpty){
+          if (response.data['data'].isNotEmpty) {
             driverTrips = tripFromJson(response.data);
             // driverTrips
             //     .removeWhere((e) => e.tripType == '1' && e.students.isEmpty);
@@ -72,6 +72,7 @@ class HomeDriverController extends GetxController {
 
   // ? ===== Trip States API =====
   RxBool tripStatesLoading = false.obs;
+
   Future<void> tripStatesAPI({
     required BuildContext context,
     required String tripId,
@@ -112,6 +113,7 @@ class HomeDriverController extends GetxController {
 
   // ? ===== Notifications Requests =====
   List<NotificationRequestModel> notificationRequests = [];
+
   Future<void> getNotificationRequests({
     required BuildContext context,
   }) async {
@@ -159,9 +161,34 @@ class HomeDriverController extends GetxController {
     }
   }
 
+  int start = 0;
+  Timer timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {});
+  bool resendLoading = false;
+
+  void startTimer(bool resendLoading) {
+    timer.cancel();
+    resendLoading = true;
+    start = 15;
+    const oneSec = Duration(seconds: 1);
+
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (start < 1) {
+          resendLoading = false;
+          timer.cancel();
+        } else {
+          start--;
+        }
+        update();
+      },
+    );
+  }
+
   Timer? traddyTimer;
   bool traddyTripsStatesLoading = false;
   List<TraddyModel> traddyTrips = [];
+
   Future<void> getTraddyTripsAPI({
     required BuildContext context,
     required String tripId,
@@ -207,6 +234,44 @@ class HomeDriverController extends GetxController {
     update();
   }
 
+  RxBool showEndTrip = false.obs;
+  Future<void> wosolSettingApi({
+    required BuildContext context,
+  }) async {
+    try {
+      Response response =
+      await AppConstants.homeDriverRepository.wosolSetting();
+
+      if (response.statusCode == 200) {
+        if (response.data['status'] == 'success') {
+          showEndTrip.value = response.data['data']['driver_end_trips'];
+        } else {
+          if (context.mounted) {
+            defaultErrorSnackBar(
+              context: context,
+              message: response.data['data']['error'],
+            );
+          }
+        }
+      } else {
+        if (context.mounted) {
+          defaultErrorSnackBar(
+            context: context,
+            message: response.data['data']['error'],
+          );
+        }
+      }
+    } catch (e) {
+      if (context.mounted) {
+        defaultErrorSnackBar(
+          context: context,
+          message: e.toString(),
+        );
+      }
+    }
+    update();
+  }
+
   Future<void> driverReachApi({
     required String requestId,
     required int index,
@@ -220,8 +285,7 @@ class HomeDriverController extends GetxController {
         },
       );
       if (response.statusCode == 200) {
-        homeDriverController
-            .traddyTrips[index].driverReach = '1';
+        homeDriverController.traddyTrips[index].driverReach = '1';
         defaultSuccessSnackBar(
           context: Get.context!,
           message: "notificationHasBeenSent".tr,
