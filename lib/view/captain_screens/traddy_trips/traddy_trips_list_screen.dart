@@ -212,7 +212,7 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
                                           .homeDriverController.traddyTrips[index].resendLoading = true;
                                       widget.homeDriverController.resendLoading = true;
                                       widget
-                                          .homeDriverController.start = 15;
+                                          .homeDriverController.start = 10;
                                       const oneSec = Duration(seconds: 1);
 
                                       widget
