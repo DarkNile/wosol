@@ -73,248 +73,250 @@ class _TraddyTripsScreenState extends State<TraddyTripsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            CustomHeaderWithBackButton(
-              header: "traddyTrips".tr,
-              isTraddy: true,
-              onBackPressed: () {
-                Navigator.pop(context, true);
-              },
-              traddyFunction: () async {
-                widget.mapController.markerIcon = await widget.mapController
-                    .getBytesFromAsset('assets/images/location_on.png', 50);
-                widget.mapController.startIcon = await widget.mapController
-                    .getBytesFromAsset('assets/images/location_on.png', 50);
-                widget.mapController.currentIcon = await widget.mapController
-                    .getBytesFromAsset(
-                        'assets/images/navigation_arrow.png', 50);
-                widget.mapController.startLatLng = widget.fromLatLng;
-                widget.mapController.targetLatLng = widget.toLatLng;
+        child: GetBuilder<HomeDriverController>(
+          builder: (_) {
+            return Column(
+              children: [
+                CustomHeaderWithBackButton(
+                  header: "traddyTrips".tr,
+                  isTraddy: true,
+                  onBackPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  traddyFunction: () async {
+                    widget.mapController.markerIcon = await widget.mapController
+                        .getBytesFromAsset('assets/images/location_on.png', 50);
+                    widget.mapController.startIcon = await widget.mapController
+                        .getBytesFromAsset('assets/images/location_on.png', 50);
+                    widget.mapController.currentIcon = await widget.mapController
+                        .getBytesFromAsset(
+                            'assets/images/navigation_arrow.png', 50);
+                    widget.mapController.startLatLng = widget.fromLatLng;
+                    widget.mapController.targetLatLng = widget.toLatLng;
 
-                await widget.mapController
-                    .getCurrentLocation()
-                    .then((value) async {
-                  widget.mapController.currentLatLng =
-                      LatLng(value.latitude, value.longitude);
-                  await widget.mapController
-                      .getCurrentTargetPolylinePoints(drawNormal: false);
-                  widget.mapController.cameraPosition = CameraPosition(
-                    target: widget.mapController.currentLatLng,
-                    bearing: widget.mapController.bearing,
-                    zoom: 19,
-                  );
-                  widget.mapController.userLiveLocation(
-                      getEstimatedTime: false,
-                      drawCurrentTargetPolyline: false);
-                  Get.to(() => const MapScreen(
-                        students: [],
-                        isTraddy: true,
-                      ));
-                });
-              },
-            ),
-            GetBuilder<HomeDriverController>(builder: (context) {
-              return Expanded(
-                child: widget.homeDriverController.traddyTrips.isEmpty
-                    ? Center(
-                        child: Text(
-                          'waitTheTrips'.tr,
-                          style: AppFonts.header,
-                        ),
-                      )
-                    : ListView.separated(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 24, horizontal: 16),
-                        itemBuilder: (context, index) => Container(
-                          width: Get.width,
-                          // height: 135,
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: AppColors.white900,
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(2, 2),
-                                blurRadius: 4,
-                                color: AppColors.black.withOpacity(0.15),
-                              ),
-                            ],
+                    await widget.mapController
+                        .getCurrentLocation()
+                        .then((value) async {
+                      widget.mapController.currentLatLng =
+                          LatLng(value.latitude, value.longitude);
+                      await widget.mapController
+                          .getCurrentTargetPolylinePoints(drawNormal: false);
+                      widget.mapController.cameraPosition = CameraPosition(
+                        target: widget.mapController.currentLatLng,
+                        bearing: widget.mapController.bearing,
+                        zoom: 19,
+                      );
+                      widget.mapController.userLiveLocation(
+                          getEstimatedTime: false,
+                          drawCurrentTargetPolyline: false);
+                      Get.to(() => const MapScreen(
+                            students: [],
+                            isTraddy: true,
+                          ));
+                    });
+                  },
+                ),
+                Expanded(
+                  child: widget.homeDriverController.traddyTrips.isEmpty
+                      ? Center(
+                          child: Text(
+                            'waitTheTrips'.tr,
+                            style: AppFonts.header,
                           ),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    '${'name'.tr}:  ',
-                                    style:
-                                        AppFonts.header.copyWith(fontSize: 16),
-                                  ),
-                                  Text(
-                                    widget.homeDriverController
-                                        .traddyTrips[index].employeeName,
-                                    style: AppFonts.medium,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '${'Phone Number'.tr}:  ',
-                                    style:
-                                        AppFonts.header.copyWith(fontSize: 16),
-                                  ),
-                                  Text(
-                                    widget.homeDriverController
-                                        .traddyTrips[index].employeePhone,
-                                    style: AppFonts.medium,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '${'Email'.tr}:  ',
-                                    style:
-                                        AppFonts.header.copyWith(fontSize: 16),
-                                  ),
-                                  Text(
-                                    widget.homeDriverController
-                                        .traddyTrips[index].employeeEmail,
-                                    style: AppFonts.medium,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              if (widget.homeDriverController.traddyTrips[index]
-                                      .notificationCounter
-                                   <
-                                      3)
-                                DefaultButton(
-                                  marginBottom: 8,
-                                  function: () {
-                                    if (!widget
-                                        .homeDriverController.traddyTrips[index].resendLoading) {
-                                      widget
-                                          .homeDriverController.traddyTrips[index].notificationCounter++;
-
-                                      widget
-                                          .homeDriverController.timer.cancel();
-                                      widget
-                                          .homeDriverController.traddyTrips[index].resendLoading = true;
-                                      widget.homeDriverController.resendLoading = true;
-                                      widget
-                                          .homeDriverController.start = 10;
-                                      const oneSec = Duration(seconds: 1);
-
-                                      widget
-                                          .homeDriverController.timer = Timer.periodic(
-                                        oneSec,
-                                            (Timer timer) {
-                                          if (widget
-                                              .homeDriverController.start < 1) {
-                                            widget
-                                                .homeDriverController.traddyTrips[index].resendLoading = false;
-                                            widget.homeDriverController.resendLoading = false;
-                                            timer.cancel();
-                                          } else {
-                                            widget
-                                                .homeDriverController.start--;
-                                          }
-                                          widget
-                                              .homeDriverController.update();
-                                        },
-                                      );
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 24, horizontal: 16),
+                          itemBuilder: (context, index) => Container(
+                            width: Get.width,
+                            // height: 135,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: AppColors.white900,
+                              boxShadow: [
+                                BoxShadow(
+                                  offset: const Offset(2, 2),
+                                  blurRadius: 4,
+                                  color: AppColors.black.withOpacity(0.15),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${'name'.tr}:  ',
+                                      style:
+                                          AppFonts.header.copyWith(fontSize: 16),
+                                    ),
+                                    Text(
                                       widget.homeDriverController
-                                          .driverReachApi(
-                                        requestId: widget.homeDriverController
-                                            .traddyTrips[index].requestId,
-                                        index: index,
-                                        homeDriverController:
-                                            widget.homeDriverController,
-                                      );
-                                    }
+                                          .traddyTrips[index].employeeName,
+                                      style: AppFonts.medium,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${'Phone Number'.tr}:  ',
+                                      style:
+                                          AppFonts.header.copyWith(fontSize: 16),
+                                    ),
+                                    Text(
+                                      widget.homeDriverController
+                                          .traddyTrips[index].employeePhone,
+                                      style: AppFonts.medium,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${'Email'.tr}:  ',
+                                      style:
+                                          AppFonts.header.copyWith(fontSize: 16),
+                                    ),
+                                    Text(
+                                      widget.homeDriverController
+                                          .traddyTrips[index].employeeEmail,
+                                      style: AppFonts.medium,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                if (widget.homeDriverController.traddyTrips[index]
+                                        .notificationCounter
+                                     <
+                                        3)
+                                  DefaultButton(
+                                    marginBottom: 8,
+                                    function: () {
+                                      if (!widget
+                                          .homeDriverController.traddyTrips[index].resendLoading) {
+                                        widget
+                                            .homeDriverController.traddyTrips[index].notificationCounter++;
+
+                                        widget
+                                            .homeDriverController.timer.cancel();
+                                        widget
+                                            .homeDriverController.traddyTrips[index].resendLoading = true;
+                                        widget.homeDriverController.resendLoading = true;
+                                        widget
+                                            .homeDriverController.start = 10;
+                                        const oneSec = Duration(seconds: 1);
+
+                                        widget
+                                            .homeDriverController.timer = Timer.periodic(
+                                          oneSec,
+                                              (Timer timer) {
+                                            if (widget
+                                                .homeDriverController.start < 1) {
+                                              widget
+                                                  .homeDriverController.traddyTrips[index].resendLoading = false;
+                                              widget.homeDriverController.resendLoading = false;
+                                              timer.cancel();
+                                            } else {
+                                              widget
+                                                  .homeDriverController.start--;
+                                            }
+                                            widget
+                                                .homeDriverController.update();
+                                          },
+                                        );
+                                        widget.homeDriverController
+                                            .driverReachApi(
+                                          requestId: widget.homeDriverController
+                                              .traddyTrips[index].requestId,
+                                          index: index,
+                                          homeDriverController:
+                                              widget.homeDriverController,
+                                        );
+                                      }
+                                    },
+                                    height: 40,
+                                    text: (widget
+                                            .homeDriverController.traddyTrips[index].resendLoading)
+                                        ? '${widget.homeDriverController.start}'
+                                        : 'SendNotification'.tr,
+                                  ),
+                                // if (widget.homeDriverController.traddyTrips[index]
+                                //         .driverReach ==
+                                //     '0')
+                                //   const SizedBox(
+                                //     height: 8,
+                                //   ),
+                                DefaultButton(
+                                  function: () {
+                                    widget.homeDriverController
+                                        .requestRideApprovedApi(
+                                            requestId: widget.homeDriverController
+                                                .traddyTrips[index].requestId)
+                                        .then((value) => openGoogleMaps(
+                                            double.parse(widget
+                                                .homeDriverController
+                                                .traddyTrips[index]
+                                                .lat),
+                                            double.parse(widget
+                                                .homeDriverController
+                                                .traddyTrips[index]
+                                                .lng)));
                                   },
                                   height: 40,
-                                  text: (widget
-                                          .homeDriverController.traddyTrips[index].resendLoading)
-                                      ? '${widget.homeDriverController.start}'
-                                      : 'SendNotification'.tr,
+                                  text: 'approve'.tr,
                                 ),
-                              // if (widget.homeDriverController.traddyTrips[index]
-                              //         .driverReach ==
-                              //     '0')
-                              //   const SizedBox(
-                              //     height: 8,
-                              //   ),
-                              DefaultButton(
-                                function: () {
-                                  widget.homeDriverController
-                                      .requestRideApprovedApi(
-                                          requestId: widget.homeDriverController
-                                              .traddyTrips[index].requestId)
-                                      .then((value) => openGoogleMaps(
-                                          double.parse(widget
-                                              .homeDriverController
-                                              .traddyTrips[index]
-                                              .lat),
-                                          double.parse(widget
-                                              .homeDriverController
-                                              .traddyTrips[index]
-                                              .lng)));
-                                },
-                                height: 40,
-                                text: 'approve'.tr,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 12,
+                          ),
+                          itemCount:
+                              widget.homeDriverController.traddyTrips.length,
                         ),
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 12,
-                        ),
-                        itemCount:
-                            widget.homeDriverController.traddyTrips.length,
+                ),
+                if(widget.homeDriverController.showEndTrip.value)
+                  DefaultButton(
+                  function: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isDismissible: false,
+                      enableDrag: false,
+                      builder: (context) => RandomSheet(
+                        headTitle: 'endTrip'.tr,
+                        subTitle: 'confirmEndTrip'.tr,
+                        height: 220,
+                        withCloseIcon: true,
+                        function: () async {
+                          await widget.homeDriverController
+                              .tripEnd(tripId: widget.tripId);
+                          widget.mapController.positionStream!.cancel();
+                          widget.mapController.startIcon = null;
+                        },
                       ),
-              );
-            }),
-            if(widget.homeDriverController.showEndTrip.value)
-              DefaultButton(
-              function: () {
-                showModalBottomSheet(
-                  context: context,
-                  isDismissible: false,
-                  enableDrag: false,
-                  builder: (context) => RandomSheet(
-                    headTitle: 'endTrip'.tr,
-                    subTitle: 'confirmEndTrip'.tr,
-                    height: 220,
-                    withCloseIcon: true,
-                    function: () async {
-                      await widget.homeDriverController
-                          .tripEnd(tripId: widget.tripId);
-                      widget.mapController.positionStream!.cancel();
-                      widget.mapController.startIcon = null;
-                    },
-                  ),
-                );
-              },
-              marginBottom: 16,
-              marginTop: 16,
-              marginLeft: 16,
-              marginRight: 16,
-              color: AppColors.darkBlueGrey,
-              height: 48,
-              text: 'endTrip'.tr,
-            )
-          ],
+                    );
+                  },
+                  marginBottom: 16,
+                  marginTop: 16,
+                  marginLeft: 16,
+                  marginRight: 16,
+                  color: AppColors.darkBlueGrey,
+                  height: 48,
+                  text: 'endTrip'.tr,
+                )
+              ],
+            );
+          }
         ),
       ),
     );
