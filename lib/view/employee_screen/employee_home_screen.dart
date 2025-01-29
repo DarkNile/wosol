@@ -225,7 +225,7 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) => TextButton(
                         child: Text(
-                          employeeController.groups[index].groupName,
+                          AppConstants.isEnLocale? employeeController.groups[index].groupNameEn : employeeController.groups[index].groupName,
                           textAlign: TextAlign.start,
                         ),
                         onPressed: () async {
