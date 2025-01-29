@@ -1,12 +1,14 @@
 class Group {
   final String groupId;
   final String groupName;
+  final String groupNameEn;
 
-  Group({required this.groupId, required this.groupName});
+  Group({required this.groupId, required this.groupName, required this.groupNameEn});
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
     groupId: json['group_id'] as String,
     groupName: json['group_name'] as String,
+    groupNameEn: json['group_name_en'] as String,
   );
 }
 
