@@ -237,5 +237,7 @@ const Map<String, String> en = {
   "absent": "Absent",
   "No Data Received": "No Data Received",
   "confirmEndTrip": "Are you sure you want to end the trip?",
+  "Password should be more than 5 digits": "Password should be more than 5 digits",
+  "Password doesn\'t match": "Password doesn\'t match",
   "": "",
 };

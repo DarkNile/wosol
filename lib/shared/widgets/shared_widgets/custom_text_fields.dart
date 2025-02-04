@@ -425,29 +425,44 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           ),
           if (widget.fieldValidation == TextFieldValidation.notValid &&
               widget.validateText != null)
-            Align(
-              alignment: AppConstants.localizationController
-                          .currentLocale()
-                          .languageCode ==
-                      'en'
-                  ? Alignment.centerLeft
-                  : Alignment.centerRight,
-              child: Padding(
-                padding: AppConstants.edge(
-                    padding: EdgeInsets.only(
-                  left: widget.validatePadding,
-                  right: widget.validatePadding,
-                  top: 8,
-                )),
-                child: Text(
-                  widget.validateText ?? '',
-                  style: AppFonts.small.copyWith(
-                    fontSize: 14,
-                    color: AppColors.error600,
-                  ),
+            Padding(
+              padding: AppConstants.edge(
+                  padding: EdgeInsets.only(
+                    left: widget.validatePadding,
+                    right: widget.validatePadding,
+                    top: 8,
+                  )),
+              child: Text(
+                widget.validateText ?? '',
+                style: AppFonts.small.copyWith(
+                  fontSize: 14,
+                  color: AppColors.error600,
                 ),
               ),
             ),
+            // Align(
+            //   alignment: AppConstants.localizationController
+            //               .currentLocale()
+            //               .languageCode ==
+            //           'en'
+            //       ? Alignment.centerLeft
+            //       : Alignment.centerRight,
+            //   child: Padding(
+            //     padding: AppConstants.edge(
+            //         padding: EdgeInsets.only(
+            //       left: widget.validatePadding,
+            //       right: widget.validatePadding,
+            //       top: 8,
+            //     )),
+            //     child: Text(
+            //       widget.validateText ?? '',
+            //       style: AppFonts.small.copyWith(
+            //         fontSize: 14,
+            //         color: AppColors.error600,
+            //       ),
+            //     ),
+            //   ),
+            // ),
         ],
       ),
     );

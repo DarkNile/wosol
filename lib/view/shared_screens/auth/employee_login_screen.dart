@@ -148,7 +148,7 @@ class EmployeeLoginScreen extends StatelessWidget {
                             controller: loginController.passwordController,
                             fieldValidation: loginController.passwordValidate,
                             validateText:
-                                'Password should be more than 5 digits',
+                                'Password should be more than 5 digits'.tr,
                             onSubmit: (val) {},
                             label: '',
                             hintText: 'Password'.tr,

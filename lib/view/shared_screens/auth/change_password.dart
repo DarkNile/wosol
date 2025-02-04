@@ -109,7 +109,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             controller: changePasswordController.passwordController,
                             fieldValidation: changePasswordController.passwordValidate,
                             validateText:
-                            'Password should be more than 5 digits',
+                            'Password should be more than 5 digits'.tr,
                             onSubmit: (val) {},
                             label: '',
                             hintText: fromProfile? 'current password'.tr : 'Password'.tr,
@@ -141,7 +141,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             controller: changePasswordController.confirmPasswordController,
                             fieldValidation: changePasswordController.confirmPasswordValidate,
                             validateText:
-                            fromProfile? 'Password should be more than 5 digits' : 'Password doesn\'t match',
+                            fromProfile? 'Password should be more than 5 digits'.tr : 'Password doesn\'t match'.tr,
                             onSubmit: (val) {},
                             label: '',
                             hintText: fromProfile? 'new password'.tr : 'confirm password'.tr,
