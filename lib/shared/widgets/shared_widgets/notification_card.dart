@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
-import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/notification_menu_widget.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -30,11 +29,11 @@ class NotificationCard extends StatelessWidget {
         children: [
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 9.0),
@@ -50,44 +49,17 @@ class NotificationCard extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: AppConstants.screenWidth(context) <= 353
-                                ? AppConstants.screenWidth(context) * .64
-                                : AppConstants.screenWidth(context) * .68,
-                            child: Text.rich(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              TextSpan(
-                                children: [
-                                  const TextSpan(
-                                    text: 'You canceled ',
-                                    style: TextStyle(
-                                      color: AppColors.orange,
-                                      textBaseline: TextBaseline.ideographic,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: notificationTitle,
-                                    style: const TextStyle(
-                                      color: AppColors.black,
-                                      textBaseline: TextBaseline.ideographic,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                      child: SizedBox(
+                        width: AppConstants.screenWidth(context) <= 353
+                            ? AppConstants.screenWidth(context) * .64
+                            : AppConstants.screenWidth(context) * .68,
+                        child: Text(
+                          notificationTitle,
+                          style: const TextStyle(
+                            color: AppColors.black,
+                            textBaseline: TextBaseline.ideographic,
                           ),
-                          // Text(notificationTime,
-                          //     softWrap: true,
-                          //     style:
-                          //         // Todo use Appfonts with copyWith
-                          //         AppFonts.medium.copyWith(
-                          //             fontSize: 12,
-                          //             fontWeight: FontWeight.w500)),
-                        ],
+                        ),
                       ),
                     ),
                   ],
