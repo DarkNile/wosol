@@ -72,7 +72,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          fromEmployee?"Enter your phone here" :  "Enter your email here".tr,
+                          fromEmployee?"Enter your phone here".tr :  "Enter your email here".tr,
                           style: AppFonts.medium.copyWith(
                               fontWeight: FontWeight.w400,
                               color: AppColors.darkBlue500Base),

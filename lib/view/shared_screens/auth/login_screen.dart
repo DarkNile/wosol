@@ -97,6 +97,7 @@ class LoginScreen extends StatelessWidget {
                               loginController.checkEmailValidation();
                             },
                             hint: 'Email'.tr,
+                            validateText: 'emailIsntValid'.tr,
                             label: '',
                             fieldValidation: loginController.emailValidation);
                       },
@@ -124,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                             controller: loginController.passwordController,
                             fieldValidation: loginController.passwordValidate,
                             validateText:
-                                'Password should be more than 5 digits',
+                                'Password should be more than 5 digits'.tr,
                             onSubmit: (val) {},
                             label: '',
                             hintText: 'Password'.tr,

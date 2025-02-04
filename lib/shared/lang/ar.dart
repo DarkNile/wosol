@@ -234,5 +234,7 @@ const Map<String, String> ar = {
   "absent": "غياب",
   "No Data Received": "لم يتم استلام البيانات",
   "confirmEndTrip": "هل أنت متأكد أنك تريد إنهاء الرحلة؟",
+  "Password should be more than 5 digits": "يجب أن تكون كلمة المرور أكثر من 5 أرقام",
+  "Password doesn\'t match": "كلمة المرور غير متطابقة",
   "": "",
 };
