@@ -601,9 +601,10 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                       ? "goToMap".tr
                       : null,
           headTitle:
-              '${"rideStartWithin".tr} ${AppConstants.getTimeDifference(startDate)}',
+              '${"rideStartWithin".tr}: ${AppConstants.getRemainingTimeString(startDate, fromTime)}',
           formTime: fromTime,
-          toTime: toTime,
+          toTime: '',
+          // toTime: toTime,
           formPlace: fromPlace,
           isLoading: isStartingTrip,
           toPlace: toPlace,
@@ -614,6 +615,8 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
       },
     );
   }
+
+
 
 // Widget _rideAndTripEndBottomSheet() {
 //   return RideAndTripEndBottomSheet(

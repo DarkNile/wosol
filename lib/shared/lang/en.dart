@@ -201,6 +201,8 @@ const Map<String, String> en = {
   "Start Time": "Start Time",
   "End Time": "End Time",
   "requestUnderReview": "Request Under Review",
+  "requestRejected": "Request Rejected",
+  "requestAccepted": "Request Accepted",
   "goToMap": "View map",
   "startPoint": "Start Point",
   "startPointMsg":
@@ -239,5 +241,10 @@ const Map<String, String> en = {
   "confirmEndTrip": "Are you sure you want to end the trip?",
   "Password should be more than 5 digits": "Password should be more than 5 digits",
   "Password doesn\'t match": "Password doesn\'t match",
+  "call the driver": "Contact with the driver",
+  "h": "h",
+  "m": "m",
+  "s": "s",
+  "Trip has already started": "Trip has already started",
   "": "",
 };

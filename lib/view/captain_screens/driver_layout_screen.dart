@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wosol/view/captain_screens/bottom_nav_bar_captain.dart';
 import 'package:wosol/view/captain_screens/home/driver_home_screen.dart';
 import 'package:wosol/view/employee_screen/employee_home_screen.dart';
@@ -11,6 +13,7 @@ import '../../controllers/captain_controllers/driver_layout_controller.dart';
 import '../../controllers/captain_controllers/home_driver_controller.dart';
 import '../../controllers/shared_controllers/map_controller.dart';
 import '../../shared/constants/constants.dart';
+import '../../shared/constants/style/colors.dart';
 import '../../shared/widgets/captain_widgets/notification_ride_request.dart';
 import '../shared_screens/trip_history/trip_history_screen.dart';
 
@@ -118,6 +121,20 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
             driverLayoutController: driverLayoutController,
           ),
         ],
+      ),
+      floatingActionButtonLocation: AppConstants.userType != 'Employee'? null : FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: AppConstants.userType != 'Employee'? null : Padding(
+        padding: const EdgeInsets.only(bottom: 55),
+        child: FloatingActionButton(
+          onPressed: (){
+            launchUrl(Uri.parse(
+                "https://wa.me/${'+966 53 232 8393'}"));
+          },
+          elevation: 6,
+          // backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.logo.withOpacity(0.8),
+          child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
+        ),
       ),
     );
   }

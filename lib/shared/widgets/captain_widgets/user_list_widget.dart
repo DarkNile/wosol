@@ -42,6 +42,7 @@ class UserListWidget extends StatelessWidget {
                         title: 'Mostafa Abdelrahman',
                         subTitle: '',
                         isChat: false,
+                        // contact: (){},
                         isUserList: true,
                         isCheckbox: false,
                         noSubTitle: true,

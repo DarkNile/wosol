@@ -163,6 +163,40 @@ class AppConstants {
 
     return result.isEmpty ? "0 seconds" : result.trim();
   }
+
+  static String getRemainingTimeString(String tripDate, String tripTime) {
+    // Parse the trip date
+    DateTime parsedDate = DateTime.parse(tripDate);
+
+    // Parse the trip time
+    int hour = int.parse(tripTime.split(':')[0]) % 12 + (tripTime.contains("PM") ? 12 : 0);
+    int minute = int.parse(tripTime.split(':')[1].split(' ')[0]);
+
+    DateTime tripDateTime = DateTime(
+      parsedDate.year,
+      parsedDate.month,
+      parsedDate.day,
+      hour,
+      minute,
+    );
+
+    // Get current time
+    DateTime now = DateTime.now();
+
+    // Calculate the difference
+    Duration difference = tripDateTime.difference(now);
+
+    if (difference.isNegative) {
+      return "Trip has already started".tr;
+    }
+
+    int hours = difference.inHours;
+    int minutes = difference.inMinutes % 60;
+    int seconds = difference.inSeconds % 60;
+
+    return "$hours${'h'.tr} $minutes${'m'.tr} $seconds${'s'.tr}";
+  }
+
 }
 
 extension ResponsiveText on double {

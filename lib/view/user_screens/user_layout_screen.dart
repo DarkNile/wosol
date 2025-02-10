@@ -2,10 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wosol/controllers/user_controllers/user_layout_controller.dart';
+import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/view/shared_screens/main_screens/settings_screen.dart';
 import 'package:wosol/view/shared_screens/notification_screen.dart';
 import 'package:wosol/view/user_screens/home/user_home_screen.dart';
@@ -266,6 +269,20 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
             userLayoutController: userLayoutController,
           ),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 55),
+        child: FloatingActionButton(
+          onPressed: (){
+            launchUrl(Uri.parse(
+                            "https://wa.me/${'+966 53 232 8393'}"));
+          },
+          elevation: 6,
+          // backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.logo.withOpacity(0.8),
+          child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
+        ),
       ),
     );
   }
