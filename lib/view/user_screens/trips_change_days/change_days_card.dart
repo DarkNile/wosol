@@ -65,9 +65,10 @@ class ChangeDaysCardWidget extends StatelessWidget {
               height: 4,
             ),
 
-            (changeDaysModel.requestChange == "1")
+            (changeDaysModel.requestChange != "0")
                 ? Text(
-                    "requestUnderReview".tr,
+              changeDaysModel.requestChange == "1"? "requestUnderReview".tr :
+              changeDaysModel.requestChange == "2"? "requestAccepted".tr : "requestRejected".tr,
                     style: AppFonts.medium.copyWith(color: AppColors.logo),
                   )
                 : Row(

@@ -8,6 +8,7 @@ import 'package:wosol/shared/constants/style/fonts.dart';
 class CustomCaptainListTileWidget extends StatelessWidget {
   final String title;
   final String subTitle;
+  // final Function() contact;
   bool isCheckbox;
   bool isChat;
   bool noSubTitle;
@@ -19,7 +20,9 @@ class CustomCaptainListTileWidget extends StatelessWidget {
       this.noSubTitle = false,
       this.isUserList = false,
       required this.title,
-      required this.subTitle});
+      required this.subTitle,
+      // required this.contact,
+      });
 
   bool _checked = true;
 
@@ -93,18 +96,18 @@ class CustomCaptainListTileWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-          const Spacer(),
-          isChat
-              ? InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                      width: 42, height: 42, 'assets/icons/msg.svg'),
-                )
-              : InkWell(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                      width: 24, height: 24, 'assets/icons/list_mobile.svg'),
-                )
+          // const Spacer(),
+          // isChat
+          //     ? InkWell(
+          //         onTap: contact,
+          //         child: SvgPicture.asset(
+          //             width: 42, height: 42, 'assets/icons/msg.svg'),
+          //       )
+          //     : InkWell(
+          //         onTap: contact,
+          //         child: SvgPicture.asset(
+          //             width: 24, height: 24, 'assets/icons/list_mobile.svg'),
+          //       )
         ]);
   }
 }

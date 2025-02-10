@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wosol/shared/services/network/repositories/map_repository.dart';
 import 'package:wosol/view/captain_screens/driver_layout_screen.dart';
 
@@ -423,6 +424,8 @@ class MapController extends GetxController {
   bool _isConfirmUser = false;
   double bearing = 0;
 
+  bool x = false;
+
   Future<void> getEstimatedTime({
     required LatLng originLatLng,
     required LatLng destinationLatLng,
@@ -436,6 +439,218 @@ class MapController extends GetxController {
     required bool firstTripType,
   }) async {
     HomeDriverController homeDriverController = Get.put(HomeDriverController());
+//     if(!x){
+//       showModalBottomSheet(
+//         context: Get.context!,
+//         isDismissible: false,
+//         enableDrag: false,
+//         backgroundColor: Colors.black.withOpacity(0.3),
+//         builder: (bottomContext) =>
+//             ConfirmPickupBottomSheet(
+//               title: students[currentStudentIndex.value].isStartPoint
+//                   ? 'studentTrip'.tr
+//                   : students[currentStudentIndex.value].userFname,
+//               subTitle: students[currentStudentIndex.value].isStartPoint
+//                   ? 'waitStudentsMsg'.tr
+//                   : students[currentStudentIndex.value].address,
+// //               contact: (){
+// //                 // launchUrl(
+// //                 //     Uri.parse("tel://+966 53 232 8393"));
+// // // todo add the phone number here
+// //                 launchUrl(Uri.parse(
+// //                     "https://wa.me/${'+966 53 232 8393'}"));
+// //               },
+//               firstButtonFunction: () {
+//                 AppConstants.homeDriverRepository
+//                     .sendTripAttendance(
+//                   tripId: tripId,
+//                   userId: students[currentStudentIndex.value].tripUserId,
+//                   isAttended: true,
+//                   isStartPoint:
+//                   students[currentStudentIndex.value].isStartPoint,
+//                 )
+//                     .then((value) async {
+//                   homeDriverController
+//                       .getTrips(Get.context!, containLoading: false)
+//                       .then((v) async {
+//                     if (Navigator.of(bottomContext).canPop()) {
+//                       Navigator.of(bottomContext).pop();
+//                     }
+//                     if (homeDriverController.driverNextRide.isNotEmpty) {
+//                       currentStudents =
+//                           homeDriverController.driverNextRide[0].students;
+//                       if (currentStudents.isNotEmpty) {
+//                         targetLatLng = LatLng(
+//                             double.parse(currentStudents[0].pickupLat),
+//                             double.parse(currentStudents[0].pickupLong));
+//                         currentStudentIndex.value = 0;
+//                         nearbyStudent(
+//                           driverId:
+//                           AppConstants.userRepository.driverData.driverId,
+//                           tripId: tripId,
+//                           userId: students[currentStudentIndex.value]
+//                               .userId,
+//                           tripUserId:
+//                           students[currentStudentIndex.value].tripUserId,
+//                         );
+//                       } else {
+//                         if (firstTripType) {
+//                           targetLatLng = LatLng(
+//                               double.parse(endLat),
+//                               double.parse(endLong));
+//                           currentStudentIndex.value = -1;
+//                         } else {
+//                           showModalBottomSheet(
+//                             context: Get.context!,
+//                             isDismissible: false,
+//                             enableDrag: false,
+//                             builder: (endContext) {
+//                               return RideAndTripEndBottomSheet(
+//                                 headTitle: 'rideEnd'.tr,
+//                                 imagePath: 'assets/images/celebrate.png',
+//                                 headerMsg: '${"congrats".tr} ',
+//                                 subHeaderMsg:
+//                                 "${'rideCompletedSuccessfully'
+//                                     .tr} *Trip id: $tripId",
+//                                 isTrip: true,
+//                                 function: () async {
+//                                   await tripEnd(tripId: tripId);
+//                                   distantTrack = "10000 km";
+//                                   if (positionStream != null) {
+//                                     positionStream!.cancel();
+//                                     positionStream = null;
+//                                   }
+//                                   // isToEnd = false;
+//                                   // _isEndTrip = false;
+//                                   // homeDriverController.getTrips(context);
+//                                 },
+//                               );
+//                             },
+//                           );
+//                         }
+//                       }
+//                     }
+//
+//                     // if (students.length - 1 > currentStudentIndex.value) {
+//                     //   // currentStudentIndex.value++;
+//                     //
+//                     //   targetLatLng = LatLng(
+//                     //     double.parse(
+//                     //         students[currentStudentIndex.value].pickupLat),
+//                     //     double.parse(
+//                     //         students[currentStudentIndex.value].pickupLong),
+//                     //   );
+//                     // } else {
+//                     //   currentStudentIndex.value++;
+//                     //   targetLatLng = LatLng(
+//                     //     double.parse(endLat),
+//                     //     double.parse(endLong),
+//                     //   );
+//                     // }
+//                     update();
+//
+//                     markerIcon = await getBytesFromAsset(
+//                         'assets/images/location_on.png', 70);
+//                     currentIcon = await getBytesFromAsset(
+//                         'assets/images/navigation_arrow.png', 70);
+//
+//                     await getCurrentLocation().then((value) async {
+//                       currentLatLng =
+//                           LatLng(value.latitude, value.longitude);
+//                       await getCurrentTargetPolylinePoints();
+//                       cameraPosition = CameraPosition(
+//                         target: currentLatLng,
+//                         zoom: 12,
+//                       );
+//                       debugPrint("geee estimateddd 2 $tripId");
+//                       getEstimatedTime(
+//                           isEmployee: isEmployee,
+//                           isStudent: isStudent,
+//                           firstTripType: firstTripType,
+//                           originLatLng: currentLatLng,
+//                           destinationLatLng: targetLatLng,
+//                           tripId: tripId,
+//                           students: students,
+//                           endLong: endLong,
+//                           endLat: endLat,
+//                           isRound: isRound);
+//                       debugPrint("live stresaaaam  6$tripId");
+//                       liveLocation(
+//                         isEmployee: isEmployee,
+//                         isStudent: isStudent,
+//                         firstTripType: firstTripType,
+//                         isRound: isRound,
+//                       );
+//                     });
+//                   });
+//                 });
+//               },
+//               secondButtonFunction: () {
+//                 if (Navigator.of(bottomContext).canPop()) {
+//                   Navigator.of(bottomContext).pop();
+//                 }
+//                 AppConstants.homeDriverRepository
+//                     .sendTripAttendance(
+//                     tripId: tripId,
+//                     userId: students[currentStudentIndex.value]
+//                         .tripUserId,
+//                     isAttended: false,
+//                     isStartPoint:
+//                     students[currentStudentIndex.value].isStartPoint)
+//                     .then((value) async {
+//                   if (students.isNotEmpty) {
+//                     currentStudentIndex.value++;
+//                     targetLatLng = LatLng(
+//                       double.parse(
+//                           students[currentStudentIndex.value].pickupLat),
+//                       double.parse(
+//                           students[currentStudentIndex.value].pickupLong),
+//                     );
+//                   } else {
+//                     targetLatLng = LatLng(
+//                       double.parse(endLat),
+//                       double.parse(endLong),
+//                     );
+//                   }
+//                   markerIcon = await getBytesFromAsset(
+//                       'assets/images/location_on.png', 70);
+//                   currentIcon = await getBytesFromAsset(
+//                       'assets/images/navigation_arrow.png', 70);
+//                   await getCurrentLocation().then((value) async {
+//                     currentLatLng =
+//                         LatLng(value.latitude, value.longitude);
+//                     await getCurrentTargetPolylinePoints();
+//                     cameraPosition = CameraPosition(
+//                       target: currentLatLng,
+//                       zoom: 12,
+//                     );
+//                     debugPrint("geee estimateddd 3 $tripId");
+//                     getEstimatedTime(
+//                         isEmployee: isEmployee,
+//                         isStudent: isStudent,
+//                         firstTripType: firstTripType,
+//                         originLatLng: currentLatLng,
+//                         destinationLatLng: targetLatLng,
+//                         tripId: tripId,
+//                         students: students,
+//                         endLong: endLong,
+//                         endLat: endLat,
+//                         isRound: isRound);
+//                     debugPrint("live stresaaaam 5 $tripId");
+//
+//                     liveLocation(
+//                       isEmployee: isEmployee,
+//                       isRound: isRound,
+//                       isStudent: isStudent,
+//                       firstTripType: firstTripType,
+//                     );
+//                   });
+//                 });
+//               },
+//             ),
+//       );
+//       x = true;
+//     }
 
     debugPrint("geetttt estimateddd $tripId");
     final url =
@@ -571,6 +786,13 @@ class MapController extends GetxController {
                     subTitle: students[currentStudentIndex.value].isStartPoint
                         ? 'waitStudentsMsg'.tr
                         : students[currentStudentIndex.value].address,
+//                     contact: (){
+//                       // launchUrl(
+//                       //     Uri.parse("tel://+966 53 232 8393"));
+// // todo add the phone number here
+//                       launchUrl(Uri.parse(
+//                           "https://wa.me/${'+966 53 232 8393'}"));
+//                     },
                     firstButtonFunction: () {
                       AppConstants.homeDriverRepository
                           .sendTripAttendance(

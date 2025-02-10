@@ -93,13 +93,19 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                 : 2,
                                             (indexSubData) => TripCardWidget(
                                               isOldDate: userHomeController
-                                                  .tripsList[index]
-                                                  .subData![indexSubData]
-                                                  .isOldDate ?? false,
+                                                      .tripsList[index]
+                                                      .subData![indexSubData]
+                                                      .isOldDate ??
+                                                  false,
                                               tripId: userHomeController
                                                   .tripsList[index]
                                                   .subData![indexSubData]
                                                   .tripId!,
+                                              // driverPhoneNumber:
+                                              //     userHomeController
+                                              //         .tripsList[index]
+                                              //         .subData![indexSubData]
+                                              //         .driverPhone?? '',
                                               isCancel: userHomeController
                                                       .tripsList[index]
                                                       .subData![indexSubData]
@@ -270,6 +276,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                                         .calendarData[index]
                                                         .subData![indexSubData]
                                                         .calendarId!,
+                                                    // driverPhoneNumber: null,
                                                     isCancel: userHomeController
                                                             .calendarData[index]
                                                             .subData![

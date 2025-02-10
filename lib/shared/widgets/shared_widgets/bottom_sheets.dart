@@ -279,12 +279,14 @@ class ConfirmPickupBottomSheet extends StatelessWidget {
     required this.subTitle,
     required this.firstButtonFunction,
     required this.secondButtonFunction,
+    // required this.contact,
   });
 
   final String title;
   final String subTitle;
   final Function() firstButtonFunction;
   final Function() secondButtonFunction;
+  // final Function() contact;
 
   @override
   Widget build(BuildContext context) {
@@ -305,6 +307,7 @@ class ConfirmPickupBottomSheet extends StatelessWidget {
         title: title,
         subTitle: subTitle,
         isCheckbox: false,
+        // contact: contact,
       ),
     );
   }
@@ -403,6 +406,7 @@ class SelectUsersToPickupBottomSheet extends StatelessWidget {
                 title: titles[index],
                 subTitle: subTitles[index],
                 isChat: false,
+                // contact: (){},
               ),
             ),
           ),

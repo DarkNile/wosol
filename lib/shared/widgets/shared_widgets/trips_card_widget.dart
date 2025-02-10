@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
+import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/buttons.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart';
@@ -24,6 +29,8 @@ class TripCardWidget extends StatelessWidget {
   final bool isOldDate;
   final bool tripIsRunning;
   final String tripId;
+  // final String? driverPhoneNumber;
+
   const TripCardWidget({
     super.key,
     this.withCancel = false,
@@ -41,12 +48,13 @@ class TripCardWidget extends StatelessWidget {
     this.isCancel = true,
     this.tripIsRunning = false,
     required this.tripId,
+    // this.driverPhoneNumber,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomContainerCardWithBorderWidget(
-      height: withCancel && !isOldDate ? (295 + 10 + 7) : (236 + 24 + 10),
+      height: withCancel && !isOldDate ? (296 + 10 + 7) : (254 + 24 + 10 + 30),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
         child: Column(
@@ -66,6 +74,40 @@ class TripCardWidget extends StatelessWidget {
               date: date,
               tripId: tripId,
             )),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.end,
+            //   children: [
+            //     InkWell(
+            //       onTap: () {
+            //         launchUrl(Uri.parse(
+            //             "https://wa.me/${'+966 $driverPhoneNumber'}"));
+            //       },
+            //       child: Container(
+            //         width: 155,
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(6),
+            //           color: AppColors.orange.withOpacity(0.1),
+            //         ),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Text('call the driver'.tr,
+            //                 style: AppFonts.button.copyWith(
+            //                     fontSize: 13, color: AppColors.black800)),
+            //             const SizedBox(
+            //               width: 4,
+            //             ),
+            //             SvgPicture.asset(
+            //                 width: 24, height: 24, 'assets/icons/msg.svg')
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
             if (withCancel)
               Row(
                 children: [
