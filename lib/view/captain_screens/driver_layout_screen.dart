@@ -123,18 +123,22 @@ class _DriverLayoutScreenState extends State<DriverLayoutScreen> {
         ],
       ),
       floatingActionButtonLocation: AppConstants.userType != 'Employee'? null : FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: AppConstants.userType != 'Employee'? null : Padding(
-        padding: const EdgeInsets.only(bottom: 55),
-        child: FloatingActionButton(
-          onPressed: (){
-            launchUrl(Uri.parse(
-                "https://wa.me/${'+966 53 232 8393'}"));
-          },
-          elevation: 6,
-          // backgroundColor: Colors.transparent,
-          backgroundColor: AppColors.logo.withOpacity(0.8),
-          child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
-        ),
+      floatingActionButton: AppConstants.userType != 'Employee'? null : GetBuilder<DriverLayoutController>(
+        builder: (_) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 55),
+            child: FloatingActionButton(
+              onPressed: (){
+                launchUrl(Uri.parse(
+                    "https://wa.me/${driverLayoutController.contactDataModel!.contactWhatsapp}"));
+              },
+              elevation: 6,
+              // backgroundColor: Colors.transparent,
+              backgroundColor: AppColors.logo.withOpacity(0.8),
+              child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
+            ),
+          );
+        }
       ),
     );
   }

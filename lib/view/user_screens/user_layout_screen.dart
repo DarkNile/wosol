@@ -271,18 +271,23 @@ class _UserLayoutScreenState extends State<UserLayoutScreen> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 55),
-        child: FloatingActionButton(
-          onPressed: (){
-            launchUrl(Uri.parse(
-                            "https://wa.me/${'+966 53 232 8393'}"));
-          },
-          elevation: 6,
-          // backgroundColor: Colors.transparent,
-          backgroundColor: AppColors.logo.withOpacity(0.8),
-          child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
-        ),
+      floatingActionButton: GetBuilder<UserLayoutController>(
+        builder: (_) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 55),
+            child: FloatingActionButton(
+              onPressed: (){
+                print("https://wa.me/${userLayoutController.contactDataModel!.contactWhatsapp}");
+                launchUrl(Uri.parse(
+                                "https://wa.me/${userLayoutController.contactDataModel!.contactWhatsapp}"));
+              },
+              elevation: 6,
+              // backgroundColor: Colors.transparent,
+              backgroundColor: AppColors.logo.withOpacity(0.8),
+              child: SvgPicture.asset('assets/icons/whatsapp.svg', fit: BoxFit.fill, width: 50, height: 50,),
+            ),
+          );
+        }
       ),
     );
   }
