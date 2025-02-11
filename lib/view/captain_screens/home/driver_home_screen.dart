@@ -254,8 +254,9 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
                                       headTitle: 'upcomingRide'.tr,
                                       formTime: homeDriverController
                                           .driverTrips[index].tripTime,
-                                      toTime: homeDriverController
-                                          .driverTrips[index].tripTime,
+                                      // toTime: homeDriverController
+                                      //     .driverTrips[index].tripTime,
+                                          toTime: '',
                                       formPlace: homeDriverController
                                           .driverTrips[index].from,
                                       toPlace: homeDriverController
