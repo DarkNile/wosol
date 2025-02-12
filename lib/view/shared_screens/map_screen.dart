@@ -45,17 +45,20 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    if(widget.students.isNotEmpty){
-      for (var student in widget.students) {
-        if(student.attendance == '0'){
-          mapController.leftStudents.add(student);
-        } else if(student.attendance == '1'){
-          mapController.confirmedStudents.add(student);
-        } else{
-          mapController.canceledStudents.add(student);
-        }
-      }
+    if(AppConstants.userType == 'Driver'){
+      mapController.getTripDetailsApi(tripId: widget.tripId!);
     }
+    // if(widget.students.isNotEmpty){
+    //   for (var student in widget.students) {
+    //     if(student.attendance == '0'){
+    //       mapController.leftStudents.add(student);
+    //     } else if(student.attendance == '1'){
+    //       mapController.confirmedStudents.add(student);
+    //     } else{
+    //       mapController.canceledStudents.add(student);
+    //     }
+    //   }
+    // }
     print(mapController.confirmedStudents.length);
     print(mapController.leftStudents.length);
     print(mapController.canceledStudents.length);
@@ -354,7 +357,7 @@ class _MapScreenState extends State<MapScreen> {
                                                           width: 8,
                                                         ),
                                                         Text(
-                                                          '${mapController.confirmedStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          '${mapController.confirmedStudents[index].userFname} ${mapController.confirmedStudents[index].userLname}',
                                                           style: AppFonts.header,
                                                         ),
                                                       ],
@@ -468,7 +471,7 @@ class _MapScreenState extends State<MapScreen> {
                                                           width: 8,
                                                         ),
                                                         Text(
-                                                          '${mapController.canceledStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          '${mapController.canceledStudents[index].userFname} ${mapController.canceledStudents[index].userLname}',
                                                           style: AppFonts.header,
                                                         ),
                                                       ],
@@ -580,7 +583,7 @@ class _MapScreenState extends State<MapScreen> {
                                                           width: 8,
                                                         ),
                                                         Text(
-                                                          '${mapController.leftStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          '${mapController.leftStudents[index].userFname} ${mapController.leftStudents[index].userLname}',
                                                           style: AppFonts.header,
                                                         ),
                                                       ],
