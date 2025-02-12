@@ -246,5 +246,6 @@ const Map<String, String> en = {
   "m": "m",
   "s": "s",
   "Trip has already started": "Trip has already started",
+  "left": "Left",
   "": "",
 };

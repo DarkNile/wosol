@@ -41,6 +41,10 @@ class MapController extends GetxController {
   RxBool enableLocation = true.obs;
   bool isToEnd = false;
 
+  List<Student> canceledStudents = [];
+  List<Student> confirmedStudents = [];
+  List<Student> leftStudents = [];
+
   // Timer? timer;
 
   @override
@@ -803,6 +807,9 @@ class MapController extends GetxController {
                         students[currentStudentIndex.value].isStartPoint,
                       )
                           .then((value) async {
+                            leftStudents.remove(students[currentStudentIndex.value]);
+                            confirmedStudents.add(students[currentStudentIndex.value]);
+                            update();
                         homeDriverController
                             .getTrips(Get.context!, containLoading: false)
                             .then((v) async {
@@ -931,7 +938,11 @@ class MapController extends GetxController {
                           isStartPoint:
                           students[currentStudentIndex.value].isStartPoint)
                           .then((value) async {
+
                         if (students.isNotEmpty) {
+                          leftStudents.remove(students[currentStudentIndex.value]);
+                          canceledStudents.add(students[currentStudentIndex.value]);
+                          update();
                           currentStudentIndex.value++;
                           targetLatLng = LatLng(
                             double.parse(

@@ -403,6 +403,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         cancelReason: 'سبب الالغاء',
                         tripUserId: tripUserId!,
                         tripId: tripId!,
+                        student: null
                       );
                     } else {
                       // Un Cancel
@@ -412,6 +413,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         cancel: '0',
                         tripUserId: tripUserId!,
                         tripId: tripId!,
+                        student: null,
                       );
                     }
                   } else {

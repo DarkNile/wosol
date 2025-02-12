@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/trip_list_model.dart';
 import 'package:wosol/models/trip_model.dart';
 
 import '../../models/calendar_model.dart';
@@ -10,6 +11,7 @@ import '../../shared/constants/constants.dart';
 import '../../shared/services/network/dio_helper.dart';
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
+import '../shared_controllers/map_controller.dart';
 
 class UserHomeController extends GetxController {
   List<CalendarData> calendarData = [];
@@ -105,6 +107,7 @@ class UserHomeController extends GetxController {
     required String userId,
     required String tripId,
     required String cancel,
+    required Student? student,
     String? cancelReason,
   }) async {
     tripCancelLoading.value = true;
@@ -121,12 +124,26 @@ class UserHomeController extends GetxController {
         tripCancelLoading.value = false;
         Get.back();
         getTrips();
+        final MapController mapController = Get.find();
         if (context.mounted) {
-          !(cancel == "0")
-              ? defaultSuccessSnackBar(
-                  context: context, message: 'Trip Canceled'.tr)
-              : defaultSuccessSnackBar(
-                  context: context, message: 'Trip Un Canceled'.tr);
+          if(cancel != "0"){
+            if(student != null){
+              mapController.leftStudents.remove(student);
+              mapController.canceledStudents.add(student);
+              mapController.update();
+            }
+            defaultSuccessSnackBar(
+                context: context, message: 'Trip Canceled'.tr);
+          } else{
+            if(student != null){
+              mapController.canceledStudents.remove(student);
+              mapController.leftStudents.add(student);
+              mapController.update();
+            }
+            defaultSuccessSnackBar(
+                context: context, message: 'Trip Un Canceled'.tr);
+          }
+
         }
       });
     } catch (e) {
