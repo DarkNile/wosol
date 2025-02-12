@@ -422,6 +422,48 @@ class MapController extends GetxController {
     }
   }
 
+  Future<void> getTripDetailsApi({
+    required String tripId,
+  }) async {
+    try {
+      Response response = await DioHelper.postData(
+        url: 'driver/trips/trip_by_id',
+        data: {
+          "trip_id": tripId,
+          "driver_id": AppConstants.userRepository.driverData.driverId,
+        },
+      );
+      if (response.statusCode == 200) {
+        print('details');
+        List<Trip> trip = [];
+        trip = tripFromJson(response.data);
+
+        if(trip[0].students.isNotEmpty){
+          for (var student in trip[0].students) {
+            if(student.attendance == '0'){
+              leftStudents.add(student);
+            } else if(student.attendance == '1'){
+              confirmedStudents.add(student);
+            } else{
+              canceledStudents.add(student);
+            }
+          }
+        }
+        print(response.data);
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
+    }
+  }
+
   String timeTrack = '';
   String distantTrack = '';
   bool _isEndTrip = false;
