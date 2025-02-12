@@ -243,5 +243,6 @@ const Map<String, String> ar = {
   "m": "د",
   "s": "ث",
   "Trip has already started": "لقد بدأت الرحلة بالفعل",
+  "left": "متبقي",
   "": "",
 };

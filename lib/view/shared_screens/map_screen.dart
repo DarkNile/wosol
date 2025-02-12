@@ -41,9 +41,24 @@ class _MapScreenState extends State<MapScreen> {
       Get.put(HomeDriverController());
   final UserHomeController userHomeController = Get.put(UserHomeController());
   EmployeeController employeeController = Get.put(EmployeeController());
+
   @override
   void initState() {
     super.initState();
+    if(widget.students.isNotEmpty){
+      for (var student in widget.students) {
+        if(student.attendance == '0'){
+          mapController.leftStudents.add(student);
+        } else if(student.attendance == '1'){
+          mapController.confirmedStudents.add(student);
+        } else{
+          mapController.canceledStudents.add(student);
+        }
+      }
+    }
+    print(mapController.confirmedStudents.length);
+    print(mapController.leftStudents.length);
+    print(mapController.canceledStudents.length);
     KeepScreenOn.turnOn();
   }
 
@@ -306,109 +321,346 @@ class _MapScreenState extends State<MapScreen> {
                                 builder: (context) {
                                   return CustomBottomSheetWidget(
                                     height: Get.height * 0.7,
-                                    headTitle: 'students'.tr,
+                                    headTitle: 'manageTrip'.tr,
                                     withCloseIcon: true,
-                                    child: ListView.separated(
+                                    child: SingleChildScrollView(
                                       physics: const PageScrollPhysics(),
-                                      padding: AppConstants.edge(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 20)),
-                                      itemBuilder: (context, index) => Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Expanded(
-                                              flex: 3,
-                                              child: Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.person,
-                                                    color: AppColors.logo,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 8,
-                                                  ),
-                                                  Text(
-                                                    '${widget.students[index].userFname} ${widget.students[index].userLname}',
-                                                    style: AppFonts.header,
-                                                  ),
-                                                ],
-                                              )),
-                                          Expanded(
-                                            flex: 2,
-                                            child: DefaultRowButton(
-                                              text: widget.students[index]
-                                                          .cancelRequest ==
-                                                      '0'
-                                                  ? "cancelTrip".tr
-                                                  : "unCancelTrip".tr,
-                                              height: 30,
-                                              border: widget.students[index]
-                                                          .cancelRequest ==
-                                                      '0'
-                                                  ? Border.all(
+                                          Text(
+                                            'confirmed'.tr,
+                                            style: AppFonts.header,
+                                          ),
+                                          ListView.separated(
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            padding: AppConstants.edge(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 10, vertical: 20)),
+                                            itemBuilder: (context, index) => Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                    flex: 3,
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.person,
+                                                          color: AppColors.logo,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Text(
+                                                          '${mapController.confirmedStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          style: AppFonts.header,
+                                                        ),
+                                                      ],
+                                                    )),
+                                                // Expanded(
+                                                //   flex: 2,
+                                                //   child: DefaultRowButton(
+                                                //     text: mapController.confirmedStudents[index]
+                                                //                 .cancelRequest ==
+                                                //             '0'
+                                                //         ? "cancelTrip".tr
+                                                //         : "unCancelTrip".tr,
+                                                //     height: 30,
+                                                //     border: mapController.confirmedStudents[index]
+                                                //                 .cancelRequest ==
+                                                //             '0'
+                                                //         ? Border.all(
+                                                //             color: AppColors.error600,
+                                                //           )
+                                                //         : null,
+                                                //     color: mapController.confirmedStudents[index]
+                                                //                 .cancelRequest ==
+                                                //             '0'
+                                                //         ? AppColors.white
+                                                //         : AppColors.error600,
+                                                //     function: () async {
+                                                //       if (mapController.confirmedStudents[index]
+                                                //               .cancelRequest ==
+                                                //           '0') {
+                                                //         mapController.confirmedStudents[index]
+                                                //             .cancelRequest = '1';
+                                                //         await userHomeController.tripCancelAPI(
+                                                //           context: context,
+                                                //           userId: widget
+                                                //               .students[index].userId,
+                                                //           cancel: '1',
+                                                //           cancelReason: 'سبب الالغاء',
+                                                //           tripUserId: widget
+                                                //               .students[index].tripUserId,
+                                                //           tripId: widget.tripId!,
+                                                //         );
+                                                //       } else {
+                                                //         mapController.confirmedStudents[index]
+                                                //             .cancelRequest = '0';
+                                                //         await userHomeController.tripCancelAPI(
+                                                //           context: context,
+                                                //           userId: widget
+                                                //               .students[index].userId,
+                                                //           cancel: '0',
+                                                //           tripUserId: widget
+                                                //               .students[index].tripUserId,
+                                                //           tripId: widget.tripId!,
+                                                //         );
+                                                //       }
+                                                //     },
+                                                //     textColor: mapController.confirmedStudents[index]
+                                                //                 .cancelRequest ==
+                                                //             '0'
+                                                //         ? AppColors.error600
+                                                //         : AppColors.white,
+                                                //     borderRadius: 8,
+                                                //     svgPic: mapController.confirmedStudents[index]
+                                                //                 .cancelRequest ==
+                                                //             '0'
+                                                //         ? 'assets/icons/close_red.svg'
+                                                //         : 'assets/icons/close_white.svg',
+                                                //   ),
+                                                // )
+                                              ],
+                                            ),
+                                            separatorBuilder: (context, index) =>
+                                                const Padding(
+                                              padding:
+                                                  EdgeInsets.symmetric(vertical: 10),
+                                              child: Divider(
+                                                  height: 1,
+                                                  color: AppColors.darkBlue100),
+                                            ),
+                                            itemCount: mapController.confirmedStudents.length,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                                            child: Divider(
+                                              height: 1,
+                                              color: AppColors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            'canceled'.tr,
+                                            style: AppFonts.header,
+                                          ),
+                                          ListView.separated(
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            padding: AppConstants.edge(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 10, vertical: 20)),
+                                            itemBuilder: (context, index) => Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                    flex: 3,
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.person,
+                                                          color: AppColors.logo,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Text(
+                                                          '${mapController.canceledStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          style: AppFonts.header,
+                                                        ),
+                                                      ],
+                                                    )),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: DefaultRowButton(
+                                                    text: mapController.canceledStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? "cancelTrip".tr
+                                                        : "unCancelTrip".tr,
+                                                    height: 30,
+                                                    border: mapController.canceledStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? Border.all(
                                                       color: AppColors.error600,
                                                     )
-                                                  : null,
-                                              color: widget.students[index]
-                                                          .cancelRequest ==
-                                                      '0'
-                                                  ? AppColors.white
-                                                  : AppColors.error600,
-                                              function: () async {
-                                                if (widget.students[index]
+                                                        : null,
+                                                    color: mapController.canceledStudents[index]
                                                         .cancelRequest ==
-                                                    '0') {
-                                                  widget.students[index]
-                                                      .cancelRequest = '1';
-                                                  await userHomeController.tripCancelAPI(
-                                                    context: context,
-                                                    userId: widget
-                                                        .students[index].userId,
-                                                    cancel: '1',
-                                                    cancelReason: 'سبب الالغاء',
-                                                    tripUserId: widget
-                                                        .students[index].tripUserId,
-                                                    tripId: widget.tripId!,
-                                                  );
-                                                } else {
-                                                  widget.students[index]
-                                                      .cancelRequest = '0';
-                                                  await userHomeController.tripCancelAPI(
-                                                    context: context,
-                                                    userId: widget
-                                                        .students[index].userId,
-                                                    cancel: '0',
-                                                    tripUserId: widget
-                                                        .students[index].tripUserId,
-                                                    tripId: widget.tripId!,
-                                                  );
-                                                }
-                                              },
-                                              textColor: widget.students[index]
+                                                        '0'
+                                                        ? AppColors.white
+                                                        : AppColors.error600,
+                                                    function: () async {
+                                                      if (mapController.canceledStudents[index]
                                                           .cancelRequest ==
-                                                      '0'
-                                                  ? AppColors.error600
-                                                  : AppColors.white,
-                                              borderRadius: 8,
-                                              svgPic: widget.students[index]
-                                                          .cancelRequest ==
-                                                      '0'
-                                                  ? 'assets/icons/close_red.svg'
-                                                  : 'assets/icons/close_white.svg',
+                                                          '0') {
+                                                        mapController.canceledStudents[index]
+                                                            .cancelRequest = '1';
+                                                        await userHomeController.tripCancelAPI(
+                                                          context: context,
+                                                          userId: mapController.canceledStudents[index].userId,
+                                                          cancel: '1',
+                                                          cancelReason: 'سبب الالغاء',
+                                                          tripUserId: mapController.canceledStudents[index].tripUserId,
+                                                          tripId: widget.tripId!,
+                                                          student: mapController.canceledStudents[index],
+                                                        );
+                                                      } else {
+                                                        mapController.canceledStudents[index]
+                                                            .cancelRequest = '0';
+                                                        await userHomeController.tripCancelAPI(
+                                                          context: context,
+                                                          userId: mapController.canceledStudents[index].userId,
+                                                          cancel: '0',
+                                                          tripUserId: mapController.canceledStudents[index].tripUserId,
+                                                          tripId: widget.tripId!,
+                                                          student: mapController.canceledStudents[index],
+                                                        );
+                                                      }
+                                                    },
+                                                    textColor: mapController.canceledStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? AppColors.error600
+                                                        : AppColors.white,
+                                                    borderRadius: 8,
+                                                    svgPic: mapController.canceledStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? 'assets/icons/close_red.svg'
+                                                        : 'assets/icons/close_white.svg',
+                                                  ),
+                                                )
+                                              ],
                                             ),
-                                          )
+                                            separatorBuilder: (context, index) =>
+                                            const Padding(
+                                              padding:
+                                              EdgeInsets.symmetric(vertical: 10),
+                                              child: Divider(
+                                                  height: 1,
+                                                  color: AppColors.darkBlue100),
+                                            ),
+                                            itemCount: mapController.canceledStudents.length,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                                            child: Divider(
+                                              height: 1,
+                                              color: AppColors.black,
+                                            ),
+                                          ),
+                                          Text(
+                                            'left'.tr,
+                                            style: AppFonts.header,
+                                          ),
+                                          ListView.separated(
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            padding: AppConstants.edge(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 10, vertical: 20)),
+                                            itemBuilder: (context, index) => Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                    flex: 3,
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.person,
+                                                          color: AppColors.logo,
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Text(
+                                                          '${mapController.leftStudents[index].userFname} ${widget.students[index].userLname}',
+                                                          style: AppFonts.header,
+                                                        ),
+                                                      ],
+                                                    )),
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: DefaultRowButton(
+                                                    text: mapController.leftStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? "cancelTrip".tr
+                                                        : "unCancelTrip".tr,
+                                                    height: 30,
+                                                    border: mapController.leftStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? Border.all(
+                                                      color: AppColors.error600,
+                                                    )
+                                                        : null,
+                                                    color: mapController.leftStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? AppColors.white
+                                                        : AppColors.error600,
+                                                    function: () async {
+                                                      if (mapController.leftStudents[index]
+                                                          .cancelRequest ==
+                                                          '0') {
+                                                        mapController.leftStudents[index]
+                                                            .cancelRequest = '1';
+                                                        await userHomeController.tripCancelAPI(
+                                                          context: context,
+                                                          userId: mapController.leftStudents[index].userId,
+                                                          cancel: '1',
+                                                          cancelReason: 'سبب الالغاء',
+                                                          tripUserId: mapController.leftStudents[index].tripUserId,
+                                                          tripId: widget.tripId!,
+                                                          student: mapController.leftStudents[index],
+                                                        );
+                                                      } else {
+                                                        mapController.leftStudents[index]
+                                                            .cancelRequest = '0';
+                                                        await userHomeController.tripCancelAPI(
+                                                          context: context,
+                                                          userId: mapController.leftStudents[index].userId,
+                                                          cancel: '0',
+                                                          tripUserId: mapController.leftStudents[index].tripUserId,
+                                                          tripId: widget.tripId!,
+                                                          student: mapController.leftStudents[index],
+                                                        );
+                                                      }
+                                                    },
+                                                    textColor: mapController.leftStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? AppColors.error600
+                                                        : AppColors.white,
+                                                    borderRadius: 8,
+                                                    svgPic: mapController.leftStudents[index]
+                                                        .cancelRequest ==
+                                                        '0'
+                                                        ? 'assets/icons/close_red.svg'
+                                                        : 'assets/icons/close_white.svg',
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            separatorBuilder: (context, index) =>
+                                            const Padding(
+                                              padding:
+                                              EdgeInsets.symmetric(vertical: 10),
+                                              child: Divider(
+                                                  height: 1,
+                                                  color: AppColors.darkBlue100),
+                                            ),
+                                            itemCount: mapController.leftStudents.length,
+                                          ),
                                         ],
                                       ),
-                                      separatorBuilder: (context, index) =>
-                                          const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        child: Divider(
-                                            height: 1,
-                                            color: AppColors.darkBlue100),
-                                      ),
-                                      itemCount: widget.students.length,
                                     ),
                                   );
                                 });
