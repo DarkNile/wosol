@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
+import 'package:wosol/models/trip_list_model.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/captain_widgets/custom_captain_list_tile.dart';
 
 class UserListWidget extends StatelessWidget {
   final bool hasSubTitle;
+  final bool fromManage;
+  final bool isCanceled;
+  final List<Student> students;
   final int length;
-  const UserListWidget({super.key, this.hasSubTitle = true, this.length = 6});
+  const UserListWidget({super.key, this.isCanceled = false, this.hasSubTitle = true, this.fromManage = false, this.length = 6, required this.students});
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +32,18 @@ class UserListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _CustomUserHeader(
-                title: '${"confirmed".tr} (11 ${"users".tr})',
+                title: '${isCanceled?'canceled'.tr : "confirmed".tr} (${students.length} ${"users".tr})',
                 subTitle: '${"from".tr} 14 ${"users".tr}',
                 hasSubTitle: hasSubTitle),
             const SizedBox(
               height: 6,
             ),
             ...List.generate(
-                length,
+                fromManage? length : students.length,
                 (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       child: CustomCaptainListTileWidget(
-                        title: 'Mostafa Abdelrahman',
+                        title: '${students[index].userFname} ${students[index].userLname}',
                         subTitle: '',
                         isChat: false,
                         // contact: (){},

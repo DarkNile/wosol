@@ -11,6 +11,7 @@ import 'package:wosol/view/captain_screens/routes/map_screen.dart';
 import 'package:wosol/view/captain_screens/trip_details/captain_trip_details_screen.dart';
 import 'package:wosol/view/user_screens/trip_details/user_trip_details_screen.dart';
 
+import '../../../models/trip_list_model.dart';
 import '../../../shared/widgets/shared_widgets/custom_header.dart';
 import '../../../shared/widgets/shared_widgets/trip_history_card.dart';
 
@@ -66,8 +67,9 @@ class TripHistoryScreen extends StatelessWidget {
                       child: const CircularProgressIndicator()),
                 );
               } // add or to user
-              return tripHistoryDriverController.tripsList.isEmpty ||
-                      tripHistoryStudentController.tripsList.isEmpty
+              return (tripHistoryDriverController.tripsList.isEmpty && (AppConstants.userType == 'Driver') ||
+                  (tripHistoryDriverController.employeeTripsList.isEmpty && AppConstants.userType == 'Employee')) ||
+                      (tripHistoryStudentController.tripsList.isEmpty && AppConstants.userType == 'Student')
                   ? Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: Get.height / 3),
@@ -79,7 +81,7 @@ class TripHistoryScreen extends StatelessWidget {
                     )
                   : Expanded(
                       child: ListView.separated(
-                        physics: const PageScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.only(
                           top: 14,
                           left: 16,
@@ -118,7 +120,7 @@ class TripHistoryScreen extends StatelessWidget {
 
                           String fromCity = AppConstants.userType == 'Driver'
                               ? tripHistoryDriverController
-                                  .tripsList[index].from!
+                                  .tripsList[index].from??''
                               : AppConstants.userType == "Employee"
                                   ? tripHistoryDriverController
                                       .employeeTripsList[index].from
@@ -138,10 +140,28 @@ class TripHistoryScreen extends StatelessWidget {
                                 : 'rideDetails'.tr,
                             onTap: () {
                               if (AppConstants.userType == 'Driver') {
+                                List<Student> canceledStudents = [];
+                                List<Student> confirmedStudents = [];
+                                if(tripHistoryDriverController
+                                    .tripsList[index].students != null){
+                                  if(tripHistoryDriverController
+                                      .tripsList[index].students!.isNotEmpty){
+                                    for (var student in tripHistoryDriverController
+                                        .tripsList[index].students!) {
+                                      if(student.attendance == '1'){
+                                        confirmedStudents.add(student);
+                                      } else{
+                                        canceledStudents.add(student);
+                                      }
+                                    }
+                                  }
+                                }
                                 Get.to(() => CaptainTripDetailsScreen(
                                       dateTime: '$date  - $time',
                                       from: fromCity,
                                       to: toCity,
+                                  confirmedStudents: confirmedStudents,
+                                  canceledStudents: canceledStudents,
                                     ));
                               } else if (AppConstants.userType == 'Student') {
                                 Get.to(() => UserTripDetailsScreen(
@@ -175,9 +195,11 @@ class TripHistoryScreen extends StatelessWidget {
                         separatorBuilder: (context, index) => const SizedBox(
                           height: 12,
                         ),
-                        itemCount: AppConstants.userType == 'Driver' ||
-                                AppConstants.userType == "Employee"
-                            ? tripHistoryDriverController.tripsList.length
+                        itemCount: AppConstants.userType == 'Driver'
+                            ? tripHistoryDriverController.tripsList.length :
+                        AppConstants.userType == "Employee"?
+                        tripHistoryDriverController
+                            .employeeTripsList.length
                             : tripHistoryStudentController.tripsList.length,
                       ),
                     );
