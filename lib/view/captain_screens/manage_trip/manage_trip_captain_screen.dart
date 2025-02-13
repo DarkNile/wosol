@@ -21,7 +21,7 @@ class ManageTripCaptainScreen extends StatelessWidget {
           child: ListView.separated(
               itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(top: index == 0 ? 10 : 0),
-                    child: UserListWidget(length: index == 1 ? 1 : 3),
+                    child: UserListWidget(length: index == 1 ? 1 : 3, fromManage: true, students: const [],),
                   ),
               separatorBuilder: (context, index) => const SizedBox(
                     height: 10,

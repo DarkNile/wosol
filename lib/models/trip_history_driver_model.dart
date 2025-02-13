@@ -1,3 +1,5 @@
+import 'package:wosol/models/trip_list_model.dart';
+
 class TripHistoryDriverModel {
   String? tripId;
   String? tripType;
@@ -17,6 +19,7 @@ class TripHistoryDriverModel {
   String? fromLng;
   String? toLat;
   String? toLng;
+  List<Student>? students;
 
   TripHistoryDriverModel({
     this.tripId,
@@ -37,6 +40,8 @@ class TripHistoryDriverModel {
     this.fromLng,
     this.toLat,
     this.toLng,
+    this.students,
+
   });
 
   //"from_lat": "21.624312907539974",
@@ -63,6 +68,8 @@ class TripHistoryDriverModel {
     fromLng = json['from_long'];
     toLat = json['to_lat'];
     toLng = json['to_long'];
+    students = json["students"] != null? List<Student>.from(
+        json["students"].map((x) => Student.fromJson(x))) : [];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +88,7 @@ class TripHistoryDriverModel {
     data['trip_status'] = tripStatus;
     data['trip_start'] = tripStart;
     data['trip_end'] = tripEnd;
+    data['students'] = List<dynamic>.from(students!.map((x) => x.toJson()));
     return data;
   }
 }

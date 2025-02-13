@@ -40,9 +40,11 @@ class TripHistoryDriverController extends GetxController {
         log("error ${response.data['data']['error']}");
         throw (response.data['data']['error']);
       }
+      update();
     } on DioException catch (e) {
       isGettingTrips.value = false;
       log("error ${e.response!.data['data']['error']}");
+      update();
       throw e.response!.data['data']['error'];
     }
   }
