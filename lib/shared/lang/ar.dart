@@ -244,5 +244,7 @@ const Map<String, String> ar = {
   "s": "ث",
   "Trip has already started": "لقد بدأت الرحلة بالفعل",
   "left": "متبقي",
+  "Groups": "المجموعات",
+  "There are no groups currently.": "لا يوجد مجموعات حاليا",
   "": "",
 };

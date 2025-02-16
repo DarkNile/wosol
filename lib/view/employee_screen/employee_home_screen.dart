@@ -216,12 +216,12 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
       builder: (context) => Obx(() {
         return CustomBottomSheetWidget(
           height: AppConstants.screenHeight(context) * .6,
-          headTitle: "Groups",
+          headTitle: "Groups".tr,
           child: employeeController.isGettingGroups.value
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.separated(
+              : ( employeeController.groups.isNotEmpty? ListView.separated(
                   padding: const EdgeInsets.only(top: 16),
                   itemBuilder: (context, index) => TextButton(
                         child: Text(
@@ -272,7 +272,13 @@ class _EmployeeHomeScreenState extends State<EmployeeHomeScreen> {
                   separatorBuilder: (context, index) => const SizedBox(
                         height: 16,
                       ),
-                  itemCount: employeeController.groups.length),
+                  itemCount: employeeController.groups.length)
+          : Center(
+            child: Text(
+              'There are no groups currently.'.tr,
+              style: AppFonts.button,
+            ),
+          )),
         );
       }),
     );
