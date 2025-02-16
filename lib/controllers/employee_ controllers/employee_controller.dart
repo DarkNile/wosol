@@ -69,7 +69,16 @@ class EmployeeController extends GetxController {
       )
           .then((response) {
         isGettingGroups.value = false;
-        groups = GroupsList.fromJson(response.data).data;
+        if(response.data['data'] != null) {
+          groups = GroupsList.fromJson(response.data).data;
+        } else {
+          if (context.mounted) {
+            defaultSuccessSnackBar(
+              context: context,
+              message: 'There are no groups currently.'.tr,
+            );
+          }
+        }
         update();
       });
     } catch (e) {

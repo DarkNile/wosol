@@ -247,5 +247,7 @@ const Map<String, String> en = {
   "s": "s",
   "Trip has already started": "Trip has already started",
   "left": "Left",
+  "Groups": "Groups",
+  "There are no groups currently.": "There are no groups currently.",
   "": "",
 };
