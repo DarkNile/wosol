@@ -20,7 +20,7 @@ class RatingBarWidget extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: RatingBar.builder(
-        initialRating: 5,
+        initialRating: 0,
         minRating: 1,
         itemSize: itemSize ?? 40,
         direction: Axis.horizontal,

@@ -172,6 +172,21 @@ class TripHistoryScreen extends StatelessWidget {
                                           .tripsList[index]
                                           .subData![0]
                                           .driverName!,
+                                  userId: tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0].userId!,
+                                  tripId: tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0].tripId!,
+                                  tripUserId: tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0].tripUserId!,
+                                  tripType: tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0].userType!,
+                                  isRated: tripHistoryStudentController
+                                      .tripsList[index]
+                                      .subData![0].isRated!,
                                     ));
                               } else {
                                 Get.to(

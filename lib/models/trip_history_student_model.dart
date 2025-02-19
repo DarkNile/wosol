@@ -34,6 +34,7 @@ class TripHistoryStudentModel {
 class SubData {
   String? tripId;
   String? userId;
+  String? tripUserId;
   String? userType;
   String? tourismType;
   String? userFname;
@@ -59,10 +60,12 @@ class SubData {
   String? tripEnd;
   String? carModel;
   String? carSeats;
+  bool? isRated;
 
   SubData(
       {this.tripId,
       this.userId,
+      this.tripUserId,
       this.userType,
       this.tourismType,
       this.userFname,
@@ -87,11 +90,14 @@ class SubData {
       this.tripStart,
       this.tripEnd,
       this.carModel,
-      this.carSeats});
+      this.carSeats,
+        this.isRated,
+      });
 
   SubData.fromJson(Map<String, dynamic> json) {
     tripId = json['trip_id'];
     userId = json['user_id'];
+    tripUserId = json['trip_user_id'];
     userType = json['user_type'];
     tourismType = json['tourism_type'];
     userFname = json['user_fname'];
@@ -117,12 +123,14 @@ class SubData {
     tripEnd = json['trip_end'];
     carModel = json['car_model'];
     carSeats = json['car_seats'];
+    isRated = json['is_rated'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['trip_id'] = tripId;
     data['user_id'] = userId;
+    data['trip_user_id'] = tripUserId;
     data['user_type'] = userType;
     data['tourism_type'] = tourismType;
     data['user_fname'] = userFname;
@@ -148,6 +156,7 @@ class SubData {
     data['trip_end'] = tripEnd;
     data['car_model'] = carModel;
     data['car_seats'] = carSeats;
+    data['is_rated'] = isRated;
     return data;
   }
 }

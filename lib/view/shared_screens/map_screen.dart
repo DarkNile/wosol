@@ -15,8 +15,10 @@ import '../../controllers/employee_ controllers/employee_controller.dart';
 import '../../models/trip_list_model.dart';
 import '../../shared/constants/constants.dart';
 import '../../shared/constants/style/colors.dart';
+import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import '../../shared/widgets/shared_widgets/buttons.dart';
 import '../../shared/widgets/shared_widgets/custom_bottom_sheet_widget.dart';
+import '../../shared/widgets/shared_widgets/custom_check_tile.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({
@@ -26,6 +28,7 @@ class MapScreen extends StatefulWidget {
     this.isRound = false,
     this.isTraddy = false,
   });
+
   final List<Student> students;
   final String? tripId;
   final bool isRound;
@@ -45,7 +48,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     super.initState();
-    if(AppConstants.userType == 'Driver'){
+    if (AppConstants.userType == 'Driver') {
       mapController.getTripDetailsApi(tripId: widget.tripId!);
     }
     // if(widget.students.isNotEmpty){
@@ -68,9 +71,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void dispose() {
     super.dispose();
-    mapController.googleMapController =
-        Completer<GoogleMapController>();
-    if(mapController.positionStream != null) {
+    mapController.googleMapController = Completer<GoogleMapController>();
+    if (mapController.positionStream != null) {
       mapController.positionStream!.cancel();
       mapController.positionStream = null;
     }
@@ -127,12 +129,12 @@ class _MapScreenState extends State<MapScreen> {
                     //   icon:
                     //   BitmapDescriptor.fromBytes(mapController.markerIcon),
                     // ),
-                    if(mapController.startIcon != null)
+                    if (mapController.startIcon != null)
                       Marker(
                         markerId: const MarkerId('start'),
                         position: mapController.startLatLng,
-                        icon:
-                        BitmapDescriptor.fromBytes(mapController.startIcon!),
+                        icon: BitmapDescriptor.fromBytes(
+                            mapController.startIcon!),
                       ),
                     Marker(
                       markerId: const MarkerId('target'),
@@ -167,7 +169,7 @@ class _MapScreenState extends State<MapScreen> {
                     //   ),
                   },
                   onMapCreated: (GoogleMapController controller) {
-                    if(!mapController.googleMapController.isCompleted) {
+                    if (!mapController.googleMapController.isCompleted) {
                       mapController.googleMapController.complete(controller);
                     }
                   },
@@ -175,9 +177,14 @@ class _MapScreenState extends State<MapScreen> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    padding: const EdgeInsets.only(top: 20),
-                      onPressed: (){Get.back();},
-                      icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppColors.black,)),
+                      padding: const EdgeInsets.only(top: 20),
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: AppColors.black,
+                      )),
                 ),
                 if (AppConstants.userType == 'Driver')
                   Obx(
@@ -214,101 +221,108 @@ class _MapScreenState extends State<MapScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          if(!widget.isTraddy)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: const Offset(0, 2),
-                                    spreadRadius: 3,
-                                    color: AppColors.black.withOpacity(0.10),
-                                  ),
-                                ]),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GetBuilder<MapController>(
-                                  builder: (context)=>  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0, vertical: 8),
-                                    child: mapController.currentStudents.isNotEmpty &&mapController
-                                        .currentStudentIndex.value != -1 && !widget.isRound
-                                        ? Text(
-                                            "${"studentName".tr}: ${mapController.currentStudents[0].userFname} ${mapController.currentStudents[0].userLname}",
-                                            style: AppFonts.medium,
-                                          )
-                                        : Container(),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.offWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: Border.all(
-                                              color: AppColors.black)),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.access_time_rounded,
-                                            color: AppColors.black,
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            mapController.timeTrack,
-                                            style: AppFonts.header,
-                                          ),
-                                        ],
-                                      ),
+                          if (!widget.isTraddy)
+                            Container(
+                              height: 100,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0, 2),
+                                      spreadRadius: 3,
+                                      color: AppColors.black.withOpacity(0.10),
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.offWhite,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: Border.all(
-                                              color: AppColors.black)),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.location_on_rounded,
-                                            color: AppColors.black,
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            mapController.distantTrack,
-                                            style: AppFonts.header,
-                                          ),
-                                        ],
-                                      ),
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GetBuilder<MapController>(
+                                    builder: (context) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0, vertical: 8),
+                                      child: mapController
+                                                  .currentStudents.isNotEmpty &&
+                                              mapController.currentStudentIndex
+                                                      .value !=
+                                                  -1 &&
+                                              !widget.isRound
+                                          ? Text(
+                                              "${"studentName".tr}: ${mapController.currentStudents[0].userFname} ${mapController.currentStudents[0].userLname}",
+                                              style: AppFonts.medium,
+                                            )
+                                          : Container(),
                                     ),
-                                  ],
-                                ),
-                              ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.offWhite,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: AppColors.black)),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.access_time_rounded,
+                                              color: AppColors.black,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              mapController.timeTrack,
+                                              style: AppFonts.header,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.offWhite,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: AppColors.black)),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.location_on_rounded,
+                                              color: AppColors.black,
+                                            ),
+                                            const SizedBox(
+                                              width: 8,
+                                            ),
+                                            Text(
+                                              mapController.distantTrack,
+                                              style: AppFonts.header,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
                   ),
-                if (AppConstants.userType == 'Driver' && widget.students.isNotEmpty && !widget.isRound && !widget.isTraddy)
+                if (AppConstants.userType == 'Driver' &&
+                    widget.students.isNotEmpty &&
+                    !widget.isRound &&
+                    !widget.isTraddy)
                   GetBuilder<UserHomeController>(
                     builder: (ctrl) => Align(
                       alignment: !AppConstants.isEnLocale
@@ -329,21 +343,27 @@ class _MapScreenState extends State<MapScreen> {
                                     child: SingleChildScrollView(
                                       physics: const PageScrollPhysics(),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             'confirmed'.tr,
                                             style: AppFonts.header,
                                           ),
                                           ListView.separated(
-                                            physics: const NeverScrollableScrollPhysics(),
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             padding: AppConstants.edge(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10, vertical: 20)),
-                                            itemBuilder: (context, index) => Row(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 20)),
+                                            itemBuilder: (context, index) =>
+                                                Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Expanded(
                                                     flex: 3,
@@ -358,7 +378,8 @@ class _MapScreenState extends State<MapScreen> {
                                                         ),
                                                         Text(
                                                           '${mapController.confirmedStudents[index].userFname} ${mapController.confirmedStudents[index].userLname}',
-                                                          style: AppFonts.header,
+                                                          style:
+                                                              AppFonts.header,
                                                         ),
                                                       ],
                                                     )),
@@ -428,18 +449,21 @@ class _MapScreenState extends State<MapScreen> {
                                                 // )
                                               ],
                                             ),
-                                            separatorBuilder: (context, index) =>
-                                                const Padding(
-                                              padding:
-                                                  EdgeInsets.symmetric(vertical: 10),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10),
                                               child: Divider(
                                                   height: 1,
                                                   color: AppColors.darkBlue100),
                                             ),
-                                            itemCount: mapController.confirmedStudents.length,
+                                            itemCount: mapController
+                                                .confirmedStudents.length,
                                           ),
                                           const Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 8.0),
                                             child: Divider(
                                               height: 1,
                                               color: AppColors.black,
@@ -450,14 +474,19 @@ class _MapScreenState extends State<MapScreen> {
                                             style: AppFonts.header,
                                           ),
                                           ListView.separated(
-                                            physics: const NeverScrollableScrollPhysics(),
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             padding: AppConstants.edge(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10, vertical: 20)),
-                                            itemBuilder: (context, index) => Row(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 20)),
+                                            itemBuilder: (context, index) =>
+                                                Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Expanded(
                                                     flex: 3,
@@ -472,86 +501,159 @@ class _MapScreenState extends State<MapScreen> {
                                                         ),
                                                         Text(
                                                           '${mapController.canceledStudents[index].userFname} ${mapController.canceledStudents[index].userLname}',
-                                                          style: AppFonts.header,
+                                                          style:
+                                                              AppFonts.header,
                                                         ),
                                                       ],
                                                     )),
                                                 Expanded(
                                                   flex: 2,
                                                   child: DefaultRowButton(
-                                                    text: mapController.canceledStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    text: mapController
+                                                                .canceledStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? "cancelTrip".tr
                                                         : "unCancelTrip".tr,
                                                     height: 30,
-                                                    border: mapController.canceledStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    border: mapController
+                                                                .canceledStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? Border.all(
-                                                      color: AppColors.error600,
-                                                    )
+                                                            color: AppColors
+                                                                .error600,
+                                                          )
                                                         : null,
-                                                    color: mapController.canceledStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    color: mapController
+                                                                .canceledStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? AppColors.white
                                                         : AppColors.error600,
                                                     function: () async {
-                                                      if (mapController.canceledStudents[index]
-                                                          .cancelRequest ==
+                                                      if (mapController
+                                                              .canceledStudents[
+                                                                  index]
+                                                              .cancelRequest ==
                                                           '0') {
-                                                        mapController.canceledStudents[index]
-                                                            .cancelRequest = '1';
-                                                        await userHomeController.tripCancelAPI(
-                                                          context: context,
-                                                          userId: mapController.canceledStudents[index].userId,
-                                                          cancel: '1',
-                                                          cancelReason: 'سبب الالغاء',
-                                                          tripUserId: mapController.canceledStudents[index].tripUserId,
-                                                          tripId: widget.tripId!,
-                                                          student: mapController.canceledStudents[index],
-                                                        );
+                                                        userHomeController
+                                                            .getCancelReasons()
+                                                            .then((_) {
+                                                          Get.back();
+                                                          if (context.mounted) {
+                                                            showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                isDismissible:
+                                                                    false,
+                                                                enableDrag:
+                                                                    false,
+                                                                builder:
+                                                                    (context) =>
+                                                                        BottomSheetBase(
+                                                                          headTitle:
+                                                                              'cancellationReason'.tr,
+                                                                          buttonsContainIcon:
+                                                                              false,
+                                                                          withCloseIcon:
+                                                                              true,
+                                                                          showButtons:
+                                                                              false,
+                                                                          // height: 200,
+                                                                          child:
+                                                                              Obx(
+                                                                            () => userHomeController.isGettingCancelReasons.value
+                                                                                ? const Center(child: CircularProgressIndicator())
+                                                                                : ListView.separated(
+                                                                                    itemBuilder: (ctx, index) => CustomCheckTileWidget(
+                                                                                      onTap: () async {
+                                                                                        userHomeController.selectedReasons = userHomeController.cancelReasonsModel!.data[index];
+                                                                                        // Get.back();
+                                                                                        mapController.canceledStudents[index].cancelRequest = '1';
+                                                                                        await userHomeController.tripCancelAPI(
+                                                                                          context: context,
+                                                                                          userId: mapController.canceledStudents[index].userId,
+                                                                                          cancel: '1',
+                                                                                          cancelReason: 'سبب الالغاء',
+                                                                                          tripUserId: mapController.canceledStudents[index].tripUserId,
+                                                                                          tripId: widget.tripId!,
+                                                                                          student: mapController.canceledStudents[index],
+                                                                                        );
+                                                                                      },
+                                                                                      title: AppConstants.isEnLocale ? userHomeController.cancelReasonsModel!.data[index].reasonEn! : userHomeController.cancelReasonsModel!.data[index].reasonAr!,
+                                                                                      withCircularCheckBox: false,                                                                                    ),
+                                                                                    separatorBuilder: (context, index) => const SizedBox(
+                                                                                      height: 8,
+                                                                                    ),
+                                                                                    itemCount: userHomeController.cancelReasonsModel!.data.length,
+                                                                                  ),
+                                                                          ),
+                                                                        ));
+                                                          }
+                                                        });
                                                       } else {
-                                                        mapController.canceledStudents[index]
+                                                        mapController
+                                                            .canceledStudents[
+                                                                index]
                                                             .cancelRequest = '0';
-                                                        await userHomeController.tripCancelAPI(
+                                                        await userHomeController
+                                                            .tripCancelAPI(
                                                           context: context,
-                                                          userId: mapController.canceledStudents[index].userId,
+                                                          userId: mapController
+                                                              .canceledStudents[
+                                                                  index]
+                                                              .userId,
                                                           cancel: '0',
-                                                          tripUserId: mapController.canceledStudents[index].tripUserId,
-                                                          tripId: widget.tripId!,
-                                                          student: mapController.canceledStudents[index],
+                                                          tripUserId: mapController
+                                                              .canceledStudents[
+                                                                  index]
+                                                              .tripUserId,
+                                                          tripId:
+                                                              widget.tripId!,
+                                                          student: mapController
+                                                                  .canceledStudents[
+                                                              index],
                                                         );
                                                       }
                                                     },
-                                                    textColor: mapController.canceledStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    textColor: mapController
+                                                                .canceledStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? AppColors.error600
                                                         : AppColors.white,
                                                     borderRadius: 8,
-                                                    svgPic: mapController.canceledStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    svgPic: mapController
+                                                                .canceledStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? 'assets/icons/close_red.svg'
                                                         : 'assets/icons/close_white.svg',
                                                   ),
                                                 )
                                               ],
                                             ),
-                                            separatorBuilder: (context, index) =>
-                                            const Padding(
-                                              padding:
-                                              EdgeInsets.symmetric(vertical: 10),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10),
                                               child: Divider(
                                                   height: 1,
                                                   color: AppColors.darkBlue100),
                                             ),
-                                            itemCount: mapController.canceledStudents.length,
+                                            itemCount: mapController
+                                                .canceledStudents.length,
                                           ),
                                           const Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 8.0),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 8.0),
                                             child: Divider(
                                               height: 1,
                                               color: AppColors.black,
@@ -562,14 +664,19 @@ class _MapScreenState extends State<MapScreen> {
                                             style: AppFonts.header,
                                           ),
                                           ListView.separated(
-                                            physics: const NeverScrollableScrollPhysics(),
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             shrinkWrap: true,
                                             padding: AppConstants.edge(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10, vertical: 20)),
-                                            itemBuilder: (context, index) => Row(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 20)),
+                                            itemBuilder: (context, index) =>
+                                                Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Expanded(
                                                     flex: 3,
@@ -584,83 +691,155 @@ class _MapScreenState extends State<MapScreen> {
                                                         ),
                                                         Text(
                                                           '${mapController.leftStudents[index].userFname} ${mapController.leftStudents[index].userLname}',
-                                                          style: AppFonts.header,
+                                                          style:
+                                                              AppFonts.header,
                                                         ),
                                                       ],
                                                     )),
                                                 Expanded(
                                                   flex: 2,
                                                   child: DefaultRowButton(
-                                                    text: mapController.leftStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    text: mapController
+                                                                .leftStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? "cancelTrip".tr
                                                         : "unCancelTrip".tr,
                                                     height: 30,
-                                                    border: mapController.leftStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    border: mapController
+                                                                .leftStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? Border.all(
-                                                      color: AppColors.error600,
-                                                    )
+                                                            color: AppColors
+                                                                .error600,
+                                                          )
                                                         : null,
-                                                    color: mapController.leftStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    color: mapController
+                                                                .leftStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? AppColors.white
                                                         : AppColors.error600,
                                                     function: () async {
-                                                      if (mapController.leftStudents[index]
-                                                          .cancelRequest ==
+                                                      if (mapController
+                                                              .leftStudents[
+                                                                  index]
+                                                              .cancelRequest ==
                                                           '0') {
-                                                        mapController.leftStudents[index]
-                                                            .cancelRequest = '1';
-                                                        await userHomeController.tripCancelAPI(
-                                                          context: context,
-                                                          userId: mapController.leftStudents[index].userId,
-                                                          cancel: '1',
-                                                          cancelReason: 'سبب الالغاء',
-                                                          tripUserId: mapController.leftStudents[index].tripUserId,
-                                                          tripId: widget.tripId!,
-                                                          student: mapController.leftStudents[index],
-                                                        );
+                                                        userHomeController
+                                                            .getCancelReasons()
+                                                            .then((_) {
+                                                          Get.back();
+                                                          if (context.mounted) {
+                                                            showModalBottomSheet(
+                                                                context:
+                                                                    context,
+                                                                isDismissible:
+                                                                    false,
+                                                                enableDrag:
+                                                                    false,
+                                                                builder:
+                                                                    (context) =>
+                                                                        BottomSheetBase(
+                                                                          headTitle:
+                                                                              'cancellationReason'.tr,
+                                                                          buttonsContainIcon:
+                                                                              false,
+                                                                          withCloseIcon:
+                                                                              true,
+                                                                          showButtons:
+                                                                              false,
+                                                                          // height: 200,
+                                                                          child:
+                                                                              Obx(
+                                                                            () => userHomeController.isGettingCancelReasons.value
+                                                                                ? const Center(child: CircularProgressIndicator())
+                                                                                : ListView.separated(
+                                                                                    itemBuilder: (context, index) => CustomCheckTileWidget(
+                                                                                      onTap: () async {
+                                                                                        userHomeController.selectedReasons = userHomeController.cancelReasonsModel!.data[index];
+                                                                                        // Get.back();
+                                                                                        mapController.leftStudents[index].cancelRequest = '1';
+                                                                                        await userHomeController.tripCancelAPI(
+                                                                                          context: context,
+                                                                                          userId: mapController.leftStudents[index].userId,
+                                                                                          cancel: '1',
+                                                                                          cancelReason: 'سبب الالغاء',
+                                                                                          tripUserId: mapController.leftStudents[index].tripUserId,
+                                                                                          tripId: widget.tripId!,
+                                                                                          student: mapController.leftStudents[index],
+                                                                                        );
+                                                                                      },
+                                                                                      title: AppConstants.isEnLocale ? userHomeController.cancelReasonsModel!.data[index].reasonEn! : userHomeController.cancelReasonsModel!.data[index].reasonAr!,
+                                                                                      withCircularCheckBox: false,                                                                                    ),
+                                                                                    separatorBuilder: (context, index) => const SizedBox(
+                                                                                      height: 8,
+                                                                                    ),
+                                                                                    itemCount: userHomeController.cancelReasonsModel!.data.length,
+                                                                                  ),
+                                                                          ),
+                                                                        ));
+                                                          }
+                                                        });
                                                       } else {
-                                                        mapController.leftStudents[index]
+                                                        mapController
+                                                            .leftStudents[index]
                                                             .cancelRequest = '0';
-                                                        await userHomeController.tripCancelAPI(
+                                                        await userHomeController
+                                                            .tripCancelAPI(
                                                           context: context,
-                                                          userId: mapController.leftStudents[index].userId,
+                                                          userId: mapController
+                                                              .leftStudents[
+                                                                  index]
+                                                              .userId,
                                                           cancel: '0',
-                                                          tripUserId: mapController.leftStudents[index].tripUserId,
-                                                          tripId: widget.tripId!,
-                                                          student: mapController.leftStudents[index],
+                                                          tripUserId:
+                                                              mapController
+                                                                  .leftStudents[
+                                                                      index]
+                                                                  .tripUserId,
+                                                          tripId:
+                                                              widget.tripId!,
+                                                          student: mapController
+                                                                  .leftStudents[
+                                                              index],
                                                         );
                                                       }
                                                     },
-                                                    textColor: mapController.leftStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    textColor: mapController
+                                                                .leftStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? AppColors.error600
                                                         : AppColors.white,
                                                     borderRadius: 8,
-                                                    svgPic: mapController.leftStudents[index]
-                                                        .cancelRequest ==
-                                                        '0'
+                                                    svgPic: mapController
+                                                                .leftStudents[
+                                                                    index]
+                                                                .cancelRequest ==
+                                                            '0'
                                                         ? 'assets/icons/close_red.svg'
                                                         : 'assets/icons/close_white.svg',
                                                   ),
                                                 )
                                               ],
                                             ),
-                                            separatorBuilder: (context, index) =>
-                                            const Padding(
-                                              padding:
-                                              EdgeInsets.symmetric(vertical: 10),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 10),
                                               child: Divider(
                                                   height: 1,
                                                   color: AppColors.darkBlue100),
                                             ),
-                                            itemCount: mapController.leftStudents.length,
+                                            itemCount: mapController
+                                                .leftStudents.length,
                                           ),
                                         ],
                                       ),
