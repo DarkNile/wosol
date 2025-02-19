@@ -246,5 +246,11 @@ const Map<String, String> ar = {
   "left": "متبقي",
   "Groups": "المجموعات",
   "There are no groups currently.": "لا يوجد مجموعات حاليا",
+  "isRated": "تم تقييمه",
+  "rateDriver": "تقيم السائق",
+  "rateVehicle": "تقيم السيارة",
+  "rateTrip": "تقيم الرحلة",
+  "addComment": "إضافة تعليق",
+  "sendRate": "إرسال التقيم",
   "": "",
 };

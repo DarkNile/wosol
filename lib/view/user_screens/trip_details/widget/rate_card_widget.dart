@@ -7,10 +7,13 @@ import 'package:wosol/shared/widgets/user_widgets/rating_bar_widget.dart';
 
 class RateCardWidget extends StatelessWidget {
   final bool withRateButton;
+  final bool isRated;
+  final String title;
+  final double rate;
   final void Function()? onRateTap;
 
   const RateCardWidget(
-      {super.key, this.withRateButton = false, this.onRateTap});
+      {super.key, this.withRateButton = false, this.onRateTap, required this.title, required this.isRated, required this.rate});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class RateCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('rate'.tr,
+            Text(title,
                 style: AppFonts.header
                     .copyWith(fontSize: 14, color: AppColors.black800)),
             const SizedBox(
@@ -41,12 +44,13 @@ class RateCardWidget extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('noRating'.tr,
+                      Text(isRated? '${'isRated'.tr}: $rate' : 'noRating'.tr,
                           style: AppFonts.medium.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: AppColors.darkBlue400,
                           )),
+                      // if(!isRated)
                       DefaultButton(
                           width: 77,
                           text: 'rate'.tr,
@@ -61,7 +65,7 @@ class RateCardWidget extends StatelessWidget {
                     ],
                   )
                 : RatingBarWidget(
-                    itemSize: 48,
+                    itemSize: 60,
                     ignoreGestures: true,
                     itemPadding: const EdgeInsets.all(0),
                     onRatingUpdate: (double rate) {},

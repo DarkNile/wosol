@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:wosol/models/cancel_reasons_model.dart';
 import 'package:wosol/models/trip_list_model.dart';
 import 'package:wosol/models/trip_model.dart';
 
@@ -118,9 +119,11 @@ class UserHomeController extends GetxController {
         userId: userId,
         tripId: tripId,
         cancel: cancel,
+        cancelReasonId: selectedReasons?.reasonId,
         cancelReason: cancelReason,
       )
           .then((response) {
+            selectedReasons = null;
         tripCancelLoading.value = false;
         Get.back();
         getTrips();
@@ -283,6 +286,7 @@ class UserHomeController extends GetxController {
         date: date,
         userId: userId,
         cancel: cancel,
+        cancelReasonId: selectedReasons?.reasonId,
         cancelReason: cancelReason,
       )
           .then((response) {
@@ -290,7 +294,8 @@ class UserHomeController extends GetxController {
         if (response.statusCode == 200) {
           Get.back();
           getCalendarData();
-          showModalBottomSheet(
+          if(context.mounted) {
+            showModalBottomSheet(
               context: context,
               isDismissible: false,
               enableDrag: false,
@@ -302,6 +307,7 @@ class UserHomeController extends GetxController {
                     subHeaderMsg:
                         "Thank you for being kind and save others' time.".tr,
                   ));
+          }
           if (context.mounted) {
             !(cancel == "0")
                 ? defaultErrorSnackBar(
@@ -352,6 +358,38 @@ class UserHomeController extends GetxController {
     } on DioException catch (e) {
       isSendingTripRate.value = false;
       throw e.response!.data['data']['error'];
+    }
+  }
+
+  RxBool isGettingCancelReasons = false.obs;
+  CancelReasonsModel? cancelReasonsModel;
+  CancelReasons? selectedReasons;
+  Future<void> getCancelReasons() async {
+    isGettingCancelReasons.value = true;
+    update();
+    try {
+      Response response = await DioHelper.getData(
+        url: 'cancel_reason/listing',
+      );
+      if (response.statusCode == 200) {
+        cancelReasonsModel = CancelReasonsModel.fromJson(response.data);
+        isGettingCancelReasons.value = false;
+        update();
+      } else {
+        defaultErrorSnackBar(
+          context: Get.context!,
+          message: response.data['data']['error'],
+        );
+        isGettingCancelReasons.value = false;
+        update();
+      }
+    } on DioException catch (e) {
+      defaultErrorSnackBar(
+        context: Get.context!,
+        message: e.response!.data['data']['error'],
+      );
+      isGettingCancelReasons.value = false;
+      update();
     }
   }
 }

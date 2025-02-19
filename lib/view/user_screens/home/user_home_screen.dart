@@ -10,6 +10,7 @@ import 'package:wosol/shared/widgets/shared_widgets/trips_card_widget.dart';
 import '../../../controllers/shared_controllers/map_controller.dart';
 import '../../../controllers/user_controllers/user_home_controller.dart';
 import '../../../shared/constants/constants.dart';
+import '../../../shared/widgets/shared_widgets/custom_check_tile.dart';
 import '../../shared_screens/map_screen.dart';
 
 class UserHomeScreen extends StatefulWidget {
@@ -370,77 +371,211 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
     String? tripUserId,
     String? tripId,
   }) async {
-    showModalBottomSheet(
-        context: context,
-        isDismissible: false,
-        enableDrag: false,
-        builder: (context) => Obx(
-              () => RideCanceledAndReportedBottomSheet(
-                isCancel: isCancel,
-                headTitle: isCancel ? 'Cancel Ride'.tr : 'Un Cancel Ride'.tr,
-                isCancelFirstStep: true,
-                imagePath: 'assets/images/thinking.png',
-                headerMsg: isCancel
-                    ? 'You are about to cancel your ride, are you sure?'.tr
-                    : 'You are about to unCancel your ride, are you sure?'.tr,
-                subHeaderMsg: isCancel
-                    ? 'Note: today trip only will be canceled'.tr
-                    : 'Note: today trip only will be uncanceled'.tr,
-                firstButtonLoading: (isTrip &&
-                        userHomeController.tripCancelByDateLoading.value) ||
-                    (!isTrip &&
-                        userHomeController.calendarCancelByDateLoading.value),
-                firstButtonFunction: () async {
-                  log("UserID $userId");
-                  log("isCancel $isCancel");
-                  if (isTrip) {
-                    //  Cancel
-                    if (isCancel) {
-                      await userHomeController.tripCancelAPI(
-                        context: context,
-                        userId: userId,
-                        cancel: '1',
-                        cancelReason: 'سبب الالغاء',
-                        tripUserId: tripUserId!,
-                        tripId: tripId!,
-                        student: null
-                      );
+    if (isCancel) {
+      userHomeController.getCancelReasons().then((_) {
+        if (context.mounted) {
+          showModalBottomSheet(
+              context: context,
+              isDismissible: false,
+              enableDrag: false,
+              builder: (context) => BottomSheetBase(
+                    headTitle: 'cancellationReason'.tr,
+                    buttonsContainIcon: false,
+                    withCloseIcon: true,
+                    showButtons: false,
+                    // height: 200,
+                    child: Obx(
+                      () => userHomeController.isGettingCancelReasons.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : ListView.separated(
+                              itemBuilder: (context, index) =>
+                                  CustomCheckTileWidget(
+                                onTap: () {
+                                  userHomeController.selectedReasons =
+                                      userHomeController
+                                          .cancelReasonsModel!.data[index];
+                                  Get.back();
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isDismissible: false,
+                                      enableDrag: false,
+                                      builder: (context) => Obx(
+                                            () =>
+                                                RideCanceledAndReportedBottomSheet(
+                                              isCancel: isCancel,
+                                              headTitle: isCancel
+                                                  ? 'Cancel Ride'.tr
+                                                  : 'Un Cancel Ride'.tr,
+                                              isCancelFirstStep: true,
+                                              imagePath:
+                                                  'assets/images/thinking.png',
+                                              headerMsg: isCancel
+                                                  ? 'You are about to cancel your ride, are you sure?'
+                                                      .tr
+                                                  : 'You are about to unCancel your ride, are you sure?'
+                                                      .tr,
+                                              subHeaderMsg: isCancel
+                                                  ? 'Note: today trip only will be canceled'
+                                                      .tr
+                                                  : 'Note: today trip only will be uncanceled'
+                                                      .tr,
+                                              firstButtonLoading: (isTrip &&
+                                                      userHomeController
+                                                          .tripCancelByDateLoading
+                                                          .value) ||
+                                                  (!isTrip &&
+                                                      userHomeController
+                                                          .calendarCancelByDateLoading
+                                                          .value),
+                                              firstButtonFunction: () async {
+                                                log("UserID $userId");
+                                                log("isCancel $isCancel");
+                                                if (isTrip) {
+                                                  //  Cancel
+                                                  if (isCancel) {
+                                                    await userHomeController
+                                                        .tripCancelAPI(
+                                                            context: context,
+                                                            userId: userId,
+                                                            cancel: '1',
+                                                            cancelReason:
+                                                                'سبب الالغاء',
+                                                            tripUserId:
+                                                                tripUserId!,
+                                                            tripId: tripId!,
+                                                            student: null);
+                                                  } else {
+                                                    // Un Cancel
+                                                    await userHomeController
+                                                        .tripCancelAPI(
+                                                      context: context,
+                                                      userId: userId,
+                                                      cancel: '0',
+                                                      tripUserId: tripUserId!,
+                                                      tripId: tripId!,
+                                                      student: null,
+                                                    );
+                                                  }
+                                                } else {
+                                                  //  Cancel
+                                                  if (isCancel) {
+                                                    await userHomeController
+                                                        .calendarCancelByDateAPI(
+                                                      context: context,
+                                                      userId: userId,
+                                                      date: calendarDate!,
+                                                      cancel: '1',
+                                                      cancelReason:
+                                                          'سبب الالغاء',
+                                                    );
+                                                  } else {
+                                                    /// Un Cancel
+                                                    await userHomeController
+                                                        .calendarCancelByDateAPI(
+                                                      context: context,
+                                                      userId: userId,
+                                                      date: calendarDate!,
+                                                      cancel: '0',
+                                                    );
+                                                  }
+                                                }
+                                              },
+                                              secondButtonFunction: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                          ));
+                                },
+                                title: AppConstants.isEnLocale
+                                    ? userHomeController.cancelReasonsModel!
+                                        .data[index].reasonEn!
+                                    : userHomeController.cancelReasonsModel!
+                                        .data[index].reasonAr!,
+                                withCircularCheckBox: false,
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                height: 8,
+                              ),
+                              itemCount: userHomeController
+                                  .cancelReasonsModel!.data.length,
+                            ),
+                    ),
+                  ));
+        }
+      });
+    } else {
+      showModalBottomSheet(
+          context: context,
+          isDismissible: false,
+          enableDrag: false,
+          builder: (context) => Obx(
+                () => RideCanceledAndReportedBottomSheet(
+                  isCancel: isCancel,
+                  headTitle: isCancel ? 'Cancel Ride'.tr : 'Un Cancel Ride'.tr,
+                  isCancelFirstStep: true,
+                  imagePath: 'assets/images/thinking.png',
+                  headerMsg: isCancel
+                      ? 'You are about to cancel your ride, are you sure?'.tr
+                      : 'You are about to unCancel your ride, are you sure?'.tr,
+                  subHeaderMsg: isCancel
+                      ? 'Note: today trip only will be canceled'.tr
+                      : 'Note: today trip only will be uncanceled'.tr,
+                  firstButtonLoading: (isTrip &&
+                          userHomeController.tripCancelByDateLoading.value) ||
+                      (!isTrip &&
+                          userHomeController.calendarCancelByDateLoading.value),
+                  firstButtonFunction: () async {
+                    log("UserID $userId");
+                    log("isCancel $isCancel");
+                    if (isTrip) {
+                      //  Cancel
+                      if (isCancel) {
+                        await userHomeController.tripCancelAPI(
+                            context: context,
+                            userId: userId,
+                            cancel: '1',
+                            cancelReason: 'سبب الالغاء',
+                            tripUserId: tripUserId!,
+                            tripId: tripId!,
+                            student: null);
+                      } else {
+                        // Un Cancel
+                        await userHomeController.tripCancelAPI(
+                          context: context,
+                          userId: userId,
+                          cancel: '0',
+                          tripUserId: tripUserId!,
+                          tripId: tripId!,
+                          student: null,
+                        );
+                      }
                     } else {
-                      // Un Cancel
-                      await userHomeController.tripCancelAPI(
-                        context: context,
-                        userId: userId,
-                        cancel: '0',
-                        tripUserId: tripUserId!,
-                        tripId: tripId!,
-                        student: null,
-                      );
+                      //  Cancel
+                      if (isCancel) {
+                        await userHomeController.calendarCancelByDateAPI(
+                          context: context,
+                          userId: userId,
+                          date: calendarDate!,
+                          cancel: '1',
+                          cancelReason: 'سبب الالغاء',
+                        );
+                      } else {
+                        /// Un Cancel
+                        await userHomeController.calendarCancelByDateAPI(
+                          context: context,
+                          userId: userId,
+                          date: calendarDate!,
+                          cancel: '0',
+                        );
+                      }
                     }
-                  } else {
-                    //  Cancel
-                    if (isCancel) {
-                      await userHomeController.calendarCancelByDateAPI(
-                        context: context,
-                        userId: userId,
-                        date: calendarDate!,
-                        cancel: '1',
-                        cancelReason: 'سبب الالغاء',
-                      );
-                    } else {
-                      /// Un Cancel
-                      await userHomeController.calendarCancelByDateAPI(
-                        context: context,
-                        userId: userId,
-                        date: calendarDate!,
-                        cancel: '0',
-                      );
-                    }
-                  }
-                },
-                secondButtonFunction: () {
-                  Get.back();
-                },
-              ),
-            ));
+                  },
+                  secondButtonFunction: () {
+                    Get.back();
+                  },
+                ),
+              ));
+    }
   }
 }

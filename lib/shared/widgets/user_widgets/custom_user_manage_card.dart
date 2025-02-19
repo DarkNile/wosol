@@ -12,6 +12,7 @@ import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget
 import 'package:wosol/shared/widgets/shared_widgets/custom_setting_row.dart';
 
 import '../shared_widgets/bottom_sheets.dart';
+import '../shared_widgets/custom_check_tile.dart';
 
 // ignore: must_be_immutable
 class CustomUserManageCardWidget extends StatelessWidget {
@@ -170,17 +171,59 @@ class CustomUserManageCardWidget extends StatelessWidget {
                 firstButtonFunction: () async {
                   //  Cancel
                   if (isCancel) {
-                    await userHomeController
-                        .calendarCancelAPI(
-                          context: context,
-                          userId: userId,
-                          calendarId: calendarId,
-                          cancel: '1',
-                          cancelReason: 'سبب الالغاء',
-                        )
-                        .then(
-                          (value) => manageTrips.isToggleOn.value = false,
-                        );
+                    userHomeController.getCancelReasons().then((_) {
+                      if (context.mounted) {
+                        showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            enableDrag: false,
+                            builder: (context) => BottomSheetBase(
+                              headTitle: 'cancellationReason'.tr,
+                              buttonsContainIcon: false,
+                              withCloseIcon: true,
+                              showButtons: false,
+                              // height: 200,
+                              child: Obx(
+                                    () => userHomeController.isGettingCancelReasons.value
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      CustomCheckTileWidget(
+                                        onTap: () async{
+                                          userHomeController.selectedReasons =
+                                          userHomeController
+                                              .cancelReasonsModel!.data[index];
+                                          Get.back();
+                                          await userHomeController
+                                              .calendarCancelAPI(
+                                            context: context,
+                                            userId: userId,
+                                            calendarId: calendarId,
+                                            cancel: '1',
+                                            cancelReason: 'سبب الالغاء',
+                                          )
+                                              .then(
+                                                (value) => manageTrips.isToggleOn.value = false,
+                                          );
+                                        },
+                                        title: AppConstants.isEnLocale
+                                            ? userHomeController.cancelReasonsModel!
+                                            .data[index].reasonEn!
+                                            : userHomeController.cancelReasonsModel!
+                                            .data[index].reasonAr!,
+                                        withCircularCheckBox: false,
+                                      ),
+                                  separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  itemCount: userHomeController
+                                      .cancelReasonsModel!.data.length,
+                                ),
+                              ),
+                            ));
+                      }
+                    });
                   } else {
                     /// Un Cancel
                     await userHomeController
@@ -202,13 +245,55 @@ class CustomUserManageCardWidget extends StatelessWidget {
                     userHomeController.calendarCancelByDateLoading.value,
                 thirdButtonFunction: () async {
                   if (manageTrips.isToggleOn.value) {
-                    await userHomeController.calendarCancelByDateAPI(
-                      context: context,
-                      userId: userId,
-                      date: calenderDate,
-                      cancel: '1',
-                      cancelReason: 'سبب الالغاء',
-                    );
+                    userHomeController.getCancelReasons().then((_) {
+                      if (context.mounted) {
+                        showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            enableDrag: false,
+                            builder: (context) => BottomSheetBase(
+                              headTitle: 'cancellationReason'.tr,
+                              buttonsContainIcon: false,
+                              withCloseIcon: true,
+                              showButtons: false,
+                              // height: 200,
+                              child: Obx(
+                                    () => userHomeController.isGettingCancelReasons.value
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      CustomCheckTileWidget(
+                                        onTap: () async{
+                                          userHomeController.selectedReasons =
+                                          userHomeController
+                                              .cancelReasonsModel!.data[index];
+                                          Get.back();
+                                          await userHomeController.calendarCancelByDateAPI(
+                                            context: context,
+                                            userId: userId,
+                                            date: calenderDate,
+                                            cancel: '1',
+                                            cancelReason: 'سبب الالغاء',
+                                          );
+                                        },
+                                        title: AppConstants.isEnLocale
+                                            ? userHomeController.cancelReasonsModel!
+                                            .data[index].reasonEn!
+                                            : userHomeController.cancelReasonsModel!
+                                            .data[index].reasonAr!,
+                                        withCircularCheckBox: false,
+                                      ),
+                                  separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  itemCount: userHomeController
+                                      .cancelReasonsModel!.data.length,
+                                ),
+                              ),
+                            ));
+                      }
+                    });
                   } else {
                     await userHomeController.calendarCancelByDateAPI(
                       context: context,

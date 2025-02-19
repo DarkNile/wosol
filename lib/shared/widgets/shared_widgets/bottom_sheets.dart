@@ -516,7 +516,6 @@ class RideCanceledAndReportedBottomSheet extends StatelessWidget {
   final bool secondButtonLoading;
   final bool thirdButtonLoading;
   final bool isCancel;
-
   final Function()? firstButtonFunction;
   final Function()? secondButtonFunction;
   final Function()? thirdButtonFunction;
@@ -627,7 +626,8 @@ class RateBottomSheet extends StatelessWidget {
           Align(
             alignment: selectIssue ? Alignment.topLeft : Alignment.center,
             child: RatingBarWidget(
-              itemSize: !selectIssue ? 60 : null,
+              // itemSize: !selectIssue ? 60 : null,
+              itemSize: 60,
               onRatingUpdate: onRatingUpdate,
             ),
           ),

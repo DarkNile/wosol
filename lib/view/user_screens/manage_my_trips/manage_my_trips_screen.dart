@@ -135,7 +135,7 @@ class AllWidget extends StatelessWidget {
                         calendarData[index].subData![0].isOldDate ?? false,
                     calenderId: calendarData[index].subData![0].calendarId!,
                     userId: calendarData[index].subData![0].userId!,
-                    calenderDate: calendarData[index].subData![0].cancelDate!,
+                    calenderDate: calendarData[index].subData![0].date!,
                     isCancel:
                         calendarData[index].subData![0].cancelRequest == '0',
                     manageTrips: ManageTripsModel(
@@ -161,7 +161,7 @@ class AllWidget extends StatelessWidget {
                           calendarData[index].subData![1].isOldDate ?? false,
                       calenderId: calendarData[index].subData![1].calendarId!,
                       userId: calendarData[index].subData![1].userId!,
-                      calenderDate: calendarData[index].subData![1].cancelDate!,
+                      calenderDate: calendarData[index].subData![1].date!,
                       isCancel:
                           calendarData[index].subData![1].cancelRequest == '0',
                       userHomeController: homeController,

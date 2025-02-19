@@ -38,6 +38,7 @@ class StudentRepository extends GetxService {
     required String userId,
     required String cancel,
     String? cancelReason,
+    String? cancelReasonId,
   }) async {
     try {
       Response response = await DioHelper.postData(
@@ -46,6 +47,7 @@ class StudentRepository extends GetxService {
           "user_id": userId,
           "date": date,
           "cancel": cancel,
+          if (cancelReasonId != null) "reason_id": cancelReasonId,
           if (cancelReason != null) "cancel_reason": cancelReason
         },
       );
@@ -65,6 +67,7 @@ class StudentRepository extends GetxService {
     required String tripId,
     required String cancel,
     String? cancelReason,
+    String? cancelReasonId,
   }) async {
     try {
       Response response = await DioHelper.postData(
@@ -76,6 +79,7 @@ class StudentRepository extends GetxService {
           "user_id": userId,
           "trip_id": tripId,
           "cancel": cancel,
+          if (cancelReasonId != null) "reason_id": cancelReasonId,
           if (cancelReason != null) "cancel_reason": cancelReason
         },
       );
