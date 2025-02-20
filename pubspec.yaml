@@ -2,7 +2,7 @@ name: wosol
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.60.0+60
+version: 1.61.0+61
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -20,7 +20,7 @@ dependencies:
   google_maps_flutter: ^2.5.3
   geolocator: ^10.1.0
   flutter_polyline_points: ^2.0.0
-  keep_screen_on: ^3.0.0
+  keep_screen_on:
   firebase_core: ^3.3.0
   firebase_messaging: ^15.1.5
   flutter_local_notifications: ^17.2.2
