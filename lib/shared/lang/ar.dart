@@ -252,5 +252,7 @@ const Map<String, String> ar = {
   "rateTrip": "تقيم الرحلة",
   "addComment": "إضافة تعليق",
   "sendRate": "إرسال التقيم",
+  "viewTripDetails": "عرض تفاصيل الرحلة",
+  "viewTripRoute": "عرض طريق الرحلة",
   "": "",
 };

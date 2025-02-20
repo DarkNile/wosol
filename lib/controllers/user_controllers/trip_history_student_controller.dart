@@ -9,6 +9,7 @@ import 'package:wosol/shared/services/network/dio_helper.dart';
 
 import '../../shared/widgets/shared_widgets/bottom_sheets.dart';
 import '../../shared/widgets/shared_widgets/snakbar.dart';
+import '../captain_controllers/trip_history_driver_controller.dart';
 
 class TripHistoryStudentController extends GetxController {
   double tripRate = -1;
@@ -53,6 +54,13 @@ class TripHistoryStudentController extends GetxController {
         if (response.statusCode == 200) {
           addRateLoading.value = false;
           Get.back();
+          if (AppConstants.userType == "Employee") {
+            final TripHistoryDriverController tripHistoryDriverController =
+            Get.find();
+            tripHistoryDriverController.getEmployeeTripsHistory();
+          } else {
+            getTripsHistory();
+          }
           showModalBottomSheet(
               context: Get.context!,
               isDismissible: false,
@@ -147,6 +155,13 @@ class TripHistoryStudentController extends GetxController {
           addReportLoading.value = false;
           Get.back();
           Get.back();
+          if (AppConstants.userType == "Employee") {
+            final TripHistoryDriverController tripHistoryDriverController =
+            Get.find();
+            tripHistoryDriverController.getEmployeeTripsHistory();
+          } else {
+            getTripsHistory();
+          }
           showModalBottomSheet(
               context: Get.context!,
               isDismissible: false,
