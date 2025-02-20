@@ -82,6 +82,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                                 tripHistoryStudentController.tripRate = rate;
                                 tripHistoryStudentController.update();
                               },
+                                'rateTrip'.tr,
                             );
                           },
                           title: 'rateTrip'.tr,
@@ -99,6 +100,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                                 tripHistoryStudentController.driverRate = rate;
                                 tripHistoryStudentController.update();
                               },
+                              'rateDriver'.tr,
                             );
                           },
                           title: 'rateDriver'.tr,
@@ -118,6 +120,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                                 tripHistoryStudentController.vehicleRate = rate;
                                 tripHistoryStudentController.update();
                               },
+                              'rateVehicle'.tr,
                             );
                           },
                           title: 'rateVehicle'.tr,
@@ -284,12 +287,13 @@ class UserTripDetailsScreen extends StatelessWidget {
   }
 
   onRateTap(BuildContext context, TextEditingController controller,
-      Function(double rate) onRatingUpdate) async {
+      Function(double rate) onRatingUpdate, String title) async {
     await showModalBottomSheet(
         context: context,
         isDismissible: false,
         enableDrag: false,
         builder: (context) => RateBottomSheet(
+            headTitle: title,
             function: () {
               Get.back();
               showModalBottomSheet(
@@ -298,7 +302,8 @@ class UserTripDetailsScreen extends StatelessWidget {
                   enableDrag: false,
                   isScrollControlled: true,
                   builder: (context) => BottomSheetBase(
-                        headTitle: 'Rate your trip'.tr,
+                        // headTitle: 'Rate your trip'.tr,
+                    headTitle: title,
                         withCloseIcon: true,
                         firstButtonText: 'Confirm'.tr,
                         firstButtonFunction: () {
@@ -316,7 +321,7 @@ class UserTripDetailsScreen extends StatelessWidget {
                       ));
             },
             onRatingUpdate: onRatingUpdate,
-            headTitle: 'Rate your trip'.tr,
+            // headTitle: 'Rate your trip'.tr,
             selectIssue: false));
   }
 
