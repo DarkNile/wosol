@@ -23,6 +23,7 @@ class EmployeeTrip {
   final double fromLong;
   final double toLat;
   final double toLong;
+  final bool isRated;
 
   EmployeeTrip({
     required this.tripId,
@@ -49,6 +50,7 @@ class EmployeeTrip {
     required this.fromLong,
     required this.toLat,
     required this.toLong,
+    required this.isRated,
   });
 
   factory EmployeeTrip.fromJson(Map<String, dynamic> json) => EmployeeTrip(
@@ -72,6 +74,7 @@ class EmployeeTrip {
         tripStatus: json['trip_status'] as String,
         tripStart: json['trip_start'] as String,
         tripEnd: json['trip_end'] as String,
+        isRated: json['is_rated'] as bool,
         fromLat: double.parse(json['from_lat'] as String),
         fromLong: double.parse(json['from_long'] as String),
         toLat: double.parse(json['to_lat'] as String),

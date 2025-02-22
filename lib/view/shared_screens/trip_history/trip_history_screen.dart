@@ -164,6 +164,15 @@ class TripHistoryScreen extends StatelessWidget {
                                   canceledStudents: canceledStudents,
                                     ));
                               } else if (AppConstants.userType == 'Student') {
+                                tripHistoryStudentController.tripRate = -1;
+                                tripHistoryStudentController.driverRate = -1;
+                                tripHistoryStudentController.vehicleRate = -1;
+                                tripHistoryStudentController.tripRateController.clear();
+                                tripHistoryStudentController.driverRateController.clear();
+                                tripHistoryStudentController.vehicleRateController.clear();
+                                tripHistoryStudentController.reportController.clear();
+                                tripHistoryStudentController.selectedReportReason = null;
+                                tripHistoryStudentController.reportReasonsModel = null;
                                 Get.to(() => UserTripDetailsScreen(
                                       dateTime: '$date  - $time',
                                       from: fromCity,
@@ -204,6 +213,38 @@ class TripHistoryScreen extends StatelessWidget {
                                   ),
                                 );
                               }
+                            },
+                            isEmployee: AppConstants.userType == "Employee",
+                            sEOnTap: (){
+                              tripHistoryStudentController.tripRate = -1;
+                              tripHistoryStudentController.driverRate = -1;
+                              tripHistoryStudentController.vehicleRate = -1;
+                              tripHistoryStudentController.tripRateController.clear();
+                              tripHistoryStudentController.driverRateController.clear();
+                              tripHistoryStudentController.vehicleRateController.clear();
+                              tripHistoryStudentController.reportController.clear();
+                              tripHistoryStudentController.selectedReportReason = null;
+                              tripHistoryStudentController.reportReasonsModel = null;
+                              Get.to(() => UserTripDetailsScreen(
+                                dateTime: '$date  - $time',
+                                from: fromCity,
+                                to: toCity,
+                                captainName: tripHistoryDriverController
+                                    .employeeTripsList[index]
+
+                                    .driverName,
+                                userId: AppConstants.userRepository.employeeData.driverId,
+                                tripId: tripHistoryDriverController
+                                    .employeeTripsList[index]
+                                    .tripId,
+                                tripUserId: '',
+                                tripType: tripHistoryDriverController
+                                    .employeeTripsList[index]
+                                    .tripType,
+                                isRated: tripHistoryDriverController
+                                    .employeeTripsList[index]
+                                    .isRated,
+                              ));
                             },
                           );
                         },

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wosol/shared/constants/constants.dart';
 import 'package:wosol/shared/constants/style/colors.dart';
 import 'package:wosol/shared/constants/style/fonts.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_container_card_with_border.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_map_iamge_widget.dart';
 import 'package:wosol/shared/widgets/shared_widgets/custom_row_with_arrow_widget.dart';
+
+import 'buttons.dart';
 
 class TripHistoryCard extends StatelessWidget {
   const TripHistoryCard({
@@ -16,6 +19,8 @@ class TripHistoryCard extends StatelessWidget {
     required this.buttonText,
     this.middleWidget,
     this.height,
+    this.isEmployee = false,
+    this.sEOnTap,
   });
   final String date;
 
@@ -23,15 +28,17 @@ class TripHistoryCard extends StatelessWidget {
   final String toCity;
   final String buttonText;
   final void Function() onTap;
+  final void Function()? sEOnTap;
   final Widget? middleWidget;
   final double? height;
+  final bool isEmployee;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isEmployee? null : onTap,
       child: CustomContainerCardWithBorderWidget(
-        height: height,
+        height: isEmployee? 270: height,
         child: Padding(
           padding: AppConstants.edge(padding: const EdgeInsets.all(10)),
           child: Column(
@@ -60,6 +67,31 @@ class TripHistoryCard extends StatelessWidget {
                 isHeader: false,
                 isButton: true,
               ),
+              if(isEmployee)
+                Row(
+                  children: [
+                    Expanded(
+                      child: DefaultButton(
+                        height: 48,
+                        marginLeft: 8,
+                        marginRight: 8,
+                        marginTop: 14,
+                        function: onTap,
+                        text: 'viewTripRoute'.tr,
+                      ),
+                    ),
+                    Expanded(
+                      child: DefaultButton(
+                        height: 48,
+                        marginLeft: 8,
+                        marginRight: 8,
+                        marginTop: 14,
+                        function: sEOnTap!,
+                        text: 'viewTripDetails'.tr,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),

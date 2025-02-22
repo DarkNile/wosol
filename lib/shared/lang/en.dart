@@ -255,5 +255,7 @@ const Map<String, String> en = {
   "rateTrip": "Rate trip",
   "addComment": "Add comment",
   "sendRate": "Send rate",
+  "viewTripDetails": "View trip details",
+  "viewTripRoute": "View trip route",
   "": "",
 };
