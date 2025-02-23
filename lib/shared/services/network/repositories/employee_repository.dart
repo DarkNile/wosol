@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:wosol/shared/constants/constants.dart';
+import 'package:wosol/shared/widgets/shared_widgets/snakbar.dart';
 
 import '../dio_helper.dart';
 
@@ -61,9 +63,13 @@ class EmployeeRepository extends GetxService {
           'trip_date': date,
         },
       );
-      if (response.statusCode == 200) {
-        return LatLng(double.tryParse(response.data['data']['to_lat']) ?? 0.0,
+      if (response.data['status'] == 'success') {
+        if(response.data['data']['not_trips']!= null){
+          defaultSuccessSnackBar(context: Get.context!, message: AppConstants.isEnLocale? response.data['data']['not_trips']['msg_en'] : response.data['data']['not_trips']['msg_ar']);
+        } else {
+          return LatLng(double.tryParse(response.data['data']['to_lat']) ?? 0.0,
             double.tryParse(response.data['data']['to_long']) ?? 0.0);
+        }
       } else {
         throw (response.data['data']['error']);
       }
