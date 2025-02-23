@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:flutter/material.dart';
@@ -157,8 +158,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     if (AppConstants.isFirst) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        getLocationPermission(context);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if(Platform.isAndroid) {
+            getLocationPermission(context);
+          } else{
+            await Permission.location.request();
+            await CacheHelper.setData(
+                key: 'isFirst', value: false);
+            AppConstants.isFirst =
+                await CacheHelper.getData(key: 'isFirst') ??
+                true;
+          }
       });
     }
     super.initState();
