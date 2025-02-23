@@ -73,6 +73,7 @@ class EmployeeController extends GetxController {
           groups = GroupsList.fromJson(response.data).data;
         } else {
           if (context.mounted) {
+            Get.back();
             defaultSuccessSnackBar(
               context: context,
               message: 'There are no groups currently.'.tr,
@@ -116,10 +117,12 @@ class EmployeeController extends GetxController {
             ));
         update();
         return response;
-      } else {
-        defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
-        return null;
-      }
+      }// else {
+      //   defaultErrorSnackBar(context: Get.context!, message: "No Trips".tr);
+      //   return null;
+      // }
+
+
       // if (response.statusCode == 200) {
       //   if (response.data['status'] == 'success') {
       // Get.to(() => const MapScreen(
