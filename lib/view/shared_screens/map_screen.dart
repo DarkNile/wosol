@@ -27,10 +27,12 @@ class MapScreen extends StatefulWidget {
     this.tripId,
     this.isRound = false,
     this.isTraddy = false,
+    this.isStudent = false,
   });
 
   final List<Student> students;
   final String? tripId;
+  final bool isStudent;
   final bool isRound;
   final bool isTraddy;
 
@@ -221,6 +223,26 @@ class _MapScreenState extends State<MapScreen> {
                           const SizedBox(
                             height: 15,
                           ),
+                          if(AppConstants.userType == 'Driver' && widget.isStudent)
+                            Material(
+                              child: DefaultButton(
+                                marginRight: 20,
+                                marginLeft: 20,
+                                height: 45,
+                                function: () async{
+                                  await mapController.tripEnd(tripId: widget.tripId!);
+                                  mapController.distantTrack = "10000 km";
+                                  if (mapController.positionStream != null) {
+                                    mapController.positionStream!.cancel();
+                                    mapController.positionStream = null;
+                                  }
+
+                                },
+                                text: 'endTrip'.tr,),
+                            ),
+                          const SizedBox(
+                            height: 8,
+                          ),
                           if (!widget.isTraddy)
                             Container(
                               height: 100,
@@ -319,6 +341,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                   ),
+
                 if (AppConstants.userType == 'Driver' &&
                     widget.students.isNotEmpty &&
                     !widget.isRound &&
@@ -856,6 +879,7 @@ class _MapScreenState extends State<MapScreen> {
                           )),
                     ),
                   ),
+
               ],
             );
           }),
