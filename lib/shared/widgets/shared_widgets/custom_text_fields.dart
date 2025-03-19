@@ -133,20 +133,21 @@ class _EmailTextFieldState extends State<EmailTextField> {
                     : isTextFieldEmpty
                         ? AppColors.white
                         : AppColors.orange50,
-                prefixIcon: widget.prefixIcon?? (widget.isWithIcon
-                    ? FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: SvgPicture.asset(
-                          'assets/icons/sms.svg',
-                          width: 24,
-                          height: 24,
-                          colorFilter: isTextFieldEmpty
-                              ? null
-                              : const ColorFilter.mode(
-                                  AppColors.logo, BlendMode.srcIn),
-                        ),
-                      )
-                    : null),
+                prefixIcon: widget.prefixIcon ??
+                    (widget.isWithIcon
+                        ? FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: SvgPicture.asset(
+                              'assets/icons/sms.svg',
+                              width: 24,
+                              height: 24,
+                              colorFilter: isTextFieldEmpty
+                                  ? null
+                                  : const ColorFilter.mode(
+                                      AppColors.logo, BlendMode.srcIn),
+                            ),
+                          )
+                        : null),
                 labelText: widget.label,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 labelStyle: AppFonts.medium.copyWith(
@@ -428,10 +429,10 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             Padding(
               padding: AppConstants.edge(
                   padding: EdgeInsets.only(
-                    left: widget.validatePadding,
-                    right: widget.validatePadding,
-                    top: 8,
-                  )),
+                left: widget.validatePadding,
+                right: widget.validatePadding,
+                top: 8,
+              )),
               child: Text(
                 widget.validateText ?? '',
                 style: AppFonts.small.copyWith(
@@ -440,29 +441,29 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 ),
               ),
             ),
-            // Align(
-            //   alignment: AppConstants.localizationController
-            //               .currentLocale()
-            //               .languageCode ==
-            //           'en'
-            //       ? Alignment.centerLeft
-            //       : Alignment.centerRight,
-            //   child: Padding(
-            //     padding: AppConstants.edge(
-            //         padding: EdgeInsets.only(
-            //       left: widget.validatePadding,
-            //       right: widget.validatePadding,
-            //       top: 8,
-            //     )),
-            //     child: Text(
-            //       widget.validateText ?? '',
-            //       style: AppFonts.small.copyWith(
-            //         fontSize: 14,
-            //         color: AppColors.error600,
-            //       ),
-            //     ),
-            //   ),
-            // ),
+          // Align(
+          //   alignment: AppConstants.localizationController
+          //               .currentLocale()
+          //               .languageCode ==
+          //           'en'
+          //       ? Alignment.centerLeft
+          //       : Alignment.centerRight,
+          //   child: Padding(
+          //     padding: AppConstants.edge(
+          //         padding: EdgeInsets.only(
+          //       left: widget.validatePadding,
+          //       right: widget.validatePadding,
+          //       top: 8,
+          //     )),
+          //     child: Text(
+          //       widget.validateText ?? '',
+          //       style: AppFonts.small.copyWith(
+          //         fontSize: 14,
+          //         color: AppColors.error600,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -529,7 +530,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIcon,
     this.icon,
     this.contentPadding,
-    this.height = 58,
+    this.height = 56,
     this.width,
     this.inputFormatters,
     this.fillColor = AppColors.white,
@@ -604,9 +605,9 @@ class CustomTextField extends StatelessWidget {
                   hintText: hint,
                   hintStyle: hintStyle ??
                       AppFonts.small.copyWith(
-                fontSize: 16,
-                  color: AppColors.darkBlue400,
-                ),
+                        fontSize: 16,
+                        color: AppColors.darkBlue400,
+                      ),
                   contentPadding: contentPadding ??
                       AppConstants.edge(
                         padding: const EdgeInsets.only(
@@ -650,11 +651,7 @@ class CustomTextField extends StatelessWidget {
             ),
             if (!validate && isWithValidationMsg)
               Padding(
-                padding: const EdgeInsets.only(
-                  top: 8,
-                  left: 20,
-                  right: 20
-                ),
+                padding: const EdgeInsets.only(top: 8, left: 20, right: 20),
                 child: Text(
                   validateText,
                   style: AppFonts.small.copyWith(

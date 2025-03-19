@@ -24,7 +24,7 @@ import '../captain_controllers/home_driver_controller.dart';
 class MapController extends GetxController {
   MapRepository mapRepository = MapRepository();
   Completer<GoogleMapController> googleMapController =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   RxInt currentStudentIndex = 0.obs;
 
@@ -62,10 +62,10 @@ class MapController extends GetxController {
         result = await polylinePoints.getRouteBetweenCoordinates(
           googleApiKey: AppConstants.googleApiKey,
           request: PolylineRequest(
-            origin: PointLatLng(
-                currentLatLng.latitude, currentLatLng.longitude),
-            destination: PointLatLng(
-                targetLatLng.latitude, targetLatLng.longitude),
+            origin:
+                PointLatLng(currentLatLng.latitude, currentLatLng.longitude),
+            destination:
+                PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
             mode: TravelMode.driving,
           ),
         );
@@ -74,7 +74,8 @@ class MapController extends GetxController {
           googleApiKey: AppConstants.googleApiKey,
           request: PolylineRequest(
             origin: PointLatLng(startLatLng.latitude, startLatLng.longitude),
-            destination: PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
+            destination:
+                PointLatLng(targetLatLng.latitude, targetLatLng.longitude),
             mode: TravelMode.driving,
           ),
         );
@@ -166,7 +167,7 @@ class MapController extends GetxController {
       {bool getEstimatedTime = true, bool drawCurrentTargetPolyline = true}) {
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
+      distanceFilter: 50,
     );
     Geolocator.getPositionStream(
       locationSettings: locationSettings,
@@ -192,17 +193,14 @@ class MapController extends GetxController {
   }) async {
     debugPrint("caaaaallll");
     final url =
-        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng
-        .latitude},${originLatLng.longitude}&destinations=${destinationLatLng
-        .latitude},${destinationLatLng
-        .longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
       url: url,
     );
 
     if (response.statusCode == 200) {
       distantTrack =
-      response.data['rows'][0]['elements'][0]['distance']['text'];
+          response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
       debugPrint("ressponseeee ${response.data}");
     } else {
@@ -243,7 +241,7 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
+      distanceFilter: 50,
     );
 
     positionStream = Geolocator.getPositionStream(
@@ -438,13 +436,13 @@ class MapController extends GetxController {
         List<Trip> trip = [];
         trip = tripFromJson(response.data);
 
-        if(trip[0].students.isNotEmpty){
+        if (trip[0].students.isNotEmpty) {
           for (var student in trip[0].students) {
-            if(student.attendance == '0'){
+            if (student.attendance == '0') {
               leftStudents.add(student);
-            } else if(student.attendance == '1'){
+            } else if (student.attendance == '1') {
               confirmedStudents.add(student);
-            } else{
+            } else {
               canceledStudents.add(student);
             }
           }
@@ -700,17 +698,14 @@ class MapController extends GetxController {
 
     debugPrint("geetttt estimateddd $tripId");
     final url =
-        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng
-        .latitude},${originLatLng.longitude}&destinations=${destinationLatLng
-        .latitude},${destinationLatLng
-        .longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
+        'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${originLatLng.latitude},${originLatLng.longitude}&destinations=${destinationLatLng.latitude},${destinationLatLng.longitude}&key=AIzaSyCa8FElw75agiPGmjxxbo8aFf5ZkvWchRw';
     final response = await DioHelper.getData(
       url: url,
     );
 
     if (response.statusCode == 200) {
       distantTrack =
-      response.data['rows'][0]['elements'][0]['distance']['text'];
+          response.data['rows'][0]['elements'][0]['distance']['text'];
       timeTrack = response.data['rows'][0]['elements'][0]['duration']['text'];
 
       // defaultSuccessSnackBar(
@@ -777,12 +772,12 @@ class MapController extends GetxController {
           );
           update();
         } else if (((students.isEmpty && isToEnd) ||
-            ((students.isEmpty &&
-                currentStudentIndex.value == -1 &&
-                isRound == false) ||
-                (students.isNotEmpty &&
-                    currentStudentIndex.value == students.length &&
-                    isRound == true))) &&
+                ((students.isEmpty &&
+                        currentStudentIndex.value == -1 &&
+                        isRound == false) ||
+                    (students.isNotEmpty &&
+                        currentStudentIndex.value == students.length &&
+                        isRound == true))) &&
             _isEndTrip == false &&
             firstTripType) {
           _isEndTrip = true;
@@ -796,7 +791,7 @@ class MapController extends GetxController {
                 imagePath: 'assets/images/celebrate.png',
                 headerMsg: '${"congrats".tr} ',
                 subHeaderMsg:
-                "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                 isTrip: true,
                 function: () async {
                   await tripEnd(tripId: tripId);
@@ -824,14 +819,13 @@ class MapController extends GetxController {
               isDismissible: false,
               enableDrag: false,
               backgroundColor: Colors.black.withOpacity(0.3),
-              builder: (bottomContext) =>
-                  ConfirmPickupBottomSheet(
-                    title: students[currentStudentIndex.value].isStartPoint
-                        ? 'studentTrip'.tr
-                        : students[currentStudentIndex.value].userFname,
-                    subTitle: students[currentStudentIndex.value].isStartPoint
-                        ? 'waitStudentsMsg'.tr
-                        : students[currentStudentIndex.value].address,
+              builder: (bottomContext) => ConfirmPickupBottomSheet(
+                title: students[currentStudentIndex.value].isStartPoint
+                    ? 'studentTrip'.tr
+                    : students[currentStudentIndex.value].userFname,
+                subTitle: students[currentStudentIndex.value].isStartPoint
+                    ? 'waitStudentsMsg'.tr
+                    : students[currentStudentIndex.value].address,
 //                     contact: (){
 //                       // launchUrl(
 //                       //     Uri.parse("tel://+966 53 232 8393"));
@@ -839,201 +833,195 @@ class MapController extends GetxController {
 //                       launchUrl(Uri.parse(
 //                           "https://wa.me/${'+966 53 232 8393'}"));
 //                     },
-                    firstButtonFunction: () {
-                      AppConstants.homeDriverRepository
-                          .sendTripAttendance(
-                        tripId: tripId,
-                        userId: students[currentStudentIndex.value].tripUserId,
-                        isAttended: true,
-                        isStartPoint:
+                firstButtonFunction: () {
+                  AppConstants.homeDriverRepository
+                      .sendTripAttendance(
+                    tripId: tripId,
+                    userId: students[currentStudentIndex.value].tripUserId,
+                    isAttended: true,
+                    isStartPoint:
                         students[currentStudentIndex.value].isStartPoint,
-                      )
-                          .then((value) async {
-                            leftStudents.remove(students[currentStudentIndex.value]);
-                            confirmedStudents.add(students[currentStudentIndex.value]);
-                            update();
-                        homeDriverController
-                            .getTrips(Get.context!, containLoading: false)
-                            .then((v) async {
-                          if (Navigator.of(bottomContext).canPop()) {
-                            Navigator.of(bottomContext).pop();
-                          }
-                          if (homeDriverController.driverNextRide.isNotEmpty) {
-                            currentStudents =
-                                homeDriverController.driverNextRide[0].students;
-                            if (currentStudents.isNotEmpty) {
-                              targetLatLng = LatLng(
-                                  double.parse(currentStudents[0].pickupLat),
-                                  double.parse(currentStudents[0].pickupLong));
-                              currentStudentIndex.value = 0;
-                              nearbyStudent(
-                                driverId:
-                                AppConstants.userRepository.driverData.driverId,
-                                tripId: tripId,
-                                userId: students[currentStudentIndex.value]
-                                    .userId,
-                                tripUserId:
-                                students[currentStudentIndex.value].tripUserId,
-                              );
-                            } else {
-                              if (firstTripType) {
-                                targetLatLng = LatLng(
-                                    double.parse(endLat),
-                                    double.parse(endLong));
-                                currentStudentIndex.value = -1;
-                              } else {
-                                showModalBottomSheet(
-                                  context: Get.context!,
-                                  isDismissible: false,
-                                  enableDrag: false,
-                                  builder: (endContext) {
-                                    return RideAndTripEndBottomSheet(
-                                      headTitle: 'rideEnd'.tr,
-                                      imagePath: 'assets/images/celebrate.png',
-                                      headerMsg: '${"congrats".tr} ',
-                                      subHeaderMsg:
-                                      "${'rideCompletedSuccessfully'
-                                          .tr} *Trip id: $tripId",
-                                      isTrip: true,
-                                      function: () async {
-                                        await tripEnd(tripId: tripId);
-                                        distantTrack = "10000 km";
-                                        if (positionStream != null) {
-                                          positionStream!.cancel();
-                                          positionStream = null;
-                                        }
-                                        // isToEnd = false;
-                                        // _isEndTrip = false;
-                                        // homeDriverController.getTrips(context);
-                                      },
-                                    );
-                                  },
-                                );
-                              }
-                            }
-                          }
-
-                          // if (students.length - 1 > currentStudentIndex.value) {
-                          //   // currentStudentIndex.value++;
-                          //
-                          //   targetLatLng = LatLng(
-                          //     double.parse(
-                          //         students[currentStudentIndex.value].pickupLat),
-                          //     double.parse(
-                          //         students[currentStudentIndex.value].pickupLong),
-                          //   );
-                          // } else {
-                          //   currentStudentIndex.value++;
-                          //   targetLatLng = LatLng(
-                          //     double.parse(endLat),
-                          //     double.parse(endLong),
-                          //   );
-                          // }
-                          update();
-
-                          markerIcon = await getBytesFromAsset(
-                              'assets/images/location_on.png', 70);
-                          currentIcon = await getBytesFromAsset(
-                              'assets/images/navigation_arrow.png', 70);
-
-                          await getCurrentLocation().then((value) async {
-                            currentLatLng =
-                                LatLng(value.latitude, value.longitude);
-                            await getCurrentTargetPolylinePoints();
-                            cameraPosition = CameraPosition(
-                              target: currentLatLng,
-                              zoom: 12,
-                            );
-                            debugPrint("geee estimateddd 2 $tripId");
-                            getEstimatedTime(
-                                isEmployee: isEmployee,
-                                isStudent: isStudent,
-                                firstTripType: firstTripType,
-                                originLatLng: currentLatLng,
-                                destinationLatLng: targetLatLng,
-                                tripId: tripId,
-                                students: students,
-                                endLong: endLong,
-                                endLat: endLat,
-                                isRound: isRound);
-                            debugPrint("live stresaaaam  6$tripId");
-                            liveLocation(
-                              isEmployee: isEmployee,
-                              isStudent: isStudent,
-                              firstTripType: firstTripType,
-                              isRound: isRound,
-                            );
-                          });
-                        });
-                      });
-                    },
-                    secondButtonFunction: () {
+                  )
+                      .then((value) async {
+                    leftStudents.remove(students[currentStudentIndex.value]);
+                    confirmedStudents.add(students[currentStudentIndex.value]);
+                    update();
+                    homeDriverController
+                        .getTrips(Get.context!, containLoading: false)
+                        .then((v) async {
                       if (Navigator.of(bottomContext).canPop()) {
                         Navigator.of(bottomContext).pop();
                       }
-                      AppConstants.homeDriverRepository
-                          .sendTripAttendance(
-                          tripId: tripId,
-                          userId: students[currentStudentIndex.value]
-                              .tripUserId,
-                          isAttended: false,
-                          isStartPoint:
-                          students[currentStudentIndex.value].isStartPoint)
-                          .then((value) async {
-
-                        if (students.isNotEmpty) {
-                          leftStudents.remove(students[currentStudentIndex.value]);
-                          canceledStudents.add(students[currentStudentIndex.value]);
-                          update();
-                          currentStudentIndex.value++;
+                      if (homeDriverController.driverNextRide.isNotEmpty) {
+                        currentStudents =
+                            homeDriverController.driverNextRide[0].students;
+                        if (currentStudents.isNotEmpty) {
                           targetLatLng = LatLng(
-                            double.parse(
-                                students[currentStudentIndex.value].pickupLat),
-                            double.parse(
-                                students[currentStudentIndex.value].pickupLong),
+                              double.parse(currentStudents[0].pickupLat),
+                              double.parse(currentStudents[0].pickupLong));
+                          currentStudentIndex.value = 0;
+                          nearbyStudent(
+                            driverId:
+                                AppConstants.userRepository.driverData.driverId,
+                            tripId: tripId,
+                            userId: students[currentStudentIndex.value].userId,
+                            tripUserId:
+                                students[currentStudentIndex.value].tripUserId,
                           );
                         } else {
-                          targetLatLng = LatLng(
-                            double.parse(endLat),
-                            double.parse(endLong),
-                          );
+                          if (firstTripType) {
+                            targetLatLng = LatLng(
+                                double.parse(endLat), double.parse(endLong));
+                            currentStudentIndex.value = -1;
+                          } else {
+                            showModalBottomSheet(
+                              context: Get.context!,
+                              isDismissible: false,
+                              enableDrag: false,
+                              builder: (endContext) {
+                                return RideAndTripEndBottomSheet(
+                                  headTitle: 'rideEnd'.tr,
+                                  imagePath: 'assets/images/celebrate.png',
+                                  headerMsg: '${"congrats".tr} ',
+                                  subHeaderMsg:
+                                      "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                                  isTrip: true,
+                                  function: () async {
+                                    await tripEnd(tripId: tripId);
+                                    distantTrack = "10000 km";
+                                    if (positionStream != null) {
+                                      positionStream!.cancel();
+                                      positionStream = null;
+                                    }
+                                    // isToEnd = false;
+                                    // _isEndTrip = false;
+                                    // homeDriverController.getTrips(context);
+                                  },
+                                );
+                              },
+                            );
+                          }
                         }
-                        markerIcon = await getBytesFromAsset(
-                            'assets/images/location_on.png', 70);
-                        currentIcon = await getBytesFromAsset(
-                            'assets/images/navigation_arrow.png', 70);
-                        await getCurrentLocation().then((value) async {
-                          currentLatLng =
-                              LatLng(value.latitude, value.longitude);
-                          await getCurrentTargetPolylinePoints();
-                          cameraPosition = CameraPosition(
-                            target: currentLatLng,
-                            zoom: 12,
-                          );
-                          debugPrint("geee estimateddd 3 $tripId");
-                          getEstimatedTime(
-                              isEmployee: isEmployee,
-                              isStudent: isStudent,
-                              firstTripType: firstTripType,
-                              originLatLng: currentLatLng,
-                              destinationLatLng: targetLatLng,
-                              tripId: tripId,
-                              students: students,
-                              endLong: endLong,
-                              endLat: endLat,
-                              isRound: isRound);
-                          debugPrint("live stresaaaam 5 $tripId");
+                      }
 
-                          liveLocation(
+                      // if (students.length - 1 > currentStudentIndex.value) {
+                      //   // currentStudentIndex.value++;
+                      //
+                      //   targetLatLng = LatLng(
+                      //     double.parse(
+                      //         students[currentStudentIndex.value].pickupLat),
+                      //     double.parse(
+                      //         students[currentStudentIndex.value].pickupLong),
+                      //   );
+                      // } else {
+                      //   currentStudentIndex.value++;
+                      //   targetLatLng = LatLng(
+                      //     double.parse(endLat),
+                      //     double.parse(endLong),
+                      //   );
+                      // }
+                      update();
+
+                      markerIcon = await getBytesFromAsset(
+                          'assets/images/location_on.png', 70);
+                      currentIcon = await getBytesFromAsset(
+                          'assets/images/navigation_arrow.png', 70);
+
+                      await getCurrentLocation().then((value) async {
+                        currentLatLng = LatLng(value.latitude, value.longitude);
+                        await getCurrentTargetPolylinePoints();
+                        cameraPosition = CameraPosition(
+                          target: currentLatLng,
+                          zoom: 12,
+                        );
+                        debugPrint("geee estimateddd 2 $tripId");
+                        getEstimatedTime(
                             isEmployee: isEmployee,
-                            isRound: isRound,
                             isStudent: isStudent,
                             firstTripType: firstTripType,
-                          );
-                        });
+                            originLatLng: currentLatLng,
+                            destinationLatLng: targetLatLng,
+                            tripId: tripId,
+                            students: students,
+                            endLong: endLong,
+                            endLat: endLat,
+                            isRound: isRound);
+                        debugPrint("live stresaaaam  6$tripId");
+                        liveLocation(
+                          isEmployee: isEmployee,
+                          isStudent: isStudent,
+                          firstTripType: firstTripType,
+                          isRound: isRound,
+                        );
                       });
-                    },
-                  ),
+                    });
+                  });
+                },
+                secondButtonFunction: () {
+                  if (Navigator.of(bottomContext).canPop()) {
+                    Navigator.of(bottomContext).pop();
+                  }
+                  AppConstants.homeDriverRepository
+                      .sendTripAttendance(
+                          tripId: tripId,
+                          userId:
+                              students[currentStudentIndex.value].tripUserId,
+                          isAttended: false,
+                          isStartPoint:
+                              students[currentStudentIndex.value].isStartPoint)
+                      .then((value) async {
+                    if (students.isNotEmpty) {
+                      leftStudents.remove(students[currentStudentIndex.value]);
+                      canceledStudents.add(students[currentStudentIndex.value]);
+                      update();
+                      currentStudentIndex.value++;
+                      targetLatLng = LatLng(
+                        double.parse(
+                            students[currentStudentIndex.value].pickupLat),
+                        double.parse(
+                            students[currentStudentIndex.value].pickupLong),
+                      );
+                    } else {
+                      targetLatLng = LatLng(
+                        double.parse(endLat),
+                        double.parse(endLong),
+                      );
+                    }
+                    markerIcon = await getBytesFromAsset(
+                        'assets/images/location_on.png', 70);
+                    currentIcon = await getBytesFromAsset(
+                        'assets/images/navigation_arrow.png', 70);
+                    await getCurrentLocation().then((value) async {
+                      currentLatLng = LatLng(value.latitude, value.longitude);
+                      await getCurrentTargetPolylinePoints();
+                      cameraPosition = CameraPosition(
+                        target: currentLatLng,
+                        zoom: 12,
+                      );
+                      debugPrint("geee estimateddd 3 $tripId");
+                      getEstimatedTime(
+                          isEmployee: isEmployee,
+                          isStudent: isStudent,
+                          firstTripType: firstTripType,
+                          originLatLng: currentLatLng,
+                          destinationLatLng: targetLatLng,
+                          tripId: tripId,
+                          students: students,
+                          endLong: endLong,
+                          endLat: endLat,
+                          isRound: isRound);
+                      debugPrint("live stresaaaam 5 $tripId");
+
+                      liveLocation(
+                        isEmployee: isEmployee,
+                        isRound: isRound,
+                        isStudent: isStudent,
+                        firstTripType: firstTripType,
+                      );
+                    });
+                  });
+                },
+              ),
             );
           }
         } else if (_isEndTrip == false &&
@@ -1081,7 +1069,7 @@ class MapController extends GetxController {
                     imagePath: 'assets/images/celebrate.png',
                     headerMsg: '${"congrats".tr} ',
                     subHeaderMsg:
-                    "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
+                        "${'rideCompletedSuccessfully'.tr} *Trip id: $tripId",
                     isTrip: true,
                     function: () async {
                       await tripEnd(tripId: tripId);
@@ -1102,9 +1090,9 @@ class MapController extends GetxController {
           update();
 
           markerIcon =
-          await getBytesFromAsset('assets/images/location_on.png', 70);
+              await getBytesFromAsset('assets/images/location_on.png', 70);
           currentIcon =
-          await getBytesFromAsset('assets/images/navigation_arrow.png', 70);
+              await getBytesFromAsset('assets/images/navigation_arrow.png', 70);
 
           await getCurrentLocation().then((value) async {
             // Get.back();
@@ -1192,7 +1180,7 @@ bool isWithinDistance(String distanceString) {
     double value = double.parse(
       parts[0].replaceAll(',', ''),
     );
-    if (value <= 100) {
+    if (value <= 50) {
       return true;
     } else {
       return false;
