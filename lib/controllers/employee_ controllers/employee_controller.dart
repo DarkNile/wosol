@@ -95,6 +95,7 @@ class EmployeeController extends GetxController {
     update();
   }
 
+  TextEditingController addCommentController = TextEditingController();
   Future<LatLng?> requestRide({
     required String groupId,
     required String lat,
@@ -109,6 +110,7 @@ class EmployeeController extends GetxController {
         lat: lat,
         lng: lng,
         date: date,
+        requestComment: addCommentController.text??'',
       );
 
       if (response != null) {

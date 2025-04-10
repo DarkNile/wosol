@@ -254,5 +254,7 @@ const Map<String, String> ar = {
   "sendRate": "إرسال التقيم",
   "viewTripDetails": "عرض تفاصيل الرحلة",
   "viewTripRoute": "عرض طريق الرحلة",
+  "comment": "تعليق",
+  "sendRequest": "إرسال طلب",
   "": "",
 };

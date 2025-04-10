@@ -51,6 +51,7 @@ class EmployeeRepository extends GetxService {
     required String lat,
     required String lng,
     required String date,
+    required String requestComment,
   }) async {
     try {
       final response = await DioHelper.postData(
@@ -61,6 +62,7 @@ class EmployeeRepository extends GetxService {
           "lat": lat,
           "lng": lng,
           'trip_date': date,
+          'request_comment': requestComment,
         },
       );
       if (response.data['status'] == 'success') {
