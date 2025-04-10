@@ -257,5 +257,7 @@ const Map<String, String> en = {
   "sendRate": "Send rate",
   "viewTripDetails": "View trip details",
   "viewTripRoute": "View trip route",
+  "comment": "Comment",
+  "sendRequest": "Send request",
   "": "",
 };
