@@ -223,7 +223,7 @@ class _MapScreenState extends State<MapScreen> {
                           const SizedBox(
                             height: 15,
                           ),
-                          if(AppConstants.userType == 'Driver' && widget.isStudent)
+                          if(AppConstants.userType == 'Driver') //&& widget.isStudent)
                             Material(
                               child: DefaultButton(
                                 marginRight: 20,
