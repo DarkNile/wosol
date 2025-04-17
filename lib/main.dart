@@ -159,16 +159,16 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     if (AppConstants.isFirst) {
         WidgetsBinding.instance.addPostFrameCallback((_) async {
-          if(Platform.isAndroid) {
-            getLocationPermission(context);
-          } else{
+          // if(Platform.isAndroid) {
+          //   getLocationPermission(context);
+          // } else{
             await Permission.location.request();
             await CacheHelper.setData(
                 key: 'isFirst', value: false);
             AppConstants.isFirst =
                 await CacheHelper.getData(key: 'isFirst') ??
                 true;
-          }
+          // }
       });
     }
     super.initState();
