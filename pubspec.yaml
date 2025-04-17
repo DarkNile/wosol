@@ -2,7 +2,7 @@ name: wosol
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.65.0+65
+version: 1.67.0+67
 
 environment:
   sdk: '>=3.2.0 <4.0.0'
@@ -61,6 +61,7 @@ flutter_launcher_icons:
   image_path_ios: "assets/images/wosol_app.png"
   adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/images/wosol_app.png"
+  remove_alpha_ios: true
 
 flutter:
 
