@@ -241,7 +241,7 @@ class MapController extends GetxController {
     Position? previousPosition;
     LocationSettings locationSettings = const LocationSettings(
       accuracy: LocationAccuracy.high,
-      distanceFilter: 50,
+      distanceFilter: 100,
     );
 
     positionStream = Geolocator.getPositionStream(
@@ -1180,7 +1180,7 @@ bool isWithinDistance(String distanceString) {
     double value = double.parse(
       parts[0].replaceAll(',', ''),
     );
-    if (value <= 50) {
+    if (value <= 100) {
       return true;
     } else {
       return false;
