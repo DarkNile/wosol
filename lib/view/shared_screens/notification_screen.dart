@@ -61,7 +61,7 @@ class NotificationsScreen extends StatelessWidget {
                                 notificationTime: AppConstants.isEnLocale
                                     ? "15 ${"minsAgo".tr}"
                                     : "${"ago".tr} 15 ${"min".tr}",
-                                notificationTitle: notification.text ?? "",
+                                notificationTitle: (AppConstants.isEnLocale? notification.textEn : notification.textAr) ?? "",
                                 onSelected: (String value) async {
                                   if (value == "MarkAsRead") {
                                     notifyController

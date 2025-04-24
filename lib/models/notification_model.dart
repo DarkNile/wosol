@@ -9,7 +9,8 @@ class NotificationModel {
   String? vehicleId;
   String? tripId;
   String? title;
-  String? text;
+  String? textAr;
+  String? textEn;
   String? read;
   String? dateAdded;
   String? modifiedDate;
@@ -25,7 +26,8 @@ class NotificationModel {
       this.vehicleId,
       this.tripId,
       this.title,
-      this.text,
+      this.textAr,
+      this.textEn,
       this.read,
       this.dateAdded,
       this.modifiedDate});
@@ -41,7 +43,8 @@ class NotificationModel {
     vehicleId = json['vehicle_id'];
     tripId = json['trip_id'];
     title = json['title'];
-    text = json['text'];
+    textAr = json['text_ar'];
+    textEn = json['text_en'];
     read = json['read'];
     dateAdded = json['date_added'];
     modifiedDate = json['modified_date'];
@@ -59,7 +62,8 @@ class NotificationModel {
     data['vehicle_id'] = vehicleId;
     data['trip_id'] = tripId;
     data['title'] = title;
-    data['text'] = text;
+    data['text_ar'] = textAr;
+    data['text_en'] = textEn;
     data['read'] = read;
     data['date_added'] = dateAdded;
     data['modified_date'] = modifiedDate;
