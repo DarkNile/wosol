@@ -8,7 +8,8 @@ class NotificationModel {
   String? driverId;
   String? vehicleId;
   String? tripId;
-  String? title;
+  String? titleAr;
+  String? titleEn;
   String? textAr;
   String? textEn;
   String? read;
@@ -25,7 +26,8 @@ class NotificationModel {
       this.driverId,
       this.vehicleId,
       this.tripId,
-      this.title,
+      this.titleAr,
+      this.titleEn,
       this.textAr,
       this.textEn,
       this.read,
@@ -42,8 +44,9 @@ class NotificationModel {
     driverId = json['driver_id'];
     vehicleId = json['vehicle_id'];
     tripId = json['trip_id'];
-    title = json['title'];
-    textAr = json['text_ar'];
+    titleAr = json['title'];
+    titleEn = json['title_en'];
+    textAr = json['text'];
     textEn = json['text_en'];
     read = json['read'];
     dateAdded = json['date_added'];
@@ -61,8 +64,9 @@ class NotificationModel {
     data['driver_id'] = driverId;
     data['vehicle_id'] = vehicleId;
     data['trip_id'] = tripId;
-    data['title'] = title;
-    data['text_ar'] = textAr;
+    data['title'] = titleAr;
+    data['title_en'] = titleEn;
+    data['text'] = textAr;
     data['text_en'] = textEn;
     data['read'] = read;
     data['date_added'] = dateAdded;
